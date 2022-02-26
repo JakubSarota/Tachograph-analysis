@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
+    <left>
+        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" text="Back" BorderPane.alignment="CENTER" />
+    </left>
+   <right>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <VBox prefHeight="69.0" prefWidth="600.0" BorderPane.alignment="TOP_RIGHT">
+         <children>
+            <Label fx:id="uploadText" />
+            <Button fx:id="btnUpload" mnemonicParsing="false" onAction="#Upload" text="Upload" textAlignment="CENTER" />
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
