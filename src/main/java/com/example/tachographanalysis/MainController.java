@@ -17,4 +17,9 @@ public class MainController {
         Stage scene = (Stage) btnAnalogueButton.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, 1280,720));
     }
+    public void getDigitalAnalysis() throws Exception {
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("digitalAnalysis.fxml"));
+        Stage scene = (Stage) btnDigitalButton.getScene().getWindow();
+        scene.setScene(new Scene(fxmlLoader, 1280,720));
+    }
 }

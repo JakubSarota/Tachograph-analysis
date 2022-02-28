@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
     <top>
         <HBox prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: rgb(54,123,52);" BorderPane.alignment="CENTER">
             <children>
@@ -27,7 +27,7 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="158.0" text="Digital analysis" textAlignment="CENTER" wrapText="true">
+                <Button fx:id="btnDigitalButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#getDigitalAnalysis" prefHeight="60.0" prefWidth="158.0" text="Digital analysis" textAlignment="CENTER" wrapText="true">
                     <opaqueInsets>
                         <Insets bottom="50.0" top="50.0" />
                     </opaqueInsets>
