@@ -20,6 +20,6 @@ public class AnalogueAnalysisController {
     }
 
     public void Upload() {
-        uploadText = new Label("TEST");
+        uploadText = new Label("zmiana w analgowym");
     }
 }
