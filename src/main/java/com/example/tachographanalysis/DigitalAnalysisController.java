@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import com.example.tachographanalysis.size.SizeController;
 
 public class DigitalAnalysisController {
     @FXML
@@ -16,7 +17,7 @@ public class DigitalAnalysisController {
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
         Stage scene = (Stage) btnBack.getScene().getWindow();
-        scene.setScene(new Scene(fxmlLoader, 1280,720));
+        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeW));
     }
 
 
