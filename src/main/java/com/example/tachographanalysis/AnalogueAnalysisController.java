@@ -12,12 +12,12 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import com.example.tachographanalysis.size.SizeController;
 
@@ -37,6 +37,7 @@ public class AnalogueAnalysisController {
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
     }
+
     @FXML
     private void handleDragOver(DragEvent event) {
         if(event.getDragboard().hasFiles()) {
@@ -44,11 +45,32 @@ public class AnalogueAnalysisController {
         }
     }
 
+    public String getExtension(String fileName){
+        String extension = "";
+
+        int i = fileName.lastIndexOf('.');
+        if (i > 0 && i < fileName.length() - 1)
+            return fileName.substring(i + 1).toLowerCase();
+
+        return extension;
+    }
+
     @FXML
     private void handleDropped(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
+        List<String> validExtensions  = Arrays.asList("jpg", "png");
+
         image = new Image(new FileInputStream(files.get(0)));
-        imageView.setImage(image);
+
+        if(!validExtensions.containsAll(event.getDragboard().getFiles().stream().map(file -> getExtension(file.getName())).collect(Collectors.toList()))) {
+            uploadText.setText("It's not jpg or png file!");
+        } else if(image.getWidth() <= 550 || image.getHeight() <= 550) {
+            uploadText.setText("Size is to small, to load file");
+        } else {
+            imageView.setImage(image);
+            uploadText.setText("");
+        }
+
     }
 
     public void initialize(URL url, ResourceBundle rb) {

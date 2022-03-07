@@ -17,8 +17,6 @@ public class DigitalAnalysisController {
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
         Stage scene = (Stage) btnBack.getScene().getWindow();
-        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeW));
+        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
     }
-
-
 }

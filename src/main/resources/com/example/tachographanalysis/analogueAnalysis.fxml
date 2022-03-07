@@ -11,12 +11,15 @@
    <bottom>
       <VBox alignment="TOP_CENTER" prefHeight="118.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="dragOver" fitHeight="88.0" fitWidth="142.0" onDragDropped="#handleDropped" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true"/>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="99.0" text="Upload" textAlignment="CENTER" />
+            <ImageView fx:id="dragOver" fitHeight="75.0" fitWidth="81.0" onDragDropped="#handleDropped" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@draganddrop.png" />
+               </image></ImageView>
+            <Label fx:id="uploadText" prefHeight="28.0" prefWidth="184.0" />
          </children>
       </VBox>
    </bottom>
    <center>
-      <ImageView fx:id="imageView" fitHeight="205.0" fitWidth="276.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER"/>
+      <ImageView fx:id="imageView" fitHeight="260.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
