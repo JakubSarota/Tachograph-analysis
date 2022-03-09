@@ -4,22 +4,20 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
     <left>
         <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" prefHeight="40.0" prefWidth="100.0" text="Back" BorderPane.alignment="CENTER" />
     </left>
    <bottom>
       <VBox alignment="TOP_CENTER" prefHeight="118.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="dragOver" fitHeight="75.0" fitWidth="81.0" onDragDropped="#handleDropped" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@draganddrop.png" />
-               </image></ImageView>
+            <Button fx:id="dragOver" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="105.0" prefWidth="321.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Choose file from memory or drag and drop here" />
             <Label fx:id="uploadText" prefHeight="28.0" prefWidth="184.0" />
          </children>
       </VBox>
+
    </bottom>
    <center>
-      <ImageView fx:id="imageView" fitHeight="260.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <ImageView fx:id="imageView" fitHeight="500.0" fitWidth="850.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

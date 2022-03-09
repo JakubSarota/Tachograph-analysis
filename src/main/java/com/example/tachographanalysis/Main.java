@@ -15,7 +15,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), SizeController.sizeW, SizeController.sizeH);
-        stage.setTitle("Tachfive");
+        stage.setTitle("Tachfive 1.0");
         stage.setScene(scene);
         stage.show();
     }
