@@ -1,14 +1,14 @@
 package com.example.tachographanalysis;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritablePixelFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.cert.Extension;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,12 +25,13 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import com.example.tachographanalysis.size.SizeController;
+import com.example.tachographanalysis.analogueAnalysis.blackAndWhite;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 public class AnalogueAnalysisController {
     @FXML
-    private Button btnBack, btnUpload;
-    @FXML
-    private Label uploadText;
+    private Button btnBack;
     @FXML
     private ImageView imageView;
     @FXML
@@ -39,8 +40,10 @@ public class AnalogueAnalysisController {
     private Button dragOver;
 
     private String imageFile;
-    String text = "Choose file from memory or drag and drop here";
+    private String text = "Choose file from memory or drag and drop here";
     List<String> lstFile;
+
+    blackAndWhite blackAndWhite = new blackAndWhite();
 
     @FXML
     public void getBack() throws Exception {
@@ -58,7 +61,7 @@ public class AnalogueAnalysisController {
     }
 
     @FXML
-    private void onDragClickedButton() throws MalformedURLException {
+    private void onDragClickedButton() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files",
@@ -69,7 +72,13 @@ public class AnalogueAnalysisController {
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else if(selectedFile != null) {
-            imageView.setImage(image);
+            blackAndWhite.loadImage(image);
+//            blackAndWhite.source(image);
+//            blackAndWhite.imageToMat(image);
+//            imageView.setImage(image);
+
+            dragOver.setText(text);
+        } else if(selectedFile == null) {
             dragOver.setText(text);
         }
     }
@@ -99,7 +108,6 @@ public class AnalogueAnalysisController {
         int i = fileName.lastIndexOf('.');
         if (i > 0 && i < fileName.length() - 1)
             return fileName.substring(i + 1).toLowerCase();
-
         return extension;
     }
 
@@ -108,5 +116,6 @@ public class AnalogueAnalysisController {
         lstFile.add("*.png");
         lstFile.add("*.jpg");
     }
+
 
 }

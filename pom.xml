@@ -91,18 +91,27 @@
             <scope>test</scope>
         </dependency>
         <!--Opencv library-->
-        <dependency>
-            <groupId>nu.pattern</groupId>
-            <artifactId>opencv</artifactId>
-            <version>2.4.9-4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>nu.pattern</groupId>-->
+<!--            <artifactId>opencv</artifactId>-->
+<!--            <version>2.4.9-4</version>-->
+<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.36.0.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.openpnp</groupId>
+            <artifactId>opencv</artifactId>
+            <version>4.5.1-2</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.bytedeco</groupId>-->
+<!--            <artifactId>javacv-platform</artifactId>-->
+<!--            <version>1.5.7</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
