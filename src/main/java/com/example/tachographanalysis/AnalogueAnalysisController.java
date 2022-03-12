@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritablePixelFormat;
+import javafx.scene.image.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
@@ -61,7 +58,7 @@ public class AnalogueAnalysisController {
     }
 
     @FXML
-    private void onDragClickedButton() throws IOException {
+    private void onDragClickedButton() throws Exception {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files",
@@ -72,11 +69,8 @@ public class AnalogueAnalysisController {
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else if(selectedFile != null) {
-            blackAndWhite.loadImage(image);
-//            blackAndWhite.source(image);
-//            blackAndWhite.imageToMat(image);
-//            imageView.setImage(image);
-
+            WritableImage writableImage = blackAndWhite.loadAndConvert(image);
+            imageView.setImage(writableImage);
             dragOver.setText(text);
         } else if(selectedFile == null) {
             dragOver.setText(text);
@@ -97,6 +91,7 @@ public class AnalogueAnalysisController {
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else {
+//            WritableImage writableImage = blackAndWhite.loadAndConvert(image);
             imageView.setImage(image);
             dragOver.setText(text);
         }

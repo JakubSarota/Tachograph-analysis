@@ -1,47 +1,70 @@
 package com.example.tachographanalysis.analogueAnalysis;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
-import javafx.scene.image.WritablePixelFormat;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
+
+
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.highgui.HighGui;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+
+import java.awt.image.BufferedImage;
 
 
 public class blackAndWhite {
 
-    public static WritableImage loadImage(Image image) {
+    public static String loadImage(Image image) {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         String file = image.getUrl();
-        Mat imageFile = Imgcodecs.imread(file);
-        System.out.println(imageFile);
+        Mat imageFile = Imgcodecs.imread(file
+                .replace("file:/","")
+        );
         return null;
     }
 
-    public static Mat imageToMat(Image image) {
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-        byte[] buffer = new byte[width * height * 4];
+//    public WritableImage loadAndConvert(Image image) {
+//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//        Mat dst = new Mat();
+//        String file = image.getUrl();
+//        Mat imageFile = Imgcodecs.imread(file
+//                .replace("file:/","")
+//        );
+//        Imgproc.threshold(imageFile, dst, 220, 520, Imgproc.THRESH_BINARY);
+//        byte[] data1 = new byte[dst.rows() * dst.cols() * (int)(dst.elemSize())];
+//        dst.get(0,0,data1);
+//        BufferedImage bufferedImage = new BufferedImage(dst.cols(), dst.rows(), BufferedImage.TYPE_BYTE_BINARY);
+//        bufferedImage.getRaster().setDataElements(0,0, dst.cols(), dst.rows(), data1);
+//        WritableImage writableImage = SwingFXUtils.toFXImage(bufferedImage, null);
+//        System.out.println("Converted to binary");
+//        return writableImage;
+//    }
 
-        PixelReader reader = image.getPixelReader();
-        WritablePixelFormat<ByteBuffer> format = WritablePixelFormat.getByteBgraInstance();
-        reader.getPixels(0, 0, width, height, format, buffer, 0, width * 4);
-
-        Mat mat = new Mat(height, width, CvType.CV_8UC4);
-        mat.put(0, 0, buffer);
-        System.out.println(width+ " " + height);
-        return mat;
+    public WritableImage loadAndConvert(Image image) {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        String file = image.getUrl();
+        Mat imageFile = Imgcodecs.imread(file
+                .replace("file:/",""),
+                Imgcodecs.IMREAD_GRAYSCALE
+        );
+        Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
+        Core.bitwise_not(imageFile, dst);
+//        Imgproc.adaptiveThreshold(imageFile, dst, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, -2);
+        java.awt.Image img = HighGui.toBufferedImage(dst);
+        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) img, null);
+        return writableImage;
     }
 
-    public static String source(Image image) {
-        String src = image.getUrl();
-        System.out.println(src);
+    public WritableImage findCircle(Image image) {
+
         return null;
     }
 
+    public WritableImage getHuanByCircle(Image image) {
+
+        return null;
+    }
 }
