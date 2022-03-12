@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -10,4 +11,11 @@
    <center>
       <Button fx:id="dragOver" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="118.0" prefWidth="600.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik z dysku albo przeciągnij go tutaj" BorderPane.alignment="CENTER" />
    </center>
+   <right>
+      <TextArea fx:id="textArea" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets right="50.0" />
+         </BorderPane.margin>
+      </TextArea>
+   </right>
 </BorderPane>
