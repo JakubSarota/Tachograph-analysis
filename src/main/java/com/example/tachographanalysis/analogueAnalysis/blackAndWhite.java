@@ -1,8 +1,5 @@
 package com.example.tachographanalysis.analogueAnalysis;
 
-
-
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -59,7 +56,13 @@ public class blackAndWhite {
     }
 
     public WritableImage findCircle(Image image) {
-
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        String file = image.getUrl();
+        Mat imageFile = Imgcodecs.imread(file
+                        .replace("file:/",""),
+                Imgcodecs.IMREAD_GRAYSCALE
+        );
+        Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         return null;
     }
 

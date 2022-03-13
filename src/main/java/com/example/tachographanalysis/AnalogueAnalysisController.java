@@ -74,6 +74,7 @@ public class AnalogueAnalysisController {
             dragOver.setText(text);
         } else if(selectedFile == null) {
             dragOver.setText(text);
+
         }
     }
 
