@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -49,6 +50,17 @@ public class blackAndWhite {
         );
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Core.bitwise_not(imageFile, dst);
+        Mat dst_=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
+        Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
+        Imgproc.warpPolar(imageFile,
+                dst_,
+                imageFile.size(),
+                new Point(imageFile.width()/2,imageFile.height()/2),
+                imageFile.width()/2,
+                0);
+        Core.rotate(dst_,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
+        Imgcodecs.imwrite(file
+                .replace("file:/","")+"test___.jpg",dst2);
 //        Imgproc.adaptiveThreshold(imageFile, dst, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, -2);
         java.awt.Image img = HighGui.toBufferedImage(dst);
         WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) img, null);
