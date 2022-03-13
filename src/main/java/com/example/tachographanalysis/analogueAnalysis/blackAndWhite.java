@@ -11,6 +11,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 
 public class blackAndWhite {
@@ -41,7 +42,7 @@ public class blackAndWhite {
 //        return writableImage;
 //    }
 
-    public WritableImage loadAndConvert(Image image) {
+    public WritableImage loadAndConvert(Image image) throws IOException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         String file = image.getUrl();
         Mat imageFile = Imgcodecs.imread(file
@@ -49,7 +50,6 @@ public class blackAndWhite {
                 Imgcodecs.IMREAD_GRAYSCALE
         );
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
-        Core.bitwise_not(imageFile, dst);
         Mat dst_=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Imgproc.warpPolar(imageFile,
@@ -62,8 +62,12 @@ public class blackAndWhite {
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"test___.jpg",dst2);
 //        Imgproc.adaptiveThreshold(imageFile, dst, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, -2);
-        java.awt.Image img = HighGui.toBufferedImage(dst);
-        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) img, null);
+//        Core.bitwise_not(imageFile, dst2);
+        java.awt.Image img = HighGui.toBufferedImage(dst2);
+        Graphics g=new Graphics(HighGui.toBufferedImage(dst2));
+        g.blackAndWhite(200);
+
+        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
         return writableImage;
     }
 
