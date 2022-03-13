@@ -65,7 +65,7 @@ public class DigitalAnalysisController implements Initializable{
 //
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.txt"));
+                new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.txt","*.xml"));
         File file = fileChooser.showOpenDialog(new Stage());
         try{
             Scanner scanner = new Scanner(file);
@@ -82,7 +82,7 @@ public class DigitalAnalysisController implements Initializable{
     @FXML
     private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
-        List<String> validExtensions = Arrays.asList("ddd","DDD","txt");
+        List<String> validExtensions = Arrays.asList("ddd","DDD","txt","xml");
         file = new File(String.valueOf(new FileInputStream(files.get(0))));
         if(!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
