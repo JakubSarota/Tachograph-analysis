@@ -14,8 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -83,8 +90,38 @@ public class DigitalAnalysisController implements Initializable {
                 Thread.sleep(5000);
                 System.out.println("Success convert");
                 Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
+                Thread.sleep(5000);
+                File filexml = new File(pathxml);
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc = db.parse(filexml+".xml");
+                doc.getDocumentElement().normalize();
+                System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+                NodeList nodeList = doc.getElementsByTagName("DriverCardHolderIdentification");
+                for (int itr = 0; itr < nodeList.getLength(); itr++)
+                {
+                    Node node = nodeList.item(itr);
+                    System.out.println("\nNode Name :" + node.getNodeName());
+                    System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+                    if (node.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                        Element eElement = (Element) node;
+
+                        textArea.appendText("Nazwisko: "+ eElement.getElementsByTagName("CardHolderSurname").item(0).getTextContent()+"\n");
+                        textArea.appendText("Imie: "+ eElement.getElementsByTagName("CardHolderFirstNames").item(0).getTextContent()+"\n");
+                        textArea.appendText("Drugie imie: "+ eElement.getElementsByTagName("CardHolderBirthDate").item(0).getTextContent()+"\n");
+                        textArea.appendText("Język: "+ eElement.getElementsByTagName("CardHolderPreferredLanguage").item(0).getTextContent()+"\n");
+
+                    }
+                }
+
+
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();
