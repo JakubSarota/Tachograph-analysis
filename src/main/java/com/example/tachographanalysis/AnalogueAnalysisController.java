@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.image.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -12,19 +13,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import com.example.tachographanalysis.size.SizeController;
-import com.example.tachographanalysis.analogueAnalysis.blackAndWhite;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
+import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
 
 public class AnalogueAnalysisController {
     @FXML
@@ -35,12 +29,14 @@ public class AnalogueAnalysisController {
     private Image image;
     @FXML
     private Button dragOver;
+    @FXML
+    private ScrollBar scroll;
 
     private String imageFile;
     private String text = "Choose file from memory or drag and drop here";
     List<String> lstFile;
 
-    blackAndWhite blackAndWhite = new blackAndWhite();
+    analysisCircle analysisCircle = new analysisCircle();
 
     @FXML
     public void getBack() throws Exception {
@@ -69,17 +65,15 @@ public class AnalogueAnalysisController {
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else if(selectedFile != null) {
-            WritableImage writableImage = blackAndWhite.loadAndConvert(imageFile);
-            imageView.setImage(writableImage);
+            getImageOnClick(imageFile);
             dragOver.setText(text);
         } else if(selectedFile == null) {
             dragOver.setText(text);
-
         }
     }
 
     @FXML
-    private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
+    private void handleDroppedButton(DragEvent event) throws IOException {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("jpg", "png");
         image = new Image(new FileInputStream(files.get(0)));
@@ -91,13 +85,7 @@ public class AnalogueAnalysisController {
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else {
-            WritableImage writableImage = null;
-            try {
-                writableImage = blackAndWhite.loadAndConvert(String.valueOf(files.get(0)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imageView.setImage(writableImage);
+            getImageDragAndDrop(files);
             dragOver.setText(text);
         }
     }
@@ -111,11 +99,14 @@ public class AnalogueAnalysisController {
         return extension;
     }
 
-    public void initialize(URL url, ResourceBundle rb) {
-        lstFile = new ArrayList<>();
-        lstFile.add("*.png");
-        lstFile.add("*.jpg");
+    private void getImageOnClick(String image) throws IOException {
+        WritableImage writableImage = analysisCircle.getHuanByCircle(image);
+        imageView.setImage(writableImage);
     }
 
+    private void getImageDragAndDrop(List<File> files) throws IOException {
+        WritableImage writableImage = analysisCircle.getHuanByCircle(String.valueOf(files.get(0)));
+        imageView.setImage(writableImage);
+    }
 
 }

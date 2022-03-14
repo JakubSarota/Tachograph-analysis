@@ -6,7 +6,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
     <left>
-        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" prefHeight="40.0" prefWidth="100.0" text="Back" BorderPane.alignment="CENTER" />
+        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" prefHeight="40.0" prefWidth="128.0" text="Back" BorderPane.alignment="CENTER" />
     </left>
    <bottom>
       <VBox alignment="TOP_CENTER" prefHeight="118.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -17,6 +17,14 @@
 
    </bottom>
    <center>
-      <ImageView fx:id="imageView" fitHeight="500.0" fitWidth="850.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="782.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="355.0" fitWidth="1240.0" pickOnBounds="true" preserveRatio="true" />
+            <ScrollBar prefHeight="14.0" prefWidth="1194.0" />
+         </children>
+      </VBox>
    </center>
+   <right>
+      <TextArea prefHeight="782.0" prefWidth="232.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>
