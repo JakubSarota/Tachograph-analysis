@@ -73,24 +73,25 @@ public class DigitalAnalysisController implements Initializable {
         InputStream inputStream = new FileInputStream(file);
 //      String pathxml = file.getParent()+"\\"+file.getName().subSequence(0,file.getName().length()-4)+".DDD";
         try {
+            File dir = new File(".\\ddd_to_xml\\data\\driver\\");
+            if (!dir.exists()){
+                dir.mkdirs();
+            }
             String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
             File f = new File(pathxml);
             f.createNewFile();
             System.out.println(pathxml);
             OutputStream outputStream = new FileOutputStream(pathxml);
 
-            long start = System.currentTimeMillis();
             byte[] allBytes = inputStream.readAllBytes();
             outputStream.write(allBytes);
 
-            long end = System.currentTimeMillis();
-//            System.out.println("Copied in " + (end - start) + " ms");
             outputStream.close();
             try {
-                Thread.sleep(5000);
+                Thread.sleep(2000);
                 System.out.println("Success convert");
                 Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
-                Thread.sleep(5000);
+                Thread.sleep(2000);
                 File filexml = new File(pathxml);
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                 DocumentBuilder db = dbf.newDocumentBuilder();
