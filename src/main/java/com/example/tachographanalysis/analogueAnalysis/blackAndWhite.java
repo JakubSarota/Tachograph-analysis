@@ -40,9 +40,9 @@ public class blackAndWhite {
 //        return writableImage;
 //    }
 
-    public WritableImage loadAndConvert(Image image) throws IOException {
+    public WritableImage loadAndConvert(String url) throws IOException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String file = image.getUrl();
+        String file = url;
         Mat imageFile = Imgcodecs.imread(file
                 .replace("file:/",""),
                 Imgcodecs.IMREAD_GRAYSCALE

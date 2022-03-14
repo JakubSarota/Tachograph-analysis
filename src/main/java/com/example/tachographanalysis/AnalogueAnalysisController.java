@@ -69,7 +69,7 @@ public class AnalogueAnalysisController {
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else if(selectedFile != null) {
-            WritableImage writableImage = blackAndWhite.loadAndConvert(image);
+            WritableImage writableImage = blackAndWhite.loadAndConvert(imageFile);
             imageView.setImage(writableImage);
             dragOver.setText(text);
         } else if(selectedFile == null) {
@@ -82,7 +82,6 @@ public class AnalogueAnalysisController {
     private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("jpg", "png");
-
         image = new Image(new FileInputStream(files.get(0)));
 
         if(!validExtensions.containsAll(event.getDragboard()
@@ -92,8 +91,13 @@ public class AnalogueAnalysisController {
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
         } else {
-//            WritableImage writableImage = blackAndWhite.loadAndConvert(image);
-            imageView.setImage(image);
+            WritableImage writableImage = null;
+            try {
+                writableImage = blackAndWhite.loadAndConvert(String.valueOf(files.get(0)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageView.setImage(writableImage);
             dragOver.setText(text);
         }
     }
