@@ -43,6 +43,7 @@ public class AnalogueAnalysisController {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
+//        scene.setMaximized(true);
     }
 
     @FXML
@@ -100,6 +101,7 @@ public class AnalogueAnalysisController {
     }
 
     private void getImageOnClick(String image) throws IOException {
+
         WritableImage writableImage = analysisCircle.getHuanByCircle(image);
         imageView.setImage(writableImage);
     }

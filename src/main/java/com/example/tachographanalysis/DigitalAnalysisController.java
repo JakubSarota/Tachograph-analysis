@@ -18,5 +18,6 @@ public class DigitalAnalysisController {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
+//        scene.setMaximized(true);
     }
 }

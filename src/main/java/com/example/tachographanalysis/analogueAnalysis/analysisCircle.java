@@ -31,12 +31,14 @@ public class analysisCircle {
                 imageFile.width()/2,
                 0);
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
-
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
+
+
 //        Imgcodecs.imwrite(file
 //                .replace("file:/","")+"test___.jpg",dst2);
         java.awt.Image img = HighGui.toBufferedImage(dst2);
         changeColor g=new changeColor(HighGui.toBufferedImage(dst2));
+        Imgproc.resize(imageFile, dst, new Size(2200,3000), 5, 5, Imgproc.INTER_AREA);
         g.blackAndWhite(200);
 
         WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
@@ -44,14 +46,7 @@ public class analysisCircle {
     }
 
     public WritableImage resizeImage(String url) {
-        Mat imageFile = imread(url
-                        .replace("file:/",""),
-                Imgcodecs.IMREAD_GRAYSCALE
-        );
-        System.out.println(imageFile);
-        Mat resizeimage = new Mat();
-        Size scalesize = new Size(1240,360);
-        Imgproc.resize(imageFile,resizeimage,scalesize,0,0, Imgproc.INTER_CUBIC);
+
         return null;
     }
 
@@ -60,9 +55,11 @@ public class analysisCircle {
         String file = image.getUrl();
         Mat imageFile = imread(file
                         .replace("file:/",""),
-                Imgcodecs.IMREAD_GRAYSCALE
+                        Imgcodecs.IMREAD_GRAYSCALE
         );
-        Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
+        Mat dst = new Mat();
+
+
         return null;
     }
 

@@ -14,6 +14,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), SizeController.sizeW, SizeController.sizeH);
         stage.setTitle("Tachfive 1.0");
         stage.setScene(scene);
+//        stage.setMaximized(true);
         stage.show();
     }
 
