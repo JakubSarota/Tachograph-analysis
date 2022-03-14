@@ -3,9 +3,7 @@ package com.example.tachographanalysis.analogueAnalysis;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
+import org.opencv.core.*;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -59,6 +57,13 @@ public class blackAndWhite {
                 imageFile.width()/2,
                 0);
         Core.rotate(dst_,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
+
+//        Imgproc.rectangle(dst2, new Point(0, 0),
+//                new Point(dst2.width() , dst2.height() - dst2.height() / 2.8), new Scalar(0, 255, 0));
+//        dst2.submat(0, 0,dst2.width() , (int) (dst2.height() - dst2.height() / 2.8));
+//        System.out.println(dst2.width());
+//        System.out.println((int) (dst2.height() - dst2.height() / 2.8));
+        dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"test___.jpg",dst2);
 //        Imgproc.adaptiveThreshold(imageFile, dst, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, -2);
