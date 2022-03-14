@@ -66,7 +66,7 @@ public class DigitalAnalysisController implements Initializable {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.txt", "*.xml"));
+                new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.xml"));
         File file = fileChooser.showOpenDialog(new Stage());
         fileChooser.setTitle("Open Resource File");
         //
@@ -98,7 +98,6 @@ public class DigitalAnalysisController implements Initializable {
                 DocumentBuilder db = dbf.newDocumentBuilder();
                 Document doc = db.parse(filexml+".xml");
                 doc.getDocumentElement().normalize();
-                System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
                 NodeList nodeList = doc.getElementsByTagName("DriverCardHolderIdentification");
                 for (int itr = 0; itr < nodeList.getLength(); itr++)
                 {
