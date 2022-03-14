@@ -77,6 +77,7 @@ public class DigitalAnalysisController implements Initializable {
             if (!dir.exists()){
                 dir.mkdirs();
             }
+            Thread.sleep(1000);
             String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
             File f = new File(pathxml);
             f.createNewFile();
@@ -125,6 +126,8 @@ public class DigitalAnalysisController implements Initializable {
                 e.printStackTrace();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
