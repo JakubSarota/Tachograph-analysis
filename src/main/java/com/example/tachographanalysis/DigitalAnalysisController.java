@@ -72,63 +72,105 @@ public class DigitalAnalysisController implements Initializable {
         //
         InputStream inputStream = new FileInputStream(file);
 //      String pathxml = file.getParent()+"\\"+file.getName().subSequence(0,file.getName().length()-4)+".DDD";
-        try {
-            File dir = new File(".\\ddd_to_xml\\data\\driver\\");
-            if (!dir.exists()){
-                dir.mkdirs();
-            }
-            Thread.sleep(1000);
-            String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
-            File f = new File(pathxml);
-            f.createNewFile();
-            System.out.println(pathxml);
-            OutputStream outputStream = new FileOutputStream(pathxml);
+//        System.out.println(file);
 
-            byte[] allBytes = inputStream.readAllBytes();
-            outputStream.write(allBytes);
+        String xmlExtCheck = new String(file.getName().substring(file.getName().length() - 4));
+        String xml = new String(".xml");
+        System.out.println(file);
 
-            outputStream.close();
+        if (!xmlExtCheck.equals(xml)) {
+            System.out.println("To nie jest plik .xml");
             try {
-                Thread.sleep(2000);
-                System.out.println("Success convert");
-                Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
-                Thread.sleep(2000);
-                File filexml = new File(pathxml);
-                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                DocumentBuilder db = dbf.newDocumentBuilder();
-                Document doc = db.parse(filexml+".xml");
-                doc.getDocumentElement().normalize();
-                NodeList nodeList = doc.getElementsByTagName("DriverCardHolderIdentification");
-                for (int itr = 0; itr < nodeList.getLength(); itr++)
-                {
-                    Node node = nodeList.item(itr);
-                    System.out.println("\nNode Name :" + node.getNodeName());
-                    System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-                    if (node.getNodeType() == Node.ELEMENT_NODE)
-                    {
-                        Element eElement = (Element) node;
-
-                        textArea.appendText("Nazwisko: "+ eElement.getElementsByTagName("CardHolderSurname").item(0).getTextContent()+"\n");
-                        textArea.appendText("Imie: "+ eElement.getElementsByTagName("CardHolderFirstNames").item(0).getTextContent()+"\n");
-                        textArea.appendText("Drugie imie: "+ eElement.getElementsByTagName("CardHolderBirthDate").item(0).getTextContent()+"\n");
-                        textArea.appendText("Język: "+ eElement.getElementsByTagName("CardHolderPreferredLanguage").item(0).getTextContent()+"\n");
-
-                    }
+                File dir = new File(".\\ddd_to_xml\\data\\driver\\");
+                if (!dir.exists()) {
+                    dir.mkdirs();
                 }
+                else{
+                Thread.sleep(1000);
+                String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
+                File f = new File(pathxml);
+                f.createNewFile();
+                System.out.println(pathxml);
+                OutputStream outputStream = new FileOutputStream(pathxml);
+
+                byte[] allBytes = inputStream.readAllBytes();
+                outputStream.write(allBytes);
+
+                outputStream.close();
+                try {
+                    Thread.sleep(1000);
+
+                    Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
+                    Thread.sleep(1000);
+                    File filexml = new File(pathxml + ".xml");
+                    if (filexml.exists()) {
+                        System.out.println("Plik xml został stworzony");
+                        readData(filexml);
+                    } else {
+                        textArea.appendText("Błąd plik nie istnieje");
+                    }
 
 
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            } catch (ParserConfigurationException e) {
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            } catch (IOException e) {
                 e.printStackTrace();
-            } catch (SAXException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        } else {
+
+            System.out.println("To jest plik.xml");
+            readData(file);
+            }
+    }
+
+    private void readData(File filexml) {
+        textArea.clear();
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(filexml);
+            doc.getDocumentElement().normalize();
+            NodeList nodeList = doc.getElementsByTagName("DriverData");
+            System.out.println("Wyswietlanie danych ");
+            for (int itr = 0; itr < nodeList.getLength(); itr++) {
+                Node node = nodeList.item(itr);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) node;
+//                   Font font = Font.font(textArea.getFont().getSize()+10.0f);
+//                   textArea.setFont(font);
+                    //title page
+                    textArea.appendText(filexml.getName()+", ");
+                    textArea.appendText( eElement.getElementsByTagName("CardHolderSurname").
+                            item(0).getTextContent()+", ");
+                    textArea.appendText(eElement.getElementsByTagName("CardHolderFirstNames").
+                            item(0).getTextContent()+", ");
+                    textArea.appendText(  eElement.getElementsByTagName("CardHolderPreferredLanguage").
+                            item(0).getTextContent() + "\n\n");
+                    // CardExtendedSerialNumber
+
+                    textArea.appendText(  "Identyfikacja karty ICC: "+ eElement.getElementsByTagName("CardExtendedSerialNumber").
+                            item(0).getTextContent() + "\n\n");
+                    textArea.appendText(  "Numer zatwierdzenia karty: "+ eElement.getElementsByTagName("CardExtendedSerialNumber").
+                            item(0).getTextContent() + "\n\n");
+
+
+                }
+            }
+
+
+        }
+        catch (ParserConfigurationException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (SAXException e) {
             e.printStackTrace();
         }
+
     }
 
 
@@ -159,6 +201,7 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
     }
+
 
 
     public String getExtension(String fileName) {

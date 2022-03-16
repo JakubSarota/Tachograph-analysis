@@ -29,3 +29,5 @@ ddd_to_xml/data/driver/C_A_Nowak_.DDD.xml
 >>>>>>> Stashed changes
 ddd_to_xml/data/driver/Readme.txt
 ddd_to_xml/data/driver/Readme.txt
+*.DDD
+*.xml
