@@ -107,6 +107,11 @@
             <artifactId>javafx-swing</artifactId>
             <version>11-ea+24</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -54,5 +54,6 @@
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.36.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:11-ea+24" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:win:11-ea+24" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
   </component>
 </module>

@@ -116,7 +116,14 @@ public class changeColor {
         for(int i=0;i<width;i++) {
             for(int j=0;j<height;j++) {
                     raster.getPixel(i, j, pixels);
-                        System.out.println(pixels[0]+" "+pixels[1]+" "+pixels[2]);
+                    if(pixels[0]<245&&pixels[1]<245&&pixels[2]<245){
+                        int black[]={0,0,0};
+                        raster.setPixel(i, j, black);
+                    }else{
+                        int black[]={255,255,255};
+                        raster.setPixel(i, j, black);
+                    }
+//                        System.out.println(pixels[0]+" "+pixels[1]+" "+pixels[2]);
             }
         }
     }

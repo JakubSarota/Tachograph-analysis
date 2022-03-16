@@ -3,6 +3,7 @@ package com.example.tachographanalysis.analogueAnalysis;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import org.json.JSONObject;
 import org.opencv.core.*;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -22,13 +23,22 @@ public class analysisCircle {
                 .replace("file:/",""),
                 Imgcodecs.IMREAD_GRAYSCALE
         );
+        changeColor kola=new changeColor(HighGui.toBufferedImage(imageFile));
+//        kola.blackAndWhite(200);
+//        kola.petla_po_pikselach();
+        kola.greyScale();
+        kola.save("png",file
+                .replace("file:/","")+"black_circle.png");
+        JSONObject center=HoughCirclesRun.run(file
+                .replace("file:/","")+"black_circle.png");
+        System.out.println(center);
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Imgproc.warpPolar(imageFile,
                 dst,
                 imageFile.size(),
-                new Point(imageFile.width()/2,imageFile.height()/2),
-                imageFile.width()/2,
+                new Point(center.getDouble("centerx"),center.getDouble("centery")),
+                center.getDouble("radius"),
                 0);
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
@@ -38,9 +48,11 @@ public class analysisCircle {
 //                .replace("file:/","")+"test___.jpg",dst2);
         java.awt.Image img = HighGui.toBufferedImage(dst2);
         changeColor g=new changeColor(HighGui.toBufferedImage(dst2));
-        Imgproc.resize(imageFile, dst, new Size(2200,3000), 5, 5, Imgproc.INTER_AREA);
         g.blackAndWhite(200);
-
+    g.petla_po_pikselach();
+        Imgproc.resize(imageFile, dst, new Size(2200,3000), 5, 5, Imgproc.INTER_AREA);
+//        g.save("png",file.replace("file:/","")+"nazwa.png");
+//      System.out.println(file+"nazwa.png");
         WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
         return writableImage;
     }
