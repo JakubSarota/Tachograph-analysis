@@ -1,7 +1,6 @@
 package com.example.tachographanalysis.analogueAnalysis;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import org.json.JSONObject;
 import org.opencv.core.*;
@@ -34,6 +33,7 @@ public class analysisCircle {
         kola.greyScale();
         kola.save("png",file
                 .replace("file:/","")+"black_circle.png");
+
         JSONObject center=HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
 
@@ -50,19 +50,23 @@ public class analysisCircle {
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
 
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
-
-
-//        changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
         resizeImage(dst2, dstResize);
+
+        Mat work = CropWork.crop(dstResize);
+
+        Imgcodecs.imwrite(file
+                .replace("file:/","")+"_work.jpg",work);
+
         changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
 
         g.blackAndWhite(200);
         g.petla_po_pikselach();
         Imgcodecs.imwrite(file
-                .replace("file:/","")+"test___.jpg",dstResize);
+                .replace("file:/","")+"_resize.jpg",dstResize);
 
 
-        java.awt.Image img = HighGui.toBufferedImage(dstResize);
+
+//        java.awt.Image img = HighGui.toBufferedImage(dstResize);
         WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
         return writableImage;
     }
