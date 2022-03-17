@@ -12,6 +12,7 @@ module com.example.tachographanalysis {
     requires opencv;
     requires java.desktop;
     requires javafx.swing;
+    requires json;
 
     opens com.example.tachographanalysis to javafx.fxml;
     exports com.example.tachographanalysis;

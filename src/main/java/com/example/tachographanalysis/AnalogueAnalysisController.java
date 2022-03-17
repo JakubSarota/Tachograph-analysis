@@ -1,5 +1,6 @@
 package com.example.tachographanalysis;
 
+import com.example.tachographanalysis.analogueAnalysis.HoughCirclesRun;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -80,7 +81,6 @@ public class AnalogueAnalysisController {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("jpg", "png");
         image = new Image(new FileInputStream(files.get(0)));
-
         if(!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
