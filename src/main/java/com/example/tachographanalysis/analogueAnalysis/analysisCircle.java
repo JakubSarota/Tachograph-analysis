@@ -3,6 +3,7 @@ package com.example.tachographanalysis.analogueAnalysis;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import org.json.JSONObject;
 import org.opencv.core.*;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -22,24 +23,47 @@ public class analysisCircle {
                 .replace("file:/",""),
                 Imgcodecs.IMREAD_GRAYSCALE
         );
+
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dstResize=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
+        changeColor kola=new changeColor(HighGui.toBufferedImage(imageFile));
+
+//        kola.blackAndWhite(200);
+//        kola.petla_po_pikselach();
+        kola.greyScale();
+        kola.save("png",file
+                .replace("file:/","")+"black_circle.png");
+        JSONObject center=HoughCirclesRun.run(file
+                .replace("file:/","")+"black_circle.png");
+
+        System.out.println(center);
+
         Imgproc.warpPolar(imageFile,
                 dst,
                 imageFile.size(),
-                new Point(imageFile.width()/2,imageFile.height()/2),
-                imageFile.width()/2,
+//                new Point(imageFile.width()/2,imageFile.height()/2),
+//                imageFile.width()/2,
+                new Point(center.getDouble("centerx"),center.getDouble("centery")),
+                center.getDouble("radius"),
                 0);
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
+
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
+
+
+//        changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
         resizeImage(dst2, dstResize);
         changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
+
+        g.blackAndWhite(200);
+        g.petla_po_pikselach();
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"test___.jpg",dstResize);
-        g.blackAndWhite(200);
+
+
         java.awt.Image img = HighGui.toBufferedImage(dstResize);
-        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) img, null);
+        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
         return writableImage;
     }
 
