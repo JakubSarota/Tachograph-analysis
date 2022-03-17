@@ -24,6 +24,7 @@ public class analysisCircle {
         );
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
+        Mat dstResize=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Imgproc.warpPolar(imageFile,
                 dst,
                 imageFile.size(),
@@ -32,35 +33,19 @@ public class analysisCircle {
                 0);
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
-
-
-//        Imgcodecs.imwrite(file
-//                .replace("file:/","")+"test___.jpg",dst2);
-        java.awt.Image img = HighGui.toBufferedImage(dst2);
-        changeColor g=new changeColor(HighGui.toBufferedImage(dst2));
-        Imgproc.resize(imageFile, dst, new Size(2200,3000), 5, 5, Imgproc.INTER_AREA);
+        resizeImage(dst2, dstResize);
+        changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
+        Imgcodecs.imwrite(file
+                .replace("file:/","")+"test___.jpg",dstResize);
         g.blackAndWhite(200);
-
-        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
+        java.awt.Image img = HighGui.toBufferedImage(dstResize);
+        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) img, null);
         return writableImage;
     }
 
-    public WritableImage resizeImage(String url) {
-
-        return null;
-    }
-
-    public WritableImage findCircle(Image image) {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String file = image.getUrl();
-        Mat imageFile = imread(file
-                        .replace("file:/",""),
-                        Imgcodecs.IMREAD_GRAYSCALE
-        );
-        Mat dst = new Mat();
-
-
-        return null;
+    private void resizeImage(Mat dst, Mat dstResize) {
+        Size Resize = new Size(1235, 290);
+        Imgproc.resize(dst, dstResize, Resize, 0,0, Imgproc.INTER_AREA);
     }
 
 

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -26,15 +27,16 @@ public class AnalogueAnalysisController {
     @FXML
     private ImageView imageView;
     @FXML
+    private ImageView imageView2;
+    @FXML
     private Image image;
     @FXML
     private Button dragOver;
     @FXML
-    private ScrollBar scroll;
+    private ScrollPane scroll;
 
     private String imageFile;
-    private String text = "Choose file from memory or drag and drop here";
-    List<String> lstFile;
+    private String text = "Wybierz plik albo upuść go tutaj";
 
     analysisCircle analysisCircle = new analysisCircle();
 
@@ -51,7 +53,7 @@ public class AnalogueAnalysisController {
         if(event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.ANY);
         }
-        dragOver.setText("Drop here");
+        dragOver.setText("Upuść tutaj plik");
     }
 
     @FXML
@@ -64,7 +66,7 @@ public class AnalogueAnalysisController {
         imageFile = selectedFile.toURI().toURL().toString();
         image = new Image(imageFile);
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
+            dragOver.setText("Rozmiar pliku zamały, wymagane 1000x1000 pikseli");
         } else if(selectedFile != null) {
             getImageOnClick(imageFile);
             dragOver.setText(text);
@@ -82,9 +84,9 @@ public class AnalogueAnalysisController {
         if(!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
-            dragOver.setText("It's not jpg or png file!");
+            dragOver.setText("To nie jest plik graficzny!");
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("File size is small to load, minimum is 1000x1000 pixels");
+            dragOver.setText("Rozmiar pliku zamały, wymagane 1000x1000 pikseli");
         } else {
             getImageDragAndDrop(files);
             dragOver.setText(text);
@@ -93,7 +95,6 @@ public class AnalogueAnalysisController {
 
     public String getExtension(String fileName){
         String extension = "";
-
         int i = fileName.lastIndexOf('.');
         if (i > 0 && i < fileName.length() - 1)
             return fileName.substring(i + 1).toLowerCase();
@@ -101,14 +102,21 @@ public class AnalogueAnalysisController {
     }
 
     private void getImageOnClick(String image) throws IOException {
-
+        scroll.pannableProperty().set(true);
+        scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         WritableImage writableImage = analysisCircle.getHuanByCircle(image);
         imageView.setImage(writableImage);
+        imageView2.setImage(writableImage);
     }
 
     private void getImageDragAndDrop(List<File> files) throws IOException {
+        scroll.pannableProperty().set(true);
+        scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         WritableImage writableImage = analysisCircle.getHuanByCircle(String.valueOf(files.get(0)));
         imageView.setImage(writableImage);
+        imageView2.setImage(writableImage);
     }
 
 }
