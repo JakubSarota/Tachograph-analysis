@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -11,19 +10,23 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1222.0" style="-fx-background-color: F8F8F8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
    <left>
-      <AnchorPane prefHeight="495.0" prefWidth="283.0" style="-fx-background-color: #142E49;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="707.0" prefWidth="287.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#2090d0" layoutX="42.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tach5" textAlignment="CENTER" wrappingWidth="198.1953125">
-               <font>
-                  <Font name="System Bold" size="44.0" />
-               </font>
-            </Text>
+            <AnchorPane layoutX="-6.0" prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #29A1FA;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analiza analogowa" wrappingWidth="278.1953125">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
               <Button fx:id="btnBack" alignment="CENTER" layoutX="63.0" layoutY="161.0" mnemonicParsing="false" onAction="#getBack" opacity="0.81" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Wróć" textAlignment="CENTER" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnBack1" alignment="CENTER" layoutX="64.0" layoutY="255.0" mnemonicParsing="false" onAction="#getBack" opacity="0.81" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz z pliku" textAlignment="CENTER" textFill="#47535b">
+            <Button fx:id="btnBack1" alignment="CENTER" layoutX="64.0" layoutY="255.0" mnemonicParsing="false" onMouseClicked="#onDragClickedButton"  opacity="0.81" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz z pliku" textAlignment="CENTER" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -37,22 +40,18 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="695.0" prefWidth="984.0" style="-fx-background-color: #A7B6BE;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="695.0" prefWidth="984.0" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="dragOver" layoutX="45.0" layoutY="172.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="200.0" prefWidth="338.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Upuść wybrany plik tutaj." textFill="#000000a7">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <ImageView fx:id="imageView" fitHeight="388.0" fitWidth="459.0" layoutX="438.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-style: dotted; -fx-border-color: #fff;" styleClass="-fx-border-color: white;" />
+            <ImageView fx:id="imageView" fitHeight="388.0" fitWidth="459.0" layoutX="441.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" styleClass="-fx-border-color: white;" />
             <Label fx:id="uploadText" prefHeight="107.0" prefWidth="719.0" />
             <AnchorPane layoutX="-2.0" layoutY="505.0" prefHeight="190.0" prefWidth="885.0">
                <children>
-                  <ImageView fitHeight="158.0" fitWidth="885.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../Desktop/so71416458-straight.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fitHeight="151.0" fitWidth="885.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children>

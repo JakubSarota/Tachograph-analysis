@@ -17,7 +17,7 @@
          <children>
               <VBox alignment="CENTER" layoutX="23.0" layoutY="146.0" prefHeight="444.0" prefWidth="170.0">
                   <children>
-                      <Button fx:id="btnAnalogueButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getAnalogueAnalysis" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Analogue analysis" textFill="WHITE" wrapText="true">
+                      <Button fx:id="btnAnalogueButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getAnalogueAnalysis" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Analiza analogowa" textFill="WHITE" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
@@ -25,7 +25,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                      <Button fx:id="btnDigitalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getDigitalAnalysis" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Digital analysis" textFill="WHITE" wrapText="true">
+                      <Button fx:id="btnDigitalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getDigitalAnalysis" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Analiza cyfrowa" textFill="WHITE" wrapText="true">
                           <opaqueInsets>
                               <Insets bottom="50.0" top="50.0" />
                           </opaqueInsets>
@@ -36,7 +36,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                       </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Driver" textFill="WHITE">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Kierowcy" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
@@ -44,7 +44,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Reports" textFill="WHITE">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Raporty" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
@@ -52,7 +52,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Help" textFill="WHITE">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Pomoc" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
@@ -60,7 +60,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Quit" textFill="WHITE">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Wyjdź" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -69,7 +69,7 @@
               </VBox>
             <AnchorPane prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #29A1FA;">
                <children>
-                  <Text fill="WHITE" layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Panel" wrappingWidth="223.1953125">
+                  <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tach5" wrappingWidth="223.1953125">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -97,12 +97,12 @@
                </image>
             </ImageView>
             <Circle fill="DODGERBLUE" layoutX="659.0" layoutY="438.0" radius="224.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text fill="WHITE" layoutX="505.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Tach5!" textAlignment="CENTER">
+            <Text fill="WHITE" layoutX="540.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Witaj w Tach5!">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="487.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simple, fully automated, digital and analogue tachograph analysis and compliance reporting system." textAlignment="CENTER" wrappingWidth="350.2353515625">
+            <Text fill="WHITE" layoutX="487.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prosty, w pełni zautomatyzowany, cyfrowy i analogowy system analizy i generowania raportów z tachografów." textAlignment="CENTER" wrappingWidth="350.2353515625">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
