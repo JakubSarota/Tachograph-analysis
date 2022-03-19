@@ -16,7 +16,7 @@
          <children>
             <Button fx:id="dragOver" layoutX="420.0" layoutY="28.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="118.0" prefWidth="600.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik z dysku albo przeciągnij go tutaj" />
             <Button fx:id="btnBack" layoutX="42.0" layoutY="87.0" mnemonicParsing="false" onAction="#getBack" prefHeight="25.0" prefWidth="89.0" text="Wyjdź" />
-            <Button fx:id="btnRaportPDF" mnemonicParsing="false" onAction="#generatePDF" text="Generuj Raport" />
+            <Button fx:id="btnRaportPDF" layoutX="163.0" layoutY="87.0" mnemonicParsing="false" onAction="#generatePDF" text="Generuj Raport" visible="false" />
          </children>
       </AnchorPane>
    </bottom>

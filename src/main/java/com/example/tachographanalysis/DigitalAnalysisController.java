@@ -50,17 +50,9 @@ public class DigitalAnalysisController implements Initializable {
 
     static String PDF = new String("");
 
-//    public class LoadMethod {
-//
-//
-//    public void stayInvisible() {
-//        textArea.setVisible(false);
-//    }
-//
-//    }
 
 
-//    private DigitalAnalysisController readFile;
+//   private DigitalAnalysisController readFile;
 
 //    public void DigitalAnalysisController(DigitalAnalysisFileController readFile) {
 //        this.readFile = readFile;
@@ -163,7 +155,6 @@ public class DigitalAnalysisController implements Initializable {
 
         if(filexml.exists()) {
             dragOver.setVisible(false);
-            textArea.setVisible(true);
             btnRaportPDF.setVisible(true);
             textArea.clear();
 
@@ -177,11 +168,14 @@ public class DigitalAnalysisController implements Initializable {
                 Document doc = db.parse(filexml);
                 doc.getDocumentElement().normalize();
                 NodeList nodeList = doc.getElementsByTagName("DriverData");
+                NodeList CardVehicleRecord = doc.getElementsByTagName("CardVehicleRecords");
                 System.out.println("Wyswietlanie danych ");
                 for (int itr = 0; itr < nodeList.getLength(); itr++) {
+                    Node nodeVehic = CardVehicleRecord.item(itr);
                     Node node = nodeList.item(itr);
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
                         Element eElement = (Element) node;
+                        Element elElement = (Element) nodeVehic;
 //                   Font font = Font.font(textArea.getFont().getSize()+10.0f);
 //                   textArea.setFont(font);
                         //title page
@@ -302,10 +296,10 @@ public class DigitalAnalysisController implements Initializable {
                                 item(0).getTextContent() + "\n");
                         //Events>CardEventRecorded>CardEventRecordedColection
                         //CardDrivingRecord
-                        textArea.appendText(" CardEventRecord: " + eElement.getElementsByTagName("CardEventRecord").
-                                item(0).getTextContent() + "\n");
-                        textArea.appendText(" \t CardEventRecord: " + eElement.getElementsByTagName("CardEventRecord").
-                                item(0).getTextContent() + "\n");
+//                        textArea.appendText(" CardEventRecord: " + eElement.getElementsByTagName("CardEventRecord").
+//                                item(0).getTextContent() + "\n");
+//                        textArea.appendText(" \t CardEventRecord: " + eElement.getElementsByTagName("CardEventRecord").
+//                                item(0).getTextContent() + "\n");
                         // BEGIN
 
 //                    NodeList nodeListDriverData = doc.getElementsByTagName("CardEventRecord");
@@ -316,16 +310,44 @@ public class DigitalAnalysisController implements Initializable {
 
                         NodeList dataDriver = doc.getElementsByTagName("CardDriverActivity");
 //                    if (dataDriver.item(itr).hasAttributes()) {
-                        System.out.println(dataDriver.getLength());
+//                        System.out.println(dataDriver.getLength());
 
+                        //dziala na razie koment
+                        int k = 0;
                         NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
                         NodeList ActivityChangeInfo = doc.getElementsByTagName("ActivityChangeInfo");
-                        for (int cout = 0; cout < dataDriver.getLength(); cout++) {
+                        for (int cout = 0; cout < CardActivityDailyRecord.getLength(); cout++) {
+                            textArea.appendText(" \n\n Data aktywności: " + CardActivityDailyRecord.item(cout).
+                                    getAttributes().item(1).getNodeValue() + " \n");
+                            textArea.appendText(" Dystans : " + CardActivityDailyRecord.item(cout).
+                                    getAttributes().item(2).getNodeValue() + " km \n");
+                            textArea.appendText(" Aktywność: " + CardActivityDailyRecord.item(cout).
+                                    getAttributes().item(0).getNodeValue() + " dnia pracy \n\n");
+                            // ilosc daily rekordy w danym dniu
+                            int itemsInCardActiveDailyRecord = CardActivityDailyRecord.item(cout).getChildNodes().getLength();
+                            // gdy
+                            int j = 0;
+                            while (j < itemsInCardActiveDailyRecord) {
 
-                            System.out.print(CardActivityDailyRecord.item(cout).getAttributes().item(0).getNodeValue() + "\n");
-                            System.out.print(ActivityChangeInfo.item(cout).getAttributes().item(0).getNodeValue() + "\n");
+//                                textArea.appendText(" \t FileOffset: "+ActivityChangeInfo.item(j+k).getAttributes().item(1).getNodeValue() + "\n");
+//                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(3).getNodeValue() + "\n");
+//                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(4).getNodeValue() + "\n");
+//                                textArea.appendText(" \t Inserted: "+ActivityChangeInfo.item(j+k).getAttributes().item(2).getNodeValue() + "\n");
+                                textArea.appendText(" \t Aktywność: " + ActivityChangeInfo.item(j + k).getAttributes().item(0).getNodeValue());
+                                textArea.appendText(" Czas: " + ActivityChangeInfo.item(j + k).getAttributes().item(5).getNodeValue() + "\n");
+                                j++;
+                            }
+                            k += itemsInCardActiveDailyRecord;
+                        }
+                        //end komenta dzialajacego
 
 
+//                            for(int j = 0;j<itemsInCardActiveDailyRecord; j++) {
+//                                System.out.print(ActivityChangeInfo.item(j).getAttributes().item(0).getNodeValue() + "\n");
+//                                System.out.print(ActivityChangeInfo.item(j).getAttributes().item(3).getNodeValue() + "\n");
+//                                System.out.print(ActivityChangeInfo.item(j).getAttributes().item(4).getNodeValue() + "\n");
+//                                System.out.print(ActivityChangeInfo.item(j).getAttributes().item(5).getNodeValue() + "\n");
+//                            }
                             //NamedNodeMap dataTimeAtributes = dataDriver.item(cout).getAttributes();
                             //test
 //                        System.out.println(cout);
@@ -354,10 +376,38 @@ public class DigitalAnalysisController implements Initializable {
 //                                    item(0).getTextContent() + "\n");
 //                            textArea.appendText(" \t\t\t VehicleRegistrationNumber: " + eElement.getElementsByTagName("VehicleRegistration").
 //                                    item(0).getTextContent() + "\n");
+
+                        NodeList elPlaceRecord = doc.getElementsByTagName("PlaceRecord");
+
+                        NodeList EntryTime = doc.getElementsByTagName("EntryTime");
+                        NodeList DailyWorkPeriodCountry = doc.getElementsByTagName("DailyWorkPeriodCountry"); //atrib
+
+                        textArea.appendText("\n Trasa kierowcy: \n\n");
+                        for(int i=0;i<elPlaceRecord.getLength();i++) {
+                            textArea.appendText("\t Kraj: " + DailyWorkPeriodCountry.item(i).getAttributes().item(0).getNodeValue() + " ");
+                            textArea.appendText(" Data i godzina: " + EntryTime.item(i).getAttributes().item(0).getNodeValue());
+                            textArea.appendText("  Przebieg: "+ eElement.getElementsByTagName("VehicleOdometerValue").item(i).getTextContent() +" km \n");
+                            }
+
+                        NodeList elCardVehicleRecord = doc.getElementsByTagName("CardVehicleRecord");
+
+                        NodeList VehicleFirstUse = doc.getElementsByTagName("VehicleFirstUse");
+                        NodeList VehicleLastUse = doc.getElementsByTagName("VehicleLastUse"); //atrib
+
+                        textArea.appendText("\n Dane pojazdu: \n\n");
+                        for(int i=0;i<elCardVehicleRecord.getLength();i++) {
+                            textArea.appendText("\t Przebieg startowy: "+ eElement.getElementsByTagName("VehicleOdometerBegin").item(i).getTextContent() +" km, ");
+                            textArea.appendText(" przebieg końcowy: "+ eElement.getElementsByTagName("VehicleOdometerEnd").item(i).getTextContent() +" km, ");
+                            textArea.appendText(" od: " + VehicleFirstUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
+                            textArea.appendText(" do: " + VehicleLastUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
+                            textArea.appendText(" Numer rejestracyjny: " + elElement.getElementsByTagName("VehicleRegistrationNumber").item(i).getTextContent() +" \n");
+                            System.out.println( elElement.getElementsByTagName("VehicleRegistrationNumber"). item(i).getTextContent().length());
                         }
+
+                    
                     }
                 }
-                //END
+
 
 
 //                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
@@ -367,8 +417,6 @@ public class DigitalAnalysisController implements Initializable {
 //                        }
 
 
-                //Po załadowaniu pliku przechodzi do kolejnej zakładki i wyświetla text w TextArea
-                // po prawej stronie konwersja do pdf i zapisanie
 
                 //CardFaultRecords
 //                }
