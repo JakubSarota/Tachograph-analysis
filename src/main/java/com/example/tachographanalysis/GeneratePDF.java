@@ -1,11 +1,12 @@
 package com.example.tachographanalysis;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class GeneratePDF
 {
@@ -16,7 +17,7 @@ public class GeneratePDF
         try
         {
 //generate a PDF at the specified location
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\acer\\Documents\\GitHub\\Tachograph-analysis\\PDF\\plik.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\ziolo\\Documents\\alg_komi\\plik.pdf"));
             System.out.println("Stworzono plik PDF.");
 //opens the PDF
             doc.open();

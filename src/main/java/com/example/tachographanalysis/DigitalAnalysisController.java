@@ -1,6 +1,9 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.size.SizeController;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,7 +44,11 @@ public class DigitalAnalysisController implements Initializable {
     private File file;
     @FXML
     private String DDDFile;
+    @FXML
+    private Button btnRaportPDF;
     List<String> lstFile;
+
+    static String PDF = new String("");
 
 //    public class LoadMethod {
 //
@@ -150,13 +157,19 @@ public class DigitalAnalysisController implements Initializable {
             }
     }
 
-    private void readData(File filexml) {
+    public void readData(File filexml) {
 
+        PDF= String.valueOf(filexml);
 
         if(filexml.exists()) {
             dragOver.setVisible(false);
             textArea.setVisible(true);
+            btnRaportPDF.setVisible(true);
             textArea.clear();
+
+            if(btnRaportPDF.isPressed()){
+                generatePDF();
+            }
 
             try {
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -418,5 +431,38 @@ public class DigitalAnalysisController implements Initializable {
         lstFile.add("*.ddd");
         lstFile.add("*.DDD");
     }
+
+    public void generatePDF()
+    {
+//created PDF document instance
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+        try
+        {
+//generate a PDF at the specified location
+            System.out.println(PDF);
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\ziolo\\Documents\\alg_komi\\plik.pdf"));
+            System.out.println("Stworzono plik PDF.");
+//opens the PDF
+            doc.open();
+//adds paragraph to the PDF file
+            doc.add(new Paragraph("Jakiś tekst"));
+            doc.add(new Paragraph(PDF));
+//close the PDF file
+            doc.close();
+//closes the writer
+            writer.close();
+        }
+        catch (DocumentException e)
+        {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }
