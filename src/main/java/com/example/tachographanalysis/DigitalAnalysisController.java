@@ -482,12 +482,11 @@ public class DigitalAnalysisController implements Initializable {
         lstFile.add("*.DDD");
     }
 
-    public void generatePDF()
-    {
+    public void generatePDF() {
 //created PDF document instance
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-        try
-        {
+        PdfWriter writer;
+        try {
 //generate a PDF at the specified location
             System.out.println(PDF);
 //            String fname = null;
@@ -512,20 +511,59 @@ public class DigitalAnalysisController implements Initializable {
 
 //            FileChooser fileChooser = new FileChooser();
 //            File file = fileChooser.showOpenDialog(new Stage());
-            String PDF1 = PDF.substring(25, PDF.length() - 8);
+            //Tworzenie pliku PDF
+            String PDF1 = PDF.substring(25, PDF.length() - 4);
             System.out.println(PDF1);
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF1 + ".pdf"));
+
+            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF1 + ".pdf"));
             System.out.println("Tworzenie pliku PDF powiodło się.");
-//opens the PDF
+//Otwieranie pliku PDF
             doc.open();
-//adds paragraph to the PDF file
-            doc.add(new Paragraph("Jakiś tekst"));
-            doc.add(new Paragraph(PDF));
+//Dodwawanie paragrafów do pliku PDF
+            try {
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc1 = db.parse(PDF);
+                doc1.getDocumentElement().normalize();
+                NodeList nodeList = doc1.getElementsByTagName("DriverData");
+                NodeList CardVehicleRecord = doc1.getElementsByTagName("CardVehicleRecords");
+                for (int itr = 0; itr < nodeList.getLength(); itr++) {
+                    Node nodeVehic = CardVehicleRecord.item(itr);
+                    Node node = nodeList.item(itr);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement = (Element) node;
+                        Element elElement = (Element) nodeVehic;
+
+                        // dodać serial number / data / rfu/  (jak wyciąga się value xml elementu month year itp..)
+                        doc.add(new Paragraph("\t ClockStop: " + eElement.getElementsByTagName("ClockStop").
+                                item(0).getTextContent() + "\n"));
+
+                    }
+                }
+
+
+//                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
+//                        Node node = nodeList.item(itr);
+//                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                        }
+
+
+                //CardFaultRecords
+//                }
+            } catch (ParserConfigurationException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (SAXException ex) {
+                ex.printStackTrace();
+            }
+        doc.add(new Paragraph(PDF));
 //close the PDF file
-            doc.close();
+        doc.close();
 //closes the writer
-            writer.close();
-        }
+        writer.close();
+    }
         catch (DocumentException e)
         {
             e.printStackTrace();
