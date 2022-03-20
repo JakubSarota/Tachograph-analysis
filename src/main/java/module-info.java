@@ -13,6 +13,7 @@ module com.example.tachographanalysis {
     requires java.desktop;
     requires javafx.swing;
     requires json;
+    requires tess4j;
 
     opens com.example.tachographanalysis to javafx.fxml;
     exports com.example.tachographanalysis;

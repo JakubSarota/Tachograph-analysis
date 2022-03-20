@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
+import static com.example.tachographanalysis.analogueAnalysis.CropWork.work;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 
@@ -22,6 +23,8 @@ public class analysisCircle {
                 .replace("file:/",""),
                 Imgcodecs.IMREAD_GRAYSCALE
         );
+
+        work(imageFile);
 
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
@@ -39,9 +42,7 @@ public class analysisCircle {
 
         System.out.println(center);
 
-        Imgproc.warpPolar(imageFile,
-                dst,
-                imageFile.size(),
+        Imgproc.warpPolar(imageFile, dst, imageFile.size(),
 //                new Point(imageFile.width()/2,imageFile.height()/2),
 //                imageFile.width()/2,
                 new Point(center.getDouble("centerx"),center.getDouble("centery")),
@@ -54,17 +55,16 @@ public class analysisCircle {
 
         Mat work = CropWork.crop(dstResize);
 
+//        Mat test = CropWork.work(work);
         Imgcodecs.imwrite(file
-                .replace("file:/","")+"_work.jpg",work);
+                .replace("file:/","")+"_work.png",work);
 
         changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
 
         g.blackAndWhite(200);
         g.petla_po_pikselach();
         Imgcodecs.imwrite(file
-                .replace("file:/","")+"_resize.jpg",dstResize);
-
-
+                .replace("file:/","")+"_resize.png",dstResize);
 
 //        java.awt.Image img = HighGui.toBufferedImage(dstResize);
         WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
