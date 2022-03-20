@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="opencv-455">
+    <CLASSES>
+      <root url="jar://D:/pobrane/opencv/build/java/opencv-455.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://D:/pobrane/opencv/build/java/x64" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://D:/pobrane/opencv/build/java/opencv-455.jar!/" />
+      <root url="jar://D:/pobrane/opencv/build/java/opencv-455.jar!/" />
+      <root url="file://D:/pobrane/opencv/build/java/x64" />
+    </SOURCES>
+    <jarDirectory url="file://D:/pobrane/opencv/build/java/x64" recursive="false" type="SOURCES" />
+  </library>
+</component>
