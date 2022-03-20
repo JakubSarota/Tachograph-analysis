@@ -242,6 +242,26 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../pdf/itextpdf-5.5.13.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/.idea/libraries/itextpdf-5.5.13.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17.0.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:17.0.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17.0.0.1" level="project" />
@@ -271,25 +291,5 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:11-ea+24" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:win:11-ea+24" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
-    <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/pdf/itextpdf-5.5.13.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/.idea/libraries/itextpdf-5.5.13.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>

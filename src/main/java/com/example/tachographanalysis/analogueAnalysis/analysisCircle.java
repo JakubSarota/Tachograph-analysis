@@ -24,7 +24,7 @@ public class analysisCircle {
                 Imgcodecs.IMREAD_GRAYSCALE
         );
 
-        work(imageFile);
+//        work(imageFile);
 
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
