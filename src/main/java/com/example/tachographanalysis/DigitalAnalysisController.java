@@ -97,6 +97,8 @@ public class DigitalAnalysisController implements Initializable {
         String xml = new String(".xml");
         System.out.println(file);
 
+        
+        
         if (!xmlExtCheck.equals(xml)) {
             System.out.println("To nie jest plik .xml");
             try {
@@ -508,10 +510,12 @@ public class DigitalAnalysisController implements Initializable {
 //
 //            return file;
 
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(new Stage());
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".pdf"));
-            System.out.println("Stworzono plik PDF.");
+//            FileChooser fileChooser = new FileChooser();
+//            File file = fileChooser.showOpenDialog(new Stage());
+            String PDF1 = PDF.substring(25, PDF.length() - 8);
+            System.out.println(PDF1);
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF1 + ".pdf"));
+            System.out.println("Tworzenie pliku PDF powiodło się.");
 //opens the PDF
             doc.open();
 //adds paragraph to the PDF file
