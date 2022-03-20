@@ -6,37 +6,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1598.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DigitalAnalysisController">
-   <left>
-      <AnchorPane prefHeight="773.0" prefWidth="283.0" style="-fx-background-color: #142E49;" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="1244.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DigitalAnalysisController">
+   <top>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="-6.0" prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #29A1FA;">
-               <children>
-                  <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analiza cyfrowa" wrappingWidth="278.1953125">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            
-            <Button fx:id="btnBack" layoutX="63.0" layoutY="160.0" mnemonicParsing="false" onAction="#getBack" opacity="0.89" prefHeight="39.0" prefWidth="157.0" style="-fx-background-radius: 30 30 30 30; -fx-background-color: #F8F9FA;" text="Wróć" textAlignment="CENTER" textFill="#47535b">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Button>
-
-            <Button fx:id="btnBack1" alignment="CENTER" layoutX="64.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#onDragClickedButton" opacity="0.81" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz z pliku" textAlignment="CENTER" textFill="#47535b">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Button>
+            <TextArea fx:id="textArea" layoutX="166.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="606.0" prefWidth="912.0" AnchorPane.bottomAnchor="-413.0" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="7.0" />
          </children>
       </AnchorPane>
-   </left>
-   <center>
-      <AnchorPane prefHeight="158.0" prefWidth="1548.0" BorderPane.alignment="CENTER">
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="dragOver" layoutX="40.0" layoutY="124.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="124.0" prefWidth="275.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik z dysku albo przeciągnij go tutaj" />
+            <Button fx:id="dragOver" layoutX="420.0" layoutY="28.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="118.0" prefWidth="600.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik z dysku albo przeciągnij go tutaj" />
+            <Button fx:id="btnBack" layoutX="42.0" layoutY="87.0" mnemonicParsing="false" onAction="#getBack" prefHeight="25.0" prefWidth="89.0" text="Wyjdź" />
+            <Button fx:id="btnRaportPDF" layoutX="163.0" layoutY="87.0" mnemonicParsing="false" onAction="#generatePDF" text="Generuj Raport" visible="false" />
          </children>
       </AnchorPane>
-   </center>
+   </bottom>
 </BorderPane>

@@ -18,10 +18,12 @@ public class MainController {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("analogueAnalysis.fxml"));
         Stage scene = (Stage) btnAnalogueButton.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
+//        scene.setMaximized(true);
     }
     public void getDigitalAnalysis() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("digitalAnalysis.fxml"));
         Stage scene = (Stage) btnDigitalButton.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
+//        scene.setMaximized(true);
     }
 }

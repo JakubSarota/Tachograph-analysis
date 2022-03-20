@@ -2,3 +2,34 @@
 .idea/vcs.xml
 .idea/runConfigurations.xml
 target/classes/module-info.class
+<<<<<<< Updated upstream
+.idea/artifacts/Tachograph_Analysis_jar.xml
+.idea/libraries/Java_EE_6_Java_EE_6.xml
+ddd_to_xml/data/desktop.ini
+ddd_to_xml/data/driver/C_A_Nowak_.DDD
+ddd_to_xml/data/driver/C_A_Nowak_.DDD.xml
+ddd_to_xml/data/driver/desktop.ini
+ddd_to_xml/data/vehicle/C_A_Nowak_.DDD
+ddd_to_xml/data/vehicle/C_A_Nowak_.DDD.xml
+ddd_to_xml/data/vehicle/desktop.ini
+lib/javax.annotation.jar
+lib/javax.ejb.jar
+lib/javax.jms.jar
+lib/javax.persistence.jar
+lib/javax.resource.jar
+lib/javax.servlet.jar
+lib/javax.servlet.jsp.jar
+lib/javax.servlet.jsp.jstl.jar
+lib/javax.transaction.jar
+out/artifacts/Tachograph_Analysis/Tachograph_Analysis.jar
+out/artifacts/Tachograph_Analysis_jar/Tachograph-Analysis.jar
+=======
+ddd_to_xml/data/driver/C_A_Nowak_.DDD
+ddd_to_xml/data/driver/C_A_Nowak_.DDD.xml
+>>>>>>> Stashed changes
+ddd_to_xml/data/driver/Readme.txt
+ddd_to_xml/data/driver/Readme.txt
+*.DDD
+*.xml
+src/main/java/com/example/tachographanalysis/GeneratePDF.java
+*.pdf
