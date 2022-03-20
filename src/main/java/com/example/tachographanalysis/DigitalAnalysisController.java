@@ -488,7 +488,29 @@ public class DigitalAnalysisController implements Initializable {
         {
 //generate a PDF at the specified location
             System.out.println(PDF);
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\ziolo\\Documents\\alg_komi\\plik.pdf"));
+//            String fname = null;
+//            File file = null;
+//
+//            System.out.println("Please choose file name:");
+//            while (true) {
+//                try (Scanner in = new Scanner(System.in)) {
+//                    // Reads a single line from the console
+//                    fname = in.nextLine();
+//                    file = new File(fname);
+//                    if (!file.createNewFile()) {
+//                        throw new RuntimeException("File already exist");
+//                    }
+//                    break;
+//                } catch (Exception ex) {
+//                    System.out.println(ex.getMessage() + ", please try again:");
+//                }
+//            }
+//
+//            return file;
+
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(new Stage());
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".pdf"));
             System.out.println("Stworzono plik PDF.");
 //opens the PDF
             doc.open();
