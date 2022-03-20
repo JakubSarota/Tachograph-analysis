@@ -97,8 +97,8 @@ public class DigitalAnalysisController implements Initializable {
         String xml = new String(".xml");
         System.out.println(file);
 
-        
-        
+
+
         if (!xmlExtCheck.equals(xml)) {
             System.out.println("To nie jest plik .xml");
             try {
@@ -107,36 +107,36 @@ public class DigitalAnalysisController implements Initializable {
                     dir.mkdirs();
                 }
                 else{
-                Thread.sleep(1000);
-                String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
-                File f = new File(pathxml);
-                f.createNewFile();
-                System.out.println(pathxml);
-                OutputStream outputStream = new FileOutputStream(pathxml);
-
-                byte[] allBytes = inputStream.readAllBytes();
-                outputStream.write(allBytes);
-
-                outputStream.close();
-                try {
                     Thread.sleep(1000);
+                    String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
+                    File f = new File(pathxml);
+                    f.createNewFile();
+                    System.out.println(pathxml);
+                    OutputStream outputStream = new FileOutputStream(pathxml);
 
-                    Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
-                    Thread.sleep(1000);
-                    File filexml = new File(pathxml + ".xml");
-                    if (filexml.exists()) {
-                        System.out.println("Plik xml został stworzony");
-                        readData(filexml);
-                    } else {
-                        textArea.appendText("Błąd plik nie istnieje");
+                    byte[] allBytes = inputStream.readAllBytes();
+                    outputStream.write(allBytes);
+
+                    outputStream.close();
+                    try {
+                        Thread.sleep(1000);
+
+                        Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
+                        Thread.sleep(1000);
+                        File filexml = new File(pathxml + ".xml");
+                        if (filexml.exists()) {
+                            System.out.println("Plik xml został stworzony");
+                            readData(filexml);
+                        } else {
+                            textArea.appendText("Błąd plik nie istnieje");
+                        }
+
+
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -148,7 +148,7 @@ public class DigitalAnalysisController implements Initializable {
             System.out.println("To jest plik.xml");
             readData(file);
 
-            }
+        }
     }
 
     public void readData(File filexml) {
@@ -350,8 +350,8 @@ public class DigitalAnalysisController implements Initializable {
 //                                System.out.print(ActivityChangeInfo.item(j).getAttributes().item(4).getNodeValue() + "\n");
 //                                System.out.print(ActivityChangeInfo.item(j).getAttributes().item(5).getNodeValue() + "\n");
 //                            }
-                            //NamedNodeMap dataTimeAtributes = dataDriver.item(cout).getAttributes();
-                            //test
+                        //NamedNodeMap dataTimeAtributes = dataDriver.item(cout).getAttributes();
+                        //test
 //                        System.out.println(cout);
 //
 //                        System.out.println(dataDriver.item(cout).getAttributes().item(0).getNodeValue());
@@ -389,7 +389,7 @@ public class DigitalAnalysisController implements Initializable {
                             textArea.appendText("\t Kraj: " + DailyWorkPeriodCountry.item(i).getAttributes().item(0).getNodeValue() + " ");
                             textArea.appendText(" Data i godzina: " + EntryTime.item(i).getAttributes().item(0).getNodeValue());
                             textArea.appendText("  Przebieg: "+ eElement.getElementsByTagName("VehicleOdometerValue").item(i).getTextContent() +" km \n");
-                            }
+                        }
 
                         NodeList elCardVehicleRecord = doc.getElementsByTagName("CardVehicleRecord");
 
@@ -406,7 +406,7 @@ public class DigitalAnalysisController implements Initializable {
                             System.out.println( elElement.getElementsByTagName("VehicleRegistrationNumber"). item(i).getTextContent().length());
                         }
 
-                    
+
                     }
                 }
 
@@ -558,12 +558,12 @@ public class DigitalAnalysisController implements Initializable {
             } catch (SAXException ex) {
                 ex.printStackTrace();
             }
-        doc.add(new Paragraph(PDF));
+            doc.add(new Paragraph(PDF));
 //close the PDF file
-        doc.close();
+            doc.close();
 //closes the writer
-        writer.close();
-    }
+            writer.close();
+        }
         catch (DocumentException e)
         {
             e.printStackTrace();

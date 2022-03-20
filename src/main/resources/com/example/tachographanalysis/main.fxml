@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
     <top>
         <HBox prefHeight="25.0" prefWidth="636.0" BorderPane.alignment="CENTER">
          <children>
@@ -32,19 +32,19 @@
     <left>
         <VBox alignment="CENTER" prefHeight="355.0" prefWidth="155.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnAnalogueButton" alignment="CENTER" mnemonicParsing="false" onAction="#getAnalogueAnalysis" prefHeight="50.0" prefWidth="160.0" text="Analogue analysis" textAlignment="CENTER" wrapText="true">
+                <Button fx:id="btnAnalogueButton" alignment="CENTER" mnemonicParsing="false" onAction="#getAnalogueAnalysis" prefHeight="50.0" prefWidth="160.0" text="Analiza tarczki" textAlignment="CENTER" wrapText="true">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="btnDigitalButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#getDigitalAnalysis" prefHeight="50.0" prefWidth="160.0" text="Digital analysis" textAlignment="CENTER" wrapText="true">
+                <Button fx:id="btnDigitalButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#getDigitalAnalysis" prefHeight="50.0" prefWidth="160.0" text="Analiza pliku" textAlignment="CENTER" wrapText="true">
                     <opaqueInsets>
                         <Insets bottom="50.0" top="50.0" />
                     </opaqueInsets>
                 </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="160.0" text="Driver" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Reports" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="160.0" text="Help" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="160.0" text="Kierowca" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Raporty" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="160.0" text="Pomoc" />
             </children>
         </VBox>
     </left>
