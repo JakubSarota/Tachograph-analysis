@@ -1,0 +1,68 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "tachograph-reader-core/1.0.0": {
+        "dependencies": {
+          "tachograph-reader-lib": "1.0.0"
+        },
+        "runtime": {
+          "tachograph-reader-core.dll": {}
+        }
+      },
+      "Microsoft.NETCore.Platforms/5.0.0-rc.1.20451.14": {},
+      "System.Buffers/4.5.1": {},
+      "System.Text.Encoding.CodePages/5.0.0-rc.1.20451.14": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "5.0.0-rc.1.20451.14"
+        }
+      },
+      "tachograph-reader-lib/1.0.0": {
+        "dependencies": {
+          "System.Buffers": "4.5.1",
+          "System.Text.Encoding.CodePages": "5.0.0-rc.1.20451.14"
+        },
+        "runtime": {
+          "tachograph-reader-lib.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "tachograph-reader-core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.NETCore.Platforms/5.0.0-rc.1.20451.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Jc+RnnjaMdpJ2sdm9v0ATyGVd3MBNDlAuu/yFz51gYpZhK3fHQiGHqgUinvtoD8dK5FSjSyn9lSYPPdwRg4D+w==",
+      "path": "microsoft.netcore.platforms/5.0.0-rc.1.20451.14",
+      "hashPath": "microsoft.netcore.platforms.5.0.0-rc.1.20451.14.nupkg.sha512"
+    },
+    "System.Buffers/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg==",
+      "path": "system.buffers/4.5.1",
+      "hashPath": "system.buffers.4.5.1.nupkg.sha512"
+    },
+    "System.Text.Encoding.CodePages/5.0.0-rc.1.20451.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Lv5RhroQUlEVQ3hFpojVQ8htnfHbHF7Jo0AsCEXiR1vayR012DhZAncnQzjRoHs0wiv39tdExmTFKX3YdZZtJQ==",
+      "path": "system.text.encoding.codepages/5.0.0-rc.1.20451.14",
+      "hashPath": "system.text.encoding.codepages.5.0.0-rc.1.20451.14.nupkg.sha512"
+    },
+    "tachograph-reader-lib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

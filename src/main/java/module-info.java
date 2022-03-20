@@ -14,6 +14,7 @@ module com.example.tachographanalysis {
     requires javafx.swing;
     requires json;
     requires tess4j;
+    requires itextpdf;
 
     opens com.example.tachographanalysis to javafx.fxml;
     exports com.example.tachographanalysis;
