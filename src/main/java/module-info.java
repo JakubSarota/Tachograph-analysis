@@ -9,6 +9,7 @@ module com.example.tachographanalysis {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires itextpdf;
 
     opens com.example.tachographanalysis to javafx.fxml;
     exports com.example.tachographanalysis;
