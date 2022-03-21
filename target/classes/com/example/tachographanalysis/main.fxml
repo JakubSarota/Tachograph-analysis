@@ -32,7 +32,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                       </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Kierowcy" textFill="WHITE">
+                  <Button fx:id="btnDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getDrivers" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Kierowcy" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
@@ -40,7 +40,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Raporty" textFill="WHITE">
+                  <Button fx:id="btnReports" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getReports" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Raporty" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
@@ -48,15 +48,10 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Pomoc" textFill="WHITE">
+                  <Button fx:id="" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getHelp" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Pomoc" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Wyjdź" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -73,7 +68,7 @@
                </children>
             </AnchorPane>
             <Button layoutX="89.0" layoutY="590.0" mnemonicParsing="false" style="-fx-background-color: #2F3136;" />
-            <ImageView fitHeight="33.0" fitWidth="45.0" layoutX="97.0" layoutY="577.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnSettings" fitHeight="33.0" fitWidth="45.0" layoutX="97.0" layoutY="577.0" onMouseClicked="#getSettings" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@gear.png" />
                </image>
@@ -105,7 +100,7 @@
                   <Image url="@delivery-truck.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="46.0" fitWidth="44.0" layoutX="938.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="" fitHeight="46.0" fitWidth="44.0" layoutX="938.0" layoutY="14.0" onMouseClicked="#getInfo" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons8-info-50.png" />
                </image>

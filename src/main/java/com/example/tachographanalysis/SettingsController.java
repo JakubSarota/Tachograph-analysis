@@ -1,5 +1,5 @@
 package com.example.tachographanalysis;
 
-public class Settings {
+public class SettingsController {
 
 }
