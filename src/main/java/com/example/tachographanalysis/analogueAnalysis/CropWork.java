@@ -31,7 +31,7 @@ public class CropWork {
         //Variable to path files
 
 //        InputStream is = getClass.getClassLoader().getResourceAsStream("");
-        template=Imgcodecs.imread( "./src/main/resources/com/example/tachographanalysis");
+        template=Imgcodecs.imread( "src/main/resources/com/example/tachographanalysis");
 
         //Mathmethod and output
         Mat outputImage=new Mat();
