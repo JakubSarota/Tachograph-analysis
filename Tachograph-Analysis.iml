@@ -247,7 +247,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../pdf/itextpdf-5.5.13.2.jar!/" />
+          <root url="jar://$USER_HOME$/pdf/itextpdf-5.5.13.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -291,5 +291,6 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:11-ea+24" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:win:11-ea+24" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
+    <orderEntry type="library" name="opencv-4551" level="project" />
   </component>
 </module>
