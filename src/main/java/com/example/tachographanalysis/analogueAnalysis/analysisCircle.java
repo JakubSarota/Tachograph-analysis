@@ -1,23 +1,28 @@
 package com.example.tachographanalysis.analogueAnalysis;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXML;
 import javafx.scene.image.WritableImage;
 import org.json.JSONObject;
 import org.opencv.core.*;
+import org.opencv.core.Point;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
 import static com.example.tachographanalysis.analogueAnalysis.CropWork.work;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
+import javafx.scene.control.TextArea;
 
 
 public class analysisCircle {
-    public WritableImage getHuanByCircle(String file) throws IOException {
+    public changeColor blackImage;
+    public BufferedImage[] getHuanByCircle(String file) throws IOException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imageFile = imread(file
                 .replace("file:/",""),
@@ -40,7 +45,13 @@ public class analysisCircle {
         JSONObject center=HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
 
-        System.out.println(center);
+        Mat findedCircle=imageFile;
+        findedCircle=findedCircle.submat(new Range((int) (center.getDouble("centery")-center.getDouble("radius")),
+                        (int) (center.getDouble("centery")+center.getDouble("radius"))),
+                new Range((int) (center.getDouble("centerx")-center.getDouble("radius")),
+                        (int) (center.getDouble("centerx")+center.getDouble("radius"))));
+
+
 
         Imgproc.warpPolar(imageFile, dst, imageFile.size(),
 //                new Point(imageFile.width()/2,imageFile.height()/2),
@@ -59,16 +70,20 @@ public class analysisCircle {
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"_work.png",work);
 
-        changeColor g = new changeColor(HighGui.toBufferedImage(dstResize));
+        blackImage = new changeColor(HighGui.toBufferedImage(dstResize));
 
-        g.blackAndWhite(200);
-        g.petla_po_pikselach();
+        blackImage.blackAndWhite(200);
+//        blackImage.czas_pracy();
+        blackImage.save("png",file
+                .replace("file:/","")+"praca.jpg");
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"_resize.png",dstResize);
 
 //        java.awt.Image img = HighGui.toBufferedImage(dstResize);
-        WritableImage writableImage = SwingFXUtils.toFXImage((BufferedImage) g.im, null);
-        return writableImage;
+
+
+        BufferedImage writableImage = (BufferedImage) blackImage.im;
+        return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(findedCircle)};
     }
 
     private void resizeImage(Mat dst, Mat dstResize) {
