@@ -1,11 +1,15 @@
 package com.example.tachographanalysis.analogueAnalysis;
 
+import org.json.JSONObject;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
@@ -15,6 +19,8 @@ public class changeColor {
     private int width = 0;
     private int height = 0;
     private int pixels[] = new int[3];
+    private int pixels2[] = new int[3];
+    private int pixels3[] = new int[3];
 
     public changeColor(BufferedImage fileName) throws IOException {
         im=fileName;
@@ -127,7 +133,39 @@ public class changeColor {
             }
         }
     }
+    public JSONObject czas_pracy(){
+        JSONObject json=new JSONObject();
+        double coMinuty=(double)width/(24*60);
+        List<String> minuty = new ArrayList<String>();
+        for(int i=0;i<width;i++) {
+            int j= (int) (height*0.765);
+            raster.getPixel(i, j, pixels);
+//            System.out.println(pixels[0]);
+            if(pixels[0]==255){
+                raster.getPixel(i, j-5, pixels2);
+                if(pixels2[0]==255) {
+                    raster.getPixel(i, j+5, pixels3);
+                    if(pixels3[0]==255) {
+                        minuty.add(String.valueOf((int) (i/coMinuty)));
 
+                    }
+                }
+            }
+            int black[]={200,200,50};
+            raster.setPixel(i, j, black);
+            raster.setPixel(i, j-5, black);
+            raster.setPixel(i, j+5, black);
+            json.put("praca",minuty);
+
+        }
+        System.out.println(json);
+        return json;
+    }
+    public String ktoraGodzina(int m){
+        int godziny=m/60;
+        int minuty=m%60;
+        return godziny+":"+minuty;
+    }
     private double[] hsv2rgb(double hue, double sat, double val) {
         double red = 0, grn = 0, blu = 0;
         double i, f, p, q, t;
