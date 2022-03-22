@@ -436,10 +436,10 @@ public class DigitalAnalysisController implements Initializable {
 //            FileChooser fileChooser = new FileChooser();
 //            File file = fileChooser.showOpenDialog(new Stage());
             //Tworzenie pliku PDF
-            String PDF1 = PDF.substring(25, PDF.length() - 4);
-            System.out.println(PDF1);
+            //String PDF1 = PDF.substring(25, PDF.length() - 4);
+            File PDF2 = new File(new File(PDF).getName()); // nazwa pliku
 
-            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF1 + ".pdf"));
+            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + ".pdf"));
             System.out.println("Tworzenie pliku PDF powiodło się.");
 //Otwieranie pliku PDF
             doc.open();
@@ -460,6 +460,108 @@ public class DigitalAnalysisController implements Initializable {
 
                         // dodać serial number / data / rfu/  (jak wyciąga się value xml elementu month year itp..)
                         doc.add(new Paragraph("\t ClockStop: " + eElement.getElementsByTagName("ClockStop").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t CardExtendedSerialNumber: " + eElement.getElementsByTagName("CardExtendedSerialNumber").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t Numer zatwierdzenia karty: " + eElement.getElementsByTagName("CardApprovalNumber").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t CardPersonaliserId: " + eElement.getElementsByTagName("CardPersonaliserId").
+                                item(0).getTextContent() + "\n"));
+                        //EmbedderIcAssemblerId
+                        doc.add(new Paragraph("\t EmbedderIcAssemblerId: " + "\n"));
+                        doc.add(new Paragraph("\t\t CountryCode: " + eElement.getElementsByTagName("CountryCode").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t ModuleEmbedder: " + eElement.getElementsByTagName("CountryCode").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t ManufacturerInformation: " + eElement.getElementsByTagName("ManufacturerInformation").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t IcIdentifier: " + eElement.getElementsByTagName("IcIdentifier").
+                                item(0).getTextContent() + "\n"));
+                        //CardChipIdentyfiaction
+                        doc.add(new Paragraph("CardChipIdentification: " + eElement.getElementsByTagName("CardChipIdentification").
+                                item(0).getTextContent() + "\n"));
+                        // ext value
+                        doc.add(new Paragraph("\t IcSerialNumber: " + eElement.getElementsByTagName("IcSerialNumber").
+                                item(0).getTextContent() + "\n"));
+                        // ext value
+                        doc.add(new Paragraph("\t IcManufacturingReferences: " + eElement.getElementsByTagName("IcManufacturingReferences").
+                                item(0).getTextContent() + "\n"));
+                        //DriverCardApplicationIdentyfication
+                        doc.add(new Paragraph(" DriverCardApplicationIdentification: " + "\n"));
+                        doc.add(new Paragraph("\t Type: " + eElement.getElementsByTagName("Type").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t Version: " + eElement.getElementsByTagName("Version").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t NoOfEventsPerType: " + eElement.getElementsByTagName("NoOfEventsPerType").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t NoOfFaultsPerType: " + eElement.getElementsByTagName("NoOfFaultsPerType").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t ActivityStructureLength: " + eElement.getElementsByTagName("ActivityStructureLength").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t NoOfCardVehicleRecords: " + eElement.getElementsByTagName("NoOfCardVehicleRecords").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t NoOfCardPlaceRecords: " + eElement.getElementsByTagName("NoOfCardPlaceRecords").
+                                item(0).getTextContent() + "\n"));
+                        //CardCertificate
+                        doc.add(new Paragraph(" CardCertificate: " + "\n"));
+                        //ext value
+                        doc.add(new Paragraph("\t Signature: " + eElement.getElementsByTagName("Signature").
+                                item(0).getTextContent() + "\n"));
+                        //ext value
+                        doc.add(new Paragraph("\t PublicKeyRemainder: " + eElement.getElementsByTagName("PublicKeyRemainder").
+                                item(0).getTextContent() + "\n"));
+                        //CertificationAuthorityReference
+                        doc.add(new Paragraph("\t CertificationAuthorityReference: " + "\n"));
+                        doc.add(new Paragraph("\t\t Nation: " + eElement.getElementsByTagName("Nation").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t NationCode: " + eElement.getElementsByTagName("NationCode").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t SerialNumber: " + eElement.getElementsByTagName("SerialNumber").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t AdditionalInfo: " + eElement.getElementsByTagName("AdditionalInfo").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t CaIdentifier: " + eElement.getElementsByTagName("CaIdentifier").
+                                item(0).getTextContent() + "\n"));
+                        //Identification
+                        doc.add(new Paragraph(" Identification: " + "\n"));
+                        //CardIdentyfication
+                        doc.add(new Paragraph("\t CardIdentification: " + "\n"));
+                        doc.add(new Paragraph("\t\t CardIssuingMemberState: " + eElement.getElementsByTagName("CardIssuingMemberState").
+                                item(0).getTextContent() + "\n"));
+                        // ext value
+                        doc.add(new Paragraph("\t\t CardNumber: " + eElement.getElementsByTagName("CardNumber").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t CardIssuingAuthorityName: " + eElement.getElementsByTagName("CardIssuingAuthorityName").
+                                item(0).getTextContent() + "\n"));
+                        // ext value
+                        doc.add(new Paragraph("\t\t CardIssueDate: " + eElement.getElementsByTagName("CardIssueDate").
+                                item(0).getTextContent() + "\n"));
+                        // ext value
+                        doc.add(new Paragraph("\t\t CardValidityBegin: " + eElement.getElementsByTagName("CardValidityBegin").
+                                item(0).getTextContent() + "\n"));
+                        // ext value
+                        doc.add(new Paragraph("\t\t CardExpiryDate: " + eElement.getElementsByTagName("CardExpiryDate").
+                                item(0).getTextContent() + "\n"));
+                        //DriverCardHolderIdentyfication
+                        doc.add(new Paragraph("\t DriverCardHolderIdentification: " + eElement.getElementsByTagName("DriverCardHolderIdentification").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t CardHolderSurname: " + eElement.getElementsByTagName("CardHolderSurname").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t CardHolderFirstNames: " + eElement.getElementsByTagName("CardHolderFirstNames").
+                                item(0).getTextContent() + "\n"));
+                        // ect value
+                        doc.add(new Paragraph("\t\t CardHolderBirthDate: " + eElement.getElementsByTagName("CardHolderBirthDate").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t CardHolderPreferredLanguage: " + eElement.getElementsByTagName("CardHolderPreferredLanguage").
+                                item(0).getTextContent() + "\n"));
+                        //CardDrivingLicenceInformation
+                        doc.add(new Paragraph("\t CardDrivingLicenceInformation: " + eElement.getElementsByTagName("CardDrivingLicenceInformation").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t DrivingLicenceIssuingAuthority: " + eElement.getElementsByTagName("DrivingLicenceIssuingAuthority").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t DrivingLicenceIssuingNation: " + eElement.getElementsByTagName("DrivingLicenceIssuingNation").
+                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
                                 item(0).getTextContent() + "\n"));
 
                     }
