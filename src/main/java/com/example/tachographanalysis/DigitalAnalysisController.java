@@ -412,7 +412,10 @@ public class DigitalAnalysisController implements Initializable {
         PdfWriter writer;
         try {
 //generate a PDF at the specified location
-            System.out.println(PDF);
+            File dir = new File(".\\PDF\\");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
 //            String fname = null;
 //            File file = null;
 //
