@@ -56,6 +56,15 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnSettings" mnemonicParsing="false" onAction="#getSettings" prefHeight="54.0" prefWidth="57.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@gear.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                   </children>
               </VBox>
             <AnchorPane prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #29A1FA;">
@@ -68,11 +77,6 @@
                </children>
             </AnchorPane>
             <Button layoutX="89.0" layoutY="590.0" mnemonicParsing="false" style="-fx-background-color: #2F3136;" />
-            <ImageView fx:id="btnSettings" fitHeight="33.0" fitWidth="45.0" layoutX="97.0" layoutY="577.0" onMouseClicked="#getSettings" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@gear.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
    </left>
@@ -100,11 +104,14 @@
                   <Image url="@delivery-truck.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="" fitHeight="46.0" fitWidth="44.0" layoutX="938.0" layoutY="14.0" onMouseClicked="#getInfo" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@icons8-info-50.png" />
-               </image>
-            </ImageView>
+            <Button layoutX="919.0" layoutY="23.0" mnemonicParsing="false" onAction="#aboutProgram" prefHeight="43.0" prefWidth="43.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons8-info-50.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children></AnchorPane>
    </center>
 </BorderPane>

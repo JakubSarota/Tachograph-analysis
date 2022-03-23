@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -18,9 +19,8 @@ import java.io.InputStream;
 
 public class MainController {
     @FXML
-    private Button btnAnalogueButton, btnDigitalButton, btnDrivers, btnReports;
-    @FXML
-    private ImageView btnHelp, btnInfo;
+    private Button btnAnalogueButton, btnDigitalButton, btnDrivers, btnReports, btnSettings;
+
 
     public void getAnalogueAnalysis() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("analogueAnalysis.fxml"));
@@ -49,30 +49,25 @@ public class MainController {
     }
 
     public void getHelp() throws Exception {
-//        if(Desktop.isDesktopSupported()) {
-//            InputStream jarpdf = getClass().getClassLoader().getResourceAsStream("TACHOFIVEHELP.pdf");
-//            try {
-//                File pdfTemp = new File("TACHOFIVEHELP.pdf");
-//                FileOutputStream fos = new FileOutputStream(pdfTemp);
-//                while (jarpdf.available() > 0) {
-//                    fos.write(jarpdf.read());
-//                }
-//                fos.close();
-//            } catch (IOException e) {
-//                System.out.println(e);
-//            }
-//        }
+        File fileChooser = new File("src/main/resources/com/example/tachographanalysis/TACHOFIVEHELP.pdf");
+        Desktop.getDesktop().open(fileChooser);
     }
 
-    public void getInfo() throws Exception {
-//        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("drivers.fxml"));
-//        Stage scene = (Stage) getScene().getWindow();
-//        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
+    public void aboutProgram() throws Exception {
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("aboutProgram.fxml"));
+        StackPane stackPane = new StackPane();
+        Scene secondScene = new Scene(stackPane, 200,100);
+        stackPane.getChildren().add(fxmlLoader);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("");
+        secondStage.setScene(secondScene);
+
+        secondStage.show();
     }
 
     public void getSettings() throws Exception {
-//        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("settings.fxml"));
-//        Stage scene = (Stage) btnDrivers.getScene().getWindow();
-//        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("settings.fxml"));
+        Stage scene = (Stage) btnSettings.getScene().getWindow();
+        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
     }
 }
