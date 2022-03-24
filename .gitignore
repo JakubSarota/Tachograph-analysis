@@ -33,3 +33,4 @@ ddd_to_xml/data/driver/Readme.txt
 *.xml
 src/main/java/com/example/tachographanalysis/GeneratePDF.java
 *.pdf
+.log
