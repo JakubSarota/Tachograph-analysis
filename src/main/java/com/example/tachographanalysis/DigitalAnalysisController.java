@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -30,10 +31,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.lang.Integer.parseInt;
 
 
 public class DigitalAnalysisController implements Initializable {
@@ -41,13 +45,13 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private ProgressBar progressBar;
     @FXML
+    private DatePicker dataPicker;
+    @FXML
     private Tab one, two, three, four;
     @FXML
     private TabPane tabPane;
     @FXML
     private TextArea dailyTextAreaDataChart;
-    @FXML
-    private DatePicker dataPicker;
     @FXML
     private Button btnBack, btnUpload, btnRaport;
     @FXML
@@ -60,8 +64,8 @@ public class DigitalAnalysisController implements Initializable {
     private Button btnRaportPDF;
     List<String> lstFile;
 
-    static String PDF = new String("");
-
+    static String PDF =  "";
+    static String dataT =  "";
 
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
@@ -86,112 +90,129 @@ public class DigitalAnalysisController implements Initializable {
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.xml"));
         File file = fileChooser.showOpenDialog(new Stage());
-        fileChooser.setTitle("Open Resource File");
-        //
-        InputStream inputStream = new FileInputStream(file);
-        Thread.sleep(500);
+        if(file == null)
+        {
 
-        String xmlExtCheck = (file.getName().substring(file.getName().length() - 4));
-        String xml = ".xml";
+        }
+        else {
+            fileChooser.setTitle("Open Resource File");
+            //
 
-        String fileNameXML = file.getName().subSequence(0, file.getName().length() - 4) + ".xml";
-        String fileNameDDD = file.getName().subSequence(0, file.getName().length() - 4) + ".ddd";
+            InputStream inputStream = new FileInputStream(file);
+            Thread.sleep(500);
 
-        System.out.println(file);
-        Path logFilePath = Paths.get(".\\.log");
-        //log current time
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        if (!xmlExtCheck.equals(xml)) {
-            System.out.println("To jest plik .ddd");
-            try {
-                File dir = new File(".\\ddd_to_xml\\data\\driver\\");
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                } else {
+            String xmlExtCheck = (file.getName().substring(file.getName().length() - 4));
+            String xml = ".xml";
 
-                    Thread.sleep(1000);
-                    String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
-                    File f = new File(pathxml);
-                    f.createNewFile();
-                    System.out.println(pathxml);
-                    OutputStream outputStream = new FileOutputStream(pathxml);
+            String fileNameXML = file.getName().subSequence(0, file.getName().length() - 4) + ".xml";
+            String fileNameDDD = file.getName().subSequence(0, file.getName().length() - 4) + ".ddd";
 
-                    byte[] allBytes = inputStream.readAllBytes();
-                    outputStream.write(allBytes);
+            System.out.println(file);
+            Path logFilePath = Paths.get(".\\.log");
+            //log current time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            if (!xmlExtCheck.equals(xml)) {
+                System.out.println("To jest plik .ddd");
+                try {
+                    File dir = new File(".\\ddd_to_xml\\data\\driver\\");
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    } else {
 
-                    outputStream.close();
-                    try {
                         Thread.sleep(1000);
+                        String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
+                        File f = new File(pathxml);
+                        f.createNewFile();
+                        System.out.println(pathxml);
+                        OutputStream outputStream = new FileOutputStream(pathxml);
 
-                        Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
-                        Thread.sleep(1000);
-                        File filexml = new File(pathxml + ".xml");
-                        String filexmlSize = String.valueOf(filexml);
-                        long bytes = Files.size(Path.of(filexmlSize));
-                        long kiloBytes = bytes / 1024;
+                        byte[] allBytes = inputStream.readAllBytes();
+                        outputStream.write(allBytes);
 
-                        if (filexml.exists() && kiloBytes > 1) {
-                            System.out.println("Poprawnie zaimportowano plik .ddd");
+                        outputStream.close();
+                        try {
+                            Thread.sleep(1000);
 
-                            f.deleteOnExit();
+                            Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
+                            Thread.sleep(1000);
+                            File filexml = new File(pathxml + ".xml");
+                            String filexmlSize = String.valueOf(filexml);
+                            long bytes = Files.size(Path.of(filexmlSize));
+                            long kiloBytes = bytes / 1024;
 
-
-                            String[] readedData = readData(filexml);
-                            showData(readedData);
-
-                        } else {
-
-                            if (Files.exists(logFilePath)) {
-                                FileWriter logDataWrite = new FileWriter(".\\.log", true);
-                                logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameDDD + " nie został poprawnie załadowany bądź jest uszkodzony\n");
-                                logDataWrite.close();
-                                f.delete();
-                                System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+                            if (filexml.exists() && kiloBytes > 1) {
+                                System.out.println("Poprawnie zaimportowano plik .ddd");
+                                f.deleteOnExit();
+                                String[] readedData = readData(filexml);
+                                showData(readedData);
 
                             } else {
-                                FileWriter logDataWrite = new FileWriter(".\\.log");
-                                logDataWrite.append(dtf.format(now) + " błąd plik '" + fileNameDDD + "'' nie został poprawnie załadowany bądź jest uszkodzony\n");
-                                logDataWrite.close();
-                                f.delete();
-                                System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+
+                                if (Files.exists(logFilePath)) {
+                                    FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                    logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameDDD + " nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                    logDataWrite.close();
+                                    f.delete();
+                                    System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+
+                                } else {
+                                    FileWriter logDataWrite = new FileWriter(".\\.log");
+                                    logDataWrite.append(dtf.format(now) + " błąd plik '" + fileNameDDD + "'' nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                    logDataWrite.close();
+                                    f.delete();
+                                    System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+                                }
                             }
+
+                        } catch (InterruptedException ex) {
+                            Thread.currentThread().interrupt();
                         }
-
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
                     }
+                } catch (IOException e) {
+
+                    if (Files.exists(logFilePath)) {
+                        FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                        logDataWrite.append(dtf.format(now) + " Błąd konwersja nie przebiegła pomyślnie\n");
+                        logDataWrite.close();
+                        System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+
+                    } else {
+                        FileWriter logDataWrite = new FileWriter(".\\.log");
+                        logDataWrite.append(dtf.format(now) + "Błąd konwersja nie przebiegła pomyślnie\n");
+                        logDataWrite.close();
+                        System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+                    }
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-
-            String filexmlSize = String.valueOf(file);
-            long bytesXML = Files.size(Path.of(filexmlSize));
-            long kiloBytesXML = bytesXML / 1024;
-
-            if (kiloBytesXML > 1) {
-                System.out.println("Poprawnie zaimportowano plik .xml");
-                readData(file);
             } else {
 
-                if (Files.exists(logFilePath)) {
-                    FileWriter logDataWrite = new FileWriter(".\\.log", true);
-                    logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameXML + " nie został poprawnie załadowany bądź jest uszkodzony\n");
-                    logDataWrite.close();
-                    file.delete();
-                    System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
-                } else {
-                    FileWriter logDataWrite = new FileWriter(".\\.log");
-                    logDataWrite.append(dtf.format(now) + " błąd plik: '" + fileNameXML + "' nie został poprawnie załadowany bądź jest uszkodzony \n");
-                    logDataWrite.close();
-                    file.delete();
-                    System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
-                }
-            }
 
+                String filexmlSize = String.valueOf(file);
+                long bytesXML = Files.size(Path.of(filexmlSize));
+                long kiloBytesXML = bytesXML / 1024;
+
+                if (kiloBytesXML > 1) {
+                    System.out.println("Poprawnie zaimportowano plik .xml");
+                    readData(file);
+                } else {
+
+                    if (Files.exists(logFilePath)) {
+                        FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                        logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameXML + " nie został poprawnie załadowany bądź jest uszkodzony\n");
+                        logDataWrite.close();
+                        file.delete();
+                        System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
+                    } else {
+                        FileWriter logDataWrite = new FileWriter(".\\.log");
+                        logDataWrite.append(dtf.format(now) + " błąd plik: '" + fileNameXML + "' nie został poprawnie załadowany bądź jest uszkodzony \n");
+                        logDataWrite.close();
+                        file.delete();
+                        System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
+                    }
+                }
+
+            }
         }
     }
 
@@ -199,15 +220,20 @@ public class DigitalAnalysisController implements Initializable {
     private void  generatePDF2(){
         generatePDF(PDF);
     }
-
+    @FXML
     private void showData(String[] readedData){
 
 
-//            progressBar.setVisible(true);
-//            progressBar.setProgress(1.0);
-            dragOver.setVisible(false);
-            btnRaportPDF.setVisible(true);
-            dataPicker.setVisible(true);
+//          progressBar.setVisible(true);
+//          progressBar.setProgress(1.0);
+//          dragOver.setVisible(false);
+        try {
+            colorPicker();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        btnRaportPDF.setVisible(true);
+
             tabPane.setVisible(true);
             if(btnRaportPDF.isPressed()) {
                 generatePDF2();
@@ -218,11 +244,12 @@ public class DigitalAnalysisController implements Initializable {
         TextArea textArea = (TextArea) one.getContent();
         textArea.appendText(readedData[0]);
 
-
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
         TextArea dailyDataDriver = (TextArea) two.getContent();
-        dailyDataDriver.appendText(readedData[1]);
+//        dailyDataDriver.appendText(readedData[1]);
+
+        dataT=readedData[1];
 
 
         TextArea driverRoute = new TextArea("");
@@ -231,12 +258,127 @@ public class DigitalAnalysisController implements Initializable {
         driverRouteArea.appendText(readedData[2]);
 
 
+
         TextArea vehicleHistory = new TextArea("");
         four.setContent(vehicleHistory);
         TextArea vehicleHistoryData = (TextArea) four.getContent();
         vehicleHistoryData.appendText(readedData[3]);
 
+
     }
+
+    @FXML
+    private void  setDataPicker() {
+        setDataPicker2(dataT);
+    }
+
+    @FXML
+    private void setDataPicker2(String dataXml){
+
+          String datePickerTime = String.valueOf(dataPicker.getValue());
+          String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
+
+          TextArea dailyData = new TextArea("");
+          two.setContent(dailyData);
+          TextArea dailyDataDriver = (TextArea) two.getContent();
+          dataPicker.setVisible(true);
+
+        if(indexOfDataPickerTime.equals("-1")) {
+            dailyDataDriver.appendText("Ten pracownik nie pracował tego dnia ");
+        }
+        else {
+
+            dailyDataDriver.appendText("Dzienna Aktywność: ");
+            int indeksString = parseInt(indexOfDataPickerTime);
+            int i = 0;
+            while (!String.valueOf(dataXml.charAt(indeksString + i)).equals("d")) {
+                dailyDataDriver.appendText("" + dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
+                i += 1;
+            }
+        }
+
+
+
+//        System.out.println(dataXml+"\n");
+//        System.out.println(dataPicker.getValue());
+
+//        String dataPickerValue = String.valueOf(dataPicker.getValue());
+//        System.out.println(dataPickerValue);
+//        dailyPaneDataChart.setVisible(true);
+//        dailyTextAreaDataChart.appendText(dataPickerValue);
+
+    }
+    @FXML
+    private void visibilityDataPickerLeave(){
+
+        if(dataT.length()!=0) {
+            dataPicker.setVisible(false);
+        }
+
+    }
+    @FXML
+    private void visibilityDataPickerEnter(){
+        dataPicker.setVisible(true);
+    }
+
+private void colorPicker() throws ParserConfigurationException {
+    List<LocalDate> work = new ArrayList<>();
+
+    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    DocumentBuilder db = dbf.newDocumentBuilder();
+    Document doc = null;
+    try {
+        doc = db.parse(PDF);
+    } catch (SAXException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    doc.getDocumentElement().normalize();
+    NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
+
+    for(int i=0;i<CardActivityDailyRecord.getLength();i++) {
+
+        String year = "";
+        String month = "";
+        String day = "";
+        String dataCalendar = CardActivityDailyRecord.item(i).getAttributes().item(1).getNodeValue();
+
+        year += dataCalendar.charAt(0);
+        year += dataCalendar.charAt(1);
+        year += dataCalendar.charAt(2);
+        year += dataCalendar.charAt(3);
+
+        month += dataCalendar.charAt(5);
+        month += dataCalendar.charAt(6);
+
+        day += dataCalendar.charAt(8);
+        day += dataCalendar.charAt(9);
+
+
+        work.add(LocalDate.of(parseInt(year),parseInt(month),parseInt(day)));
+    }
+
+
+    dataPicker.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+        @Override
+        public DateCell call(DatePicker param) {
+            return new DateCell() {
+                @Override
+                public void updateItem(LocalDate item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (!empty && item != null) {
+                        if (work.contains(item)) {
+                            this.setStyle("-fx-background-color: pink");
+                        }
+                    }
+                }
+            };
+        }
+    });
+}
 
     public String[] readData(File filexml) throws Exception {
 
@@ -391,7 +533,7 @@ public class DigitalAnalysisController implements Initializable {
                     for (int cout = 0; cout < CardActivityDailyRecord.getLength(); cout++) {
 
 
-                        dailyActivityS +=(" \n\n Data aktywności: " + CardActivityDailyRecord.item(cout).
+                        dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(cout).
                                 getAttributes().item(1).getNodeValue() + " \n");
 
                         dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(cout).
@@ -500,24 +642,6 @@ public class DigitalAnalysisController implements Initializable {
     }
 
 
-//    @FXML
-//    private void generalData() {
-//
-//
-//    }
-
-
-
-//
-    @FXML
-    private void setDataPicker(){
-
-        System.out.println(dataPicker.getValue());
-        String dataPickerValue = String.valueOf(dataPicker.getValue());
-        System.out.println(dataPickerValue);
-//        dailyPaneDataChart.setVisible(true);
-        dailyTextAreaDataChart.appendText(dataPickerValue);
-    }
 
 
     public String getExtension(String fileName) {
