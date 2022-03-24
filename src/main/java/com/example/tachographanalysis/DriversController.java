@@ -8,8 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +25,10 @@ public class DriversController implements Initializable {
 
     @FXML
     private Button btnBack;
-
+    @FXML
+    private Button btnDrivers;
+    @FXML
+    private Pane boxDrivers;
     @FXML
     private ListView<String> accountListView;
 
@@ -35,11 +41,19 @@ public class DriversController implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources){
+        boolean isVboxVisible = boxDrivers.isVisible();
+        if(isVboxVisible == true) {
+            btnDrivers.setOnAction(e -> boxDrivers.setVisible(false));
+            System.out.println("true");
+        } else if(isVboxVisible == false) {
+            btnDrivers.setOnAction(e -> boxDrivers.setVisible(true));
+            System.out.println("false");
+        }
+
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getDBConnection();
 
         String connectQuery = "SELECT first_name, last_name FROM kierowcy";
-
         try{
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(connectQuery);
@@ -47,8 +61,7 @@ public class DriversController implements Initializable {
             while (queryOutput.next()){
                 String firstname = queryOutput.getString("first_name");
                 String lastname = queryOutput.getString("last_name");
-                String listOut = firstname + " " + lastname;
-
+                String listOut = firstname + "\t" + lastname;
                 accountListView.getItems().add(listOut);
 
             }
@@ -56,6 +69,11 @@ public class DriversController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    private void getDrivers() {
+
+    }
+
 }
 
 

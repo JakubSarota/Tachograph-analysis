@@ -62,6 +62,7 @@ public class analysisCircle {
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
 
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
+
         resizeImage(dst2, dstResize);
 
         Mat work = CropWork.crop(dstResize);
@@ -69,6 +70,8 @@ public class analysisCircle {
 //        Mat test = CropWork.work(work);
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"_work.png",work);
+
+
 
         blackImage = new changeColor(HighGui.toBufferedImage(dstResize));
 
