@@ -1,5 +1,6 @@
 package com.example.tachographanalysis;
 
+import com.example.tachographanalysis.database.DatabaseConnection;
 import com.example.tachographanalysis.size.SizeController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,17 +9,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
 
 public class DriversController implements Initializable {
-
 
     @FXML
     private Button btnBack;
@@ -56,6 +60,19 @@ public class DriversController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void getAddDrivers() throws Exception {
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
+        StackPane stackPane = new StackPane();
+        Scene secondScene = new Scene(stackPane, 440,520);
+        stackPane.getChildren().add(fxmlLoader);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Dodaj kierowce");
+        secondStage.setScene(secondScene);
+
+        secondStage.show();
+    }
+
 }
 
 

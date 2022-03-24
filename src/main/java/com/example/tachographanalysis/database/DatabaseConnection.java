@@ -1,4 +1,4 @@
-package com.example.tachographanalysis;
+package com.example.tachographanalysis.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     public Connection getDBConnection(){
 
-        String url = "jdbc:sqlite:D:/Programy/sqlite3/tachograph-analysis";
+        String url = "jdbc:sqlite:src/main/resources/com/example/tachographanalysis/tachograph-analysis";
         try{
             databaseLink = DriverManager.getConnection(url);
             System.out.println("Connected to SQLITE!");
