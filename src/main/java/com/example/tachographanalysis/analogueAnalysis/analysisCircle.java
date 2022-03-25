@@ -1,8 +1,5 @@
 package com.example.tachographanalysis.analogueAnalysis;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.fxml.FXML;
-import javafx.scene.image.WritableImage;
 import org.json.JSONObject;
 import org.opencv.core.*;
 import org.opencv.core.Point;
@@ -10,14 +7,11 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
-import static com.example.tachographanalysis.analogueAnalysis.CropWork.work;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
-import javafx.scene.control.TextArea;
 
 
 public class analysisCircle {
@@ -44,14 +38,18 @@ public class analysisCircle {
 
         JSONObject center=HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
-
+        if(center==null){
+            return new BufferedImage[]{null, null};
+        }
         Mat findedCircle=imageFile;
         findedCircle=findedCircle.submat(new Range((int) (center.getDouble("centery")-center.getDouble("radius")),
                         (int) (center.getDouble("centery")+center.getDouble("radius"))),
                 new Range((int) (center.getDouble("centerx")-center.getDouble("radius")),
                         (int) (center.getDouble("centerx")+center.getDouble("radius"))));
 
-
+//        Mat p24=Imgcodecs.imread("C:\\Users\\Grzesiek\\IdeaProjects\\p24.png");
+//        Imgproc.matchShapes(findedCircle, findedCircle);
+//        System.out.println();
 
         Imgproc.warpPolar(imageFile, dst, imageFile.size(),
 //                new Point(imageFile.width()/2,imageFile.height()/2),
@@ -62,7 +60,7 @@ public class analysisCircle {
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
 
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
-        resizeImage(dst2, dstResize);
+        resizeImage(dst2, dstResize, (int) ( center.getDouble("radius")*2*Math.PI));
 
         Mat work = CropWork.crop(dstResize);
 
@@ -74,8 +72,6 @@ public class analysisCircle {
 
         blackImage.blackAndWhite(200);
 //        blackImage.czas_pracy();
-        blackImage.save("png",file
-                .replace("file:/","")+"praca.jpg");
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"_resize.png",dstResize);
 
@@ -86,8 +82,8 @@ public class analysisCircle {
         return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(findedCircle)};
     }
 
-    private void resizeImage(Mat dst, Mat dstResize) {
-        Size Resize = new Size(1235, 290);
+    private void resizeImage(Mat dst, Mat dstResize,int width) {
+        Size Resize = new Size(width, dst.height());
         Imgproc.resize(dst, dstResize, Resize, 0,0, Imgproc.INTER_AREA);
     }
 
