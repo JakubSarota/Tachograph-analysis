@@ -142,29 +142,31 @@ public class changeColor {
             raster.getPixel(i, j, pixels);
 //            System.out.println(pixels[0]);
             if(pixels[0]==255){
-                raster.getPixel(i, j-5, pixels2);
+                raster.getPixel(i, j-10, pixels2);
                 if(pixels2[0]==255) {
-                    raster.getPixel(i, j+5, pixels3);
+                    raster.getPixel(i, j+10, pixels3);
                     if(pixels3[0]==255) {
                         minuty.add(String.valueOf((int) (i/coMinuty)));
 
                     }
                 }
             }
-            int black[]={200,200,50};
+            int black[]={100,200,50};
             raster.setPixel(i, j, black);
-            raster.setPixel(i, j-5, black);
-            raster.setPixel(i, j+5, black);
+            raster.setPixel(i, j-10, black);
+            raster.setPixel(i, j+10, black);
             json.put("praca",minuty);
 
         }
-        System.out.println(json);
         return json;
     }
     public String ktoraGodzina(int m){
         int godziny=m/60;
         int minuty=m%60;
-        return godziny+":"+minuty;
+        String mm= String.valueOf(minuty);
+        if(minuty<10)
+            mm="0"+minuty;
+        return godziny+":"+mm;
     }
     private double[] hsv2rgb(double hue, double sat, double val) {
         double red = 0, grn = 0, blu = 0;

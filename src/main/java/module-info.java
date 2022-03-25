@@ -19,5 +19,7 @@ module com.example.tachographanalysis {
 
     opens com.example.tachographanalysis to javafx.fxml;
     exports com.example.tachographanalysis;
+    exports com.example.tachographanalysis.database;
+    opens com.example.tachographanalysis.database to javafx.fxml;
 
 }
