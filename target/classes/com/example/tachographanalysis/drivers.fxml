@@ -22,7 +22,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button layoutX="66.0" layoutY="223.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Lista kierowców" textFill="#47535b">
+            <Button fx:id="btnDrivers" layoutX="66.0" layoutY="223.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Lista kierowców" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -38,12 +38,25 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="accountListView" layoutX="14.0" layoutY="88.0" prefHeight="498.0" prefWidth="200.0" />
-            <Text fill="#f5f5f5" layoutX="14.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista kierowców">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-            </Text>
+            <Pane fx:id="boxDrivers" prefHeight="620.0" prefWidth="995.0">
+               <children>
+                  <Text fill="#f5f5f5" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista kierowców">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </Text>
+                  <HBox layoutX="14.0" layoutY="69.0" prefHeight="528.0" prefWidth="288.0">
+                     <children>
+                        <ScrollPane prefHeight="355.0" prefWidth="286.0">
+                           <content>
+                              <ListView fx:id="accountListView" prefHeight="526.0" prefWidth="281.0">
+                              </ListView>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </center>

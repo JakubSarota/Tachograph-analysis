@@ -50,9 +50,6 @@
                         <ScrollPane prefHeight="355.0" prefWidth="286.0">
                            <content>
                               <ListView fx:id="accountListView" prefHeight="526.0" prefWidth="281.0">
-                                 <cursor>
-                                    <Cursor fx:constant="CLOSED_HAND" />
-                                 </cursor>
                               </ListView>
                            </content>
                         </ScrollPane>

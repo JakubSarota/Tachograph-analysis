@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -33,20 +34,10 @@ public class DriversController implements Initializable {
     private ListView<String> accountListView;
 
     @FXML
-    private Button btnAddDrivers;
-
-    @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
-    }
-
-    @FXML
-    public void addDriver(MouseEvent event){
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getDBConnection();
-
     }
 
     public void initialize(URL location, ResourceBundle resources){
