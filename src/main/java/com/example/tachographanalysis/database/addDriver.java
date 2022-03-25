@@ -7,7 +7,10 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.regex.Pattern;
+
 import javafx.scene.control.TextField;
+
 
 public class addDriver {
     @FXML
@@ -22,7 +25,13 @@ public class addDriver {
     @FXML
     private TextField tf_phone;
 
-    public void addDriver(javafx.scene.input.MouseEvent mouseEvent) {
+    public void addDriver() {
+        insertToDatabase();
+
+
+    }
+
+    public void insertToDatabase() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connectDB = databaseConnection.getDBConnection();
 

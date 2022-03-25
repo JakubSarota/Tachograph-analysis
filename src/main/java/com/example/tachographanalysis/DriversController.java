@@ -46,19 +46,6 @@ public class DriversController implements Initializable {
 
     }
 
-    public void getAddDrivers() throws Exception {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
-        StackPane stackPane = new StackPane();
-        Scene secondScene = new Scene(stackPane, 840,520);
-        stackPane.getChildren().add(fxmlLoader);
-        Stage secondStage = new Stage();
-        secondStage.setTitle("");
-        secondStage.setScene(secondScene);
-
-        secondStage.show();
-    }
-
-
     public void initialize(URL location, ResourceBundle resources){
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getDBConnection();
