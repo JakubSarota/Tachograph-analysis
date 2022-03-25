@@ -2,6 +2,8 @@ module com.example.tachographanalysis {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.graphics;
+    requires java.sql;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -17,4 +19,7 @@ module com.example.tachographanalysis {
 
     opens com.example.tachographanalysis to javafx.fxml;
     exports com.example.tachographanalysis;
+    exports com.example.tachographanalysis.database;
+    opens com.example.tachographanalysis.database to javafx.fxml;
+
 }

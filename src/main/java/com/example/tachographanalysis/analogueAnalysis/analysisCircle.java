@@ -68,6 +68,8 @@ public class analysisCircle {
         Imgcodecs.imwrite(file
                 .replace("file:/","")+"_work.png",work);
 
+
+
         blackImage = new changeColor(HighGui.toBufferedImage(dstResize));
 
         blackImage.blackAndWhite(200);
