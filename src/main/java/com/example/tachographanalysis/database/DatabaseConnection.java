@@ -1,4 +1,4 @@
-package com.example.tachographanalysis;
+package com.example.tachographanalysis.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

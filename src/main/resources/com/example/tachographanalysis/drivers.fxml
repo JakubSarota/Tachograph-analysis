@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -28,7 +27,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="66.0" layoutY="288.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj kierowcę" textFill="#47535b">
+            <Button layoutX="66.0" layoutY="288.0" mnemonicParsing="false" onAction="#getAddDrivers" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj kierowcę" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
