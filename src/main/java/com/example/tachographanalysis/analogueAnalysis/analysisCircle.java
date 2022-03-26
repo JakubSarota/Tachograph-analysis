@@ -42,10 +42,22 @@ public class analysisCircle {
             return new BufferedImage[]{null, null};
         }
         Mat findedCircle=imageFile;
-        findedCircle=findedCircle.submat(new Range((int) (center.getDouble("centery")-center.getDouble("radius")),
-                        (int) (center.getDouble("centery")+center.getDouble("radius"))),
-                new Range((int) (center.getDouble("centerx")-center.getDouble("radius")),
-                        (int) (center.getDouble("centerx")+center.getDouble("radius"))));
+        System.out.println(center);
+        int minX=(int) (center.getDouble("centerx")-center.getDouble("radius"));
+        int minY=(int) (center.getDouble("centery")-center.getDouble("radius"));
+        int maxX= (int) (center.getDouble("centerx")+center.getDouble("radius"));
+        int maxY=(int) (center.getDouble("centery")+center.getDouble("radius"));
+        if(minX<0)
+            minX=0;
+        if(maxX>findedCircle.width());
+            maxX=findedCircle.width();
+        if(minY<0)
+            minY=0;
+        if(maxY>findedCircle.height())
+            maxY=findedCircle.height();
+        findedCircle=findedCircle.submat(
+                new Range(minY,maxY),
+                new Range(minX,maxX));
 
 //        Mat p24=Imgcodecs.imread("C:\\Users\\Grzesiek\\IdeaProjects\\p24.png");
 //        Imgproc.matchShapes(findedCircle, findedCircle);
