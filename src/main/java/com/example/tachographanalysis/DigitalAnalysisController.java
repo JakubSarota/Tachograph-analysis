@@ -69,6 +69,7 @@ public class DigitalAnalysisController implements Initializable {
     static String PDF =  "";
     static String dataT =  "";
     static String[] dataGD;
+    static String dataPick;
 
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
@@ -290,6 +291,8 @@ public class DigitalAnalysisController implements Initializable {
 
           String datePickerTime = String.valueOf(dataPicker.getValue());
           String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
+
+          dataPick= datePickerTime;
 
           TextArea dailyData = new TextArea("");
           two.setContent(dailyData);
@@ -805,7 +808,7 @@ private void colorPicker() throws ParserConfigurationException {
             //String PDF1 = PDF.substring(25, PDF.length() - 4);
             File PDF2 = new File(new File(PDF_).getName()); // nazwa pliku
 
-            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + ".pdf"));
+            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + dataPick + ".pdf"));
             System.out.println("Tworzenie pliku PDF powiodło się.");
 //Otwieranie pliku PDF
             doc.open();
@@ -816,7 +819,7 @@ private void colorPicker() throws ParserConfigurationException {
                 Document doc1 = db.parse(PDF_);
                 doc1.getDocumentElement().normalize();
 
-                doc.add(new Paragraph(dataGD[1]));
+                doc.add(new Paragraph(dataGD[0]));
 //                doc.add(new Paragraph(dataGD[1]));
 //                doc.add(new Paragraph(dataGD[2]));
 //                doc.add(new Paragraph(dataGD[3]));
