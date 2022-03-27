@@ -1,6 +1,7 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.analogueAnalysis.HoughCirclesRun;
+import com.example.tachographanalysis.analogueAnalysis.RotateImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,8 @@ import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
 import javafx.scene.control.TextArea;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 public class AnalogueAnalysisController {
     @FXML
@@ -87,7 +90,7 @@ public class AnalogueAnalysisController {
     }
 
     @FXML
-    private void handleDroppedButton(DragEvent event) throws IOException {
+    private void handleDroppedButton(DragEvent event) throws IOException, InterruptedException {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("jpg", "png");
         image = new Image(new FileInputStream(files.get(0)));
@@ -111,11 +114,14 @@ public class AnalogueAnalysisController {
         return extension;
     }
 
-    private void getImageOnClick(String image) throws IOException {
+    private void getImageOnClick(String image) throws IOException, InterruptedException {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(image);
+
+
+
         if(writableImage[0]!=null){
             WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
             imageView.setImage(wi);
@@ -127,12 +133,12 @@ public class AnalogueAnalysisController {
         if(analysisCircle.blackImage!=null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
             analysisCircle.blackImage.save("png",image
-                    .replace("file:/","")+"praca.jpg");
+                    .replace("file:/","")+"praca.png");
         }else
             textArea.setText("Nie odnaleziono tarczy");
     }
 
-    private void getImageDragAndDrop(List<File> files) throws IOException {
+    private void getImageDragAndDrop(List<File> files) throws IOException, InterruptedException {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
@@ -148,14 +154,14 @@ public class AnalogueAnalysisController {
         if(analysisCircle.blackImage!=null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
             analysisCircle.blackImage.save("png",String.valueOf(files.get(0))
-                    .replace("file:/","")+"praca.jpg");
+                    .replace("file:/","")+"praca.png");
         }else
             textArea.setText("Nie odnaleziono tarczy");
     }
 
     private void writeWork(JSONObject json){
         JSONArray jarr=json.getJSONArray("praca");
-        System.out.println(jarr.length());
+//        System.out.println(jarr.length());
         String text="";
         String xml="" +
                 "<DriverData>\n" +
@@ -300,7 +306,7 @@ public class AnalogueAnalysisController {
                 "    </DriverActivityData>\n"+
                 "</DriverData>";
 
-        System.out.println(xml);
+//        System.out.println(xml);
 
         textArea.setText(text);
     }

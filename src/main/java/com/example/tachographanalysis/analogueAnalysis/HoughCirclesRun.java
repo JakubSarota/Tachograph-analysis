@@ -41,8 +41,9 @@ public class HoughCirclesRun {
             jo.put("radius",radius);
             return jo;
         }
-        Imgcodecs.imwrite(filename
-                .replace("file:/","")+"test__2_.png",src);
+
+//        Imgcodecs.imwrite(filename
+//                .replace("file:/","")+"test__2_.png",src);
         return null;
     }
 
