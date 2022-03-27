@@ -54,6 +54,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnRaportPDFdnia" layoutX="455.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="40.0" prefWidth="155.0" text="Generuj Raport Dnia" textFill="#47535b" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                   <ProgressBar fx:id="progressBar" layoutX="398.0" layoutY="301.0" prefWidth="200.0" progress="0.0" visible="false" />
                   <DatePicker fx:id="dataPicker" editable="false" layoutX="789.0" layoutY="100.0" onAction="#setDataPicker" prefHeight="25.0" prefWidth="119.0" visible="false" />
                </children>

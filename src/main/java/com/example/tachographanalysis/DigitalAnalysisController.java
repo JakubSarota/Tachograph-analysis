@@ -62,6 +62,8 @@ public class DigitalAnalysisController implements Initializable {
     private String DDDFile;
     @FXML
     private Button btnRaportPDF;
+    @FXML
+    private Button btnRaportPDFdnia;
     List<String> lstFile;
 
     static String PDF =  "";
@@ -223,6 +225,10 @@ public class DigitalAnalysisController implements Initializable {
         generatePDF(PDF);
     }
     @FXML
+    private void  generatePDF3(){
+        generatePDFdnia(PDF);
+    }
+    @FXML
     private void showData(String[] readedData){
 
 
@@ -238,11 +244,13 @@ public class DigitalAnalysisController implements Initializable {
             e.printStackTrace();
         }
         btnRaportPDF.setVisible(true);
-
             tabPane.setVisible(true);
             if(btnRaportPDF.isPressed()) {
                 generatePDF2();
             }
+            if(btnRaportPDFdnia.isPressed()) {
+                generatePDF3();
+        }
 
         TextArea generalData = new TextArea("");
         one.setContent(generalData);
@@ -287,6 +295,7 @@ public class DigitalAnalysisController implements Initializable {
           two.setContent(dailyData);
           TextArea dailyDataDriver = (TextArea) two.getContent();
           dataPicker.setVisible(true);
+          btnRaportPDFdnia.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
             dailyDataDriver.appendText("Ten pracownik nie pracował tego dnia ");
@@ -318,12 +327,17 @@ public class DigitalAnalysisController implements Initializable {
 
         if(dataT.length()!=0) {
             dataPicker.setVisible(false);
+            btnRaportPDFdnia.setVisible(false);
         }
 
     }
     @FXML
     private void visibilityDataPickerEnter(){
         dataPicker.setVisible(true);
+    }
+    @FXML
+    private void btnRaportPDFdnia(){
+        btnRaportPDFdnia.setVisible(true);
     }
 
 private void colorPicker() throws ParserConfigurationException {
@@ -712,120 +726,7 @@ private void colorPicker() throws ParserConfigurationException {
                 DocumentBuilder db = dbf.newDocumentBuilder();
                 Document doc1 = db.parse(PDF_);
                 doc1.getDocumentElement().normalize();
-                NodeList nodeList = doc1.getElementsByTagName("DriverData");
-                NodeList CardVehicleRecord = doc1.getElementsByTagName("CardVehicleRecords");
-                for (int itr = 0; itr < nodeList.getLength(); itr++) {
-                    Node nodeVehic = CardVehicleRecord.item(itr);
-                    Node node = nodeList.item(itr);
-                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) node;
-                        Element elElement = (Element) nodeVehic;
 
-                        // dodać serial number / data / rfu/  (jak wyciąga się value xml elementu month year itp..)
-//                        doc.add(new Paragraph("\t ClockStop: " + eElement.getElementsByTagName("ClockStop").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t CardExtendedSerialNumber: " + eElement.getElementsByTagName("CardExtendedSerialNumber").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t Numer zatwierdzenia karty: " + eElement.getElementsByTagName("CardApprovalNumber").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t CardPersonaliserId: " + eElement.getElementsByTagName("CardPersonaliserId").
-//                                item(0).getTextContent() + "\n"));
-//                        //EmbedderIcAssemblerId
-//                        doc.add(new Paragraph("\t EmbedderIcAssemblerId: " + "\n"));
-//                        doc.add(new Paragraph("\t\t CountryCode: " + eElement.getElementsByTagName("CountryCode").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t ModuleEmbedder: " + eElement.getElementsByTagName("CountryCode").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t ManufacturerInformation: " + eElement.getElementsByTagName("ManufacturerInformation").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t IcIdentifier: " + eElement.getElementsByTagName("IcIdentifier").
-//                                item(0).getTextContent() + "\n"));
-//                        //CardChipIdentyfiaction
-//                        doc.add(new Paragraph("CardChipIdentification: " + eElement.getElementsByTagName("CardChipIdentification").
-//                                item(0).getTextContent() + "\n"));
-//                        // ext value
-//                        doc.add(new Paragraph("\t IcSerialNumber: " + eElement.getElementsByTagName("IcSerialNumber").
-//                                item(0).getTextContent() + "\n"));
-//                        // ext value
-//                        doc.add(new Paragraph("\t IcManufacturingReferences: " + eElement.getElementsByTagName("IcManufacturingReferences").
-//                                item(0).getTextContent() + "\n"));
-//                        //DriverCardApplicationIdentyfication
-//                        doc.add(new Paragraph(" DriverCardApplicationIdentification: " + "\n"));
-//                        doc.add(new Paragraph("\t Type: " + eElement.getElementsByTagName("Type").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t Version: " + eElement.getElementsByTagName("Version").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t NoOfEventsPerType: " + eElement.getElementsByTagName("NoOfEventsPerType").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t NoOfFaultsPerType: " + eElement.getElementsByTagName("NoOfFaultsPerType").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t ActivityStructureLength: " + eElement.getElementsByTagName("ActivityStructureLength").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t NoOfCardVehicleRecords: " + eElement.getElementsByTagName("NoOfCardVehicleRecords").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t NoOfCardPlaceRecords: " + eElement.getElementsByTagName("NoOfCardPlaceRecords").
-//                                item(0).getTextContent() + "\n"));
-//                        //CardCertificate
-//                        doc.add(new Paragraph(" CardCertificate: " + "\n"));
-//                        //ext value
-//                        doc.add(new Paragraph("\t Signature: " + eElement.getElementsByTagName("Signature").
-//                                item(0).getTextContent() + "\n"));
-//                        //ext value
-//                        doc.add(new Paragraph("\t PublicKeyRemainder: " + eElement.getElementsByTagName("PublicKeyRemainder").
-//                                item(0).getTextContent() + "\n"));
-//                        //CertificationAuthorityReference
-//                        doc.add(new Paragraph("\t CertificationAuthorityReference: " + "\n"));
-//                        doc.add(new Paragraph("\t\t Nation: " + eElement.getElementsByTagName("Nation").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t NationCode: " + eElement.getElementsByTagName("NationCode").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t SerialNumber: " + eElement.getElementsByTagName("SerialNumber").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t AdditionalInfo: " + eElement.getElementsByTagName("AdditionalInfo").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t CaIdentifier: " + eElement.getElementsByTagName("CaIdentifier").
-//                                item(0).getTextContent() + "\n"));
-//                        //Identification
-//                        doc.add(new Paragraph(" Identification: " + "\n"));
-//                        //CardIdentyfication
-//                        doc.add(new Paragraph("\t CardIdentification: " + "\n"));
-//                        doc.add(new Paragraph("\t\t CardIssuingMemberState: " + eElement.getElementsByTagName("CardIssuingMemberState").
-//                                item(0).getTextContent() + "\n"));
-//                        // ext value
-//                        doc.add(new Paragraph("\t\t CardNumber: " + eElement.getElementsByTagName("CardNumber").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t CardIssuingAuthorityName: " + eElement.getElementsByTagName("CardIssuingAuthorityName").
-//                                item(0).getTextContent() + "\n"));
-//                        // ext value
-//                        doc.add(new Paragraph("\t\t CardIssueDate: " + eElement.getElementsByTagName("CardIssueDate").
-//                                item(0).getTextContent() + "\n"));
-//                        // ext value
-//                        doc.add(new Paragraph("\t\t CardValidityBegin: " + eElement.getElementsByTagName("CardValidityBegin").
-//                                item(0).getTextContent() + "\n"));
-//                        // ext value
-//                        doc.add(new Paragraph("\t\t CardExpiryDate: " + eElement.getElementsByTagName("CardExpiryDate").
-//                                item(0).getTextContent() + "\n"));
-//                        //DriverCardHolderIdentyfication
-//                        doc.add(new Paragraph("\t DriverCardHolderIdentification: " + eElement.getElementsByTagName("DriverCardHolderIdentification").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t CardHolderSurname: " + eElement.getElementsByTagName("CardHolderSurname").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t CardHolderFirstNames: " + eElement.getElementsByTagName("CardHolderFirstNames").
-//                                item(0).getTextContent() + "\n"));
-//                        // ect value
-//                        doc.add(new Paragraph("\t\t CardHolderBirthDate: " + eElement.getElementsByTagName("CardHolderBirthDate").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t CardHolderPreferredLanguage: " + eElement.getElementsByTagName("CardHolderPreferredLanguage").
-//                                item(0).getTextContent() + "\n"));
-//                        //CardDrivingLicenceInformation
-//                        doc.add(new Paragraph("\t CardDrivingLicenceInformation: " + eElement.getElementsByTagName("CardDrivingLicenceInformation").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t DrivingLicenceIssuingAuthority: " + eElement.getElementsByTagName("DrivingLicenceIssuingAuthority").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t DrivingLicenceIssuingNation: " + eElement.getElementsByTagName("DrivingLicenceIssuingNation").
-//                                item(0).getTextContent() + "\n"));
-//                        doc.add(new Paragraph("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
-//                                item(0).getTextContent() + "\n"));
                         doc.add(new Paragraph(dataGD[0]));
                         doc.add(new Paragraph(dataGD[1]));
                         doc.add(new Paragraph(dataGD[2]));
@@ -833,8 +734,8 @@ private void colorPicker() throws ParserConfigurationException {
 
 
 
-                    }
-                }
+
+
 
 
 //                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
@@ -853,7 +754,6 @@ private void colorPicker() throws ParserConfigurationException {
             } catch (SAXException ex) {
                 ex.printStackTrace();
             }
-            doc.add(new Paragraph(PDF_));
 //close the PDF file
             doc.close();
 //closes the writer
@@ -868,6 +768,97 @@ private void colorPicker() throws ParserConfigurationException {
             e.printStackTrace();
         }
     }
+
+    public void generatePDFdnia(String PDF_) {
+//created PDF document instance
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+        PdfWriter writer;
+        try {
+//generate a PDF at the specified location
+            File dir = new File(".\\PDF\\");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+//            String fname = null;
+//            File file = null;
+//
+//            System.out.println("Please choose file name:");
+//            while (true) {
+//                try (Scanner in = new Scanner(System.in)) {
+//                    // Reads a single line from the console
+//                    fname = in.nextLine();
+//                    file = new File(fname);
+//                    if (!file.createNewFile()) {
+//                        throw new RuntimeException("File already exist");
+//                    }
+//                    break;
+//                } catch (Exception ex) {
+//                    System.out.println(ex.getMessage() + ", please try again:");
+//                }
+//            }
+//
+//            return file;
+
+//            FileChooser fileChooser = new FileChooser();
+//            File file = fileChooser.showOpenDialog(new Stage());
+            //Tworzenie pliku PDF
+            //String PDF1 = PDF.substring(25, PDF.length() - 4);
+            File PDF2 = new File(new File(PDF_).getName()); // nazwa pliku
+
+            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + ".pdf"));
+            System.out.println("Tworzenie pliku PDF powiodło się.");
+//Otwieranie pliku PDF
+            doc.open();
+//Dodwawanie paragrafów do pliku PDF
+            try {
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc1 = db.parse(PDF_);
+                doc1.getDocumentElement().normalize();
+
+                doc.add(new Paragraph(dataGD[1]));
+//                doc.add(new Paragraph(dataGD[1]));
+//                doc.add(new Paragraph(dataGD[2]));
+//                doc.add(new Paragraph(dataGD[3]));
+
+
+
+
+
+
+
+//                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
+//                        Node node = nodeList.item(itr);
+//                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                        }
+
+
+                //CardFaultRecords
+//                }
+            } catch (ParserConfigurationException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (SAXException ex) {
+                ex.printStackTrace();
+            }
+//close the PDF file
+            doc.close();
+//closes the writer
+            writer.close();
+        }
+        catch (DocumentException e)
+        {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
