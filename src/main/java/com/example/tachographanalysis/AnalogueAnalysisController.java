@@ -35,22 +35,17 @@ import org.opencv.imgcodecs.Imgcodecs;
 
 public class AnalogueAnalysisController {
     @FXML
-    private Button btnBack;
+    private Button btnBack, dragOver;
     @FXML
-    private ImageView imageView;
-    @FXML
-    private ImageView imageView2;
+    private ImageView imageView, imageView2;
     @FXML
     private Image image;
-    @FXML
-    private Button dragOver;
     @FXML
     private ScrollPane scroll;
     @FXML
     private TextArea textArea;
 
-    private String imageFile;
-    private String text = "Wybierz plik albo upuść go tutaj";
+    private String imageFile, text = "Wybierz plik albo upuść go tutaj";
 
     analysisCircle analysisCircle = new analysisCircle();
 
@@ -120,8 +115,6 @@ public class AnalogueAnalysisController {
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(image);
 
-
-
         if(writableImage[0]!=null){
             WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
             imageView.setImage(wi);
@@ -135,7 +128,7 @@ public class AnalogueAnalysisController {
             analysisCircle.blackImage.save("png",image
                     .replace("file:/","")+"praca.png");
         }else
-            textArea.setText("Nie odnaleziono tarczy");
+            dragOver.setText("Nie odnaleziono tarczy");
     }
 
     private void getImageDragAndDrop(List<File> files) throws IOException, InterruptedException {
@@ -156,7 +149,7 @@ public class AnalogueAnalysisController {
             analysisCircle.blackImage.save("png",String.valueOf(files.get(0))
                     .replace("file:/","")+"praca.png");
         }else
-            textArea.setText("Nie odnaleziono tarczy");
+            dragOver.setText("Nie odnaleziono tarczy");
     }
 
     private void writeWork(JSONObject json){
@@ -267,9 +260,8 @@ public class AnalogueAnalysisController {
                 "    <DriverActivityData>\n" +
                 "<CardDriverActivity>\n" +
         "            <CardActivityDailyRecord DateTime=\"\" DailyPresenceCounter=\"\" Distance=\"\">\n";
-
 //
-        for (int i=0;i<jarr.length();i++){
+        for (int i=0;i<jarr.length();i++) {
             boolean pracowal=false;
             boolean przerwa=false;
             int tmp=Integer.parseInt((String) jarr.get(i));
@@ -297,6 +289,7 @@ public class AnalogueAnalysisController {
                         analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i)))+"\" />\n";
             }
         }
+
         text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\n";
         xml+="<ActivityChangeInfo FileOffset=\"\" Slot=\"\" Status=\"\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                 analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\" />\n";

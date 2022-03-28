@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
     <center>
         <VBox alignment="BOTTOM_CENTER" prefHeight="620.0" prefWidth="948.0" style="-fx-background-color: #186199;">
             <children>
@@ -25,6 +25,7 @@
                                 </ScrollPane>
                             </children>
                         </AnchorPane>
+                  <ProgressBar layoutX="214.0" layoutY="358.0" prefHeight="25.0" prefWidth="450.0" progress="0.0" visible="false" />
                     </children>
                 </AnchorPane>
             </children>
@@ -59,6 +60,9 @@
         </AnchorPane>
     </left>
     <right>
-        <TextArea fx:id="textArea" prefHeight="620.0" prefWidth="114.0" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER" />
+        <TextArea fx:id="textArea" disable="true" prefHeight="620.0" prefWidth="134.0" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></TextArea>
     </right>
 </BorderPane>
