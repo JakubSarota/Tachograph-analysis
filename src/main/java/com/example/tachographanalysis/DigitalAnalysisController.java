@@ -5,6 +5,7 @@ import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.BaseFont;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -70,6 +71,9 @@ public class DigitalAnalysisController implements Initializable {
     static String dataT =  "";
     static String[] dataGD;
     static String dataPick;
+    static String dataPick1;
+    static String daily = "";
+    static BaseFont helvetica;
 
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
@@ -260,7 +264,7 @@ public class DigitalAnalysisController implements Initializable {
 
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
-        TextArea dailyDataDriver = (TextArea) two.getContent();
+        //TextArea dailyDataDriver = (TextArea) two.getContent();
 //        dailyDataDriver.appendText(readedData[1]);
 
         dataT=readedData[1];
@@ -293,6 +297,7 @@ public class DigitalAnalysisController implements Initializable {
           String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
 
           dataPick= datePickerTime;
+          dataPick1= indexOfDataPickerTime;
 
           TextArea dailyData = new TextArea("");
           two.setContent(dailyData);
@@ -775,7 +780,9 @@ private void colorPicker() throws ParserConfigurationException {
     public void generatePDFdnia(String PDF_) {
 //created PDF document instance
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+
         PdfWriter writer;
+
         try {
 //generate a PDF at the specified location
             File dir = new File(".\\PDF\\");
@@ -806,8 +813,8 @@ private void colorPicker() throws ParserConfigurationException {
 //            File file = fileChooser.showOpenDialog(new Stage());
             //Tworzenie pliku PDF
             //String PDF1 = PDF.substring(25, PDF.length() - 4);
-            File PDF2 = new File(new File(PDF_).getName()); // nazwa pliku
-
+            File PDF2 = new File(new File(PDF_).getName());
+            // nazwa pliku
             writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + dataPick + ".pdf"));
             System.out.println("Tworzenie pliku PDF powiodło się.");
 //Otwieranie pliku PDF
@@ -818,11 +825,28 @@ private void colorPicker() throws ParserConfigurationException {
                 DocumentBuilder db = dbf.newDocumentBuilder();
                 Document doc1 = db.parse(PDF_);
                 doc1.getDocumentElement().normalize();
+                helvetica = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
+                com.itextpdf.text.Font polskieFonty=new com.itextpdf.text.Font(helvetica,10);
 
-                doc.add(new Paragraph(dataGD[0]));
+                //doc.add(new Paragraph(dataGD[1]));
 //                doc.add(new Paragraph(dataGD[1]));
 //                doc.add(new Paragraph(dataGD[2]));
 //                doc.add(new Paragraph(dataGD[3]));
+
+                if(dataPick1.equals("-1")) {
+                    doc.add(new Paragraph("Pracownik nie pracował w tym dniu."));
+                }
+                else {
+                    int indeksString = parseInt(dataPick1);
+                    int i = 0;
+                    while (!String.valueOf(dataT.charAt(indeksString + i)).equals("d")) {
+                        daily += (dataT.charAt(parseInt(dataPick1) + i));
+                        //doc.add(new Paragraph("" + dataT.charAt(parseInt(dataPick1) + i)));
+                        i += 1;
+                        //doc.add(new Paragraph(""+daily));
+                    }
+                    doc.add(new Paragraph(daily,polskieFonty));
+                }
 
 
 
