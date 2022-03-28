@@ -44,15 +44,26 @@ public class analysisCircle {
         }
 
         Mat findedCircle = imageFile;
-        findedCircle=findedCircle.submat(new Range((int) (center.getDouble("centery")-center.getDouble("radius")),
-                        (int) (center.getDouble("centery")+center.getDouble("radius"))),
-                new Range((int) (center.getDouble("centerx")-center.getDouble("radius")),
-                        (int) (center.getDouble("centerx")+center.getDouble("radius"))));
+        int minX=(int) (center.getDouble("centerx")-center.getDouble("radius"));
+        int minY=(int) (center.getDouble("centery")-center.getDouble("radius"));
+        int maxX= (int) (center.getDouble("centerx")+center.getDouble("radius"));
+        int maxY=(int) (center.getDouble("centery")+center.getDouble("radius"));
+        if(minX<0)
+            minX=0;
+        if(maxX>findedCircle.width())
+            maxX=findedCircle.width();
+        if(minY<0)
+            minY=0;
+        if(maxY>findedCircle.height())
+            maxY=findedCircle.height();
+        findedCircle=findedCircle.submat(
+                new Range(minY,maxY),
+                new Range(minX,maxX));
 
 
 
         Mat rotateImage = RotateImage.RotateImage(findedCircle);
-        rotateImage.copyTo(imageFile);
+        rotateImage.copyTo(findedCircle);
 
 
         Imgcodecs.imwrite(file
@@ -84,7 +95,7 @@ public class analysisCircle {
 //        java.awt.Image img = HighGui.toBufferedImage(dstResize);
 
         BufferedImage writableImage = (BufferedImage) blackImage.im;
-        return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(rotateImage)};
+        return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(findedCircle)};
     }
 
     private void resizeImage(Mat dst, Mat dstResize,int width) {
