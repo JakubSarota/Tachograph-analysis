@@ -32,8 +32,8 @@ public class analysisCircle {
 //        kola.blackAndWhite(200);
 //        kola.petla_po_pikselach();
         kola.greyScale();
-        kola.save("png",file
-                .replace("file:/","")+"black_circle.png");
+//        kola.save("png",file
+//                .replace("file:/","")+"black_circle.png");
 
         JSONObject center = HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
@@ -66,8 +66,8 @@ public class analysisCircle {
         rotateImage.copyTo(findedCircle);
 
 
-        Imgcodecs.imwrite(file
-                .replace("file:/","")+"atest.png",rotateImage);
+//        Imgcodecs.imwrite(file
+//                .replace("file:/","")+"atest.png",rotateImage);
 
 
         Imgproc.warpPolar(imageFile, dst, imageFile.size(),
@@ -84,8 +84,8 @@ public class analysisCircle {
 
         Mat work = CropWork.crop(dstResize);
 
-        Imgcodecs.imwrite(file
-                .replace("file:/","")+"_work.png",work);
+//        Imgcodecs.imwrite(file
+//                .replace("file:/","")+"_work.png",work);
 
 
         blackImage = new changeColor(HighGui.toBufferedImage(dstResize));
