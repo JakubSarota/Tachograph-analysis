@@ -677,7 +677,7 @@ private void colorPicker() throws ParserConfigurationException {
     @FXML
     private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
-        List<String> validExtensions = Arrays.asList("ddd", "DDD", "txt", "xml");
+        List<String> validExtensions = Arrays.asList("ddd", "DDD", "xml");
         file = new File(String.valueOf(new Stage()));
         //image = new Image(new FileInputStream(files.get(0))); //Drag&Drop IMG
         //File file = fileChooser.showOpenDialog(new Stage());  //Chooser DIGI
