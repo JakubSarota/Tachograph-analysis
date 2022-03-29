@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
    <left>
       <AnchorPane prefHeight="620.0" prefWidth="229.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -22,12 +22,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button fx:id="btnDrivers" layoutX="66.0" layoutY="223.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Lista kierowców" textFill="#47535b">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="66.0" layoutY="288.0" mnemonicParsing="false" onAction="#getAddDrivers" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj kierowcę" textFill="#47535b">
+            <Button fx:id="btnAddDrivers" layoutX="66.0" layoutY="231.0" mnemonicParsing="false" onAction="#getAddDrivers" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj kierowcę" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

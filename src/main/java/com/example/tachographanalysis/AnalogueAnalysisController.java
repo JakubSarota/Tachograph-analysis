@@ -1,54 +1,48 @@
 package com.example.tachographanalysis;
 
-import com.example.tachographanalysis.analogueAnalysis.HoughCirclesRun;
+import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
+import com.example.tachographanalysis.size.SizeController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.*;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.tachographanalysis.size.SizeController;
-import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
-import javafx.scene.control.TextArea;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class AnalogueAnalysisController {
     @FXML
-    private Button btnBack;
+    private Button btnBack, dragOver;
     @FXML
-    private ImageView imageView;
-    @FXML
-    private ImageView imageView2;
+    private ImageView imageView, imageView2;
     @FXML
     private Image image;
-    @FXML
-    private Button dragOver;
     @FXML
     private ScrollPane scroll;
     @FXML
     private TextArea textArea;
 
-    private String imageFile;
-    private String text = "Wybierz plik albo upuść go tutaj";
-
+    private String imageFile, text = "Wybierz plik albo upuść go tutaj";
+    static double ip = 0;
     analysisCircle analysisCircle = new analysisCircle();
 
     @FXML
@@ -77,7 +71,7 @@ public class AnalogueAnalysisController {
         imageFile = selectedFile.toURI().toURL().toString();
         image = new Image(imageFile);
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("Rozmiar pliku zamały, wymagane 1000x1000 pikseli");
+            dragOver.setText("Rozmiar pliku jest za mały");
         } else if(selectedFile != null) {
             getImageOnClick(imageFile);
             dragOver.setText(text);
@@ -87,7 +81,7 @@ public class AnalogueAnalysisController {
     }
 
     @FXML
-    private void handleDroppedButton(DragEvent event) throws IOException {
+    private void handleDroppedButton(DragEvent event) throws Exception {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("jpg", "png");
         image = new Image(new FileInputStream(files.get(0)));
@@ -96,7 +90,7 @@ public class AnalogueAnalysisController {
                 .collect(Collectors.toList()))) {
             dragOver.setText("To nie jest plik graficzny!");
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("Rozmiar pliku zamały, wymagane 1000x1000 pikseli");
+            dragOver.setText("Rozmiar pliku jest za mały");
         } else {
             getImageDragAndDrop(files);
             dragOver.setText(text);
@@ -111,11 +105,12 @@ public class AnalogueAnalysisController {
         return extension;
     }
 
-    private void getImageOnClick(String image) throws IOException {
+    private void getImageOnClick(String image) throws Exception {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(image);
+
         if(writableImage[0]!=null){
             WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
             imageView.setImage(wi);
@@ -127,12 +122,12 @@ public class AnalogueAnalysisController {
         if(analysisCircle.blackImage!=null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
             analysisCircle.blackImage.save("png",image
-                    .replace("file:/","")+"praca.jpg");
+                    .replace("file:/","")+"praca.png");
         }else
-            textArea.setText("Nie odnaleziono tarczy");
+            dragOver.setText("Nie odnaleziono tarczy");
     }
 
-    private void getImageDragAndDrop(List<File> files) throws IOException {
+    private void getImageDragAndDrop(List<File> files) throws Exception {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
@@ -148,14 +143,13 @@ public class AnalogueAnalysisController {
         if(analysisCircle.blackImage!=null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
             analysisCircle.blackImage.save("png",String.valueOf(files.get(0))
-                    .replace("file:/","")+"praca.jpg");
+                    .replace("file:/","")+"praca.png");
         }else
-            textArea.setText("Nie odnaleziono tarczy");
+            dragOver.setText("Nie odnaleziono tarczy");
     }
 
-    private void writeWork(JSONObject json){
+    private void writeWork(JSONObject json) throws Exception {
         JSONArray jarr=json.getJSONArray("praca");
-        System.out.println(jarr.length());
         String text="";
         String xml="" +
                 "<DriverData>\n" +
@@ -261,9 +255,8 @@ public class AnalogueAnalysisController {
                 "    <DriverActivityData>\n" +
                 "<CardDriverActivity>\n" +
         "            <CardActivityDailyRecord DateTime=\"\" DailyPresenceCounter=\"\" Distance=\"\">\n";
-
 //
-        for (int i=0;i<jarr.length();i++){
+        for (int i=0;i<jarr.length();i++) {
             boolean pracowal=false;
             boolean przerwa=false;
             int tmp=Integer.parseInt((String) jarr.get(i));
@@ -274,7 +267,7 @@ public class AnalogueAnalysisController {
                 }
                 if(Integer.parseInt((String) jarr.get(i))-15  >= Integer.parseInt((String) jarr.get(i - 1))){
                     przerwa=true;
-                    xml+="<ActivityChangeInfo FileOffset=\"\" Slot=\"\" Status=\"\" Inserted=\"True\" Activity=\"Break\" Time=\""+
+                    xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                                     analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\" />\n";
 
                     text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\n";
@@ -287,22 +280,27 @@ public class AnalogueAnalysisController {
             }
             if(!pracowal) {
                 text += "Work " + analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i))) + "\n";
-                xml+="<ActivityChangeInfo FileOffset=\"\" Slot=\"\" Status=\"\" Inserted=\"True\" Activity=\"Work\" Time=\""+
+                xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Work\" Time=\""+
                         analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i)))+"\" />\n";
             }
         }
+
         text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\n";
-        xml+="<ActivityChangeInfo FileOffset=\"\" Slot=\"\" Status=\"\" Inserted=\"True\" Activity=\"Break\" Time=\""+
+        xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                 analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\" />\n";
         xml+="            </CardActivityDailyRecord>\n" +
-                "            <DataBufferIsWrapped>True</DataBufferIsWrapped>\n" +
                 "        </CardDriverActivity>\n" +
                 "    </DriverActivityData>\n"+
                 "</DriverData>";
 
         System.out.println(xml);
-
-        textArea.setText(text);
+        FileWriter xmlfile=new FileWriter(".\\ddd_to_xml\\data\\driver\\analoguexml.xml");
+        xmlfile.write(xml);
+        xmlfile.close();
+        String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
+        System.out.println(s);
+        System.out.println("a tu się coś dzieje");
+        textArea.setText(s[1]);
     }
 
 }

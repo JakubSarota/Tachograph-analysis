@@ -16,7 +16,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 public class analysisCircle {
     public changeColor blackImage;
-    public BufferedImage[] getHuanByCircle(String file) throws IOException {
+    public BufferedImage[] getHuanByCircle(String file) throws IOException, InterruptedException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imageFile = imread(file
                 .replace("file:/",""),
@@ -24,7 +24,6 @@ public class analysisCircle {
         );
 
 //        work(imageFile);
-
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dstResize=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
@@ -33,23 +32,25 @@ public class analysisCircle {
 //        kola.blackAndWhite(200);
 //        kola.petla_po_pikselach();
         kola.greyScale();
-        kola.save("png",file
+//        kola.save("png",file
+//                .replace("file:/","")+"black_circle.png");
+
+        JSONObject center = HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
 
-        JSONObject center=HoughCirclesRun.run(file
-                .replace("file:/","")+"black_circle.png");
+
         if(center==null){
             return new BufferedImage[]{null, null};
         }
-        Mat findedCircle=imageFile;
-        System.out.println(center);
+
+        Mat findedCircle = imageFile;
         int minX=(int) (center.getDouble("centerx")-center.getDouble("radius"));
         int minY=(int) (center.getDouble("centery")-center.getDouble("radius"));
         int maxX= (int) (center.getDouble("centerx")+center.getDouble("radius"));
         int maxY=(int) (center.getDouble("centery")+center.getDouble("radius"));
         if(minX<0)
             minX=0;
-        if(maxX>findedCircle.width());
+        if(maxX>findedCircle.width())
             maxX=findedCircle.width();
         if(minY<0)
             minY=0;
@@ -59,9 +60,13 @@ public class analysisCircle {
                 new Range(minY,maxY),
                 new Range(minX,maxX));
 
-//        Mat p24=Imgcodecs.imread("C:\\Users\\Grzesiek\\IdeaProjects\\p24.png");
-//        Imgproc.matchShapes(findedCircle, findedCircle);
-//        System.out.println();
+        Mat rotateImage = RotateImage.RotateImage(findedCircle);
+        rotateImage.copyTo(findedCircle);
+
+
+//        Imgcodecs.imwrite(file
+//                .replace("file:/","")+"atest.png",rotateImage);
+
 
         Imgproc.warpPolar(imageFile, dst, imageFile.size(),
 //                new Point(imageFile.width()/2,imageFile.height()/2),
@@ -69,6 +74,7 @@ public class analysisCircle {
                 new Point(center.getDouble("centerx"),center.getDouble("centery")),
                 center.getDouble("radius"),
                 0);
+
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
 
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
@@ -76,27 +82,21 @@ public class analysisCircle {
 
         Mat work = CropWork.crop(dstResize);
 
-//        Mat test = CropWork.work(work);
-        Imgcodecs.imwrite(file
-                .replace("file:/","")+"_work.png",work);
-
+//        Imgcodecs.imwrite(file
+//                .replace("file:/","")+"_work.png",work);
 
 
         blackImage = new changeColor(HighGui.toBufferedImage(dstResize));
 
         blackImage.blackAndWhite(200);
 //        blackImage.czas_pracy();
-        Imgcodecs.imwrite(file
-                .replace("file:/","")+"_resize.png",dstResize);
-
 //        java.awt.Image img = HighGui.toBufferedImage(dstResize);
-
 
         BufferedImage writableImage = (BufferedImage) blackImage.im;
         return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(findedCircle)};
     }
 
-    private void resizeImage(Mat dst, Mat dstResize,int width) {
+    private void resizeImage(Mat dst, Mat dstResize, int width) {
         Size Resize = new Size(width, dst.height());
         Imgproc.resize(dst, dstResize, Resize, 0,0, Imgproc.INTER_AREA);
     }
