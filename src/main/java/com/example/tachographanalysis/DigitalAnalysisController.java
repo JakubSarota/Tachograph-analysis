@@ -682,7 +682,7 @@ private void colorPicker() throws ParserConfigurationException {
     });
 }
 
-    public String[] readData(File filexml) throws Exception {
+    public static String[] readData(File filexml) throws Exception {
 
         PDF = String.valueOf(filexml);
 
@@ -832,32 +832,53 @@ private void colorPicker() throws ParserConfigurationException {
                     int k = 0;
                     NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
                     NodeList ActivityChangeInfo = doc.getElementsByTagName("ActivityChangeInfo");
-                    for (int cout = 0; cout < CardActivityDailyRecord.getLength(); cout++) {
-
-
-                        dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(cout).
+                    for(int i=0;i<CardActivityDailyRecord.getLength();i++){
+        NodeList t=CardActivityDailyRecord.item(i).getChildNodes();
+//                        System.out.println(CardActivityDailyRecord.item(i).getAttributes().getNamedItem("DateTime"));
+                        dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(1).getNodeValue() + " \n");
-
-                        dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(cout).
+                        dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(2).getNodeValue() + " km \n");
-                        dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(cout).
+                        dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(0).getNodeValue() + " \n\n");
-                        // ilosc daily rekordy w danym dniu
-                        int itemsInCardActiveDailyRecord = CardActivityDailyRecord.item(cout).getChildNodes().getLength();
-                        // gdy
-                        int j = 0;
-                        while (j < itemsInCardActiveDailyRecord) {
-
-//                                textArea.appendText(" \t FileOffset: "+ActivityChangeInfo.item(j+k).getAttributes().item(1).getNodeValue() + "\n");
-//                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(3).getNodeValue() + "\n");
-//                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(4).getNodeValue() + "\n");
-//                                textArea.appendText(" \t Inserted: "+ActivityChangeInfo.item(j+k).getAttributes().item(2).getNodeValue() + "\n");
-                            dailyActivityS +=(" \t Aktywność: " + ActivityChangeInfo.item(j + k).getAttributes().item(0).getNodeValue());
-                            dailyActivityS +=(" Czas: " + ActivityChangeInfo.item(j + k).getAttributes().item(5).getNodeValue() + "\n");
-                            j++;
+                        for (int j=0;j<t.getLength();j++){
+//                            System.out.println(t.item(j).getAttributes().getNamedItem("Time"));
+//                            System.out.println(t.item(j).getAttributes());
+                            if(t.item(j).getAttributes()!=null) {
+                                dailyActivityS += (" \t Aktywność: " + t.item(j).getAttributes().getNamedItem("Activity"));
+                                dailyActivityS += (" Czas: " + t.item(j).getAttributes().getNamedItem("Time") + "\n");
+                            }
+//
                         }
-                        k += itemsInCardActiveDailyRecord;
                     }
+//                    System.out.println(dailyActivityS);
+//                    for (int cout = 0; cout < CardActivityDailyRecord.getLength(); cout++) {
+//
+//
+//                        dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(cout).
+//                                getAttributes().item(1).getNodeValue() + " \n");
+//
+//                        dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(cout).
+//                                getAttributes().item(2).getNodeValue() + " km \n");
+//                        dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(cout).
+//                                getAttributes().item(0).getNodeValue() + " \n\n");
+//                        // ilosc daily rekordy w danym dniu
+//                        int itemsInCardActiveDailyRecord = CardActivityDailyRecord.item(cout).getChildNodes().getLength();
+//                        // gdy
+//                        int j = 0;
+//
+//                        while (j < itemsInCardActiveDailyRecord) {
+//
+////                                textArea.appendText(" \t FileOffset: "+ActivityChangeInfo.item(j+k).getAttributes().item(1).getNodeValue() + "\n");
+////                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(3).getNodeValue() + "\n");
+////                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(4).getNodeValue() + "\n");
+////                                textArea.appendText(" \t Inserted: "+ActivityChangeInfo.item(j+k).getAttributes().item(2).getNodeValue() + "\n");
+//                            dailyActivityS +=(" \t Aktywność: " + ActivityChangeInfo.item(j ).getAttributes().item(0).getNodeValue());
+//                            dailyActivityS +=(" Czas: " + ActivityChangeInfo.item(j ).getAttributes().item(5).getNodeValue() + "\n");
+//                            j++;
+//                        }
+//                        k += itemsInCardActiveDailyRecord;
+//                    }
 
                     // Trasa kierowcy
                     NodeList elPlaceRecord = doc.getElementsByTagName("PlaceRecord");
@@ -892,7 +913,9 @@ private void colorPicker() throws ParserConfigurationException {
                 }
             }
 //            progressBar.progressProperty().bind(progressBar.progressProperty());
-
+            dailyActivityS=dailyActivityS.replace("Time=","");
+            dailyActivityS=dailyActivityS.replace("\"","");
+            dailyActivityS=dailyActivityS.replace("Activity=","");
             xmlDate[0] = generalDataS;
             xmlDate[1] = dailyActivityS;
             xmlDate[2] = driverRouteS;
