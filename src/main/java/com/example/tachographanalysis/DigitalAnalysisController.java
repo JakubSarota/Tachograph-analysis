@@ -5,12 +5,17 @@ import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.BaseFont;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -31,6 +36,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +49,11 @@ import static java.lang.Integer.parseInt;
 
 public class DigitalAnalysisController implements Initializable {
 
+
+    @FXML
+    private BarChart barChart;
+    @FXML
+    private AreaChart chart;
     @FXML
     private ProgressBar progressBar;
     @FXML
@@ -59,13 +71,23 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private File file;
     @FXML
+    private File file1;
+    @FXML
     private String DDDFile;
     @FXML
     private Button btnRaportPDF;
+    @FXML
+    private Button btnRaportPDFdnia;
     List<String> lstFile;
 
     static String PDF =  "";
     static String dataT =  "";
+    static String[] dataGD;
+    static String dataPick;
+    static String savedData = "";
+    static String dataPick1;
+    static String daily = "";
+    static BaseFont helvetica;
 
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
@@ -90,6 +112,7 @@ public class DigitalAnalysisController implements Initializable {
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.xml"));
         File file = fileChooser.showOpenDialog(new Stage());
+        System.out.println(file);
         if(file == null)
         {
 
@@ -141,7 +164,7 @@ public class DigitalAnalysisController implements Initializable {
                             long bytes = Files.size(Path.of(filexmlSize));
                             long kiloBytes = bytes / 1024;
 
-                            if (filexml.exists() && kiloBytes > 1) {
+                            if (filexml.exists() && kiloBytes > 0) {
                                 System.out.println("Poprawnie zaimportowano plik .ddd");
                                 f.deleteOnExit();
                                 String[] readedData = readData(filexml);
@@ -192,7 +215,7 @@ public class DigitalAnalysisController implements Initializable {
                 long bytesXML = Files.size(Path.of(filexmlSize));
                 long kiloBytesXML = bytesXML / 1024;
 
-                if (kiloBytesXML > 1) {
+                if (kiloBytesXML > 0) {
                     System.out.println("Poprawnie zaimportowano plik .xml");
                     String[] readedData = readData(file);
                     showData(readedData);
@@ -216,10 +239,44 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
     }
+//    @FXML
+//    private void handleDroppedButton(DragEvent event) throws IOException {
+//        List<File> files = event.getDragboard().getFiles();
+//        List<String> validExtensions = Arrays.asList("ddd", "DDD","xml");
+//        file1 = new File(String.valueOf(new FileInputStream(files.get(0))));
+//        if(!validExtensions.containsAll(event.getDragboard()
+//                .getFiles().stream().map(file -> getExtension(file.getName()))
+//                .collect(Collectors.toList()))) {
+//            dragOver.setText("To nie jest odpowiedni plik.");
+//
+//            File file = fileChooser.showOpenDialog(new Stage());
+//
+//        } else {
+//            try {
+//                Scanner scanner = new Scanner(files.get(0));
+//           System.out.println(file1);
+//                while (scanner.hasNextLine()) {
+//                    File filepath = files.get(0);
+////                    Files.write(filepath, )
+//
+//
+////                    textArea.appendText(scanner.nextLine() + "\n");
+//                    dragOver.setText("Poprawnie załadowano plik");
+//
+//                }
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     @FXML
     private void  generatePDF2(){
         generatePDF(PDF);
+    }
+    @FXML
+    private void  generatePDF3(){
+        generatePDFdnia(PDF);
     }
     @FXML
     private void showData(String[] readedData){
@@ -230,15 +287,20 @@ public class DigitalAnalysisController implements Initializable {
 //          dragOver.setVisible(false);
         try {
             colorPicker();
+            dataGD=readedData;
+
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
         btnRaportPDF.setVisible(true);
-
             tabPane.setVisible(true);
             if(btnRaportPDF.isPressed()) {
                 generatePDF2();
             }
+            if(btnRaportPDFdnia.isPressed()) {
+                generatePDF3();
+        }
 
         TextArea generalData = new TextArea("");
         one.setContent(generalData);
@@ -247,10 +309,11 @@ public class DigitalAnalysisController implements Initializable {
 
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
-        TextArea dailyDataDriver = (TextArea) two.getContent();
+        //TextArea dailyDataDriver = (TextArea) two.getContent();
 //        dailyDataDriver.appendText(readedData[1]);
 
         dataT=readedData[1];
+
 
 
         TextArea driverRoute = new TextArea("");
@@ -270,22 +333,31 @@ public class DigitalAnalysisController implements Initializable {
 
     @FXML
     private void  setDataPicker() {
-        setDataPicker2(dataT);
+        try {
+            setDataPicker2(dataT);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    private void setDataPicker2(String dataXml){
+    private void setDataPicker2(String dataXml) throws ParseException {
 
           String datePickerTime = String.valueOf(dataPicker.getValue());
           String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
+          String inThisDayData = "";
 
-          TextArea dailyData = new TextArea("");
-          two.setContent(dailyData);
-          TextArea dailyDataDriver = (TextArea) two.getContent();
-          dataPicker.setVisible(true);
+          dataPick= datePickerTime;
+          dataPick1= indexOfDataPickerTime;
+
+        TextArea dailyData = new TextArea("");
+        two.setContent(dailyData);
+        TextArea dailyDataDriver = (TextArea) two.getContent();
+        dataPicker.setVisible(true);
+        btnRaportPDFdnia.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
-            dailyDataDriver.appendText("Ten pracownik nie pracował tego dnia ");
+//            dailyDataDriver.appendText("Ten pracownik nie pracował tego dnia ");
         }
         else {
 
@@ -294,8 +366,10 @@ public class DigitalAnalysisController implements Initializable {
             int i = 0;
             while (!String.valueOf(dataXml.charAt(indeksString + i)).equals("d")) {
                 dailyDataDriver.appendText("" + dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
+                inThisDayData += String.valueOf(dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
                 i += 1;
             }
+            showChart(inThisDayData);
         }
 
 
@@ -310,19 +384,246 @@ public class DigitalAnalysisController implements Initializable {
 
     }
     @FXML
+    private void showChart(String data) throws ParseException {
+
+        int firstActivity = data.indexOf("Aktywność");
+        int bTime = 0;
+
+        String activity[] = new String[3];
+
+        activity[0] = "Break";
+        activity[1] = "Driving";
+        activity[2] = "Work";
+
+
+        System.out.println(data);
+
+        String split[] = (data.split(" "));
+
+        int count = 0;
+        int count2 = 0;
+
+        // break hours
+
+        for (int i = 0; i < split.length; i++) {
+            if (activity[0].equals(split[i])) {
+                count++;
+            }
+        }
+        String activityDataBreak[] = new String[count + 1];
+
+        for (int i = 0; i < split.length; i++) {
+            if (activity[0].equals(split[i])) {
+                count2++;
+                if (split.length - i == 4) {
+                    activityDataBreak[count2] = split[i + 2] + "24:00";
+                } else {
+                    activityDataBreak[count2] = split[i + 2] + split[i + 7];
+                }
+            }
+        }
+
+        for (int i = 1; i < activityDataBreak.length; i++) {
+            System.out.println("break" + activityDataBreak[i]);
+        }
+
+        // drive hours
+        count = 0;
+        count2 = 0;
+
+        for (int i = 0; i < split.length; i++) {
+            if (activity[1].equals(split[i])) {
+                count++;
+            }
+        }
+
+        String activityDataDrive[] = new String[count + 1];
+
+        for (int i = 0; i < split.length; i++) {
+
+            if (activity[1].equals(split[i])) {
+                count2++;
+
+                if (split.length - i == 4) {
+                    activityDataDrive[count2] = split[i + 2] + "24:00";
+                } else {
+                    activityDataDrive[count2] = split[i + 2] + split[i + 7];
+                }
+
+            }
+        }
+
+        for (int i = 1; i < activityDataDrive.length; i++) {
+            System.out.println("drive" + activityDataDrive[i]);
+        }
+
+        // work hours
+        count = 0;
+        count2 = 0;
+
+        for (int i = 0; i < split.length; i++) {
+            if (activity[2].equals(split[i])) {
+                count++;
+            }
+        }
+
+        String activityDataWork[] = new String[count + 1];
+
+        for (int i = 0; i < split.length; i++) {
+            if (activity[2].equals(split[i])) {
+                count2++;
+
+                if (split.length - i == 4) {
+                    activityDataWork[count2] = split[i + 2] + "24:00";
+                } else {
+                    activityDataWork[count2] = split[i + 2] + split[i + 7];
+                }
+            }
+        }
+
+        System.out.println(timeDiffrence(activityDataWork));
+        System.out.println(timeDiffrence(activityDataDrive));
+        System.out.println(timeDiffrence(activityDataBreak));
+
+
+        String selectedDate = data.substring(0,10);
+
+
+
+
+
+        if(!savedData.contains(selectedDate)) {
+
+
+
+            //Barchart dzialający
+            barChart.setVisible(true);
+
+            barChart.setTitle("Aktywność pracownka ");
+            barChart.getXAxis().setLabel("Aktywność");
+            barChart.getYAxis().setLabel("Godziny");
+
+            barChart.setAnimated(false);
+
+            XYChart.Series series1 = new XYChart.Series();
+            series1.setName(selectedDate);
+            series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
+            series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+            series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
+            XYChart.Series series2 = new XYChart.Series();
+
+            barChart.getData().addAll(series1);
+        }
+        savedData+=selectedDate;
+
+//        barChart.getData().addAll(series1,series2,series3);
+
+//        chart.setVisible(true);
+
+//        chart.setTitle("Aktywność pracownka ");
+//        chart.getXAxis().setLabel("Minuty");
+//        chart.getYAxis().setLabel("Aktywność");
+//
+//        int workM =  parseInt(String.valueOf(timeDiffrence(activityDataWork)));
+//        int driveM =  parseInt(String.valueOf(timeDiffrence(activityDataDrive)));
+//        int breakM = parseInt(String.valueOf(timeDiffrence(activityDataBreak)));
+//
+//        chart.setAnimated(false);
+//
+//        XYChart.Series series1 = new XYChart.Series();
+//        series1.setName("Praca");
+//        series1.getData().add(new XYChart.Data( 0,10));
+//        series1.getData().add(new XYChart.Data( workM,10));
+//
+//        XYChart.Series series2 = new XYChart.Series();
+//        series2.setName("Jazda");
+//        series2.getData().add(new XYChart.Data(0,10));
+//        series2.getData().add(new XYChart.Data(driveM,10));
+//
+//        XYChart.Series series3 = new XYChart.Series();
+//        series3.setName("Przerwa");
+//        series3.getData().add(new XYChart.Data(0,10 ));
+//        series3.getData().add(new XYChart.Data(breakM,10 ));
+//
+//
+////        chart.getData().addAll(series1);
+//
+//        chart.getData().addAll(series1,series2,series3);
+    }
+
+
+
+    @FXML
+    private int timeDiffrence(String[] activity){
+
+        int sumActivityDataBreakM= 0;
+        String[] dateBreakHM = new String[8];
+        String start = "";
+        String stop = "";
+
+        for (int i = 1 ; i<activity.length ; i++){
+
+            dateBreakHM[0]= String.valueOf(activity[i].charAt(0));
+            dateBreakHM[1]= String.valueOf(activity[i].charAt(1));
+            dateBreakHM[2]= String.valueOf(activity[i].charAt(3));
+            dateBreakHM[3]= String.valueOf(activity[i].charAt(4));
+            dateBreakHM[4]= String.valueOf(activity[i].charAt(6));
+            dateBreakHM[5]= String.valueOf(activity[i].charAt(7));
+            dateBreakHM[6]= String.valueOf(activity[i].charAt(9));
+            dateBreakHM[7]= String.valueOf(activity[i].charAt(10));
+
+            start =  dateBreakHM[0]+dateBreakHM[1]+":"+dateBreakHM[2]+dateBreakHM[3];
+            stop = dateBreakHM[4]+dateBreakHM[5]+":"+dateBreakHM[6]+dateBreakHM[7];
+            SimpleDateFormat  format = new SimpleDateFormat("HH:mm");
+            Date date1 = null;
+            try {
+                date1 = format.parse(start);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date date2 = null;
+            try {
+                date2 = format.parse(stop);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long diffrence = date2.getTime()-date1.getTime();
+
+            sumActivityDataBreakM+=diffrence/1000/60;
+
+        }
+        return sumActivityDataBreakM;
+    }
+    @FXML
     private void visibilityDataPickerLeave(){
 
         if(dataT.length()!=0) {
             dataPicker.setVisible(false);
+            btnRaportPDFdnia.setVisible(false);
+            chart.setVisible(false);
+            barChart.setVisible(false);
+            savedData="";
+
+
         }
 
     }
     @FXML
     private void visibilityDataPickerEnter(){
         dataPicker.setVisible(true);
+        barChart.setVisible(false);
+        barChart.getData().clear();
+        dataPicker.getEditor().clear();
+        dataPicker.setValue(null);
+
+    }
+    @FXML
+    private void btnRaportPDFdnia(){
+        btnRaportPDFdnia.setVisible(true);
     }
 
 private void colorPicker() throws ParserConfigurationException {
+
     List<LocalDate> work = new ArrayList<>();
 
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -339,7 +640,7 @@ private void colorPicker() throws ParserConfigurationException {
     doc.getDocumentElement().normalize();
     NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
 
-    for(int i=0;i<CardActivityDailyRecord.getLength();i++) {
+    for (int i = 0; i < CardActivityDailyRecord.getLength(); i++) {
 
         String year = "";
         String month = "";
@@ -358,7 +659,7 @@ private void colorPicker() throws ParserConfigurationException {
         day += dataCalendar.charAt(9);
 
 
-        work.add(LocalDate.of(parseInt(year),parseInt(month),parseInt(day)));
+        work.add(LocalDate.of(parseInt(year), parseInt(month), parseInt(day)));
     }
 
 
@@ -640,26 +941,160 @@ private void colorPicker() throws ParserConfigurationException {
     @FXML
     private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
-        List<String> validExtensions = Arrays.asList("ddd", "DDD", "txt", "xml");
-        file = new File(String.valueOf(new FileInputStream(files.get(0))));
+        List<String> validExtensions = Arrays.asList("ddd", "DDD", "xml");
+        file = new File(String.valueOf(new Stage()));
+        //image = new Image(new FileInputStream(files.get(0))); //Drag&Drop IMG
+        //File file = fileChooser.showOpenDialog(new Stage());  //Chooser DIGI
+
         if (!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
             dragOver.setText("To nie jest plik .ddd");
         } else {
             try {
-                Scanner scanner = new Scanner(files.get(0));
-//            System.out.println(file);
-                while (scanner.hasNextLine()) {
-//                    File filepath = files.get(0);
-//                    Files.write(filepath, )
+               // Scanner scanner = new Scanner(files.get(0));
+            //System.out.println(file);
+                //while (scanner.hasNextLine()) {
+                   File filepath = files.get(0);
+                   //Files.write(filepath);
+                    System.out.println(filepath);
 
 
 //                    textArea.appendText(scanner.nextLine() + "\n");
                     dragOver.setText("Poprawnie załadowano plik");
 
+                if(file == null)
+                {
+
+                }
+                else {
+
+                    //
+
+                    InputStream inputStream = new FileInputStream(filepath);
+                    Thread.sleep(500);
+
+                    String xmlExtCheck = (filepath.getName().substring(filepath.getName().length() - 4));
+                    String xml = ".xml";
+
+                    String fileNameXML = filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".xml";
+                    String fileNameDDD = filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".ddd";
+
+                    System.out.println(filepath);
+                    Path logFilePath = Paths.get(".\\.log");
+                    //log current time
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    if (!xmlExtCheck.equals(xml)) {
+                        System.out.println("To jest plik .ddd");
+                        try {
+                            File dir = new File(".\\ddd_to_xml\\data\\driver\\");
+                            if (!dir.exists()) {
+                                dir.mkdirs();
+                            } else {
+
+                                Thread.sleep(1000);
+                                String pathxml = ".\\ddd_to_xml\\data\\driver\\" + filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".DDD";
+                                File f = new File(pathxml);
+                                f.createNewFile();
+                                System.out.println(pathxml);
+                                OutputStream outputStream = new FileOutputStream(pathxml);
+
+                                byte[] allBytes = inputStream.readAllBytes();
+                                outputStream.write(allBytes);
+
+                                outputStream.close();
+                                try {
+                                    Thread.sleep(1000);
+
+                                    Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
+                                    Thread.sleep(1000);
+                                    File filexml = new File(pathxml + ".xml");
+                                    String filexmlSize = String.valueOf(filexml);
+                                    long bytes = Files.size(Path.of(filexmlSize));
+                                    long kiloBytes = bytes / 1024;
+
+                                    if (filexml.exists() && kiloBytes > 1) {
+                                        System.out.println("Poprawnie zaimportowano plik .ddd");
+                                        f.deleteOnExit();
+                                        String[] readedData = readData(filexml);
+                                        showData(readedData);
+
+                                    } else {
+
+                                        if (Files.exists(logFilePath)) {
+                                            FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                            logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameDDD + " nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                            logDataWrite.close();
+                                            f.delete();
+                                            System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+
+                                        } else {
+                                            FileWriter logDataWrite = new FileWriter(".\\.log");
+                                            logDataWrite.append(dtf.format(now) + " błąd plik '" + fileNameDDD + "'' nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                            logDataWrite.close();
+                                            f.delete();
+                                            System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+                                        }
+                                    }
+
+                                } catch (InterruptedException ex) {
+                                    Thread.currentThread().interrupt();
+                                }
+                            }
+                        } catch (IOException e) {
+
+                            if (Files.exists(logFilePath)) {
+                                FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                logDataWrite.append(dtf.format(now) + " Błąd konwersja nie przebiegła pomyślnie\n");
+                                logDataWrite.close();
+                                System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+
+                            } else {
+                                FileWriter logDataWrite = new FileWriter(".\\.log");
+                                logDataWrite.append(dtf.format(now) + "Błąd konwersja nie przebiegła pomyślnie\n");
+                                logDataWrite.close();
+                                System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+                            }
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        String filexmlSize = String.valueOf(filepath);
+                        long bytesXML = Files.size(Path.of(filexmlSize));
+                        long kiloBytesXML = bytesXML / 1024;
+
+                        if (kiloBytesXML > 1) {
+                            System.out.println("Poprawnie zaimportowano plik .xml");
+                            String[] readedData = readData(filepath);
+                            showData(readedData);
+                        } else {
+
+                            if (Files.exists(logFilePath)) {
+                                FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameXML + " nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                logDataWrite.close();
+                                filepath.delete();
+                                System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
+                            } else {
+                                FileWriter logDataWrite = new FileWriter(".\\.log");
+                                logDataWrite.append(dtf.format(now) + " błąd plik: '" + fileNameXML + "' nie został poprawnie załadowany bądź jest uszkodzony \n");
+                                logDataWrite.close();
+                                filepath.delete();
+                                System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
+                            }
+                        }
+
+                    }
                 }
             } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -731,123 +1166,16 @@ private void colorPicker() throws ParserConfigurationException {
                 DocumentBuilder db = dbf.newDocumentBuilder();
                 Document doc1 = db.parse(PDF_);
                 doc1.getDocumentElement().normalize();
-                NodeList nodeList = doc1.getElementsByTagName("DriverData");
-                NodeList CardVehicleRecord = doc1.getElementsByTagName("CardVehicleRecords");
-                for (int itr = 0; itr < nodeList.getLength(); itr++) {
-                    Node nodeVehic = CardVehicleRecord.item(itr);
-                    Node node = nodeList.item(itr);
-                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElement = (Element) node;
-                        Element elElement = (Element) nodeVehic;
 
-                        // dodać serial number / data / rfu/  (jak wyciąga się value xml elementu month year itp..)
-                        doc.add(new Paragraph("\t ClockStop: " + eElement.getElementsByTagName("ClockStop").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t CardExtendedSerialNumber: " + eElement.getElementsByTagName("CardExtendedSerialNumber").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t Numer zatwierdzenia karty: " + eElement.getElementsByTagName("CardApprovalNumber").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t CardPersonaliserId: " + eElement.getElementsByTagName("CardPersonaliserId").
-                                item(0).getTextContent() + "\n"));
-                        //EmbedderIcAssemblerId
-                        doc.add(new Paragraph("\t EmbedderIcAssemblerId: " + "\n"));
-                        doc.add(new Paragraph("\t\t CountryCode: " + eElement.getElementsByTagName("CountryCode").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t ModuleEmbedder: " + eElement.getElementsByTagName("CountryCode").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t ManufacturerInformation: " + eElement.getElementsByTagName("ManufacturerInformation").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t IcIdentifier: " + eElement.getElementsByTagName("IcIdentifier").
-                                item(0).getTextContent() + "\n"));
-                        //CardChipIdentyfiaction
-                        doc.add(new Paragraph("CardChipIdentification: " + eElement.getElementsByTagName("CardChipIdentification").
-                                item(0).getTextContent() + "\n"));
-                        // ext value
-                        doc.add(new Paragraph("\t IcSerialNumber: " + eElement.getElementsByTagName("IcSerialNumber").
-                                item(0).getTextContent() + "\n"));
-                        // ext value
-                        doc.add(new Paragraph("\t IcManufacturingReferences: " + eElement.getElementsByTagName("IcManufacturingReferences").
-                                item(0).getTextContent() + "\n"));
-                        //DriverCardApplicationIdentyfication
-                        doc.add(new Paragraph(" DriverCardApplicationIdentification: " + "\n"));
-                        doc.add(new Paragraph("\t Type: " + eElement.getElementsByTagName("Type").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t Version: " + eElement.getElementsByTagName("Version").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t NoOfEventsPerType: " + eElement.getElementsByTagName("NoOfEventsPerType").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t NoOfFaultsPerType: " + eElement.getElementsByTagName("NoOfFaultsPerType").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t ActivityStructureLength: " + eElement.getElementsByTagName("ActivityStructureLength").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t NoOfCardVehicleRecords: " + eElement.getElementsByTagName("NoOfCardVehicleRecords").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t NoOfCardPlaceRecords: " + eElement.getElementsByTagName("NoOfCardPlaceRecords").
-                                item(0).getTextContent() + "\n"));
-                        //CardCertificate
-                        doc.add(new Paragraph(" CardCertificate: " + "\n"));
-                        //ext value
-                        doc.add(new Paragraph("\t Signature: " + eElement.getElementsByTagName("Signature").
-                                item(0).getTextContent() + "\n"));
-                        //ext value
-                        doc.add(new Paragraph("\t PublicKeyRemainder: " + eElement.getElementsByTagName("PublicKeyRemainder").
-                                item(0).getTextContent() + "\n"));
-                        //CertificationAuthorityReference
-                        doc.add(new Paragraph("\t CertificationAuthorityReference: " + "\n"));
-                        doc.add(new Paragraph("\t\t Nation: " + eElement.getElementsByTagName("Nation").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t NationCode: " + eElement.getElementsByTagName("NationCode").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t SerialNumber: " + eElement.getElementsByTagName("SerialNumber").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t AdditionalInfo: " + eElement.getElementsByTagName("AdditionalInfo").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t CaIdentifier: " + eElement.getElementsByTagName("CaIdentifier").
-                                item(0).getTextContent() + "\n"));
-                        //Identification
-                        doc.add(new Paragraph(" Identification: " + "\n"));
-                        //CardIdentyfication
-                        doc.add(new Paragraph("\t CardIdentification: " + "\n"));
-                        doc.add(new Paragraph("\t\t CardIssuingMemberState: " + eElement.getElementsByTagName("CardIssuingMemberState").
-                                item(0).getTextContent() + "\n"));
-                        // ext value
-                        doc.add(new Paragraph("\t\t CardNumber: " + eElement.getElementsByTagName("CardNumber").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t CardIssuingAuthorityName: " + eElement.getElementsByTagName("CardIssuingAuthorityName").
-                                item(0).getTextContent() + "\n"));
-                        // ext value
-                        doc.add(new Paragraph("\t\t CardIssueDate: " + eElement.getElementsByTagName("CardIssueDate").
-                                item(0).getTextContent() + "\n"));
-                        // ext value
-                        doc.add(new Paragraph("\t\t CardValidityBegin: " + eElement.getElementsByTagName("CardValidityBegin").
-                                item(0).getTextContent() + "\n"));
-                        // ext value
-                        doc.add(new Paragraph("\t\t CardExpiryDate: " + eElement.getElementsByTagName("CardExpiryDate").
-                                item(0).getTextContent() + "\n"));
-                        //DriverCardHolderIdentyfication
-                        doc.add(new Paragraph("\t DriverCardHolderIdentification: " + eElement.getElementsByTagName("DriverCardHolderIdentification").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t CardHolderSurname: " + eElement.getElementsByTagName("CardHolderSurname").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t CardHolderFirstNames: " + eElement.getElementsByTagName("CardHolderFirstNames").
-                                item(0).getTextContent() + "\n"));
-                        // ect value
-                        doc.add(new Paragraph("\t\t CardHolderBirthDate: " + eElement.getElementsByTagName("CardHolderBirthDate").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t CardHolderPreferredLanguage: " + eElement.getElementsByTagName("CardHolderPreferredLanguage").
-                                item(0).getTextContent() + "\n"));
-                        //CardDrivingLicenceInformation
-                        doc.add(new Paragraph("\t CardDrivingLicenceInformation: " + eElement.getElementsByTagName("CardDrivingLicenceInformation").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t DrivingLicenceIssuingAuthority: " + eElement.getElementsByTagName("DrivingLicenceIssuingAuthority").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t DrivingLicenceIssuingNation: " + eElement.getElementsByTagName("DrivingLicenceIssuingNation").
-                                item(0).getTextContent() + "\n"));
-                        doc.add(new Paragraph("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
-                                item(0).getTextContent() + "\n"));
+                        doc.add(new Paragraph(dataGD[0]));
+                        doc.add(new Paragraph(dataGD[1]));
+                        doc.add(new Paragraph(dataGD[2]));
+                        doc.add(new Paragraph(dataGD[3]));
 
-                    }
-                }
+
+
+
+
 
 
 //                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
@@ -866,7 +1194,6 @@ private void colorPicker() throws ParserConfigurationException {
             } catch (SAXException ex) {
                 ex.printStackTrace();
             }
-            doc.add(new Paragraph(PDF_));
 //close the PDF file
             doc.close();
 //closes the writer
@@ -881,6 +1208,116 @@ private void colorPicker() throws ParserConfigurationException {
             e.printStackTrace();
         }
     }
+
+    public void generatePDFdnia(String PDF_) {
+//created PDF document instance
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+
+        PdfWriter writer;
+
+        try {
+//generate a PDF at the specified location
+            File dir = new File(".\\PDF\\");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+//            String fname = null;
+//            File file = null;
+//
+//            System.out.println("Please choose file name:");
+//            while (true) {
+//                try (Scanner in = new Scanner(System.in)) {
+//                    // Reads a single line from the console
+//                    fname = in.nextLine();
+//                    file = new File(fname);
+//                    if (!file.createNewFile()) {
+//                        throw new RuntimeException("File already exist");
+//                    }
+//                    break;
+//                } catch (Exception ex) {
+//                    System.out.println(ex.getMessage() + ", please try again:");
+//                }
+//            }
+//
+//            return file;
+
+//            FileChooser fileChooser = new FileChooser();
+//            File file = fileChooser.showOpenDialog(new Stage());
+            //Tworzenie pliku PDF
+            //String PDF1 = PDF.substring(25, PDF.length() - 4);
+            File PDF2 = new File(new File(PDF_).getName());
+            // nazwa pliku
+            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + dataPick + ".pdf"));
+            System.out.println("Tworzenie pliku PDF powiodło się.");
+//Otwieranie pliku PDF
+            doc.open();
+//Dodwawanie paragrafów do pliku PDF
+            try {
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc1 = db.parse(PDF_);
+                doc1.getDocumentElement().normalize();
+                helvetica = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
+                com.itextpdf.text.Font polskieFonty=new com.itextpdf.text.Font(helvetica,10);
+
+                //doc.add(new Paragraph(dataGD[1]));
+//                doc.add(new Paragraph(dataGD[1]));
+//                doc.add(new Paragraph(dataGD[2]));
+//                doc.add(new Paragraph(dataGD[3]));
+
+                if(dataPick1.equals("-1")) {
+                    doc.add(new Paragraph("Pracownik nie pracował w tym dniu."));
+                }
+                else {
+                    int indeksString = parseInt(dataPick1);
+                    int i = 0;
+                    while (!String.valueOf(dataT.charAt(indeksString + i)).equals("d")) {
+                        daily += (dataT.charAt(parseInt(dataPick1) + i));
+                        //doc.add(new Paragraph("" + dataT.charAt(parseInt(dataPick1) + i)));
+                        i += 1;
+                        //doc.add(new Paragraph(""+daily));
+                    }
+                    doc.add(new Paragraph(daily,polskieFonty));
+                }
+
+
+
+
+
+
+
+//                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
+//                        Node node = nodeList.item(itr);
+//                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                        }
+
+
+                //CardFaultRecords
+//                }
+            } catch (ParserConfigurationException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (SAXException ex) {
+                ex.printStackTrace();
+            }
+//close the PDF file
+            doc.close();
+//closes the writer
+            writer.close();
+        }
+        catch (DocumentException e)
+        {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
