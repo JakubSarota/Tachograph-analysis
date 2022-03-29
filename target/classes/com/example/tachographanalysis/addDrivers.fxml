@@ -1,48 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="489.0" prefWidth="753.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.addDriver">
+<AnchorPane prefHeight="373.0" prefWidth="950.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.addDriver">
     <children>
-      <VBox layoutX="68.0" layoutY="137.0" prefHeight="285.0" prefWidth="239.0" spacing="5.0">
+      <HBox prefHeight="400.0" prefWidth="950.0">
          <children>
-            <Text fill="WHITE" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imię:">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="tf_first_name">
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </TextField>
-            <Text fill="WHITE" layoutX="10.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazwisko:">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="tf_last_name" />
-            <Label text="Email:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tf_email" />
-            <Label text="Phone:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tf_phone" />
-            <Button mnemonicParsing="false" onMouseClicked="#addDriver" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj" textFill="#47535b">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
+            <VBox prefHeight="392.0" prefWidth="450.0" spacing="5.0">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="450.0" />
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazwisko:" wrappingWidth="135.0">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="tf_last_name" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Imię:" wrappingWidth="135.0">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="tf_first_name" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="135.0" text="Drugie imię:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_second_name" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children></HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="Email:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_email" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="PESEL:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_pesel" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="Miasto:" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_city" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children></HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="59.0" prefWidth="450.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="Data urodzenia:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="tf_born" prefHeight="30.0" prefWidth="230.0"/>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="450.0">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#addDriver" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj" textAlignment="CENTER" textFill="#47535b">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="400.0" prefWidth="501.0">
+               <children>
+                  <HBox prefHeight="45.0" prefWidth="475.0" />
+                  <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="Kraj:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_country" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="Nr Karty:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_id_card" prefHeight="25.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
+                     <children>
+                        <Label prefHeight="21.0" prefWidth="135.0" text="Prawo jazdy:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tf_category" prefHeight="30.0" prefWidth="230.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
     </children>
 </AnchorPane>

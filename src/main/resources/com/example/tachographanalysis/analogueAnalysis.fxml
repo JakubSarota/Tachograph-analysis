@@ -25,7 +25,6 @@
                                 </ScrollPane>
                             </children>
                         </AnchorPane>
-                  <ProgressBar layoutX="214.0" layoutY="358.0" prefHeight="25.0" prefWidth="450.0" progress="0.0" visible="false" />
                     </children>
                 </AnchorPane>
             </children>

@@ -8,7 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -25,9 +27,7 @@ import java.util.ResourceBundle;
 public class DriversController implements Initializable {
 
     @FXML
-    private Button btnBack;
-    @FXML
-    private Button btnDrivers;
+    private Button btnBack, btnAddDrivers;
     @FXML
     private Pane boxDrivers;
     @FXML
@@ -41,19 +41,10 @@ public class DriversController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources){
-        boolean isVboxVisible = boxDrivers.isVisible();
-        if(isVboxVisible == true) {
-            btnDrivers.setOnAction(e -> boxDrivers.setVisible(false));
-            System.out.println("true");
-        } else if(isVboxVisible == false) {
-            btnDrivers.setOnAction(e -> boxDrivers.setVisible(true));
-            System.out.println("false");
-        }
-
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getDBConnection();
 
-        String connectQuery = "SELECT first_name, last_name FROM kierowcy";
+        String connectQuery = "SELECT first_name, last_name FROM driver";
         try{
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(connectQuery);
@@ -73,9 +64,10 @@ public class DriversController implements Initializable {
     public void getAddDrivers() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
         StackPane stackPane = new StackPane();
-        Scene secondScene = new Scene(stackPane, 440,520);
+        Scene secondScene = new Scene(stackPane, 950,420);
         stackPane.getChildren().add(fxmlLoader);
         Stage secondStage = new Stage();
+        secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
         secondStage.setTitle("Dodaj kierowce");
         secondStage.setScene(secondScene);
 

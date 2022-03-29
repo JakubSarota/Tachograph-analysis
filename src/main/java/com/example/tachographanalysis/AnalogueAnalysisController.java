@@ -1,37 +1,33 @@
 package com.example.tachographanalysis;
 
-import com.example.tachographanalysis.analogueAnalysis.HoughCirclesRun;
-import com.example.tachographanalysis.analogueAnalysis.RotateImage;
+import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
+import com.example.tachographanalysis.size.SizeController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.*;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.example.tachographanalysis.size.SizeController;
-import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
-import javafx.scene.control.TextArea;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
 public class AnalogueAnalysisController {
     @FXML
@@ -46,7 +42,7 @@ public class AnalogueAnalysisController {
     private TextArea textArea;
 
     private String imageFile, text = "Wybierz plik albo upuść go tutaj";
-
+    static double ip = 0;
     analysisCircle analysisCircle = new analysisCircle();
 
     @FXML
@@ -75,7 +71,7 @@ public class AnalogueAnalysisController {
         imageFile = selectedFile.toURI().toURL().toString();
         image = new Image(imageFile);
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("Rozmiar pliku zamały, wymagane 1000x1000 pikseli");
+            dragOver.setText("Rozmiar pliku jest za mały");
         } else if(selectedFile != null) {
             getImageOnClick(imageFile);
             dragOver.setText(text);
@@ -94,7 +90,7 @@ public class AnalogueAnalysisController {
                 .collect(Collectors.toList()))) {
             dragOver.setText("To nie jest plik graficzny!");
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("Rozmiar pliku zamały, wymagane 1000x1000 pikseli");
+            dragOver.setText("Rozmiar pliku jest za mały");
         } else {
             getImageDragAndDrop(files);
             dragOver.setText(text);
