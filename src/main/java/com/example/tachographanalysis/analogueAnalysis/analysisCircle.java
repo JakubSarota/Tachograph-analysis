@@ -60,8 +60,6 @@ public class analysisCircle {
                 new Range(minY,maxY),
                 new Range(minX,maxX));
 
-
-
         Mat rotateImage = RotateImage.RotateImage(findedCircle);
         rotateImage.copyTo(findedCircle);
 
@@ -98,7 +96,7 @@ public class analysisCircle {
         return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(findedCircle)};
     }
 
-    private void resizeImage(Mat dst, Mat dstResize,int width) {
+    private void resizeImage(Mat dst, Mat dstResize, int width) {
         Size Resize = new Size(width, dst.height());
         Imgproc.resize(dst, dstResize, Resize, 0,0, Imgproc.INTER_AREA);
     }
