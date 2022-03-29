@@ -13,7 +13,7 @@ public class RotateImage {
         TemplateMatching.TemplateMatching(src);
         TimeUnit.SECONDS.sleep(5);
         Integer degree = FindMinimumNumber.FindMinimum();
-        Mat rotate = Result.result(src, degree+91);
+        Mat rotate = Result.result(src, degree+90);
         return rotate;
     }
 }
