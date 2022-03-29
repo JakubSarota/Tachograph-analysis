@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -60,6 +61,8 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private File file;
     @FXML
+    private File file1;
+    @FXML
     private String DDDFile;
     @FXML
     private Button btnRaportPDF;
@@ -98,6 +101,7 @@ public class DigitalAnalysisController implements Initializable {
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.xml"));
         File file = fileChooser.showOpenDialog(new Stage());
+        System.out.println(file);
         if(file == null)
         {
 
@@ -224,6 +228,36 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
     }
+//    @FXML
+//    private void handleDroppedButton(DragEvent event) throws IOException {
+//        List<File> files = event.getDragboard().getFiles();
+//        List<String> validExtensions = Arrays.asList("ddd", "DDD","xml");
+//        file1 = new File(String.valueOf(new FileInputStream(files.get(0))));
+//        if(!validExtensions.containsAll(event.getDragboard()
+//                .getFiles().stream().map(file -> getExtension(file.getName()))
+//                .collect(Collectors.toList()))) {
+//            dragOver.setText("To nie jest odpowiedni plik.");
+//
+//            File file = fileChooser.showOpenDialog(new Stage());
+//
+//        } else {
+//            try {
+//                Scanner scanner = new Scanner(files.get(0));
+//           System.out.println(file1);
+//                while (scanner.hasNextLine()) {
+//                    File filepath = files.get(0);
+////                    Files.write(filepath, )
+//
+//
+////                    textArea.appendText(scanner.nextLine() + "\n");
+//                    dragOver.setText("Poprawnie załadowano plik");
+//
+//                }
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     @FXML
     private void  generatePDF2(){
@@ -644,25 +678,159 @@ private void colorPicker() throws ParserConfigurationException {
     private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("ddd", "DDD", "txt", "xml");
-        file = new File(String.valueOf(new FileInputStream(files.get(0))));
+        file = new File(String.valueOf(new Stage()));
+        //image = new Image(new FileInputStream(files.get(0))); //Drag&Drop IMG
+        //File file = fileChooser.showOpenDialog(new Stage());  //Chooser DIGI
+
         if (!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
             dragOver.setText("To nie jest plik .ddd");
         } else {
             try {
-                Scanner scanner = new Scanner(files.get(0));
-//            System.out.println(file);
-                while (scanner.hasNextLine()) {
-//                    File filepath = files.get(0);
-//                    Files.write(filepath, )
+               // Scanner scanner = new Scanner(files.get(0));
+            //System.out.println(file);
+                //while (scanner.hasNextLine()) {
+                   File filepath = files.get(0);
+                   //Files.write(filepath);
+                    System.out.println(filepath);
 
 
 //                    textArea.appendText(scanner.nextLine() + "\n");
                     dragOver.setText("Poprawnie załadowano plik");
 
+                if(file == null)
+                {
+
+                }
+                else {
+
+                    //
+
+                    InputStream inputStream = new FileInputStream(filepath);
+                    Thread.sleep(500);
+
+                    String xmlExtCheck = (filepath.getName().substring(filepath.getName().length() - 4));
+                    String xml = ".xml";
+
+                    String fileNameXML = filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".xml";
+                    String fileNameDDD = filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".ddd";
+
+                    System.out.println(filepath);
+                    Path logFilePath = Paths.get(".\\.log");
+                    //log current time
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    if (!xmlExtCheck.equals(xml)) {
+                        System.out.println("To jest plik .ddd");
+                        try {
+                            File dir = new File(".\\ddd_to_xml\\data\\driver\\");
+                            if (!dir.exists()) {
+                                dir.mkdirs();
+                            } else {
+
+                                Thread.sleep(1000);
+                                String pathxml = ".\\ddd_to_xml\\data\\driver\\" + filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".DDD";
+                                File f = new File(pathxml);
+                                f.createNewFile();
+                                System.out.println(pathxml);
+                                OutputStream outputStream = new FileOutputStream(pathxml);
+
+                                byte[] allBytes = inputStream.readAllBytes();
+                                outputStream.write(allBytes);
+
+                                outputStream.close();
+                                try {
+                                    Thread.sleep(1000);
+
+                                    Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
+                                    Thread.sleep(1000);
+                                    File filexml = new File(pathxml + ".xml");
+                                    String filexmlSize = String.valueOf(filexml);
+                                    long bytes = Files.size(Path.of(filexmlSize));
+                                    long kiloBytes = bytes / 1024;
+
+                                    if (filexml.exists() && kiloBytes > 1) {
+                                        System.out.println("Poprawnie zaimportowano plik .ddd");
+                                        f.deleteOnExit();
+                                        String[] readedData = readData(filexml);
+                                        showData(readedData);
+
+                                    } else {
+
+                                        if (Files.exists(logFilePath)) {
+                                            FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                            logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameDDD + " nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                            logDataWrite.close();
+                                            f.delete();
+                                            System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+
+                                        } else {
+                                            FileWriter logDataWrite = new FileWriter(".\\.log");
+                                            logDataWrite.append(dtf.format(now) + " błąd plik '" + fileNameDDD + "'' nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                            logDataWrite.close();
+                                            f.delete();
+                                            System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
+                                        }
+                                    }
+
+                                } catch (InterruptedException ex) {
+                                    Thread.currentThread().interrupt();
+                                }
+                            }
+                        } catch (IOException e) {
+
+                            if (Files.exists(logFilePath)) {
+                                FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                logDataWrite.append(dtf.format(now) + " Błąd konwersja nie przebiegła pomyślnie\n");
+                                logDataWrite.close();
+                                System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+
+                            } else {
+                                FileWriter logDataWrite = new FileWriter(".\\.log");
+                                logDataWrite.append(dtf.format(now) + "Błąd konwersja nie przebiegła pomyślnie\n");
+                                logDataWrite.close();
+                                System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+                            }
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        String filexmlSize = String.valueOf(filepath);
+                        long bytesXML = Files.size(Path.of(filexmlSize));
+                        long kiloBytesXML = bytesXML / 1024;
+
+                        if (kiloBytesXML > 1) {
+                            System.out.println("Poprawnie zaimportowano plik .xml");
+                            String[] readedData = readData(filepath);
+                            showData(readedData);
+                        } else {
+
+                            if (Files.exists(logFilePath)) {
+                                FileWriter logDataWrite = new FileWriter(".\\.log", true);
+                                logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameXML + " nie został poprawnie załadowany bądź jest uszkodzony\n");
+                                logDataWrite.close();
+                                filepath.delete();
+                                System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
+                            } else {
+                                FileWriter logDataWrite = new FileWriter(".\\.log");
+                                logDataWrite.append(dtf.format(now) + " błąd plik: '" + fileNameXML + "' nie został poprawnie załadowany bądź jest uszkodzony \n");
+                                logDataWrite.close();
+                                filepath.delete();
+                                System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
+                            }
+                        }
+
+                    }
                 }
             } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
