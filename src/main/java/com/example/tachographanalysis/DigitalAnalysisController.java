@@ -540,11 +540,13 @@ private void colorPicker() throws ParserConfigurationException {
                                 getAttributes().item(2).getNodeValue() + " km \n");
                         dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(0).getNodeValue() + " \n\n");
-                        for (int j=1;j<t.getLength();j+=2){
+                        for (int j=0;j<t.getLength();j++){
 //                            System.out.println(t.item(j).getAttributes().getNamedItem("Time"));
 //                            System.out.println(t.item(j).getAttributes());
-                            dailyActivityS +=(" \t Aktywność: " + t.item(j).getAttributes().getNamedItem("Activity"));
-                            dailyActivityS +=(" Czas: " + t.item(j).getAttributes().getNamedItem("Time") + "\n");
+                            if(t.item(j).getAttributes()!=null) {
+                                dailyActivityS += (" \t Aktywność: " + t.item(j).getAttributes().getNamedItem("Activity"));
+                                dailyActivityS += (" Czas: " + t.item(j).getAttributes().getNamedItem("Time") + "\n");
+                            }
 //
                         }
                     }
