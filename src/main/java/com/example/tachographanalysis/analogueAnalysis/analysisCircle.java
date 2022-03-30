@@ -32,8 +32,8 @@ public class analysisCircle {
 //        kola.blackAndWhite(200);
 //        kola.petla_po_pikselach();
         kola.greyScale();
-//        kola.save("png",file
-//                .replace("file:/","")+"black_circle.png");
+        kola.save("png",file
+                .replace("file:/","")+"black_circle.png");
 
         JSONObject center = HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
