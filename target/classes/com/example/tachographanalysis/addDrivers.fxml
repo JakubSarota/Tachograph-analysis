@@ -13,7 +13,7 @@
                   <HBox prefHeight="40.0" prefWidth="450.0" />
                   <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazwisko:" wrappingWidth="135.0">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="*Nazwisko:" wrappingWidth="135.0">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -26,7 +26,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Imię:" wrappingWidth="135.0">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="*Imię:" wrappingWidth="135.0">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -64,7 +64,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="PESEL:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="135.0" text="*PESEL:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -77,7 +77,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="450.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="Miasto:" textAlignment="CENTER" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="135.0" text="*Miasto:" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -89,12 +89,12 @@
                      </children></HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="59.0" prefWidth="450.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="Data urodzenia:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="135.0" text="*Data urodzenia:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="tf_born" prefHeight="30.0" prefWidth="230.0"/>
+                        <DatePicker fx:id="tf_born" prefHeight="30.0" prefWidth="230.0" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="450.0">
@@ -113,7 +113,7 @@
                   <HBox prefHeight="45.0" prefWidth="475.0" />
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="Kraj:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="135.0" text="*Kraj:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -127,7 +127,7 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="Nr Karty:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="135.0" text="*Nr Karty:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -141,7 +141,7 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="Prawo jazdy:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="135.0" text="*Prawo jazdy:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -152,6 +152,11 @@
                            </font></TextField>
                      </children>
                   </HBox>
+                  <Label fx:id="hint" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="501.0" textAlignment="CENTER" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
          </children>

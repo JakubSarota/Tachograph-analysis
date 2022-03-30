@@ -61,7 +61,7 @@ public class analysisCircle {
                 new Range(minX,maxX));
 
         Mat rotateImage = RotateImage.RotateImage(findedCircle);
-        rotateImage.copyTo(findedCircle);
+        rotateImage.copyTo(imageFile);
 
 
 //        Imgcodecs.imwrite(file
