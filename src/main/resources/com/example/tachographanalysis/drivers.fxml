@@ -39,7 +39,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="620.0" prefWidth="995.0">
+            <Pane layoutY="6.0" prefHeight="620.0" prefWidth="995.0">
                <children>
                   <Text fill="#f5f5f5" layoutX="14.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista kierowców">
                      <font>
@@ -50,12 +50,12 @@
                      <columns>
                         <TableColumn fx:id="idCol" prefWidth="34.0" text="Id" />
                         <TableColumn fx:id="firstnameCol" prefWidth="81.0" text="Imię" />
-                        <TableColumn fx:id="secondNameCol" prefWidth="85.0" text="Drugie imię" />
-                        <TableColumn fx:id="lastnameCol" prefWidth="98.0" text="Nazwisko" />
-                        <TableColumn fx:id="emailCol" prefWidth="84.0" text="e-mail" />
-                        <TableColumn fx:id="peselCol" prefWidth="77.0" text="Pesel" />
-                        <TableColumn fx:id="cityCol" prefWidth="123.0" text="Adres zamieszkania" />
-                        <TableColumn fx:id="bornCol" prefWidth="86.0" text="Data urodzenia" />
+                        <TableColumn fx:id="secondNameCol" prefWidth="72.0" text="Drugie imię" />
+                        <TableColumn fx:id="lastnameCol" prefWidth="73.0" text="Nazwisko" />
+                        <TableColumn fx:id="emailCol" prefWidth="113.0" text="e-mail" />
+                        <TableColumn fx:id="peselCol" minWidth="11.0" prefWidth="86.0" text="Pesel" />
+                        <TableColumn fx:id="cityCol" prefWidth="115.0" text="Adres zamieszkania" />
+                        <TableColumn fx:id="bornCol" prefWidth="94.0" text="Data urodzenia" />
                         <TableColumn fx:id="countryCol" prefWidth="67.0" text="Kraj" />
                         <TableColumn fx:id="cardCol" prefWidth="103.0" text="Nr karty" />
                         <TableColumn fx:id="licenseCol" prefWidth="45.0" text="Kat. prawa jazdy" />
@@ -63,8 +63,8 @@
 
                      </columns>
                   </TableView>
-                  <TextField fx:id="searchTextField" layoutX="160.0" layoutY="96.0" prefHeight="25.0" prefWidth="613.0" promptText="Szukaj w bazie ..." />
-                  <Text fill="WHITE" layoutX="23.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wyszukaj kierowce:">
+                  <TextField fx:id="searchTextField" layoutX="161.0" layoutY="96.0" prefHeight="25.0" prefWidth="613.0" promptText="Szukaj w bazie ..." />
+                  <Text fill="WHITE" layoutX="20.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wyszukaj kierowce:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

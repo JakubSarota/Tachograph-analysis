@@ -42,19 +42,19 @@ public class DriversController implements Initializable {
     @FXML
     private TableView<Drivers> accountTableView;
     @FXML
-    private TableColumn<Drivers, Integer> idCol, peselCol, cardCol;
+    private TableColumn<Drivers, Integer> idCol;
     @FXML
-    private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol;
+    private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol;
 
 
 
     public class Drivers {
 
-        Integer id, pesel, card;
-        String fname, sname, lname, email, city, country, license, born;
+        Integer id;
+        String fname, sname, lname, email, city, country, license, born, pesel, card;
 
 
-        public Drivers(Integer id, String fname, String sname, String lname, String email, Integer pesel, String city, String born, String country, Integer card, String license) {
+        public Drivers(Integer id, String fname, String sname, String lname, String email, String pesel, String city, String born, String country, String card, String license) {
             this.id = id;
             this.fname = fname;
             this.sname = sname;
@@ -81,7 +81,7 @@ public class DriversController implements Initializable {
         public String getEmail() {
             return email;
         }
-        public Integer getPesel() {
+        public String getPesel() {
             return pesel;
         }
         public String getCity() {
@@ -93,7 +93,7 @@ public class DriversController implements Initializable {
         public String getCountry() {
             return country;
         }
-        public Integer getCard() { return card; }
+        public String getCard() { return card; }
         public String getLicense() {
             return license;
         }
@@ -112,11 +112,11 @@ public class DriversController implements Initializable {
             this.lname = lname;
         }
         public void setEmail(String email) {this.email = email;}
-        public void setPesel(Integer pesel) {this.pesel = pesel;}
+        public void setPesel(String pesel) {this.pesel = pesel;}
         public void setCity(String city) {this.city = city;}
         public void setBorn(String born) {this.born = born;}
         public void setCountry(String country) {this.country = country;}
-        public void setCard(Integer card) {this.card = card;}
+        public void setCard(String card) {this.card = card;}
         public void setLicense(String license) {this.license = license;}
     }
 
@@ -142,11 +142,11 @@ public class DriversController implements Initializable {
                 String querySecondName = queryOutput.getString("second_name");
                 String queryLastName = queryOutput.getString("last_name");
                 String queryEmail = queryOutput.getString("email");
-                Integer queryPesel = queryOutput.getInt("pesel");
+                String queryPesel = queryOutput.getString("pesel");
                 String queryCity = queryOutput.getString("city");
                 String  queryBorn = queryOutput.getString("born_date");
                 String queryCountry = queryOutput.getString("country");
-                Integer queryCard = queryOutput.getInt("id_card");
+                String queryCard = queryOutput.getString("id_card");
                 String queryLicense = queryOutput.getString("license_drive");
 
                 driversList.add(new Drivers(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard, queryLicense));
@@ -159,13 +159,14 @@ public class DriversController implements Initializable {
             emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
             peselCol.setCellValueFactory(new PropertyValueFactory<>("pesel"));
             cityCol.setCellValueFactory(new PropertyValueFactory<>("city"));
-            bornCol.setCellValueFactory(new PropertyValueFactory<>("born_date"));
+            bornCol.setCellValueFactory(new PropertyValueFactory<>("born"));
             countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
-            cardCol.setCellValueFactory(new PropertyValueFactory<>("id_card"));
-            licenseCol.setCellValueFactory(new PropertyValueFactory<>("license_drive"));
+            cardCol.setCellValueFactory(new PropertyValueFactory<>("card"));
+            licenseCol.setCellValueFactory(new PropertyValueFactory<>("license"));
 
 
             accountTableView.setItems(driversList);
+            ;
 
             //Wyszukiwarka
             FilteredList<Drivers> filteredData = new FilteredList<>(driversList, b -> true);
@@ -198,6 +199,7 @@ public class DriversController implements Initializable {
             sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
 
             accountTableView.setItems(sortedData);
+
 
         } catch (SQLException e) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
