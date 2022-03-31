@@ -48,17 +48,17 @@
                   </Text>
                   <TableView fx:id="accountTableView" layoutX="9.0" layoutY="133.0" prefHeight="473.0" prefWidth="977.0">
                      <columns>
-                        <TableColumn fx:id="idCol" prefWidth="45.0" text="Id" />
-                        <TableColumn fx:id="firstnameCol" prefWidth="92.0" text="Imię" />
-                        <TableColumn fx:id="secondNameCol" prefWidth="75.0" text="Drugie imię" />
-                        <TableColumn fx:id="lastnameCol" prefWidth="99.0" text="Nazwisko" />
-                        <TableColumn fx:id="emailCol" prefWidth="71.0" text="e-mail" />
+                        <TableColumn fx:id="idCol" prefWidth="34.0" text="Id" />
+                        <TableColumn fx:id="firstnameCol" prefWidth="81.0" text="Imię" />
+                        <TableColumn fx:id="secondNameCol" prefWidth="85.0" text="Drugie imię" />
+                        <TableColumn fx:id="lastnameCol" prefWidth="98.0" text="Nazwisko" />
+                        <TableColumn fx:id="emailCol" prefWidth="84.0" text="e-mail" />
                         <TableColumn fx:id="peselCol" prefWidth="77.0" text="Pesel" />
-                        <TableColumn fx:id="cityCol" prefWidth="114.0" text="Adres zamieszkania" />
-                        <TableColumn fx:id="bornCol" prefWidth="95.0" text="Data urodzenia" />
+                        <TableColumn fx:id="cityCol" prefWidth="123.0" text="Adres zamieszkania" />
+                        <TableColumn fx:id="bornCol" prefWidth="86.0" text="Data urodzenia" />
                         <TableColumn fx:id="countryCol" prefWidth="67.0" text="Kraj" />
-                        <TableColumn fx:id="cardCol" prefWidth="63.0" text="Nr karty" />
-                        <TableColumn fx:id="licenseCol" prefWidth="85.0" text="Kat. prawa jazdy" />
+                        <TableColumn fx:id="cardCol" prefWidth="103.0" text="Nr karty" />
+                        <TableColumn fx:id="licenseCol" prefWidth="45.0" text="Kat. prawa jazdy" />
                         <TableColumn fx:id="vehicleCol" prefWidth="75.0" text="Pojazd" />
 
                      </columns>
