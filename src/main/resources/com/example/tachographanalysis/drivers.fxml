@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
    <left>
       <AnchorPane prefHeight="620.0" prefWidth="229.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -33,23 +38,30 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="boxDrivers" prefHeight="620.0" prefWidth="995.0">
+            <Pane prefHeight="620.0" prefWidth="995.0">
                <children>
-                  <Text fill="#f5f5f5" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista kierowców">
+                  <Text fill="#f5f5f5" layoutX="14.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista kierowców">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Text>
-                  <HBox layoutX="14.0" layoutY="69.0" prefHeight="528.0" prefWidth="288.0">
-                     <children>
-                        <ScrollPane prefHeight="355.0" prefWidth="286.0">
-                           <content>
-                              <ListView fx:id="accountListView" prefHeight="526.0" prefWidth="281.0">
-                              </ListView>
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </HBox>
+                  <TableView fx:id="accountTableView" layoutX="8.0" layoutY="90.0" prefHeight="473.0" prefWidth="977.0">
+                     <columns>
+                        <TableColumn fx:id="idCol" prefWidth="45.0" text="Id" />
+                        <TableColumn fx:id="firstnameCol" prefWidth="92.0" text="Imię" />
+                        <TableColumn fx:id="secondNameCol" prefWidth="75.0" text="Drugie imię" />
+                        <TableColumn fx:id="lastnameCol" prefWidth="99.0" text="Nazwisko" />
+                        <TableColumn fx:id="emailCol" prefWidth="71.0" text="e-mail" />
+                        <TableColumn fx:id="peselCol" prefWidth="77.0" text="Pesel" />
+                        <TableColumn fx:id="cityCol" prefWidth="114.0" text="Adres zamieszkania" />
+                        <TableColumn fx:id="bornCol" prefWidth="95.0" text="Data urodzenia" />
+                        <TableColumn fx:id="countryCol" prefWidth="67.0" text="Kraj" />
+                        <TableColumn fx:id="cardCol" prefWidth="63.0" text="Nr karty" />
+                        <TableColumn fx:id="licenseCol" prefWidth="85.0" text="Kat. prawa jazdy" />
+                        <TableColumn fx:id="vehicleCol" prefWidth="75.0" text="Pojazd" />
+
+                     </columns>
+                  </TableView>
                </children>
             </Pane>
          </children>
