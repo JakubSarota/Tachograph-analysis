@@ -4,8 +4,8 @@ package com.example.tachographanalysis;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +15,6 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -59,7 +58,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private DatePicker dataPicker;
     @FXML
-    private Tab one, two, three, four;
+    private Tab one, two, three, four, five;
     @FXML
     private TabPane tabPane;
     @FXML
@@ -281,7 +280,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void showData(String[] readedData){
 
-
+        showWeaklyChart(readedData[1]);
 //          progressBar.setVisible(true);
 //          progressBar.setProgress(1.0);
 //          dragOver.setVisible(false);
@@ -327,6 +326,12 @@ public class DigitalAnalysisController implements Initializable {
         four.setContent(vehicleHistory);
         TextArea vehicleHistoryData = (TextArea) four.getContent();
         vehicleHistoryData.appendText(readedData[3]);
+
+
+        TextArea dataChartTwoWeekend = new TextArea("");
+        five.setContent(dataChartTwoWeekend);
+        TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
+        dataChartTwoWeekendArea.setEditable(false);
 
 
     }
@@ -549,10 +554,140 @@ public class DigitalAnalysisController implements Initializable {
 ////        chart.getData().addAll(series1);
 //
 //        chart.getData().addAll(series1,series2,series3);
+
+
+
+
     }
 
+    // Last two weeks driver data
+    @FXML
+    private void showWeaklyChart(String readedData){
+
+//        String splitData = String.valueOf(readedData.split(" "));
+
+        int lastIndexOfData = readedData.length();
+        String splitedData[] = new String[lastIndexOfData];
+        String newSplitedData[] = new String[lastIndexOfData];
+        String twoWeeksData[] = new String[14];
+        //          System.out.println(readedData);
+        for(int i = 0 ; i<readedData.length(); i++){
+//            System.out.println(splitData.charAt(i));
+            splitedData[i]= String.valueOf(readedData.charAt(i));
+        }
+//        System.out.println(lastIndexOfData);
+//        System.out.println(splitedData[145439-1]);
+
+        int j = 0;
+
+        for( int i = lastIndexOfData-1 ; i>0 ; i-- ){
+                newSplitedData[j] = String.valueOf(readedData.charAt(i));
+            j++;
+            }
+
+        int days = 0;
+        String dataday = "";
+
+        for(int i = 0 ; i<readedData.length()-1; i++){
+            dataday="";
+//            System.out.println(splitData.charAt(i));
+            if(days==14){break;}
+            if(newSplitedData[i].equals("Z")){
+//                System.out.println("Test");
+                for(int k = 10 ; k>=1; k--){
+                    dataday += newSplitedData[i+9+k];
+
+                }
+//                System.out.println(dataday);
+                twoWeeksData[days]=dataday;
+                days++;
+
+            }
+        }
+        for(int i = 0 ; i< twoWeeksData.length ; i++){
+            System.out.println(twoWeeksData[i]);
+        }
 
 
+
+
+
+
+
+
+
+//        readedData.
+        //for przypisująca rekurencyjnie do nowej tablicy znaki
+
+
+        chart.setTitle("Dwutygodniowa aktywność pracownka ");
+        chart.getXAxis().setLabel("Aktywność");
+        chart.getYAxis().setLabel("Godziny");
+
+        chart.setAnimated(false);
+
+        XYChart.Series seriesChart1 = new XYChart.Series();
+        seriesChart1.setName("Praca");
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[0], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[1], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[2], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[3], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[4], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[5], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[6], 3));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[7], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[8], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[9], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[10], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[11], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[12], 6));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksData[13], 6));
+
+        XYChart.Series seriesChart2 = new XYChart.Series();
+        seriesChart2.setName("Przerwa");
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[0], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[1], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[2], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[3], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[4], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[5], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[6], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[7], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[8], 6));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[9], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[10], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[11], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[12], 9));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksData[13], 24));
+
+        XYChart.Series seriesChart3 = new XYChart.Series();
+        seriesChart3.setName("Jazda");
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[0], 10));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[1], 3));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[2], 5));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[3], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[4], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[5], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[6], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[7], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[8], 6));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[9], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[10], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[11], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[12], 9));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksData[13], 24));
+
+
+//        XYChart.Series seriesChart2 = new XYChart.Series();
+//        series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+//        XYChart.Series seriesChart3 = new XYChart.Series();
+//        series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
+//        XYChart.Series series2 = new XYChart.Series();
+
+        chart.getData().addAll(seriesChart1,seriesChart2,seriesChart3);
+
+
+    }
     @FXML
     private int timeDiffrence(String[] activity){
 
@@ -615,8 +750,13 @@ public class DigitalAnalysisController implements Initializable {
         barChart.getData().clear();
         dataPicker.getEditor().clear();
         dataPicker.setValue(null);
+    }
+    @FXML
+    private void visiblityChartArea(){
+        chart.setVisible(true);
 
     }
+
     @FXML
     private void btnRaportPDFdnia(){
         btnRaportPDFdnia.setVisible(true);
