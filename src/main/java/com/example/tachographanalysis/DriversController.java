@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class DriversController implements Initializable {
+public class DriversController {
 
     @FXML
     private Button btnBack;
@@ -97,14 +97,13 @@ public class DriversController implements Initializable {
 
     ObservableList<Drivers> driversList = FXCollections.observableArrayList();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
 
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getDBConnection();
 
         String query = "SELECT id, first_name, second_name, last_name FROM driver";
-
+        driversList.clear();
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);

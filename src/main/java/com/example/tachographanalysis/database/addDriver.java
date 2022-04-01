@@ -4,17 +4,26 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.web.WebView;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.function.UnaryOperator;
 
+import com.example.tachographanalysis.DriversController;
 
 public class addDriver {
 
     @FXML
-    private TextField tf_first_name, tf_last_name, tf_second_name, tf_email, tf_pesel, tf_city, tf_country, tf_id_card, tf_category;
+    private TextField tf_first_name, tf_last_name, tf_second_name, tf_email, tf_pesel, tf_city, tf_country, tf_id_card;
+
+    @FXML
+    private ChoiceBox<String> tf_category;
 
     @FXML
     private DatePicker tf_born;
@@ -22,22 +31,11 @@ public class addDriver {
     @FXML
     private Label hint;
 
-
-    public TextField getAddDriver() {
-        try {
-            tf_pesel.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                    if(!t1.matches("\\d*")) {
-                        tf_pesel.setText(t1.replaceAll("[^\\d]", ""));
-                    }
-                }
-            });
-            return tf_pesel;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+    @FXML
+    public void datepicker() {
+        if(tf_born.getValue()==null) {
+            tf_born.setValue(LocalDate.of(1990,01,01));
         }
-        return null;
     }
 
     public void addDriver() throws SQLException {
@@ -50,19 +48,24 @@ public class addDriver {
         String born = tf_born.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String country = tf_country.getText();
         String id_card = tf_id_card.getText();
-        String license_drive = tf_category.getText();
+        String license_drive = tf_category.getValue();
 
-        if(tf_pesel.getText().length() < 10) {
+        System.out.println(license_drive);
+
+        if(!checkIsAllFill(last_name, first_name, pesel, city, born, country, id_card)==true) {
+            hint.setTextFill(Color.web("#ff0000"));
+            hint.setText("Uzupełnij wszystkie pola oznaczone *");
+        } else if(!CheckIsExist(pesel, id_card) == true) {
+            hint.setTextFill(Color.web("#ff0000"));
+            hint.setText("Użytkownik istnieje w bazie");
+        } else if(tf_pesel.getText().length() != 11) {
+            hint.setTextFill(Color.web("#ff0000"));
             hint.setText("Nieprawidłowy PESEL");
-        } else if(tf_id_card.getText().length() < 15) {
+        } else if(tf_id_card.getText().length() != 15) {
+            hint.setTextFill(Color.web("#ff0000"));
             hint.setText("Nieprawidłowy numer kierowcy");
         } else {
-            if((checkIsAllFill(last_name, first_name, pesel, city, born, country, id_card, license_drive)==true && CheckIsExist(pesel, id_card, license_drive) == true)==true) {
-                insertToDatabase(last_name, first_name, second_name, email, pesel, city, born, country, id_card, license_drive);
-                System.out.println("true");
-            } else {
-                System.out.println("false");
-            }
+            insertToDatabase(last_name, first_name, second_name, email, pesel, city, born, country, id_card, license_drive);
         }
     }
 
@@ -72,10 +75,8 @@ public class addDriver {
                                   String city,
                                   String born,
                                   String country,
-                                  String id_card,
-                                  String license_drive) throws SQLException {
-        if(first_name == "" || last_name == "" || pesel == "" || city == "" || born == "" || license_drive == "" || id_card == "" || country == "") {
-            hint.setText("Uzupełnij wszystkie pola oznaczone *");
+                                  String id_card) throws SQLException {
+        if(first_name == "" || last_name == "" || pesel == "" || city == "" || born == "" || id_card == "" || country == "") {
             return false;
         } else {
             hint.setTextFill(Color.web("#ffffff"));
@@ -85,10 +86,9 @@ public class addDriver {
     }
 
     public boolean CheckIsExist(String pesel,
-                                String id_card,
-                                String license_drive) throws SQLException {
+                                String id_card) throws SQLException {
         boolean status = true;
-        String check = "SELECT * FROM driver WHERE pesel='"+pesel+"' AND id_card='"+id_card+"' AND license_drive='"+license_drive+"'";
+        String check = "SELECT * FROM driver WHERE pesel='"+pesel+"' AND id_card='"+id_card+"'";
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connection = databaseConnection.getDBConnection();
         Statement stmt;
@@ -98,7 +98,6 @@ public class addDriver {
             stmt = connection.createStatement();
             rs = stmt.executeQuery(check);
             if(rs.next()) {
-                hint.setText("Kierowca istnieje");
                 status = false;
             }
         } catch (Exception e) {
@@ -129,5 +128,35 @@ public class addDriver {
 //            System.err.println(e.getMessage());
         }
 
+    }
+
+    public void digitOnlyPesel() {
+        tf_pesel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!t1.matches("\\d*")) {
+                    tf_pesel.setText(t1.replaceAll("[^\\d]", ""));
+                }
+                if (tf_pesel.getLength() >=11) {
+                    String max = tf_pesel.getText().substring(0,11);
+                    tf_pesel.setText(max);
+                }
+            }
+        });
+    }
+
+    public void digitOnlyIdCard() {
+        tf_id_card.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!t1.matches("\\d*")) {
+                    tf_id_card.setText(t1.replaceAll("[^\\d]", ""));
+                }
+                if (tf_id_card.getLength() >=15) {
+                    String max = tf_id_card.getText().substring(0,15);
+                    tf_id_card.setText(max);
+                }
+            }
+        });
     }
 }

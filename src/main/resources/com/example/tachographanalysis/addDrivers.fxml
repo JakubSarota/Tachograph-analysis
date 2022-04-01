@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -69,7 +71,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_pesel" prefHeight="25.0" prefWidth="230.0">
+                        <TextField fx:id="tf_pesel" onKeyTyped="#digitOnlyPesel" prefHeight="25.0" prefWidth="230.0">
                            <font>
                               <Font size="15.0" />
                            </font></TextField>
@@ -94,7 +96,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="tf_born" prefHeight="30.0" prefWidth="230.0" />
+                        <DatePicker fx:id="tf_born" onMouseClicked="#datepicker" prefHeight="30.0" prefWidth="230.0" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="450.0">
@@ -132,7 +134,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_id_card" prefHeight="25.0" prefWidth="230.0">
+                        <TextField fx:id="tf_id_card" onKeyTyped="#digitOnlyIdCard" prefHeight="25.0" prefWidth="230.0">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -146,10 +148,27 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_category" prefHeight="30.0" prefWidth="230.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font></TextField>
+                        <ChoiceBox fx:id="tf_category" prefHeight="30.0" prefWidth="230.0">
+                           <items>
+                              <FXCollections fx:factory="observableArrayList">
+                                 <String fx:value="A1" />
+                                 <String fx:value="A2" />
+                                 <String fx:value="A" />
+                                 <String fx:value="B1" />
+                                 <String fx:value="B" />
+                                 <String fx:value="B+E" />
+                                 <String fx:value="C" />
+                                 <String fx:value="C1" />
+                                 <String fx:value="C1+E" />
+                                 <String fx:value="C+E" />
+                                 <String fx:value="D" />
+                                 <String fx:value="D1" />
+                                 <String fx:value="D1+E" />
+                                 <String fx:value="D+E" />
+                                 <String fx:value="T" />
+                              </FXCollections>
+                           </items>
+                        </ChoiceBox>
                      </children>
                   </HBox>
                   <Label fx:id="hint" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="501.0" textAlignment="CENTER" textFill="RED">
