@@ -554,7 +554,7 @@ public class DigitalAnalysisController implements Initializable {
 
 
     @FXML
-    private int timeDiffrence(String[] activity){
+    public int timeDiffrence(String[] activity){
 
         int sumActivityDataBreakM= 0;
         String[] dateBreakHM = new String[8];
