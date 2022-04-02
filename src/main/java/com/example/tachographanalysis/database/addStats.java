@@ -47,7 +47,7 @@ public class addStats {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getDBConnection();
 
-        String connectQuery = "SELECT id,first_name, last_name FROM driver";
+        String connectQuery = "SELECT id,first_name,second_name, last_name FROM driver";
         try{
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(connectQuery);
@@ -90,10 +90,10 @@ public class addStats {
                 String name_of_file=UUID.randomUUID().toString() + ".png";
                 if (!dir.exists()) {
                     dir.mkdirs();
-                } else {
-                    Files.copy(Path.of(AnalogueAnalysisController.file_name),
-                            Path.of(".\\archiwum\\" + name_of_file));
                 }
+                Files.copy(Path.of(AnalogueAnalysisController.file_name),
+                        Path.of(".\\archiwum\\" + name_of_file));
+
                 insertToDatabase(Integer.parseInt(d), dataPicker.getValue().toString(), LocalDate.now().toString(),
                         textArea.getText(), workTime.getText(),breakTime.getText(),
                         name_of_file , "analogowy", Integer.parseInt(sumRoad.getText()));
