@@ -322,14 +322,14 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/Desktop/opencv/build/java" />
+          <root url="file://$MODULE_DIR$/../../opencv/build/java" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/Desktop/opencv/build/java" />
+          <root url="file://$MODULE_DIR$/../../opencv/build/java" />
         </SOURCES>
-        <jarDirectory url="file://$USER_HOME$/Desktop/opencv/build/java" recursive="false" />
-        <jarDirectory url="file://$USER_HOME$/Desktop/opencv/build/java" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../../opencv/build/java" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../opencv/build/java" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
