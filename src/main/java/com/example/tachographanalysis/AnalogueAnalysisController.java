@@ -163,6 +163,8 @@ public class AnalogueAnalysisController {
     }
 
     private void writeWork(JSONObject json) throws Exception {
+        sumBreak=0;
+        sumWork=0;
         JSONArray jarr=json.getJSONArray("praca");
         String text="";
         String xml="" +
