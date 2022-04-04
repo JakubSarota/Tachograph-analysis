@@ -15,7 +15,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 
 public class analysisCircle {
-    public changeColor blackImage;
+    public static changeColor blackImage;
     public BufferedImage[] getHuanByCircle(String file) throws IOException, InterruptedException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imageFile = imread(file
@@ -61,7 +61,7 @@ public class analysisCircle {
                 new Range(minX,maxX));
 
         Mat rotateImage = RotateImage.RotateImage(findedCircle);
-        rotateImage.copyTo(findedCircle);
+        rotateImage.copyTo(imageFile);
 
 
 //        Imgcodecs.imwrite(file

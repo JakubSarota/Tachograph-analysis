@@ -322,20 +322,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/Desktop/opencv/build/java" />
+          <root url="file://$USER_HOME$/opencv/build/java" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
           <root url="file://C:/Program Files/Java/opencv/build/java/x64" />
         </NATIVE>
         <SOURCES>
-          <root url="file://$USER_HOME$/Desktop/opencv/build/java" />
+          <root url="file://$USER_HOME$/opencv/build/java" />
         </SOURCES>
         <excluded>
           <root url="file://C:/Program Files/Java/opencv/build/java/x64" />
         </excluded>
         <jarDirectory url="file://$USER_HOME$/Desktop/opencv/build/java" recursive="false" />
         <jarDirectory url="file://$USER_HOME$/Desktop/opencv/build/java" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$USER_HOME$/opencv/build/java" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/opencv/build/java" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="x64" level="project" />

@@ -1,6 +1,7 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
+import com.example.tachographanalysis.database.DatabaseConnection;
 import com.example.tachographanalysis.size.SizeController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -15,17 +16,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +49,9 @@ public class AnalogueAnalysisController {
     private ScrollPane scroll;
     @FXML
     private TextArea textArea;
+    public static int sumBreak=0;
+    public static int sumWork=0;
+    public static String file_name;
 
     private String imageFile, text = "Wybierz plik albo upuść go tutaj";
     static double ip = 0;
@@ -70,6 +81,8 @@ public class AnalogueAnalysisController {
                         "*.png","*.jpg"));
         File selectedFile = fileChooser.showOpenDialog(null);
         imageFile = selectedFile.toURI().toURL().toString();
+        file_name=imageFile.replace("file:/","");
+        System.out.println(file_name);
         image = new Image(imageFile);
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("Rozmiar pliku jest za mały");
@@ -150,6 +163,8 @@ public class AnalogueAnalysisController {
     }
 
     private void writeWork(JSONObject json) throws Exception {
+        sumBreak=0;
+        sumWork=0;
         JSONArray jarr=json.getJSONArray("praca");
         String text="";
         String xml="" +
@@ -257,10 +272,11 @@ public class AnalogueAnalysisController {
                 "<CardDriverActivity>\n" +
         "            <CardActivityDailyRecord DateTime=\"\" DailyPresenceCounter=\"\" Distance=\"\">\n";
 //
+        int lastWork=0,lastBreak=0;
         for (int i=0;i<jarr.length();i++) {
             boolean pracowal=false;
             boolean przerwa=false;
-            int tmp=Integer.parseInt((String) jarr.get(i));
+
             if(i>0) {
                 if (Integer.parseInt((String) jarr.get(i)) - 1 == Integer.parseInt((String) jarr.get(i - 1))) {
 
@@ -271,7 +287,9 @@ public class AnalogueAnalysisController {
                     xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                                     analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\" />\n";
 
-                    text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\n";
+                    sumWork+=Integer.parseInt((String) jarr.get(i - 1))-Integer.parseInt((String) jarr.get(lastWork));
+                    lastBreak=i-1;
+//                    text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\n";
                 }else{
                     pracowal = true;
                     if(przerwa){
@@ -280,13 +298,16 @@ public class AnalogueAnalysisController {
                 }
             }
             if(!pracowal) {
-                text += "Work " + analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i))) + "\n";
+                sumBreak+=Integer.parseInt((String) jarr.get(i))-Integer.parseInt((String) jarr.get(lastBreak));
+                lastWork=i;
+//                text += "Work " + analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i))) + "\n";
                 xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Work\" Time=\""+
                         analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i)))+"\" />\n";
             }
         }
 
         text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\n";
+        sumWork+=Integer.parseInt((String) jarr.get(jarr.length() - 1))-Integer.parseInt((String) jarr.get(lastWork));
         xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                 analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\" />\n";
         xml+="            </CardActivityDailyRecord>\n" +
@@ -294,14 +315,24 @@ public class AnalogueAnalysisController {
                 "    </DriverActivityData>\n"+
                 "</DriverData>";
 
-        System.out.println(xml);
         FileWriter xmlfile=new FileWriter(".\\ddd_to_xml\\data\\driver\\analoguexml.xml");
         xmlfile.write(xml);
         xmlfile.close();
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
-        System.out.println(s);
-        System.out.println("a tu się coś dzieje");
         textArea.setText(s[1]);
     }
 
+    public void addStats() throws IOException {
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
+        StackPane stackPane = new StackPane();
+        Scene secondScene = new Scene(stackPane, 950,420);
+        stackPane.getChildren().add(fxmlLoader);
+        Stage secondStage = new Stage();
+        secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+        secondStage.setTitle("Dodaj statystyki");
+        secondStage.setScene(secondScene);
+
+        secondStage.show();
+
+    }
 }

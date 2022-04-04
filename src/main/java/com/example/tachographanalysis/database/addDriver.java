@@ -1,83 +1,162 @@
 package com.example.tachographanalysis.database;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
-import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
+import com.example.tachographanalysis.DriversController;
 
 public class addDriver {
-    @FXML
-    private TextField tf_first_name;
 
     @FXML
-    private TextField tf_last_name;
+    private TextField tf_first_name, tf_last_name, tf_second_name, tf_email, tf_pesel, tf_city, tf_country, tf_id_card;
 
     @FXML
-    private TextField tf_second_name;
-
-    @FXML
-    private TextField tf_email;
-
-    @FXML
-    private TextField tf_pesel;
-
-    @FXML
-    private TextField tf_city;
+    private ChoiceBox<String> tf_category;
 
     @FXML
     private DatePicker tf_born;
 
     @FXML
-    private TextField tf_country;
+    private Label hint;
 
     @FXML
-    private TextField tf_id_card;
-
-    @FXML
-    private TextField tf_category;
-
-
-    public void addDriver() {
-        insertToDatabase();
+    public void datepicker() {
+        if(tf_born.getValue()==null) {
+            tf_born.setValue(LocalDate.of(1990,01,01));
+        }
     }
 
-    public void insertToDatabase() {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connectDB = databaseConnection.getDBConnection();
+    public void addDriver() throws SQLException {
+        String last_name = tf_last_name.getText();
+        String first_name = tf_first_name.getText();
+        String second_name = tf_second_name.getText();
+        String email = tf_email.getText();
+        String pesel = tf_pesel.getText();
+        String city = tf_city.getText();
+        String born = tf_born.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String country = tf_country.getText();
+        String id_card = tf_id_card.getText();
+        String license_drive = tf_category.getValue();
 
-        try{
-            Statement statement = connectDB.createStatement();
+        System.out.println(license_drive);
 
-            String first_name = tf_first_name.getText();
-            String last_name = tf_last_name.getText();
-            String second_name = tf_second_name.getText();
-            String email = tf_email.getText();
-            String pesel = tf_pesel.getText();
-            String city = tf_city.getText();
-            String born = tf_born.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String country = tf_country.getText();
-            String id_card = tf_id_card.getText();
-            String license_drive = tf_category.getText();
-
-            int status = statement.executeUpdate("INSERT INTO driver (first_name, second_name, last_name, email, pesel, city, born_date, country, id_card, license_drive) VALUES('"+first_name+"','"+last_name+"','"+second_name+"','"+email+"','"+pesel+"','"+city+"','"+born+"','"+country+"','"+id_card+"','"+license_drive+"')");
-
-            if(status>0) {
-                System.out.println("User exists");
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        if(!checkIsAllFill(last_name, first_name, pesel, city, born, country, id_card)==true) {
+            hint.setTextFill(Color.web("#ff0000"));
+            hint.setText("Uzupełnij wszystkie pola oznaczone *");
+        } else if(!CheckIsExist(pesel, id_card) == true) {
+            hint.setTextFill(Color.web("#ff0000"));
+            hint.setText("Użytkownik istnieje w bazie");
+        } else if(tf_pesel.getText().length() != 11) {
+            hint.setTextFill(Color.web("#ff0000"));
+            hint.setText("Nieprawidłowy PESEL");
+        } else if(tf_id_card.getText().length() != 15) {
+            hint.setTextFill(Color.web("#ff0000"));
+            hint.setText("Nieprawidłowy numer kierowcy");
+        } else {
+            insertToDatabase(last_name, first_name, second_name, email, pesel, city, born, country, id_card, license_drive);
         }
+    }
+
+    public Boolean checkIsAllFill(String last_name,
+                                  String first_name,
+                                  String pesel,
+                                  String city,
+                                  String born,
+                                  String country,
+                                  String id_card) throws SQLException {
+        if(first_name == "" || last_name == "" || pesel == "" || city == "" || born == "" || id_card == "" || country == "") {
+            return false;
+        } else {
+            hint.setTextFill(Color.web("#ffffff"));
+            hint.setText("Dodano kierowce");
+        }
+        return true;
+    }
+
+    public boolean CheckIsExist(String pesel,
+                                String id_card) throws SQLException {
+        boolean status = true;
+        String check = "SELECT * FROM driver WHERE pesel='"+pesel+"' AND id_card='"+id_card+"'";
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        Connection connection = databaseConnection.getDBConnection();
+        Statement stmt;
+        System.err.println(check);
+        ResultSet rs;
+        try {
+            stmt = connection.createStatement();
+            rs = stmt.executeQuery(check);
+            if(rs.next()) {
+                status = false;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return status;
+    }
+
+    public void insertToDatabase(String last_name,
+                                 String first_name,
+                                 String second_name,
+                                 String email,
+                                 String pesel,
+                                 String city,
+                                 String born,
+                                 String country,
+                                 String id_card,
+                                 String license_drive) throws SQLException {
+        try {
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            Connection connection = databaseConnection.getDBConnection();
+            Statement st = connection.createStatement();
+            String insert = "INSERT INTO driver (first_name, second_name, last_name, email, pesel, city, born_date, country, id_card, license_drive) VALUES('"+first_name+"','"+last_name+"','"+second_name+"','"+email+"','"+pesel+"','"+city+"','"+born+"','"+country+"','"+id_card+"','"+license_drive+"')";
+            st.executeQuery(insert);
+            connection.close();
+        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+        }
+
+    }
+
+    public void digitOnlyPesel() {
+        tf_pesel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!t1.matches("\\d*")) {
+                    tf_pesel.setText(t1.replaceAll("[^\\d]", ""));
+                }
+                if (tf_pesel.getLength() >=11) {
+                    String max = tf_pesel.getText().substring(0,11);
+                    tf_pesel.setText(max);
+                }
+            }
+        });
+    }
+
+    public void digitOnlyIdCard() {
+        tf_id_card.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (!t1.matches("\\d*")) {
+                    tf_id_card.setText(t1.replaceAll("[^\\d]", ""));
+                }
+                if (tf_id_card.getLength() >=15) {
+                    String max = tf_id_card.getText().substring(0,15);
+                    tf_id_card.setText(max);
+                }
+            }
+        });
     }
 }
