@@ -16,6 +16,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 public class analysisCircle {
     public static changeColor blackImage;
+    public static changeColor blackImage2;
     public BufferedImage[] getHuanByCircle(String file) throws IOException, InterruptedException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imageFile = imread(file
@@ -61,44 +62,44 @@ public class analysisCircle {
                 new Range(minX,maxX));
 
         Mat rotateImage = RotateImage.RotateImage(findedCircle);
-        rotateImage.copyTo(imageFile);
+//        rotateImage.copyTo(findedCircle);
 
 
-//        Imgcodecs.imwrite(file
-//                .replace("file:/","")+"atest.png",rotateImage);
 
 
-        Imgproc.warpPolar(imageFile, dst, imageFile.size(),
-//                new Point(imageFile.width()/2,imageFile.height()/2),
-//                imageFile.width()/2,
-                new Point(center.getDouble("centerx"),center.getDouble("centery")),
-                center.getDouble("radius"),
+
+        Imgproc.warpPolar(rotateImage, dst, rotateImage.size(),
+                new Point(rotateImage.width()/2,rotateImage.height()/2),
+                rotateImage.width()/2,
+//                new Point(center.getDouble("centerx"),center.getDouble("centery")),
+//                center.getDouble("radius"),
                 0);
 
         Core.rotate(dst,dst2,Core.ROTATE_90_COUNTERCLOCKWISE);
 
         dst2=dst2.submat(new Range(0,(int) (dst2.height() - dst2.height() / 2.8)),new Range(0,dst2.width()));
-        resizeImage(dst2, dstResize, (int) ( center.getDouble("radius")*2*Math.PI));
+        dstResize=resizeImage(dst2, dstResize, (int) ( rotateImage.width()*4));
 
         Mat work = CropWork.crop(dstResize);
 
-//        Imgcodecs.imwrite(file
-//                .replace("file:/","")+"_work.png",work);
 
 
-        blackImage = new changeColor(HighGui.toBufferedImage(dstResize));
+        blackImage = new changeColor(HighGui.toBufferedImage(dst2));
+        blackImage2 = new changeColor(HighGui.toBufferedImage(dstResize));
 
         blackImage.blackAndWhite(200);
+        blackImage2.blackAndWhite(200);
 //        blackImage.czas_pracy();
 //        java.awt.Image img = HighGui.toBufferedImage(dstResize);
 
-        BufferedImage writableImage = (BufferedImage) blackImage.im;
-        return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(findedCircle)};
+        BufferedImage writableImage = (BufferedImage) blackImage2.im;
+        return new BufferedImage[]{writableImage, (BufferedImage) HighGui.toBufferedImage(rotateImage)};
     }
 
-    private void resizeImage(Mat dst, Mat dstResize, int width) {
+    private Mat resizeImage(Mat dst, Mat dstResize, int width) {
         Size Resize = new Size(width, dst.height());
         Imgproc.resize(dst, dstResize, Resize, 0,0, Imgproc.INTER_AREA);
+        return dstResize;
     }
 
 
