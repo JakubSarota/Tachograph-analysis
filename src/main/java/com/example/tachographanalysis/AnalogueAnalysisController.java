@@ -321,18 +321,19 @@ public class AnalogueAnalysisController {
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1]);
     }
-
+    StackPane stackPane = new StackPane();
+    Scene secondScene = new Scene(stackPane, 950,420);
+    Stage secondStage = new Stage();
     public void addStats() throws IOException {
+        if(secondStage==null || !secondStage.isShowing()) {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
-        StackPane stackPane = new StackPane();
-        Scene secondScene = new Scene(stackPane, 950,420);
         stackPane.getChildren().add(fxmlLoader);
-        Stage secondStage = new Stage();
         secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
         secondStage.setTitle("Dodaj statystyki");
         secondStage.setScene(secondScene);
-
         secondStage.show();
-
+        } else {
+            secondStage.toFront();
+        }
     }
 }

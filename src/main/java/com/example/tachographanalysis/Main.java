@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), SizeController.sizeW, SizeController.sizeH);
-        stage.setTitle("Tachfive 1.2");
+        stage.setTitle("Tachfive 1.3");
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("ICON.png")));
 //        stage.setMaximized(true);

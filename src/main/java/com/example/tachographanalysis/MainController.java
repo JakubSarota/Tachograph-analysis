@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -52,17 +53,21 @@ public class MainController {
         File fileChooser = new File("src/main/resources/com/example/tachographanalysis/TACHOFIVEHELP.pdf");
         Desktop.getDesktop().open(fileChooser);
     }
+    Stage secondStage = new Stage();
+    StackPane stackPane = new StackPane();
+    Scene secondScene = new Scene(stackPane, 200,100);
 
     public void aboutProgram() throws Exception {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("aboutProgram.fxml"));
-        StackPane stackPane = new StackPane();
-        Scene secondScene = new Scene(stackPane, 200,100);
-        stackPane.getChildren().add(fxmlLoader);
-        Stage secondStage = new Stage();
-        secondStage.setTitle("");
-        secondStage.setScene(secondScene);
-
-        secondStage.show();
+        if(secondStage==null || !secondStage.isShowing()) {
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("aboutProgram.fxml"));
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("INFO.png")));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.setTitle("");
+            secondStage.setScene(secondScene);
+            secondStage.show();
+        } else {
+            secondStage.toFront();
+        }
     }
 
     public void getSettings() throws Exception {
