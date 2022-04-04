@@ -1,8 +1,8 @@
-#[1.3] - 2021-04-05
+#[1.3] - 2022-04-05
 
 ###Dodano
 - Raport w analizie analogowej
-- Wykresy analizie cyfrowej
+- Wykresy w analizie cyfrowej
 - Formularz dodawania kierowców
 - Lista kierowców oraz wyszkiwarka
 ###Zmieniono
@@ -11,7 +11,7 @@
 - Przyciski otwierają jedną podstrone
 #
 #
-###[1.2] - 2021-03-29
+###[1.2] - 2022-03-29
 
 ###Dodano
 - Zapisywanie danych z tarczki analogowej do pliku XML
@@ -24,7 +24,7 @@
 - "Przeciągnij i upuść" w analizie cyfrowej
 #
 #
-###[1.1] - 2021-03-22
+###[1.1] - 2022-03-22
 
 ###Dodano
 - Wyświetlanie danych czasu pracy kierowcy w analizie cyfrowej
