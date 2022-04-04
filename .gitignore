@@ -34,9 +34,5 @@ ddd_to_xml/data/driver/Readme.txt
 src/main/java/com/example/tachographanalysis/GeneratePDF.java
 *.pdf
 .log
-.log
-.log
-.log
-.log
 target/classes/com/example/tachographanalysis/truck.gif
-target
+target/
