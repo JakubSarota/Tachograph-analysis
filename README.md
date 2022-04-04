@@ -1,6 +1,6 @@
-# Tachograph-analysis
+# Tachfive 
 
-- rejestrowanie prędkości pojazdu
-- zamiana analog > cyfrowy
-- obsługa tachografu
-- analiza cyfrowa i analogowa obrazu tachografu
+- Analiza cyfrowa i analogowa obrazu tachografu
+- Zamiana analogowy na cyfrowy
+- Ewidencja czasu pracy kierowcy
+
