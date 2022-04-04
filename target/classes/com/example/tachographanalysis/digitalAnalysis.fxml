@@ -48,6 +48,7 @@
                       <Tab fx:id="two" onSelectionChanged="#visibilityDataPickerEnter" text="Dzienna aktywność kierowcy" />
                        <Tab fx:id="three" onSelectionChanged="#visibilityDataPickerLeave" text="Trasy kierowcy" />
                        <Tab fx:id="four" onSelectionChanged="#visibilityDataPickerLeave" text="Przebieg" />
+                        <Tab fx:id="five" onSelectionChanged="#visiblityChartArea" text="Wykres godzinowy" />
                     </tabs>
                   </TabPane>
                   <Button fx:id="btnRaportPDF" layoutX="87.0" layoutY="553.0" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport" textFill="#47535b" visible="false">
@@ -60,15 +61,7 @@
                         <Font size="14.0" />
                      </font></Button>
                   <ProgressBar fx:id="progressBar" layoutX="398.0" layoutY="301.0" prefWidth="200.0" progress="0.0" visible="false" />
-                  <DatePicker fx:id="dataPicker" editable="false" layoutX="789.0" layoutY="100.0" onAction="#setDataPicker" prefHeight="25.0" prefWidth="119.0" visible="false" />
-                  <AreaChart fx:id="chart" layoutX="398.0" layoutY="330.0" prefHeight="135.0" prefWidth="500.0" visible="false">
-                    <xAxis>
-                      <NumberAxis prefWidth="481.0" side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" upperBound="24.0" />
-                    </yAxis>
-                  </AreaChart>
+                  <DatePicker fx:id="dataPicker"  layoutX="789.0" layoutY="100.0" onAction="#setDataPicker" prefHeight="25.0" prefWidth="119.0" visible="false" />
                   <BarChart fx:id="barChart" layoutX="382.0" layoutY="189.0" prefHeight="341.0" prefWidth="431.0" visible="false">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
@@ -77,6 +70,14 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
+                  <AreaChart fx:id="chart" layoutX="108.0" layoutY="146.0" prefHeight="400.0" prefWidth="776.0" visible="false">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </AreaChart>
                </children>
             </AnchorPane>
          </children>

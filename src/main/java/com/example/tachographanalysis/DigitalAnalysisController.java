@@ -4,8 +4,8 @@ package com.example.tachographanalysis;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +15,6 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -59,7 +58,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private DatePicker dataPicker;
     @FXML
-    private Tab one, two, three, four;
+    private Tab one, two, three, four, five;
     @FXML
     private TabPane tabPane;
     @FXML
@@ -88,6 +87,9 @@ public class DigitalAnalysisController implements Initializable {
     static String dataPick1;
     static String daily = "";
     static BaseFont helvetica;
+    static String lastDayOfWork= "";
+    static int counterEnter = 0;
+
 
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
@@ -281,7 +283,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void showData(String[] readedData){
 
-
+        showWeaklyChart(readedData[1]+" \n\n d");
 //          progressBar.setVisible(true);
 //          progressBar.setProgress(1.0);
 //          dragOver.setVisible(false);
@@ -312,7 +314,7 @@ public class DigitalAnalysisController implements Initializable {
         //TextArea dailyDataDriver = (TextArea) two.getContent();
 //        dailyDataDriver.appendText(readedData[1]);
 
-        dataT=readedData[1];
+        dataT=readedData[1]+" \n\n d";
 
 
 
@@ -327,6 +329,12 @@ public class DigitalAnalysisController implements Initializable {
         four.setContent(vehicleHistory);
         TextArea vehicleHistoryData = (TextArea) four.getContent();
         vehicleHistoryData.appendText(readedData[3]);
+
+
+        TextArea dataChartTwoWeekend = new TextArea("");
+        five.setContent(dataChartTwoWeekend);
+        TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
+        dataChartTwoWeekendArea.setEditable(false);
 
 
     }
@@ -369,6 +377,8 @@ public class DigitalAnalysisController implements Initializable {
                 inThisDayData += String.valueOf(dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
                 i += 1;
             }
+
+
             showChart(inThisDayData);
         }
 
@@ -383,8 +393,239 @@ public class DigitalAnalysisController implements Initializable {
 //        dailyTextAreaDataChart.appendText(dataPickerValue);
 
     }
+
+
+
+
     @FXML
     private void showChart(String data) throws ParseException {
+
+        Object[] dataDiffOneDaTable = dataDiffOneDay(data);
+
+        String selectedDate = data.substring(0,10);
+
+        String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
+        String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
+        String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
+
+
+
+        if(!savedData.contains(selectedDate) && counterEnter <= 5 ) {
+
+            counterEnter++;
+
+            //Barchart dzialający
+            barChart.setVisible(true);
+
+            barChart.setTitle("Aktywność pracownka ");
+            barChart.getXAxis().setLabel("Aktywność");
+            barChart.getYAxis().setLabel("Godziny");
+
+            barChart.setAnimated(false);
+
+            XYChart.Series series1 = new XYChart.Series();
+            series1.setName(selectedDate);
+            series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
+            series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+            series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
+            XYChart.Series series2 = new XYChart.Series();
+
+            barChart.getData().addAll(series1);
+        }
+        savedData += selectedDate;
+    }
+
+    // Last two weeks driver data
+    @FXML
+    private void showWeaklyChart(String readedData) {
+
+        int lastIndexOfData = readedData.length();
+        String splitedData[] = new String[lastIndexOfData];
+        String newSplitedData[] = new String[lastIndexOfData];
+        String twoWeeksData[] = new String[14];
+        //          System.out.println(readedData);
+        for (int i = 0; i < readedData.length(); i++) {
+            splitedData[i] = String.valueOf(readedData.charAt(i));
+        }
+
+        int j = 0;
+
+        for (int i = lastIndexOfData - 1; i > 0; i--) {
+            newSplitedData[j] = String.valueOf(readedData.charAt(i));
+            j++;
+        }
+
+        int days = 0;
+        String dataday = "";
+
+        for (int i = 0; i < readedData.length() - 1; i++) {
+            dataday = "";
+
+            if (days == 14) {
+                break;
+            }
+            if (newSplitedData[i].equals("Z")) {
+                for (int k = 10; k >= 1; k--) {
+                    dataday += newSplitedData[i + 9 + k];
+
+                }
+                twoWeeksData[days] = dataday;
+                days++;
+
+            }
+        }
+        String twoWeeksDataCorrectly[] = new String[14];
+        int altI = 0;
+        for (int i = 13; i >= 0; i--) {
+            twoWeeksDataCorrectly[altI] = twoWeeksData[i];
+            altI++;
+        }
+
+
+        String inThisDayData[] = new String[14];
+        String dailyDataDriver = "";
+        int counter14days = 0;
+        String indexOfDataPickerTime[] = new String[14];
+
+        for (int i = 0; i < 14; i++) {
+            indexOfDataPickerTime[i] = String.valueOf(readedData.indexOf(twoWeeksDataCorrectly[i]));
+        }
+
+
+        while (counter14days != 14) {
+            int indeksString = parseInt(indexOfDataPickerTime[counter14days]);
+            int i = 0;
+//            if (counter14days == 13) {
+//                while (indeksString + i != readedData.length()) {
+//                    inThisDayData[counter14days] += String.valueOf(readedData.charAt(parseInt(indexOfDataPickerTime[counter14days]) + i));
+//                    i += 1;
+//                    if(indeksString +i+1 == readedData.length()){
+//                        inThisDayData[counter14days] += (" ");
+//                    }
+//                }
+//                counter14days++;
+//            } else {
+
+                while ((!String.valueOf(readedData.charAt(indeksString + i)).equals("d"))) {
+                    inThisDayData[counter14days] += String.valueOf(readedData.charAt(parseInt(indexOfDataPickerTime[counter14days]) + i));
+                    i += 1;
+                }
+                counter14days++;
+//            }
+        }
+
+        String[] inThisDayDataCorrectly = new String[14];
+        int lastIndexOfTheDay = 0;
+
+        for (int i = 0; i < 14; i++) {
+            if( inThisDayData[i].startsWith("null")) {
+                lastIndexOfTheDay = inThisDayData[i].length();
+                inThisDayDataCorrectly[i] = inThisDayData[i].substring(4, lastIndexOfTheDay);
+            }
+            else{
+                inThisDayDataCorrectly[i] = inThisDayData[i].substring(0, lastIndexOfTheDay);
+            }
+        }
+
+        String[] activityDataWork = new String[0];
+        String[] activityDataBreak = new String[0];
+        String[] activityDataDrive = new String[0];
+
+        Object[] activityDataWorkObject = new Object[14];
+        Object[] activityDataDriveObject = new Object[14];
+        Object[] activityDataBreakObject = new Object[14];
+
+
+        for (int i = 0; i < 14; i++) {
+
+            Object[] dataDiffOneDaTable = dataDiffOneDay(inThisDayDataCorrectly[i]);
+
+            activityDataWork = (String[]) dataDiffOneDaTable[0];
+            activityDataDrive = (String[]) dataDiffOneDaTable[1];
+            activityDataBreak = (String[]) dataDiffOneDaTable[2];
+
+            activityDataWorkObject[i] =  activityDataWork;
+            activityDataDriveObject[i] = activityDataDrive;
+            activityDataBreakObject[i] = activityDataBreak;
+
+        }
+
+
+//        readedData.
+        //for przypisująca rekurencyjnie do nowej tablicy znaki
+
+
+        chart.setTitle("Dwutygodniowa aktywność pracownka ");
+        chart.getXAxis().setLabel("Aktywność");
+        chart.getYAxis().setLabel("Godziny");
+
+        chart.setAnimated(false);
+
+        XYChart.Series seriesChart1 = new XYChart.Series();
+        seriesChart1.setName("Praca");
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[0], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[0]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[1], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[1]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[2], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[2]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[3], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[3]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[4], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[4]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[5], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[5]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[6], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[6]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[7]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[8]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[9]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[10]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[11]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[12]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[13]))) / 60));
+
+        XYChart.Series seriesChart2 = new XYChart.Series();
+        seriesChart2.setName("Przerwa");
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[0], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[0]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[1], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[1]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[2], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[2]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[3], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[3]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[4], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[4]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[5], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[5]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[6], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[6]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[7]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[8]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[9]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[10]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[11]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[12]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[13]))) / 60));
+
+        XYChart.Series seriesChart3 = new XYChart.Series();
+        seriesChart3.setName("Jazda");
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[0], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[0]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[1], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[1]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[2], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[2]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[3], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[3]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[4], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[4]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[5], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[5]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[6], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[6]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[7]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[8]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[9]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[10]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[11]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[12]))) / 60));
+        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[13]))) / 60));
+
+
+//        XYChart.Series seriesChart2 = new XYChart.Series();
+//        series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+//        XYChart.Series seriesChart3 = new XYChart.Series();
+//        series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
+//        XYChart.Series series2 = new XYChart.Series();
+
+        chart.getData().addAll(seriesChart1, seriesChart3, seriesChart2);
+
+
+    }
+
+    @FXML
+    private Object[] dataDiffOneDay(String data){
 
         int firstActivity = data.indexOf("Aktywność");
         int bTime = 0;
@@ -395,8 +636,6 @@ public class DigitalAnalysisController implements Initializable {
         activity[1] = "Driving";
         activity[2] = "Work";
 
-
-        System.out.println(data);
 
         String split[] = (data.split(" "));
 
@@ -410,7 +649,10 @@ public class DigitalAnalysisController implements Initializable {
                 count++;
             }
         }
+
+
         String activityDataBreak[] = new String[count + 1];
+
 
         for (int i = 0; i < split.length; i++) {
             if (activity[0].equals(split[i])) {
@@ -421,10 +663,6 @@ public class DigitalAnalysisController implements Initializable {
                     activityDataBreak[count2] = split[i + 2] + split[i + 7];
                 }
             }
-        }
-
-        for (int i = 1; i < activityDataBreak.length; i++) {
-            System.out.println("break" + activityDataBreak[i]);
         }
 
         // drive hours
@@ -453,9 +691,7 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
 
-        for (int i = 1; i < activityDataDrive.length; i++) {
-            System.out.println("drive" + activityDataDrive[i]);
-        }
+
 
         // work hours
         count = 0;
@@ -481,77 +717,22 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
 
-        System.out.println(timeDiffrence(activityDataWork));
-        System.out.println(timeDiffrence(activityDataDrive));
-        System.out.println(timeDiffrence(activityDataBreak));
+
+//        String[] timeDiffOneDayTable = new String[3];
+        Object[] timeDiffOneDayTable = new Object[3];
+
+        timeDiffOneDayTable[0]= activityDataWork;
+        timeDiffOneDayTable[1]= activityDataDrive;
+        timeDiffOneDayTable[2]= activityDataBreak;
 
 
-        String selectedDate = data.substring(0,10);
+//        System.out.println(timeDiffrence(activityDataWork));
+//        System.out.println(timeDiffrence(activityDataDrive));
+//        System.out.println(timeDiffrence(activityDataBreak));
+        return timeDiffOneDayTable;
 
 
-
-
-
-        if(!savedData.contains(selectedDate)) {
-
-
-
-            //Barchart dzialający
-            barChart.setVisible(true);
-
-            barChart.setTitle("Aktywność pracownka ");
-            barChart.getXAxis().setLabel("Aktywność");
-            barChart.getYAxis().setLabel("Godziny");
-
-            barChart.setAnimated(false);
-
-            XYChart.Series series1 = new XYChart.Series();
-            series1.setName(selectedDate);
-            series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
-            series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
-            series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
-            XYChart.Series series2 = new XYChart.Series();
-
-            barChart.getData().addAll(series1);
-        }
-        savedData+=selectedDate;
-
-//        barChart.getData().addAll(series1,series2,series3);
-
-//        chart.setVisible(true);
-
-//        chart.setTitle("Aktywność pracownka ");
-//        chart.getXAxis().setLabel("Minuty");
-//        chart.getYAxis().setLabel("Aktywność");
-//
-//        int workM =  parseInt(String.valueOf(timeDiffrence(activityDataWork)));
-//        int driveM =  parseInt(String.valueOf(timeDiffrence(activityDataDrive)));
-//        int breakM = parseInt(String.valueOf(timeDiffrence(activityDataBreak)));
-//
-//        chart.setAnimated(false);
-//
-//        XYChart.Series series1 = new XYChart.Series();
-//        series1.setName("Praca");
-//        series1.getData().add(new XYChart.Data( 0,10));
-//        series1.getData().add(new XYChart.Data( workM,10));
-//
-//        XYChart.Series series2 = new XYChart.Series();
-//        series2.setName("Jazda");
-//        series2.getData().add(new XYChart.Data(0,10));
-//        series2.getData().add(new XYChart.Data(driveM,10));
-//
-//        XYChart.Series series3 = new XYChart.Series();
-//        series3.setName("Przerwa");
-//        series3.getData().add(new XYChart.Data(0,10 ));
-//        series3.getData().add(new XYChart.Data(breakM,10 ));
-//
-//
-////        chart.getData().addAll(series1);
-//
-//        chart.getData().addAll(series1,series2,series3);
     }
-
-
 
     @FXML
     public int timeDiffrence(String[] activity){
@@ -605,18 +786,54 @@ public class DigitalAnalysisController implements Initializable {
             savedData="";
 
 
+
         }
 
     }
     @FXML
     private void visibilityDataPickerEnter(){
+
         dataPicker.setVisible(true);
         barChart.setVisible(false);
         barChart.getData().clear();
         dataPicker.getEditor().clear();
-        dataPicker.setValue(null);
+        chart.setVisible(false);
+
+        int lastZLatter = dataT.lastIndexOf("Z");
+        lastDayOfWork = String.valueOf(dataPicker.getValue());
+        int lastDataIndex = lastZLatter-19;
+        String lastaDataString = (dataT.substring(lastDataIndex,lastDataIndex+10));
+
+        String year = (lastaDataString.substring(0,4));
+        String month = (lastaDataString.substring(5,7));
+        String day = (lastaDataString.substring(8,10));
+
+        int parseDay = parseInt(day);
+        int parseMonth = parseInt(month);
+        int parseYear = parseInt(year);
+//        dataPicker.setValue(null);
+        if((parseMonth==4 || parseMonth==6 || parseMonth==9 || parseMonth==11 )&& parseDay==30 && parseMonth!=12) {
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
+        }else if (parseMonth==2 && parseDay == 28){
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
+        }else if (parseMonth==12 && parseDay == 31 ){
+            dataPicker.setValue(LocalDate.of(parseYear+1,1,1));
+        }else if ((parseMonth==1 || parseMonth==3 || parseMonth==5 || parseMonth==7 || parseMonth==8 || parseMonth==10 || parseMonth==12 )&& parseDay==31){
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
+        }
+        else{
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth,parseDay+1));
+        }
+
+
 
     }
+    @FXML
+    private void visiblityChartArea(){
+        chart.setVisible(true);
+
+    }
+
     @FXML
     private void btnRaportPDFdnia(){
         btnRaportPDFdnia.setVisible(true);
@@ -834,7 +1051,6 @@ private void colorPicker() throws ParserConfigurationException {
                     NodeList ActivityChangeInfo = doc.getElementsByTagName("ActivityChangeInfo");
                     for(int i=0;i<CardActivityDailyRecord.getLength();i++){
         NodeList t=CardActivityDailyRecord.item(i).getChildNodes();
-//                        System.out.println(CardActivityDailyRecord.item(i).getAttributes().getNamedItem("DateTime"));
                         dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(1).getNodeValue() + " \n");
                         dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(i).
@@ -842,43 +1058,13 @@ private void colorPicker() throws ParserConfigurationException {
                         dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(0).getNodeValue() + " \n\n");
                         for (int j=0;j<t.getLength();j++){
-//                            System.out.println(t.item(j).getAttributes().getNamedItem("Time"));
-//                            System.out.println(t.item(j).getAttributes());
                             if(t.item(j).getAttributes()!=null) {
                                 dailyActivityS += (" \t Aktywność: " + t.item(j).getAttributes().getNamedItem("Activity"));
                                 dailyActivityS += (" Czas: " + t.item(j).getAttributes().getNamedItem("Time") + "\n");
                             }
-//
+
                         }
                     }
-//                    System.out.println(dailyActivityS);
-//                    for (int cout = 0; cout < CardActivityDailyRecord.getLength(); cout++) {
-//
-//
-//                        dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(cout).
-//                                getAttributes().item(1).getNodeValue() + " \n");
-//
-//                        dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(cout).
-//                                getAttributes().item(2).getNodeValue() + " km \n");
-//                        dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(cout).
-//                                getAttributes().item(0).getNodeValue() + " \n\n");
-//                        // ilosc daily rekordy w danym dniu
-//                        int itemsInCardActiveDailyRecord = CardActivityDailyRecord.item(cout).getChildNodes().getLength();
-//                        // gdy
-//                        int j = 0;
-//
-//                        while (j < itemsInCardActiveDailyRecord) {
-//
-////                                textArea.appendText(" \t FileOffset: "+ActivityChangeInfo.item(j+k).getAttributes().item(1).getNodeValue() + "\n");
-////                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(3).getNodeValue() + "\n");
-////                                System.out.print(ActivityChangeInfo.item(j+k).getAttributes().item(4).getNodeValue() + "\n");
-////                                textArea.appendText(" \t Inserted: "+ActivityChangeInfo.item(j+k).getAttributes().item(2).getNodeValue() + "\n");
-//                            dailyActivityS +=(" \t Aktywność: " + ActivityChangeInfo.item(j ).getAttributes().item(0).getNodeValue());
-//                            dailyActivityS +=(" Czas: " + ActivityChangeInfo.item(j ).getAttributes().item(5).getNodeValue() + "\n");
-//                            j++;
-//                        }
-//                        k += itemsInCardActiveDailyRecord;
-//                    }
 
                     // Trasa kierowcy
                     NodeList elPlaceRecord = doc.getElementsByTagName("PlaceRecord");

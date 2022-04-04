@@ -35,3 +35,7 @@ src/main/java/com/example/tachographanalysis/GeneratePDF.java
 *.pdf
 .log
 .log
+.log
+.log
+.log
+target/classes/com/example/tachographanalysis/truck.gif
