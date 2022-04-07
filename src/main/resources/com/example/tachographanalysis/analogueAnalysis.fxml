@@ -24,7 +24,7 @@
                             </font></TextArea>
                         <ImageView fx:id="imageView2" fitHeight="290.0" fitWidth="290.0" layoutX="353.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@truck.gif" />
+                        <Image url="" />
                      </image></ImageView>
                         <AnchorPane layoutX="8.0" layoutY="451.0" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="862.0">
                             <children>
@@ -65,7 +65,7 @@
                     </font>
                 </Button>
                 <Button layoutX="63.0" layoutY="231.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0"
-                        style="-fx-background-color: #F8F9FA;" text="Kierowca" textFill="#47535b"
+                        style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b"
                         onMouseClicked="#addStats">
                     <font>
                         <Font name="System Bold" size="14.0" />

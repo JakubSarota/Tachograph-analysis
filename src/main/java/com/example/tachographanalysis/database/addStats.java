@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
 
 
 import java.awt.*;
@@ -42,6 +43,8 @@ public class addStats {
     @FXML
     private TextField sumRoad;
     private String driver;
+    @FXML
+    private Text returnInfo;
     @FXML
     protected void initialize() throws Exception {
         DatabaseConnection connectNow = new DatabaseConnection();
@@ -94,31 +97,40 @@ public class addStats {
                 Files.copy(Path.of(AnalogueAnalysisController.file_name),
                         Path.of(".\\archiwum\\" + name_of_file));
 
-                insertToDatabase(Integer.parseInt(d), dataPicker.getValue().toString(), LocalDate.now().toString(),
+                returnInfo.setText(insertToDatabase(Integer.parseInt(d), dataPicker.getValue().toString(), LocalDate.now().toString(),
                         textArea.getText(), workTime.getText(),breakTime.getText(),
-                        name_of_file , "analogowy", Integer.parseInt(sumRoad.getText()));
+                        name_of_file , "analogowy", Integer.parseInt(sumRoad.getText())));
             }
+        }else{
+            returnInfo.setText("Nie wybrano kierowcy");
         }
     }
 
-    public void insertToDatabase(int driver_id,String date_work,String date_add,String work_info,String sumWork,
+    public String insertToDatabase(int driver_id,String date_work,String date_add,String work_info,String sumWork,
                                  String sumBreak,String file,String file_type,int sumRoad) {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connectDB = databaseConnection.getDBConnection();
 
         try{
             Statement statement = connectDB.createStatement();
+            ResultSet queryOutput = statement.executeQuery("SELECT * FROM stats WHERE date_work='"+date_work+
+                    "' AND driver_id='"+driver_id+"'");
+            if(!queryOutput.next()) {
+                    int status = statement.executeUpdate(
+                            "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, sum_road)" +
+                                    " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info + "','" + sumWork + "','" +
+                                    sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "')");
 
-            int status = statement.executeUpdate(
-                    "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, sum_road)" +
-                            " VALUES('"+driver_id+"','"+date_work+"','"+date_add+"','"+work_info+"','"+sumWork+"','"+
-                            sumBreak+"','"+file+"','"+file_type+"','"+sumRoad+"')");
+                    if (status > 0) {
+                        return "Dodano";
+                    }
 
-            if(status>0) {
-                System.out.println("Add stats");
+            }else{
+                return "Istnieją już statystyki dla tego kierowcy tego dnia";
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return "Nie udało się dodać";
     }
 }

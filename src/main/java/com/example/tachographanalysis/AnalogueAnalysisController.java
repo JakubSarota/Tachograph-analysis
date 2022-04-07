@@ -314,7 +314,10 @@ public class AnalogueAnalysisController {
                 "        </CardDriverActivity>\n" +
                 "    </DriverActivityData>\n"+
                 "</DriverData>";
-
+        File dir = new File(".\\ddd_to_xml\\data\\driver\\");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         FileWriter xmlfile=new FileWriter(".\\ddd_to_xml\\data\\driver\\analoguexml.xml");
         xmlfile.write(xml);
         xmlfile.close();
