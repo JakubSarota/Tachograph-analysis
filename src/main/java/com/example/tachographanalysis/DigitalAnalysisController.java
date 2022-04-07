@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -48,7 +49,8 @@ import static java.lang.Integer.parseInt;
 
 public class DigitalAnalysisController implements Initializable {
 
-
+    @FXML
+    private Text TitleFileName,TextLoading,TextError;
     @FXML
     private BarChart barChart;
     @FXML
@@ -95,6 +97,7 @@ public class DigitalAnalysisController implements Initializable {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
+        chart.getData().removeAll();
     }
 
     @FXML
@@ -109,22 +112,30 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     void onDragClickedButton(MouseEvent event) throws Exception {
 
-
+        TextError.setText("");
+        TextLoading.setText("Przetwarzanie...");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.xml"));
         File file = fileChooser.showOpenDialog(new Stage());
-        System.out.println(file);
-        if(file == null)
-        {
+/*
+        Thread.sleep(500);
+*/
 
+//        System.out.println(file);
+        if(file == null) {
+            TextLoading.setText("");
         }
         else {
+
+            TitleFileName.setText("Dane z pliku "+file.getName());
+
             fileChooser.setTitle("Open Resource File");
             //
 
             InputStream inputStream = new FileInputStream(file);
             Thread.sleep(500);
+
 
             String xmlExtCheck = (file.getName().substring(file.getName().length() - 4));
             String xml = ".xml";
@@ -132,12 +143,12 @@ public class DigitalAnalysisController implements Initializable {
             String fileNameXML = file.getName().subSequence(0, file.getName().length() - 4) + ".xml";
             String fileNameDDD = file.getName().subSequence(0, file.getName().length() - 4) + ".ddd";
 
-            System.out.println(file);
             Path logFilePath = Paths.get(".\\.log");
             //log current time
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             if (!xmlExtCheck.equals(xml)) {
+
                 System.out.println("To jest plik .ddd");
                 try {
                     File dir = new File(".\\ddd_to_xml\\data\\driver\\");
@@ -241,36 +252,6 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
     }
-//    @FXML
-//    private void handleDroppedButton(DragEvent event) throws IOException {
-//        List<File> files = event.getDragboard().getFiles();
-//        List<String> validExtensions = Arrays.asList("ddd", "DDD","xml");
-//        file1 = new File(String.valueOf(new FileInputStream(files.get(0))));
-//        if(!validExtensions.containsAll(event.getDragboard()
-//                .getFiles().stream().map(file -> getExtension(file.getName()))
-//                .collect(Collectors.toList()))) {
-//            dragOver.setText("To nie jest odpowiedni plik.");
-//
-//            File file = fileChooser.showOpenDialog(new Stage());
-//
-//        } else {
-//            try {
-//                Scanner scanner = new Scanner(files.get(0));
-//           System.out.println(file1);
-//                while (scanner.hasNextLine()) {
-//                    File filepath = files.get(0);
-////                    Files.write(filepath, )
-//
-//
-////                    textArea.appendText(scanner.nextLine() + "\n");
-//                    dragOver.setText("Poprawnie załadowano plik");
-//
-//                }
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     @FXML
     private void  generatePDF2(){
@@ -283,10 +264,11 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void showData(String[] readedData){
 
+        TextLoading.setText("");
+        TextError.setText("");
+        chart.getData().removeAll();
+        chart.getData().clear();
         showWeaklyChart(readedData[1]+" \n\n d");
-//          progressBar.setVisible(true);
-//          progressBar.setProgress(1.0);
-//          dragOver.setVisible(false);
         try {
             colorPicker();
             dataGD=readedData;
@@ -361,7 +343,11 @@ public class DigitalAnalysisController implements Initializable {
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
         TextArea dailyDataDriver = (TextArea) two.getContent();
-        dataPicker.setVisible(true);
+
+//        Color color = (Color) dataPicker.getBackground().getFills().get(0).getFill();
+//        if(true) {
+//            dataPicker.setVisible(true);
+//        }
         btnRaportPDFdnia.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
@@ -380,6 +366,7 @@ public class DigitalAnalysisController implements Initializable {
 
 
             showChart(inThisDayData);
+
         }
 
 
@@ -613,12 +600,6 @@ public class DigitalAnalysisController implements Initializable {
         seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[13]))) / 60));
 
 
-//        XYChart.Series seriesChart2 = new XYChart.Series();
-//        series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
-//        XYChart.Series seriesChart3 = new XYChart.Series();
-//        series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
-//        XYChart.Series series2 = new XYChart.Series();
-
         chart.getData().addAll(seriesChart1, seriesChart3, seriesChart2);
 
 
@@ -778,12 +759,21 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void visibilityDataPickerLeave(){
 
-        if(dataT.length()!=0) {
-            dataPicker.setVisible(false);
-            btnRaportPDFdnia.setVisible(false);
-            chart.setVisible(false);
-            barChart.setVisible(false);
-            savedData="";
+        if(dataT.length()!=0 ) {
+
+                if(dataPicker!=null) {
+                    dataPicker.setVisible(false);
+                }
+                if(btnRaportPDFdnia!=null) {
+                    btnRaportPDFdnia.setVisible(false);
+                }
+                if(chart!=null) {
+                    chart.setVisible(false);
+                }
+                if(barChart!=null) {
+                    barChart.setVisible(false);
+                }
+                savedData = "";
 
 
 
@@ -891,6 +881,9 @@ private void colorPicker() throws ParserConfigurationException {
                     if (!empty && item != null) {
                         if (work.contains(item)) {
                             this.setStyle("-fx-background-color: pink");
+                        }
+                        else{
+                            this.setDisable(true);
                         }
                     }
                 }
