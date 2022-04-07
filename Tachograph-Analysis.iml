@@ -351,5 +351,18 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Desktop/opencv/build/java" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Desktop/opencv/build/java" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Desktop/opencv/build/java" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Desktop/opencv/build/java" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
