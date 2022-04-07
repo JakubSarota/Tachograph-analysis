@@ -213,21 +213,21 @@ public class DriversController {
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
     }
 
-
-
+    StackPane stackPane = new StackPane();
+    Scene secondScene = new Scene(stackPane, 950,420);
+    Stage secondStage = new Stage();
     public void getAddDrivers() throws Exception {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
-        StackPane stackPane = new StackPane();
-        Scene secondScene = new Scene(stackPane, 950,420);
-        stackPane.getChildren().add(fxmlLoader);
-        Stage secondStage = new Stage();
-        secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
-        secondStage.setTitle("Dodaj kierowce");
-        secondStage.setScene(secondScene);
-
-        secondStage.show();
+        if(secondStage==null||!secondStage.isShowing()) {
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+            secondStage.setTitle("Dodaj kierowce");
+            secondStage.setScene(secondScene);
+            secondStage.show();
+        } else {
+            secondStage.toFront();
+        }
     }
-
 }
 
 
