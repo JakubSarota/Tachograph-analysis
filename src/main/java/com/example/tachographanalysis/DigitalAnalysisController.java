@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.w3c.dom.Document;
@@ -1506,6 +1507,21 @@ private void colorPicker() throws ParserConfigurationException {
         }
     }
 
+//    StackPane stackPane = new StackPane();
+//    Scene secondScene = new Scene(stackPane, 950,420);
+//    Stage secondStage = new Stage();
+//
+//    public void addStats() throws IOException {
+//        if(secondStage==null || !secondStage.isShowing()) {
+//            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
+//            stackPane.getChildren().add(fxmlLoader);
+//            secondStage.setTitle("Dodaj statystyki");
+//            secondStage.setScene(secondScene);
+//            secondStage.show();
+//        } else {
+//            secondStage.toFront();
+//        }
+    }
 
 
 
