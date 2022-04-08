@@ -37,6 +37,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+<!--             Dodawanie statystyk do przeniesienia-->
+<!--             <Button layoutX="63.0" layoutY="231.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0"-->
+<!--                     style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b"-->
+<!--                     onMouseClicked="#addStats">-->
+<!--                 <font>-->
+<!--                     <Font name="System Bold" size="14.0" />-->
+<!--                 </font>-->
+<!--             </Button>-->
          </children>
       </AnchorPane>
    </left>
@@ -79,7 +87,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </AreaChart>
-                   <Text fx:id="TextLoading" fill="WHITE" layoutX="435.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                   <Text fx:id="TextLoading" fill="LIGHTBLUE" layoutX="435.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0">
                        <font>
                            <Font name="System Bold" size="30.0" />
                        </font>

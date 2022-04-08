@@ -271,19 +271,21 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void showData(String[] readedData) throws InterruptedException {
 
+
         TextLoading.setText("");
         TextError.setText("");
         chart.getData().removeAll();
         chart.getData().clear();
         showWeaklyChart(readedData[1]+" \n\n d");
+
         try {
             colorPicker();
             dataGD=readedData;
 
-
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
+
         btnRaportPDF.setVisible(true);
             tabPane.setVisible(true);
             if(btnRaportPDF.isPressed()) {
@@ -305,7 +307,9 @@ public class DigitalAnalysisController implements Initializable {
 
         dataT=readedData[1]+" \n\n d";
 
-
+        if(dataPicker!=null) {
+            visibilityDataPickerEnter();
+        }
 
         TextArea driverRoute = new TextArea("");
         three.setContent(driverRoute);
@@ -351,10 +355,6 @@ public class DigitalAnalysisController implements Initializable {
         two.setContent(dailyData);
         TextArea dailyDataDriver = (TextArea) two.getContent();
 
-//        Color color = (Color) dataPicker.getBackground().getFills().get(0).getFill();
-//        if(true) {
-//            dataPicker.setVisible(true);
-//        }
         btnRaportPDFdnia.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
@@ -376,16 +376,6 @@ public class DigitalAnalysisController implements Initializable {
 
         }
 
-
-
-//        System.out.println(dataXml+"\n");
-//        System.out.println(dataPicker.getValue());
-
-//        String dataPickerValue = String.valueOf(dataPicker.getValue());
-//        System.out.println(dataPickerValue);
-//        dailyPaneDataChart.setVisible(true);
-//        dailyTextAreaDataChart.appendText(dataPickerValue);
-
     }
 
 
@@ -402,13 +392,15 @@ public class DigitalAnalysisController implements Initializable {
         String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
         String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
 
-
-
-
 //        if(!savedData.contains(selectedDate)) {
+
+
+//        if(dataPicker!=null) {
+//            getDataPickerValue();
+//        }
             barChart.getData().clear();
             barChart.getData().removeAll();
-            counterEnter++;
+
 
             //Barchart dzialający
             barChart.setVisible(true);
@@ -424,11 +416,11 @@ public class DigitalAnalysisController implements Initializable {
             series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
             series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
             series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
-            XYChart.Series series2 = new XYChart.Series();
 
             barChart.getData().addAll(series1);
-//        }
+
         savedData += selectedDate;
+        counterEnter++;
     }
 
     // Last two weeks driver data
@@ -545,10 +537,6 @@ public class DigitalAnalysisController implements Initializable {
             activityDataBreakObject[i] = activityDataBreak;
 
         }
-
-
-//        readedData.
-        //for przypisująca rekurencyjnie do nowej tablicy znaki
 
 
         chart.setTitle("Dwutygodniowa aktywność pracownka ");
@@ -824,9 +812,36 @@ public class DigitalAnalysisController implements Initializable {
             dataPicker.setValue(LocalDate.of(parseYear,parseMonth,parseDay+1));
         }
 
-
-
     }
+
+    private void getDataPickerValue(){
+        int lastZLatter = dataT.lastIndexOf("Z");
+        lastDayOfWork = String.valueOf(dataPicker.getValue());
+        int lastDataIndex = lastZLatter-19;
+        String lastaDataString = (dataT.substring(lastDataIndex,lastDataIndex+10));
+
+        String year = (lastaDataString.substring(0,4));
+        String month = (lastaDataString.substring(5,7));
+        String day = (lastaDataString.substring(8,10));
+
+        int parseDay = parseInt(day);
+        int parseMonth = parseInt(month);
+        int parseYear = parseInt(year);
+//        dataPicker.setValue(null);
+        if((parseMonth==4 || parseMonth==6 || parseMonth==9 || parseMonth==11 )&& parseDay==30 && parseMonth!=12) {
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
+        }else if (parseMonth==2 && parseDay == 28){
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
+        }else if (parseMonth==12 && parseDay == 31 ){
+            dataPicker.setValue(LocalDate.of(parseYear+1,1,1));
+        }else if ((parseMonth==1 || parseMonth==3 || parseMonth==5 || parseMonth==7 || parseMonth==8 || parseMonth==10 || parseMonth==12 )&& parseDay==31){
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
+        }
+        else{
+            dataPicker.setValue(LocalDate.of(parseYear,parseMonth,parseDay+1));
+        }
+    }
+
     @FXML
     private void visiblityChartArea(){
         chart.setVisible(true);

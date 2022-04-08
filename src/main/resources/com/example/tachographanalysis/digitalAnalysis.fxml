@@ -87,7 +87,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </AreaChart>
-                   <Text fx:id="TextLoading" fill="WHITE" layoutX="435.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                   <Text fx:id="TextLoading" fill="LIGHTBLUE" layoutX="435.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0">
                        <font>
                            <Font name="System Bold" size="30.0" />
                        </font>
