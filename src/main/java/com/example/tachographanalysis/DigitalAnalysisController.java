@@ -20,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.w3c.dom.Document;
@@ -1521,7 +1520,7 @@ private void colorPicker() throws ParserConfigurationException {
 //        } else {
 //            secondStage.toFront();
 //        }
-    }
+//    }
 
 
 
