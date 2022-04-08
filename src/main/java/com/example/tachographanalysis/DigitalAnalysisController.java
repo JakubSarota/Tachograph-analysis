@@ -190,6 +190,7 @@ public class DigitalAnalysisController implements Initializable {
                                     logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameDDD + " nie został poprawnie załadowany bądź jest uszkodzony\n");
                                     logDataWrite.close();
                                     f.delete();
+                                    TextLoading.setText("Spróbuj ponownie");
                                     System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
 
                                 } else {
@@ -197,6 +198,7 @@ public class DigitalAnalysisController implements Initializable {
                                     logDataWrite.append(dtf.format(now) + " błąd plik '" + fileNameDDD + "'' nie został poprawnie załadowany bądź jest uszkodzony\n");
                                     logDataWrite.close();
                                     f.delete();
+                                    TextLoading.setText("Spróbuj ponownie");
                                     System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
                                 }
                             }
@@ -212,12 +214,14 @@ public class DigitalAnalysisController implements Initializable {
                         logDataWrite.append(dtf.format(now) + " Błąd konwersja nie przebiegła pomyślnie\n");
                         logDataWrite.close();
                         System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+                        TextLoading.setText("Spróbuj ponownie");
 
                     } else {
                         FileWriter logDataWrite = new FileWriter(".\\.log");
                         logDataWrite.append(dtf.format(now) + "Błąd konwersja nie przebiegła pomyślnie\n");
                         logDataWrite.close();
                         System.out.println("Błąd konwersja nie przebiegła pomyślnie");
+                        TextLoading.setText("Spróbuj ponownie");
                     }
                     e.printStackTrace();
                 }
@@ -239,12 +243,14 @@ public class DigitalAnalysisController implements Initializable {
                         logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameXML + " nie został poprawnie załadowany bądź jest uszkodzony\n");
                         logDataWrite.close();
                         file.delete();
+                        TextLoading.setText("Spróbuj ponownie");
                         System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
                     } else {
                         FileWriter logDataWrite = new FileWriter(".\\.log");
                         logDataWrite.append(dtf.format(now) + " błąd plik: '" + fileNameXML + "' nie został poprawnie załadowany bądź jest uszkodzony \n");
                         logDataWrite.close();
                         file.delete();
+                        TextLoading.setText("Spróbuj ponownie");
                         System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
                     }
                 }
@@ -397,8 +403,10 @@ public class DigitalAnalysisController implements Initializable {
 
 
 
-        if(!savedData.contains(selectedDate) && counterEnter <= 5 ) {
 
+//        if(!savedData.contains(selectedDate)) {
+            barChart.getData().clear();
+            barChart.getData().removeAll();
             counterEnter++;
 
             //Barchart dzialający
@@ -418,7 +426,7 @@ public class DigitalAnalysisController implements Initializable {
             XYChart.Series series2 = new XYChart.Series();
 
             barChart.getData().addAll(series1);
-        }
+//        }
         savedData += selectedDate;
     }
 
