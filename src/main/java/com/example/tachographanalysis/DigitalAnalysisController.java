@@ -87,7 +87,6 @@ public class DigitalAnalysisController implements Initializable {
     static String dataPick;
     static String savedData = "";
     static String dataPick1;
-    static String daily = "";
     static BaseFont helvetica;
     static String lastDayOfWork= "";
     static int counterEnter = 0;
@@ -106,6 +105,8 @@ public class DigitalAnalysisController implements Initializable {
             event.acceptTransferModes(TransferMode.ANY);
         }
         dragOver.setText("Upuść tutaj");
+        TextError.setText("");
+        TextLoading.setText("Przetwarzanie...");
     }
 
 
@@ -268,7 +269,7 @@ public class DigitalAnalysisController implements Initializable {
         generatePDFdnia(PDF);
     }
     @FXML
-    private void showData(String[] readedData){
+    private void showData(String[] readedData) throws InterruptedException {
 
         TextLoading.setText("");
         TextError.setText("");
@@ -1360,6 +1361,8 @@ private void colorPicker() throws ParserConfigurationException {
                         doc.add(new Paragraph(dataGD[3]));
 
 
+                Thread.sleep(500);
+                dragOver.setText("Plik PDF został utworzony.");
 
 
 
@@ -1380,6 +1383,8 @@ private void colorPicker() throws ParserConfigurationException {
                 ex.printStackTrace();
             } catch (SAXException ex) {
                 ex.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 //close the PDF file
             doc.close();
@@ -1399,7 +1404,6 @@ private void colorPicker() throws ParserConfigurationException {
     public void generatePDFdnia(String PDF_) {
 //created PDF document instance
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-
         PdfWriter writer;
 
         try {
@@ -1453,9 +1457,10 @@ private void colorPicker() throws ParserConfigurationException {
 //                doc.add(new Paragraph(dataGD[3]));
 
                 if(dataPick1.equals("-1")) {
-                    doc.add(new Paragraph("Pracownik nie pracował w tym dniu."));
+//                    doc.add(new Paragraph("Pracownik nie pracował w tym dniu."));
                 }
                 else {
+                    String daily = "";
                     int indeksString = parseInt(dataPick1);
                     int i = 0;
                     while (!String.valueOf(dataT.charAt(indeksString + i)).equals("d")) {
@@ -1465,8 +1470,11 @@ private void colorPicker() throws ParserConfigurationException {
                         //doc.add(new Paragraph(""+daily));
                     }
                     doc.add(new Paragraph(daily,polskieFonty));
-                }
 
+
+                }
+                Thread.sleep(500);
+                dragOver.setText("Plik PDF został utworzony");
 
 
 
@@ -1488,6 +1496,8 @@ private void colorPicker() throws ParserConfigurationException {
                 ex.printStackTrace();
             } catch (SAXException ex) {
                 ex.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 //close the PDF file
             doc.close();
@@ -1504,6 +1514,21 @@ private void colorPicker() throws ParserConfigurationException {
         }
     }
 
+//    StackPane stackPane = new StackPane();
+//    Scene secondScene = new Scene(stackPane, 950,420);
+//    Stage secondStage = new Stage();
+//
+//    public void addStats() throws IOException {
+//        if(secondStage==null || !secondStage.isShowing()) {
+//            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
+//            stackPane.getChildren().add(fxmlLoader);
+//            secondStage.setTitle("Dodaj statystyki");
+//            secondStage.setScene(secondScene);
+//            secondStage.show();
+//        } else {
+//            secondStage.toFront();
+//        }
+//    }
 
 
 

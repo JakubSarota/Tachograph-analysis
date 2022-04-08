@@ -25,7 +25,6 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="opencv-455" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -348,6 +347,21 @@
         <SOURCES>
           <root url="jar://C:/Program Files/Java/opencv/build/java/opencv-455.jar!/" />
           <root url="jar://C:/Program Files/Java/opencv/build/java/opencv-455.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/opencv/build/java/opencv-455.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/Desktop/opencv/build/java/x64" />
+        </NATIVE>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/Desktop/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
