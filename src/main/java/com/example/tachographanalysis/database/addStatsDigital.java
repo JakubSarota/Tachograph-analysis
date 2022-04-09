@@ -18,14 +18,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class addStats {
+public class addStatsDigital {
 
     @FXML
     private DatePicker dataPicker;
@@ -71,13 +70,14 @@ public class addStats {
                 driver=newValue;
             }
         });
+//        String pathxml = ".\\ddd_to_xml\\data\\driver\\" + file.getName().subSequence(0, file.getName().length() - 4) + ".DDD";
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1]);
         breakTime.setText(String.valueOf(analysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumBreak)));
         workTime.setText(String.valueOf(analysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
         dataPicker.setValue(LocalDate.now());
     }
-    public void addStats() throws IOException {
+    public void addStatsDigital() throws IOException {
         if(driver!=null) {
             Pattern p = Pattern.compile("[0-9]+");
             Matcher m = p.matcher(driver);
@@ -87,47 +87,47 @@ public class addStats {
             }
             if(d!="0") {
                 File dir = new File(".\\archiwum\\");
-                String name_of_file=UUID.randomUUID().toString() + ".png";
+                String name_of_file=UUID.randomUUID().toString() + ".ddd";
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
                 Files.copy(Path.of(AnalogueAnalysisController.file_name),
                         Path.of(".\\archiwum\\" + name_of_file));
 
-                returnInfo.setText(insertToDatabase(Integer.parseInt(d), dataPicker.getValue().toString(), LocalDate.now().toString(),
+                returnInfo.setText(addStats.insertToDatabase(Integer.parseInt(d), dataPicker.getValue().toString(), LocalDate.now().toString(),
                         textArea.getText(), workTime.getText(),breakTime.getText(),
-                        name_of_file , "analogowy", Integer.parseInt(sumRoad.getText())));
+                        name_of_file , "cyfrowy", Integer.parseInt(sumRoad.getText())));
             }
         }else{
             returnInfo.setText("Nie wybrano kierowcy");
         }
     }
 
-    public static String insertToDatabase(int driver_id, String date_work, String date_add, String work_info, String sumWork,
-                                          String sumBreak, String file, String file_type, int sumRoad) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connectDB = databaseConnection.getDBConnection();
-
-        try{
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery("SELECT * FROM stats WHERE date_work='"+date_work+
-                    "' AND driver_id='"+driver_id+"'");
-            if(!queryOutput.next()) {
-                    int status = statement.executeUpdate(
-                            "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, sum_road)" +
-                                    " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info + "','" + sumWork + "','" +
-                                    sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "')");
-
-                    if (status > 0) {
-                        return "Dodano";
-                    }
-
-            }else{
-                return "Istnieją już statystyki dla tego kierowcy tego dnia";
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return "Nie udało się dodać";
-    }
+//    public String insertToDatabase(int driver_id,String date_work,String date_add,String work_info,String sumWork,
+//                                   String sumBreak,String file,String file_type,int sumRoad) {
+//        DatabaseConnection databaseConnection = new DatabaseConnection();
+//        Connection connectDB = databaseConnection.getDBConnection();
+//
+//        try{
+//            Statement statement = connectDB.createStatement();
+//            ResultSet queryOutput = statement.executeQuery("SELECT * FROM stats WHERE date_work='"+date_work+
+//                    "' AND driver_id='"+driver_id+"'");
+//            if(!queryOutput.next()) {
+//                int status = statement.executeUpdate(
+//                        "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, sum_road)" +
+//                                " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info + "','" + sumWork + "','" +
+//                                sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "')");
+//
+//                if (status > 0) {
+//                    return "Dodano";
+//                }
+//
+//            }else{
+//                return "Istnieją już statystyki dla tego kierowcy tego dnia";
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//        return "Nie udało się dodać";
+//    }
 }

@@ -23,7 +23,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="dragOver" layoutX="16.0" layoutY="310.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
+            <Button fx:id="dragOver" layoutX="14.0" layoutY="378.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font></Button>
@@ -38,13 +38,11 @@
                </font>
             </Button>
 <!--             Dodawanie statystyk do przeniesienia-->
-<!--             <Button layoutX="63.0" layoutY="231.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0"-->
-<!--                     style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b"-->
-<!--                     onMouseClicked="#addStats">-->
-<!--                 <font>-->
-<!--                     <Font name="System Bold" size="14.0" />-->
-<!--                 </font>-->
-<!--             </Button>-->
+             <Button layoutX="66.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b">
+                 <font>
+                     <Font name="System Bold" size="14.0" />
+                 </font>
+             </Button>
          </children>
       </AnchorPane>
    </left>

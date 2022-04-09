@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -1529,21 +1530,21 @@ private void colorPicker() throws ParserConfigurationException {
         }
     }
 
-//    StackPane stackPane = new StackPane();
-//    Scene secondScene = new Scene(stackPane, 950,420);
-//    Stage secondStage = new Stage();
-//
-//    public void addStats() throws IOException {
-//        if(secondStage==null || !secondStage.isShowing()) {
-//            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
-//            stackPane.getChildren().add(fxmlLoader);
-//            secondStage.setTitle("Dodaj statystyki");
-//            secondStage.setScene(secondScene);
-//            secondStage.show();
-//        } else {
-//            secondStage.toFront();
-//        }
-//    }
+    StackPane stackPane = new StackPane();
+    Scene secondScene = new Scene(stackPane, 950,420);
+    Stage secondStage = new Stage();
+
+    public void addStatsDigital() throws IOException {
+        if(secondStage==null || !secondStage.isShowing()) {
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStatsDigital.fxml"));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.setTitle("Dodaj statystyki");
+            secondStage.setScene(secondScene);
+            secondStage.show();
+        } else {
+            secondStage.toFront();
+        }
+    }
 
 
 
