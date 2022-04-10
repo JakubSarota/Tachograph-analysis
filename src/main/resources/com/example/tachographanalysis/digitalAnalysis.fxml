@@ -38,11 +38,11 @@
                </font>
             </Button>
 <!--             Dodawanie statystyk do przeniesienia-->
-             <Button layoutX="66.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b">
-                 <font>
-                     <Font name="System Bold" size="14.0" />
-                 </font>
-             </Button>
+<!--             <Button layoutX="66.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b">-->
+<!--                 <font>-->
+<!--                     <Font name="System Bold" size="14.0" />-->
+<!--                 </font>-->
+<!--             </Button>-->
          </children>
       </AnchorPane>
    </left>
