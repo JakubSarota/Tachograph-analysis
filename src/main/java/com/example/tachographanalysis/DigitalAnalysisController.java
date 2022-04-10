@@ -1,10 +1,9 @@
 package com.example.tachographanalysis;
 
+import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +18,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -83,16 +81,24 @@ public class DigitalAnalysisController implements Initializable {
     private Button btnRaportPDF;
     @FXML
     private Button btnRaportPDFdnia;
+    @FXML
+    private Button btnAddStatsDigital;
+    @FXML
+    private Button btnAddStatsDigitalAll;
     List<String> lstFile;
+    private String inThisDayData;
 
     static String PDF =  "";
     static String dataT =  "";
-    public static String pathxml= "";
+    public static File filexmlStats;
+    static String filexml;
     static String[] dataGD;
-    static String dataPick;
+    public static String dataPick;
     static String savedData = "";
     static String dataPick1;
     static BaseFont helvetica;
+    public static String workSum;
+    public static String breakSum;
     static String lastDayOfWork= "";
     static int counterEnter = 0;
 
@@ -129,12 +135,11 @@ public class DigitalAnalysisController implements Initializable {
 */
 
 //        System.out.println(file);
-        if(file == null) {
+        if (file == null) {
             TextLoading.setText("");
-        }
-        else {
-
-            TitleFileName.setText("Dane z pliku "+file.getName());
+        } else {
+            this.file=file;
+            TitleFileName.setText("Dane z pliku " + file.getName());
 
             fileChooser.setTitle("Open Resource File");
             //
@@ -175,10 +180,10 @@ public class DigitalAnalysisController implements Initializable {
                         outputStream.close();
                         try {
                             Thread.sleep(1000);
-
                             Runtime.getRuntime().exec(".\\ddd_to_xml\\tachograph-reader-core.exe", null, new File(".\\ddd_to_xml\\"));
                             Thread.sleep(1000);
                             File filexml = new File(pathxml + ".xml");
+                            filexmlStats = filexml;
                             String filexmlSize = String.valueOf(filexml);
                             long bytes = Files.size(Path.of(filexmlSize));
                             long kiloBytes = bytes / 1024;
@@ -266,15 +271,24 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    private void  generatePDF2(){
-        generatePDF(PDF);
+    private void  generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException {
+//        generatePDF(PDF);
+        CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()));
     }
     @FXML
-    private void  generatePDF3(){
-        generatePDFdnia(PDF);
+    private void  generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException {
+//        generatePDFdnia(PDF);
+//                        String daily = "";
+//                    int indeksString = parseInt(dataPick1);
+//                    int i = 0;
+//                    while (!String.valueOf(dataT.charAt(indeksString + i)).equals("d")) {
+//                        daily += (dataT.charAt(parseInt(dataPick1) + i));
+//                        i += 1;
+//                    }
+        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick);
     }
     @FXML
-    private void showData(String[] readedData) throws InterruptedException {
+    private void showData(String[] readedData) throws InterruptedException, DocumentException, IOException, ParserConfigurationException, SAXException {
 
 
         TextLoading.setText("");
@@ -336,6 +350,10 @@ public class DigitalAnalysisController implements Initializable {
 
         if(!two.isSelected()) {
             dataPicker.setVisible(false);
+            btnRaportPDFdnia.setVisible(false);
+//            btnAddStatsDigital.setVisible(false);
+//            btnAddStatsDigitalAll.setVisible(false);
+
         }
     }
 
@@ -363,6 +381,8 @@ public class DigitalAnalysisController implements Initializable {
         TextArea dailyDataDriver = (TextArea) two.getContent();
 
         btnRaportPDFdnia.setVisible(true);
+//        btnAddStatsDigital.setVisible(true);
+//        btnAddStatsDigitalAll.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
 //            dailyDataDriver.appendText("Ten pracownik nie pracował tego dnia ");
@@ -424,6 +444,8 @@ public class DigitalAnalysisController implements Initializable {
             series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
             series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
 
+            workSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork)/60))+parseInt(String.valueOf(timeDiffrence(activityDataDrive)/60)));
+            breakSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60);
             barChart.getData().addAll(series1);
 
         savedData += selectedDate;
@@ -771,6 +793,12 @@ public class DigitalAnalysisController implements Initializable {
                 if(btnRaportPDFdnia!=null) {
                     btnRaportPDFdnia.setVisible(false);
                 }
+//                if(btnAddStatsDigital!=null) {
+//                btnAddStatsDigital.setVisible(false);
+//                }
+//            if(btnAddStatsDigitalAll!=null) {
+//                btnAddStatsDigitalAll.setVisible(false);
+//            }
                 if(chart!=null) {
                     chart.setVisible(false);
                 }
@@ -926,7 +954,7 @@ private void colorPicker() throws ParserConfigurationException {
     public static String[] readData(File filexml) throws Exception {
 
         PDF = String.valueOf(filexml);
-        pathxml = String.valueOf(pathxml);
+
 
         String generalDataS = "";
         String dailyActivityS = "";
@@ -1154,8 +1182,7 @@ private void colorPicker() throws ParserConfigurationException {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("ddd", "DDD", "xml");
         file = new File(String.valueOf(new Stage()));
-        //image = new Image(new FileInputStream(files.get(0))); //Drag&Drop IMG
-        //File file = fileChooser.showOpenDialog(new Stage());  //Chooser DIGI
+
 
         if (!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
@@ -1163,15 +1190,8 @@ private void colorPicker() throws ParserConfigurationException {
             dragOver.setText("To nie jest plik .ddd");
         } else {
             try {
-               // Scanner scanner = new Scanner(files.get(0));
-            //System.out.println(file);
-                //while (scanner.hasNextLine()) {
                    File filepath = files.get(0);
-                   //Files.write(filepath);
                     System.out.println(filepath);
-
-
-//                    textArea.appendText(scanner.nextLine() + "\n");
                     dragOver.setText("Poprawnie załadowano plik");
 
                 if(file == null)
@@ -1227,6 +1247,7 @@ private void colorPicker() throws ParserConfigurationException {
 
                                     if (filexml.exists() && kiloBytes > 1) {
                                         System.out.println("Poprawnie zaimportowano plik .ddd");
+//                                        System.out.println(filexml);
                                         f.deleteOnExit();
                                         String[] readedData = readData(filexml);
                                         showData(readedData);
@@ -1331,227 +1352,217 @@ private void colorPicker() throws ParserConfigurationException {
         lstFile.add("*.DDD");
     }
 
-    public void generatePDF(String PDF_) {
-//created PDF document instance
-        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-        PdfWriter writer;
-        try {
-//generate a PDF at the specified location
-            File dir = new File(".\\PDF\\");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-//            String fname = null;
-//            File file = null;
-//
-//            System.out.println("Please choose file name:");
-//            while (true) {
-//                try (Scanner in = new Scanner(System.in)) {
-//                    // Reads a single line from the console
-//                    fname = in.nextLine();
-//                    file = new File(fname);
-//                    if (!file.createNewFile()) {
-//                        throw new RuntimeException("File already exist");
-//                    }
-//                    break;
-//                } catch (Exception ex) {
-//                    System.out.println(ex.getMessage() + ", please try again:");
-//                }
+//    public void generatePDF(String PDF_) {
+////created PDF document instance
+//        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+//        PdfWriter writer;
+//        try {
+////generate a PDF at the specified location
+//            File dir = new File(".\\PDF\\");
+//            if (!dir.exists()) {
+//                dir.mkdirs();
 //            }
+////            String fname = null;
+////            File file = null;
+////
+////            System.out.println("Please choose file name:");
+////            while (true) {
+////                try (Scanner in = new Scanner(System.in)) {
+////                    // Reads a single line from the console
+////                    fname = in.nextLine();
+////                    file = new File(fname);
+////                    if (!file.createNewFile()) {
+////                        throw new RuntimeException("File already exist");
+////                    }
+////                    break;
+////                } catch (Exception ex) {
+////                    System.out.println(ex.getMessage() + ", please try again:");
+////                }
+////            }
+////
+////            return file;
 //
-//            return file;
-
-//            FileChooser fileChooser = new FileChooser();
-//            File file = fileChooser.showOpenDialog(new Stage());
-            //Tworzenie pliku PDF
-            //String PDF1 = PDF.substring(25, PDF.length() - 4);
-            File PDF2 = new File(new File(PDF_).getName()); // nazwa pliku
-
-            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + ".pdf"));
-            System.out.println("Tworzenie pliku PDF powiodło się.");
-//Otwieranie pliku PDF
-            doc.open();
-//Dodwawanie paragrafów do pliku PDF
-            try {
-                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                DocumentBuilder db = dbf.newDocumentBuilder();
-                Document doc1 = db.parse(PDF_);
-                doc1.getDocumentElement().normalize();
-
-                        doc.add(new Paragraph(dataGD[0]));
-                        doc.add(new Paragraph(dataGD[1]));
-                        doc.add(new Paragraph(dataGD[2]));
-                        doc.add(new Paragraph(dataGD[3]));
-
-
-                Thread.sleep(500);
-                dragOver.setText("Plik PDF został utworzony.");
-
-
-
-
-
-//                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
-//                        Node node = nodeList.item(itr);
-//                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+////            FileChooser fileChooser = new FileChooser();
+////            File file = fileChooser.showOpenDialog(new Stage());
+//            //Tworzenie pliku PDF
+//            //String PDF1 = PDF.substring(25, PDF.length() - 4);
+//            File PDF2 = new File(new File(PDF_).getName()); // nazwa pliku
 //
-//                        }
-
-
-                //CardFaultRecords
-//                }
-            } catch (ParserConfigurationException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (SAXException ex) {
-                ex.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//close the PDF file
-            doc.close();
-//closes the writer
-            writer.close();
-        }
-        catch (DocumentException e)
-        {
-            e.printStackTrace();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void generatePDFdnia(String PDF_) {
-//created PDF document instance
-        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
-        PdfWriter writer;
-
-        try {
-//generate a PDF at the specified location
-            File dir = new File(".\\PDF\\");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-//            String fname = null;
-//            File file = null;
+//            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + ".pdf"));
+//            System.out.println("Tworzenie pliku PDF powiodło się.");
+////Otwieranie pliku PDF
+//            doc.open();
+////Dodwawanie paragrafów do pliku PDF
+//            try {
+//                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//                DocumentBuilder db = dbf.newDocumentBuilder();
+//                Document doc1 = db.parse(PDF_);
+//                doc1.getDocumentElement().normalize();
 //
-//            System.out.println("Please choose file name:");
-//            while (true) {
-//                try (Scanner in = new Scanner(System.in)) {
-//                    // Reads a single line from the console
-//                    fname = in.nextLine();
-//                    file = new File(fname);
-//                    if (!file.createNewFile()) {
-//                        throw new RuntimeException("File already exist");
-//                    }
-//                    break;
-//                } catch (Exception ex) {
-//                    System.out.println(ex.getMessage() + ", please try again:");
-//                }
+//                        doc.add(new Paragraph(dataGD[0]));
+//                        doc.add(new Paragraph(dataGD[1]));
+//                        doc.add(new Paragraph(dataGD[2]));
+//                        doc.add(new Paragraph(dataGD[3]));
+//
+//
+//                Thread.sleep(500);
+//                dragOver.setText("Plik PDF został utworzony.");
+//
+//
+//
+//
+//
+////                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
+////                        Node node = nodeList.item(itr);
+////                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+////
+////                        }
+//
+//
+//                //CardFaultRecords
+////                }
+//            } catch (ParserConfigurationException ex) {
+//                ex.printStackTrace();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            } catch (SAXException ex) {
+//                ex.printStackTrace();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
 //            }
+////close the PDF file
+//            doc.close();
+////closes the writer
+//            writer.close();
+//        }
+//        catch (DocumentException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (FileNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 //
-//            return file;
-
-//            FileChooser fileChooser = new FileChooser();
-//            File file = fileChooser.showOpenDialog(new Stage());
-            //Tworzenie pliku PDF
-            //String PDF1 = PDF.substring(25, PDF.length() - 4);
-            File PDF2 = new File(new File(PDF_).getName());
-            // nazwa pliku
-            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + dataPick + ".pdf"));
-            System.out.println("Tworzenie pliku PDF powiodło się.");
-//Otwieranie pliku PDF
-            doc.open();
-//Dodwawanie paragrafów do pliku PDF
-            try {
-                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-                DocumentBuilder db = dbf.newDocumentBuilder();
-                Document doc1 = db.parse(PDF_);
-                doc1.getDocumentElement().normalize();
-                helvetica = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
-                com.itextpdf.text.Font polskieFonty=new com.itextpdf.text.Font(helvetica,10);
-
-                //doc.add(new Paragraph(dataGD[1]));
-//                doc.add(new Paragraph(dataGD[1]));
-//                doc.add(new Paragraph(dataGD[2]));
-//                doc.add(new Paragraph(dataGD[3]));
-
-                if(dataPick1.equals("-1")) {
-//                    doc.add(new Paragraph("Pracownik nie pracował w tym dniu."));
-                }
-                else {
-                    String daily = "";
-                    int indeksString = parseInt(dataPick1);
-                    int i = 0;
-                    while (!String.valueOf(dataT.charAt(indeksString + i)).equals("d")) {
-                        daily += (dataT.charAt(parseInt(dataPick1) + i));
-                        //doc.add(new Paragraph("" + dataT.charAt(parseInt(dataPick1) + i)));
-                        i += 1;
-                        //doc.add(new Paragraph(""+daily));
-                    }
-                    doc.add(new Paragraph(daily,polskieFonty));
-
-
-                }
-                Thread.sleep(500);
-                dragOver.setText("Plik PDF został utworzony");
-
-
-
-
-
-
-//                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
-//                        Node node = nodeList.item(itr);
-//                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+//    public void generatePDFdnia(String PDF_) {
+////created PDF document instance
+//        com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
+//        PdfWriter writer;
 //
-//                        }
-
-
-                //CardFaultRecords
+//        try {
+////generate a PDF at the specified location
+//            File dir = new File(".\\PDF\\");
+//            if (!dir.exists()) {
+//                dir.mkdirs();
+//            }
+////            String fname = null;
+////            File file = null;
+////
+////            System.out.println("Please choose file name:");
+////            while (true) {
+////                try (Scanner in = new Scanner(System.in)) {
+////                    // Reads a single line from the console
+////                    fname = in.nextLine();
+////                    file = new File(fname);
+////                    if (!file.createNewFile()) {
+////                        throw new RuntimeException("File already exist");
+////                    }
+////                    break;
+////                } catch (Exception ex) {
+////                    System.out.println(ex.getMessage() + ", please try again:");
+////                }
+////            }
+////
+////            return file;
+//
+////            FileChooser fileChooser = new FileChooser();
+////            File file = fileChooser.showOpenDialog(new Stage());
+//            //Tworzenie pliku PDF
+//            //String PDF1 = PDF.substring(25, PDF.length() - 4);
+//            File PDF2 = new File(new File(PDF_).getName());
+//            // nazwa pliku
+//            writer = PdfWriter.getInstance(doc, new FileOutputStream(".\\PDF\\" + PDF2.getName().subSequence(0, PDF2.getName().length() - 8) + dataPick + ".pdf"));
+//            System.out.println("Tworzenie pliku PDF powiodło się.");
+////Otwieranie pliku PDF
+//            doc.open();
+////Dodwawanie paragrafów do pliku PDF
+//            try {
+//                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//                DocumentBuilder db = dbf.newDocumentBuilder();
+//                Document doc1 = db.parse(PDF_);
+//                doc1.getDocumentElement().normalize();
+//                helvetica = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
+//                com.itextpdf.text.Font polskieFonty=new com.itextpdf.text.Font(helvetica,10);
+//
+//                //doc.add(new Paragraph(dataGD[1]));
+////                doc.add(new Paragraph(dataGD[1]));
+////                doc.add(new Paragraph(dataGD[2]));
+////                doc.add(new Paragraph(dataGD[3]));
+//
+//                if(dataPick1.equals("-1")) {
+////                    doc.add(new Paragraph("Pracownik nie pracował w tym dniu."));
 //                }
-            } catch (ParserConfigurationException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (SAXException ex) {
-                ex.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//close the PDF file
-            doc.close();
-//closes the writer
-            writer.close();
-        }
-        catch (DocumentException e)
-        {
-            e.printStackTrace();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    StackPane stackPane = new StackPane();
-    Scene secondScene = new Scene(stackPane, 950,420);
-    Stage secondStage = new Stage();
-
-    public void addStatsDigital() throws IOException {
-        if(secondStage==null || !secondStage.isShowing()) {
-            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStatsDigital.fxml"));
-            stackPane.getChildren().add(fxmlLoader);
-            secondStage.setTitle("Dodaj statystyki");
-            secondStage.setScene(secondScene);
-            secondStage.show();
-        } else {
-            secondStage.toFront();
-        }
-    }
+//                else {
+//                    String daily = "";
+//                    int indeksString = parseInt(dataPick1);
+//                    int i = 0;
+//                    while (!String.valueOf(dataT.charAt(indeksString + i)).equals("d")) {
+//                        daily += (dataT.charAt(parseInt(dataPick1) + i));
+//                        //doc.add(new Paragraph("" + dataT.charAt(parseInt(dataPick1) + i)));
+//                        i += 1;
+//                        //doc.add(new Paragraph(""+daily));
+//                    }
+//                    doc.add(new Paragraph(daily,polskieFonty));
+//
+//
+//                }
+//                Thread.sleep(500);
+//                dragOver.setText("Plik PDF został utworzony");
+//
+//
+//
+//
+//
+//
+////                    for (int itr = 0; itr < nodeList.getLength(); itr++) {
+////                        Node node = nodeList.item(itr);
+////                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+////
+////                        }
+//
+//
+//                //CardFaultRecords
+////                }
+//            } catch (ParserConfigurationException ex) {
+//                ex.printStackTrace();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            } catch (SAXException ex) {
+//                ex.printStackTrace();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+////close the PDF file
+//            doc.close();
+////closes the writer
+//            writer.close();
+//        }
+//        catch (DocumentException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (FileNotFoundException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//    public void addStatsDigital() throws IOException {
+//
+//    }
+//    public void addStatsDigitalAll() throws IOException {
+//
+//    }
 
 
 

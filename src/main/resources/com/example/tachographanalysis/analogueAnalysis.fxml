@@ -69,6 +69,11 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
+                <Button layoutX="63.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#makePDF" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Twórz pdf" textFill="#47535b">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
             </children>
         </AnchorPane>
     </left>
