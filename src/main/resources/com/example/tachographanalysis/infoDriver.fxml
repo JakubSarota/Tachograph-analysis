@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.InfoDriver">
+   <center>
+      <TableView prefHeight="454.0" prefWidth="517.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="119.0" text="Data dodania" />
+          <TableColumn prefWidth="93.0" text="Typ pliku" />
+            <TableColumn prefWidth="124.0" text="Przejechane" />
+            <TableColumn prefWidth="225.0" text="Plik" />
+        </columns>
+      </TableView>
+   </center>
+   <left>
+      <VBox prefHeight="454.0" prefWidth="195.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="207.0" />
+            <Label contentDisplay="CENTER" prefHeight="35.0" prefWidth="195.0" text="Imię:" />
+            <Label fx:id="firstname" prefHeight="35.0" prefWidth="195.0" />
+            <Label layoutX="10.0" layoutY="145.0" prefHeight="35.0" prefWidth="195.0" text="Nazwisko" />
+            <Label fx:id="lastname" layoutX="10.0" layoutY="180.0" prefHeight="35.0" prefWidth="195.0" />
+            <Label layoutX="10.0" layoutY="180.0" prefHeight="35.0" prefWidth="195.0" text="Pesel" />
+            <Label layoutX="10.0" layoutY="250.0" prefHeight="35.0" prefWidth="195.0" />
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

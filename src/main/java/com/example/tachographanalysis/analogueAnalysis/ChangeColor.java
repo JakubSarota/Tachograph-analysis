@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
-public class changeColor {
+public class ChangeColor {
     public BufferedImage im=null;
     private WritableRaster raster=null;
     private int width = 0;
@@ -22,14 +22,14 @@ public class changeColor {
     private int pixels2[] = new int[3];
     private int pixels3[] = new int[3];
 
-    public changeColor(BufferedImage fileName) throws IOException {
+    public ChangeColor(BufferedImage fileName) throws IOException {
         im=fileName;
         raster = im.getRaster();
         width = raster.getWidth();
         height = raster.getHeight();
     }
 
-    public changeColor(Image fileName) {
+    public ChangeColor(Image fileName) {
         im= (BufferedImage) fileName;
         raster = im.getRaster();
         width = raster.getWidth();

@@ -2,7 +2,7 @@ package com.example.tachographanalysis.database;
 
 import com.example.tachographanalysis.AnalogueAnalysisController;
 import com.example.tachographanalysis.DigitalAnalysisController;
-import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
+import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -13,9 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 
-import java.awt.*;
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -23,12 +21,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class addStats {
+public class AddStats {
 
     @FXML
     private DatePicker dataPicker;
@@ -47,14 +44,9 @@ public class addStats {
     private Text returnInfo;
     @FXML
     protected void initialize() throws Exception {
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getDBConnection();
-
         String connectQuery = "SELECT id,first_name,second_name, last_name FROM driver";
         try{
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(connectQuery);
-
+            ResultSet queryOutput = DatabaseConnection.exQuery(connectQuery);
             while (queryOutput.next()){
                 String firstname = queryOutput.getString("first_name");
                 String lastname = queryOutput.getString("second_name");
@@ -76,8 +68,8 @@ public class addStats {
         });
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1]);
-        breakTime.setText(String.valueOf(analysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumBreak)));
-        workTime.setText(String.valueOf(analysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
+        breakTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumBreak)));
+        workTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
         dataPicker.setValue(LocalDate.now());
     }
     public void addStats() throws IOException {
@@ -108,15 +100,12 @@ public class addStats {
 
     public String insertToDatabase(int driver_id,String date_work,String date_add,String work_info,String sumWork,
                                  String sumBreak,String file,String file_type,int sumRoad) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connectDB = databaseConnection.getDBConnection();
-
         try{
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery("SELECT * FROM stats WHERE date_work='"+date_work+
+
+            ResultSet queryOutput = DatabaseConnection.exQuery("SELECT * FROM stats WHERE date_work='"+date_work+
                     "' AND driver_id='"+driver_id+"'");
             if(!queryOutput.next()) {
-                    int status = statement.executeUpdate(
+                    int status = DatabaseConnection.exUpdate(
                             "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, sum_road)" +
                                     " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info + "','" + sumWork + "','" +
                                     sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "')");

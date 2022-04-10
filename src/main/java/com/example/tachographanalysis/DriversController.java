@@ -1,156 +1,59 @@
 package com.example.tachographanalysis;
 
-import com.example.tachographanalysis.database.DatabaseConnection;
+import com.example.tachographanalysis.database.Driver;
+import com.example.tachographanalysis.database.InfoDriver;
+import com.example.tachographanalysis.database.ShowList;
 import com.example.tachographanalysis.size.SizeController;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
-import java.net.URL;
-import java.sql.*;
-import java.util.ResourceBundle;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class DriversController {
-
     @FXML
-    private Button btnBack;
-    @FXML
-    private Button btnDrivers;
+    private Button btnBack, btnDrivers;
     @FXML
     private Pane boxDrivers;
     @FXML
     private ListView<String> accountListView;
-    ///////
     @FXML
     private TextField searchTextField;
     @FXML
-    private TableView<Drivers> accountTableView;
+    private TableView<Driver.Drivers> accountTableView;
     @FXML
-    private TableColumn<Drivers, Integer> idCol;
+    private TableColumn<Driver.Drivers, Integer> idCol;
     @FXML
-    private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol;
+    private TableColumn<Driver.Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol, editCol;
 
+    private ObservableList<Driver.Drivers> driversList = FXCollections.observableArrayList();
 
-
-    public class Drivers {
-
-        Integer id;
-        String fname, sname, lname, email, city, country, license, born, pesel, card;
-
-
-        public Drivers(Integer id, String fname, String sname, String lname, String email, String pesel, String city, String born, String country, String card, String license) {
-            this.id = id;
-            this.fname = fname;
-            this.sname = sname;
-            this.lname = lname;
-            this.email = email;
-            this.pesel = pesel;
-            this.city = city;
-            this.born = born;
-            this.country = country;
-            this.card = card;
-            this.license = license;
-        }
-
-        public Integer getId() { return id; }
-        public String getFname() {
-            return fname;
-        }
-        public String getSname() {
-            return sname;
-        }
-        public String getLname() {
-            return lname;
-        }
-        public String getEmail() {
-            return email;
-        }
-        public String getPesel() {
-            return pesel;
-        }
-        public String getCity() {
-            return city;
-        }
-        public String getBorn() {
-            return born;
-        }
-        public String getCountry() {
-            return country;
-        }
-        public String getCard() { return card; }
-        public String getLicense() {
-            return license;
-        }
-
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-        public void setFname(String fname) {
-            this.fname = fname;
-        }
-        public void setSname(String sname) {
-                this.sname = sname;
-        }
-        public void setLname(String lname) {
-            this.lname = lname;
-        }
-        public void setEmail(String email) {this.email = email;}
-        public void setPesel(String pesel) {this.pesel = pesel;}
-        public void setCity(String city) {this.city = city;}
-        public void setBorn(String born) {this.born = born;}
-        public void setCountry(String country) {this.country = country;}
-        public void setCard(String card) {this.card = card;}
-        public void setLicense(String license) {this.license = license;}
-    }
-
-
-    ObservableList<Drivers> driversList = FXCollections.observableArrayList();
+    Driver.Drivers driver = null;
 
     public void initialize() {
-
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getDBConnection();
-
-        String query = "SELECT * FROM driver";
-
+        driversList.clear();
         try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(query);
 
-            while (queryOutput.next()) {
-
-                Integer queryId = queryOutput.getInt("id");
-                String queryFirstName = queryOutput.getString("first_name");
-                String querySecondName = queryOutput.getString("second_name");
-                String queryLastName = queryOutput.getString("last_name");
-                String queryEmail = queryOutput.getString("email");
-                String queryPesel = queryOutput.getString("pesel");
-                String queryCity = queryOutput.getString("city");
-                String  queryBorn = queryOutput.getString("born_date");
-                String queryCountry = queryOutput.getString("country");
-                String queryCard = queryOutput.getString("id_card");
-                String queryLicense = queryOutput.getString("license_drive");
-
-                driversList.add(new Drivers(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard, queryLicense));
-
-            }
+            driversList = ShowList.driversList();
             idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             firstnameCol.setCellValueFactory(new PropertyValueFactory<>("fname"));
             secondNameCol.setCellValueFactory(new PropertyValueFactory<>("sname"));
@@ -161,18 +64,63 @@ public class DriversController {
             bornCol.setCellValueFactory(new PropertyValueFactory<>("born"));
             countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
             cardCol.setCellValueFactory(new PropertyValueFactory<>("card"));
-            licenseCol.setCellValueFactory(new PropertyValueFactory<>("license"));
 
+            Callback<TableColumn<Driver.Drivers, String>, TableCell<Driver.Drivers, String>> cellEdit = (TableColumn<Driver.Drivers, String> param) -> {
+                final TableCell<Driver.Drivers, String > cell = new TableCell<Driver.Drivers, String>() {
+                    @Override
+                    public void updateItem(String s, boolean b) {
+                        super.updateItem(s, b);
+                        if(b) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            Button edit = new Button();
+                            edit.setText("edytuj");
+                            edit.setStyle(
+                                    "-fx-cursor: hand ;"
+                                    +"-fx-fill:#00E676;"
+                            );
+                            edit.setOnMouseClicked((MouseEvent) -> {
+                                try {
+                                    driver = accountTableView.getSelectionModel().getSelectedItem();
+                                    FXMLLoader loader = new FXMLLoader();
+                                    loader.setLocation(getClass().getResource("infoDriver.fxml"));
+                                    try {
+                                        loader.load();
+                                    } catch (Exception e) {
+
+                                    }
+                                    InfoDriver infoDriver = loader.getController();
+//                                    infoDriver.setTextField(driver.getId());
+                                    Parent parent = loader.getRoot();
+                                    Stage stage = new Stage();
+                                    stage.setScene(new Scene(parent));
+                                    stage.show();
+                                } catch (Exception e) {
+                                    System.err.println(e.getMessage());
+                                }
+                            });
+
+                            HBox managebtn = new HBox(edit);
+                            managebtn.setStyle("-fx-alignment:center");
+                            HBox.setMargin(edit, new Insets(2, 2, 0, 3));
+                            setGraphic(managebtn);
+                            setText(null);
+                        }
+                    }
+                };
+
+                return cell;
+            };
+            editCol.setCellFactory(cellEdit);
 
             accountTableView.setItems(driversList);
-            ;
 
-            //Wyszukiwarka
-            FilteredList<Drivers> filteredData = new FilteredList<>(driversList, b -> true);
+            //search engine
+            FilteredList<Driver.Drivers> filteredData = new FilteredList<>(driversList, b -> true);
 
             searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(Drivers ->{
-
                     if (newValue.isEmpty() || newValue.isBlank() || newValue == null){
                         return true;
                     }
@@ -189,20 +137,17 @@ public class DriversController {
                         return true;
                     }else
                         return false;
-
                 });
             });
 
-            SortedList<Drivers> sortedData = new SortedList<>(filteredData);
-
+            SortedList<Driver.Drivers> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
-
             accountTableView.setItems(sortedData);
-
 
         } catch (SQLException e) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }
 
 
@@ -216,6 +161,7 @@ public class DriversController {
     StackPane stackPane = new StackPane();
     Scene secondScene = new Scene(stackPane, 950,420);
     Stage secondStage = new Stage();
+
     public void getAddDrivers() throws Exception {
         if(secondStage==null||!secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
