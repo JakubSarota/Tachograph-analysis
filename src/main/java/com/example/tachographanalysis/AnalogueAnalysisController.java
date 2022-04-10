@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -338,5 +339,14 @@ public class AnalogueAnalysisController {
     }
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
         CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+    }
+    public void openFolder(MouseEvent mouseEvent)  {
+        Desktop desktop = Desktop.getDesktop();
+        File dirToOpen = null;
+        try {
+            dirToOpen = new File(".\\PDF\\");
+            desktop.open(dirToOpen);
+        } catch (IllegalArgumentException | IOException iae) {
+        }
     }
 }

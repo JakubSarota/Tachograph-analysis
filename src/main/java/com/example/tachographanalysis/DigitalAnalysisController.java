@@ -371,7 +371,7 @@ public class DigitalAnalysisController implements Initializable {
 
           String datePickerTime = String.valueOf(dataPicker.getValue());
           String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
-          String inThisDayData = "";
+          inThisDayData = "";
 
           dataPick= datePickerTime;
           dataPick1= indexOfDataPickerTime;
@@ -427,6 +427,8 @@ public class DigitalAnalysisController implements Initializable {
 //        }
             barChart.getData().clear();
             barChart.getData().removeAll();
+
+            counterEnter++;
 
 
             //Barchart dzialający
