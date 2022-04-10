@@ -334,7 +334,9 @@ public class DigitalAnalysisController implements Initializable {
         TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
         dataChartTwoWeekendArea.setEditable(false);
 
-
+        if(!two.isSelected()) {
+            dataPicker.setVisible(false);
+        }
     }
 
     @FXML
