@@ -1,6 +1,5 @@
 package com.example.tachographanalysis;
 
-
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -14,10 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -31,6 +33,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
@@ -41,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -83,6 +87,7 @@ public class DigitalAnalysisController implements Initializable {
 
     static String PDF =  "";
     static String dataT =  "";
+    public static String pathxml= "";
     static String[] dataGD;
     static String dataPick;
     static String savedData = "";
@@ -919,6 +924,7 @@ private void colorPicker() throws ParserConfigurationException {
     public static String[] readData(File filexml) throws Exception {
 
         PDF = String.valueOf(filexml);
+        pathxml = String.valueOf(pathxml);
 
         String generalDataS = "";
         String dailyActivityS = "";
@@ -1529,4 +1535,31 @@ private void colorPicker() throws ParserConfigurationException {
         }
     }
 
+    StackPane stackPane = new StackPane();
+    Scene secondScene = new Scene(stackPane, 950,420);
+    Stage secondStage = new Stage();
+
+    public void addStatsDigital() throws IOException {
+        if(secondStage==null || !secondStage.isShowing()) {
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStatsDigital.fxml"));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.setTitle("Dodaj statystyki");
+            secondStage.setScene(secondScene);
+            secondStage.show();
+        } else {
+            secondStage.toFront();
+        }
+    }
+
+
+
+    public void openFolder(MouseEvent mouseEvent)  {
+    Desktop desktop = Desktop.getDesktop();
+    File dirToOpen = null;
+            try {
+        dirToOpen = new File(".\\PDF\\");
+        desktop.open(dirToOpen);
+    } catch (IllegalArgumentException | IOException iae) {
+    }
+}
 }

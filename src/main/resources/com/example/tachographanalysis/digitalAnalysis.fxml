@@ -32,11 +32,20 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnRaportPDFdnia" layoutX="66.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="40.0" prefWidth="155.0" text="Generuj Raport Dnia" textFill="#47535b" visible="false">
+            <Button layoutX="66.0" layoutY="546.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz folder PDF" textFill="#47535b">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button fx:id="btnRaportPDFdnia" layoutX="66.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport Dnia" textFill="#47535b" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+             <Button layoutX="66.0" layoutY="310.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b">
+                 <font>
+                     <Font name="System Bold" size="14.0" />
+                 </font>
+             </Button>
          </children>
       </AnchorPane>
    </left>
