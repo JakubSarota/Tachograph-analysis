@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 
 public class DriversController {
+
     @FXML
     private Button btnBack, btnDrivers;
     @FXML
@@ -43,11 +44,22 @@ public class DriversController {
     private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol, editCol;
 
     private ObservableList<Drivers> driversList = FXCollections.observableArrayList();
+    Drivers driver = null;
 
-    Drivers driver;
-    Drivers DriverData;
 
     public void initialize() {
+        try {
+            System.out.println(driver);
+            loadTable();
+            search();
+
+        } catch (Exception e) {
+//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+    }
+
+    public void loadTable() {
         try {
             driversList = ShowList.driversList();
             idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -74,11 +86,12 @@ public class DriversController {
                             edit.setText("Dane");
                             edit.setStyle(
                                     "-fx-cursor: hand ;"
-                                    +"-fx-fill:#00E676;"
+                                            +"-fx-fill:#00E676;"
                             );
 
                             edit.setOnMouseClicked((MouseEvent) -> {
                                 driver = accountTableView.getSelectionModel().getSelectedItem();
+
                                 FXMLLoader loader = new FXMLLoader();
                                 loader.setLocation(getClass().getResource("infoDriver.fxml"));
 
@@ -104,39 +117,37 @@ public class DriversController {
             };
             editCol.setCellFactory(cellEdit);
             accountTableView.setItems(driversList);
+        }catch (Exception e) { }
+    }
 
-            //search engine
-            FilteredList<Drivers> filteredData = new FilteredList<>(driversList, b -> true);
+    public void search() {
+        //search engine
+        FilteredList<Drivers> filteredData = new FilteredList<>(driversList, b -> true);
 
-            searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                filteredData.setPredicate(Drivers ->{
-                    if (newValue.isEmpty() || newValue.isBlank() || newValue == null){
-                        return true;
-                    }
-                    String searchKeyword = newValue.toLowerCase();
-                    if (Drivers.getFname().toLowerCase().indexOf(searchKeyword) > -1){
-                        return true;
-                    }else if(Drivers.getSname().toLowerCase().indexOf(searchKeyword) > -1){
-                        return true;
-                    }else if(Drivers.getLname().toLowerCase().indexOf(searchKeyword) > -1){
-                        return true;
-                    }else if(Drivers.getPesel().toString().indexOf(searchKeyword) > -1){
-                        return true;
-                    }else if(Drivers.getCity().toLowerCase().indexOf(searchKeyword) > -1){
-                        return true;
-                    }else
-                        return false;
-                });
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(Drivers ->{
+                if (newValue.isEmpty() || newValue.isBlank() || newValue == null){
+                    return true;
+                }
+                String searchKeyword = newValue.toLowerCase();
+                if (Drivers.getFname().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true;
+                }else if(Drivers.getSname().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true;
+                }else if(Drivers.getLname().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true;
+                }else if(Drivers.getPesel().toString().indexOf(searchKeyword) > -1){
+                    return true;
+                }else if(Drivers.getCity().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true;
+                }else
+                    return false;
             });
+        });
 
-            SortedList<Drivers> sortedData = new SortedList<>(filteredData);
-            sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
-            accountTableView.setItems(sortedData);
-
-        } catch (SQLException e) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-        }
-
+        SortedList<Drivers> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
+        accountTableView.setItems(sortedData);
     }
 
     @FXML

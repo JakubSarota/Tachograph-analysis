@@ -44,23 +44,23 @@ public class InfoDriver {
             cardnumber.setText(queryOutput.getString("id_card"));
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
         }
     }
 
     public void infoDriver() throws SQLException {
         try {
             dataList = showData.data();
+            dateAddCol.setCellValueFactory(new PropertyValueFactory<>(""));
             dateWorkCol.setCellValueFactory(new PropertyValueFactory<>("date_work"));
-            dateAddCol.setCellValueFactory(new PropertyValueFactory<>("date_add"));
             sumWorkCol.setCellValueFactory(new PropertyValueFactory<>("sum_work"));
             sumBreakCol.setCellValueFactory(new PropertyValueFactory<>("sum_break"));
-            fileCol.setCellValueFactory(new PropertyValueFactory<>("file"));
-            fileTypeCol.setCellValueFactory(new PropertyValueFactory<>("file_type"));
+            fileTypeCol.setCellValueFactory(new PropertyValueFactory<>("file"));
+            fileCol.setCellValueFactory(new PropertyValueFactory<>(""));
             dataView.setItems(dataList);
 
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
         }
 
     }

@@ -17,15 +17,18 @@ public class showData {
         System.err.println(queryOutput);
         try {
             while (queryOutput.next()) {
+                Integer queryId = queryOutput.getInt("id");
                 Integer queryDriverId = queryOutput.getInt("driver_id");
-                String queryDataWork = queryOutput.getString("date_work");
-                String queryDataAdd = queryOutput.getString("date_add");
+                String queryDateWork = queryOutput.getString("date_work");
+                String queryWorkInfo = queryOutput.getString("work_info");
+                String queryDateAdd = queryOutput.getString("date_add");
                 String querySumWork = queryOutput.getString("sum_work");
                 String querySumBreak = queryOutput.getString("sum_break");
                 String queryFile = queryOutput.getString("file");
                 String queryFileType = queryOutput.getString("file_type");
+                Integer querySumRoad = queryOutput.getInt("sum_road");
 
-                dataList.add(new Data(queryDriverId, queryDataWork, queryDataAdd, querySumWork, querySumBreak, queryFile, queryFileType));
+                dataList.add(new Data(queryId, queryDriverId, queryDateAdd, queryDateWork, queryWorkInfo, querySumWork, querySumBreak, queryFileType, queryFile, querySumRoad));
                 try {
                     if(queryOutput!=null) {
                         queryOutput.close();
