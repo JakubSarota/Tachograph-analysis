@@ -1,6 +1,7 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.PDF.CreatePDF;
+import com.example.tachographanalysis.database.addStats;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.BaseFont;
@@ -100,8 +101,9 @@ public class DigitalAnalysisController implements Initializable {
     static String savedData = "";
     static String dataPick1;
     static BaseFont helvetica;
-    public static String workSum;
-    public static String breakSum;
+    static String workSum;
+    static String breakSum;
+    static String roadSum;
     static String lastDayOfWork= "";
     static int counterEnter = 0;
 
@@ -1098,6 +1100,7 @@ private void colorPicker() throws ParserConfigurationException {
                             item(0).getTextContent() + "\n");
                     generalDataS +=("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
                             item(0).getTextContent() + "\n");
+//
 
 
 
@@ -1108,6 +1111,8 @@ private void colorPicker() throws ParserConfigurationException {
                     NodeList ActivityChangeInfo = doc.getElementsByTagName("ActivityChangeInfo");
                     for(int i=0;i<CardActivityDailyRecord.getLength();i++){
         NodeList t=CardActivityDailyRecord.item(i).getChildNodes();
+//                        roadSum =(CardActivityDailyRecord.item(i).
+//                                getAttributes().item(2).getNodeValue());
                         dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(1).getNodeValue() + " \n");
                         dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(i).
@@ -1121,6 +1126,7 @@ private void colorPicker() throws ParserConfigurationException {
                             }
 
                         }
+
                     }
 
                     // Trasa kierowcy
@@ -1356,13 +1362,20 @@ private void colorPicker() throws ParserConfigurationException {
         lstFile.add("*.DDD");
     }
     public void addStatsDigital() throws IOException {
-//        String file_name= UUID.randomUUID().toString() + ".DDD";
-//        addStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
-//                "Info o pracy", DigitalAnalysisController.workSum, DigitalAnalysisController.breakSum,
-//                file_name, "cyfrowy", Integer.parseInt(sumRoad.getText()));
+        String file_name= UUID.randomUUID().toString() + ".DDD";
+        addStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
+                inThisDayData, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(roadSum));
+        System.out.println(roadSum);
+        System.out.println("Pomyślnie dodano");
 
     }
     public void addStatsDigitalAll() throws IOException {
+        for (int i = 0; i < 2; i++) {
+            String file_name = UUID.randomUUID().toString() + ".DDD";
+            addStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
+                    inThisDayData, workSum, breakSum, file_name, "cyfrowy", parseInt("43"));
+            System.out.println("Pomyślnie dodano");
+        }
 
     }
 
