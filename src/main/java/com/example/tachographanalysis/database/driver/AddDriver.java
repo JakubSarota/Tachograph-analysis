@@ -1,6 +1,7 @@
-package com.example.tachographanalysis.database;
+package com.example.tachographanalysis.database.driver;
 
 import com.example.tachographanalysis.DriversController;
+import com.example.tachographanalysis.database.DatabaseConnection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -90,14 +91,23 @@ public class AddDriver {
     public boolean CheckIsExist(String pesel,
                                 String id_card) throws SQLException {
         boolean status = true;
+        ResultSet rs = null;
         String check = "SELECT * FROM driver WHERE pesel='"+pesel+"' AND id_card='"+id_card+"'";
         try {
-            ResultSet rs = DatabaseConnection.exQuery(check);
+            rs = DatabaseConnection.exQuery(check);
             if(rs.next()) {
                 status = false;
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
+        } finally {
+            try{
+                if(rs!=null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
 
         return status;
@@ -113,7 +123,7 @@ public class AddDriver {
                                  String country,
                                  String id_card) throws SQLException {
         try {
-            String insert = "INSERT INTO driver (first_name, second_name, last_name, email, pesel, city, born_date, country, id_card) VALUES('"+first_name+"','"+last_name+"','"+second_name+"','"+email+"','"+pesel+"','"+city+"','"+born+"','"+country+"','"+id_card+"')";
+            String insert = "INSERT INTO driver (first_name, second_name, last_name, email, pesel, city, born_date, country, id_card) VALUES('"+first_name+"','"+second_name+"','"+last_name+"','"+email+"','"+pesel+"','"+city+"','"+born+"','"+country+"','"+id_card+"')";
             ResultSet rs = DatabaseConnection.exQuery(insert);
         } catch (Exception e) {
 //            System.err.println(e.getMessage());

@@ -1,4 +1,13 @@
-#[1.3] - 2022-04-05
+#[1.3.1] - 2022-04-12
+
+###Dodano
+
+###Zmieniono
+
+###Poprawiono
+#
+#
+###[1.3] - 2022-04-05
 
 ###Dodano
 - Raport w analizie analogowej

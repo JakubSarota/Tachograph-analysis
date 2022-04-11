@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="373.0" prefWidth="950.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.AddDriver">
+<AnchorPane prefHeight="373.0" prefWidth="950.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.driver.AddDriver">
     <children>
       <HBox prefHeight="400.0" prefWidth="950.0">
          <children>

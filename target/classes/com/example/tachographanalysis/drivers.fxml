@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#initialize" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
    <left>
       <AnchorPane prefHeight="620.0" prefWidth="229.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -52,7 +52,7 @@
                         <TableColumn fx:id="cityCol" minWidth="20.0" prefWidth="127.0" style="-fx-alignment: center;" text="Adres zamieszkania" />
                         <TableColumn fx:id="bornCol" minWidth="20.0" prefWidth="107.0" style="-fx-alignment: center;" text="Data urodzenia" />
                         <TableColumn fx:id="countryCol" minWidth="20.0" prefWidth="66.0" style="-fx-alignment: center;" text="Kraj" />
-                        <TableColumn fx:id="cardCol" minWidth="20.0" prefWidth="89.0" style="-fx-alignment: center;" text="Nr karty" />
+                        <TableColumn fx:id="cardCol" minWidth="20.0" prefWidth="89.0" style="-fx-alignment: center;" text="Nr karty " />
                         <TableColumn fx:id="editCol" maxWidth="110.0" minWidth="20.0" prefWidth="110.0" style="-fx-alignment: center;" text="Opcje" />
 
                      </columns>

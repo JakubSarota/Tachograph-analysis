@@ -1,5 +1,7 @@
-package com.example.tachographanalysis.database;
+package com.example.tachographanalysis.database.driver;
 
+import com.example.tachographanalysis.database.DatabaseConnection;
+import com.example.tachographanalysis.database.driver.Driver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,6 +27,9 @@ public class ShowList {
                 String queryCountry = queryOutput.getString("country");
                 String queryCard = queryOutput.getString("id_card");
                 driversList.add(new Driver.Drivers(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard));
+            }
+            if(queryOutput!=null) {
+                queryOutput.close();
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

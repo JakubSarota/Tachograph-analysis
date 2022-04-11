@@ -43,11 +43,11 @@ public class MainController {
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
     }
 
-    public void getReports() throws Exception {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("reports.fxml"));
-        Stage scene = (Stage) btnReports.getScene().getWindow();
-        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
-    }
+//    public void getReports() throws Exception {
+//        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("reports.fxml"));
+//        Stage scene = (Stage) btnReports.getScene().getWindow();
+//        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW,SizeController.sizeH));
+//    }
 
     public void getHelp() throws Exception {
         File fileChooser = new File("src/main/resources/com/example/tachographanalysis/TACHOFIVEHELP.pdf");
