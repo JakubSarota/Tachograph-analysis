@@ -33,6 +33,16 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <Button fx:id="btnRemoveDriver" layoutX="66.0" layoutY="375.0" mnemonicParsing="false" onAction="#removeDriver" prefHeight="21.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Usuń" textFill="#47535b">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEditDriver" layoutX="66.0" layoutY="310.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Edytuj" textFill="#47535b">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </left>
@@ -46,10 +56,10 @@
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Text>
-                  <TableView fx:id="accountTableView" layoutX="9.0" layoutY="133.0" prefHeight="473.0" prefWidth="977.0">
+                  <TableView fx:id="accountTableView" editable="true" layoutX="9.0" layoutY="133.0" prefHeight="473.0" prefWidth="977.0">
                      <columns>
                         <TableColumn fx:id="idCol" prefWidth="34.0" text="Id" />
-                        <TableColumn fx:id="firstnameCol" prefWidth="81.0" text="Imię" />
+                        <TableColumn fx:id="firstnameCol" onEditCommit="#onEditFname" prefWidth="81.0" text="Imię" />
                         <TableColumn fx:id="secondNameCol" prefWidth="72.0" text="Drugie imię" />
                         <TableColumn fx:id="lastnameCol" prefWidth="73.0" text="Nazwisko" />
                         <TableColumn fx:id="emailCol" prefWidth="113.0" text="e-mail" />
@@ -69,6 +79,11 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
+                  <Button layoutX="790.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#UpdateTable" prefHeight="30.0" prefWidth="89.0" style="-fx-background-radius: 30 30 30 30; -fx-background-color: #F8F9FA;" text="Odśwież" textFill="#47535b">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
          </children>
