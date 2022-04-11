@@ -2,6 +2,8 @@ package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
 import com.example.tachographanalysis.size.SizeController;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,12 +15,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
+import javax.swing.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -26,7 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class DriversController {
+public class DriversController implements Initializable {
 
     @FXML
     private Button btnBack;
@@ -35,8 +40,9 @@ public class DriversController {
     @FXML
     private Pane boxDrivers;
     @FXML
+    private Button btnRemoveDriver;
+    @FXML
     private ListView<String> accountListView;
-    ///////
     @FXML
     private TextField searchTextField;
     @FXML
@@ -48,7 +54,8 @@ public class DriversController {
 
 
 
-    public class Drivers {
+
+    public static class Drivers {
 
         Integer id;
         String fname, sname, lname, email, city, country, license, born, pesel, card;
@@ -67,7 +74,10 @@ public class DriversController {
             this.card = card;
             this.license = license;
         }
+        public Drivers() {}
 
+
+        //setter getter
         public Integer getId() { return id; }
         public String getFname() {
             return fname;
@@ -106,7 +116,7 @@ public class DriversController {
             this.fname = fname;
         }
         public void setSname(String sname) {
-                this.sname = sname;
+            this.sname = sname;
         }
         public void setLname(String lname) {
             this.lname = lname;
@@ -118,19 +128,41 @@ public class DriversController {
         public void setCountry(String country) {this.country = country;}
         public void setCard(String card) {this.card = card;}
         public void setLicense(String license) {this.license = license;}
-    }
 
+
+
+        ///////
+
+        public ObjectProperty<Drivers>driversObjectProperty = new SimpleObjectProperty<>();
+        static ObjectProperty<Drivers>driversObjectPropertyEdit = new SimpleObjectProperty<>(new Drivers());
+
+
+        public static Drivers getDriversObjectPropertyEdit() {
+            return driversObjectPropertyEdit.get();
+        }
+
+        public static ObjectProperty<Drivers> driversObjectPropertyEditProperty() {
+            return driversObjectPropertyEdit;
+        }
+
+        public static void setDriversObjectPropertyEdit(Drivers driversObjectPropertyEdit) {
+            Drivers.driversObjectPropertyEdit.set(driversObjectPropertyEdit);
+        }
+
+        ///////
+    }
 
     ObservableList<Drivers> driversList = FXCollections.observableArrayList();
 
-    public void initialize() {
 
+    public void UpdateTable() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB = connectNow.getDBConnection();
 
-        String query = "SELECT * FROM driver";
-
+        driversList.clear();
         try {
+            String query = "SELECT * FROM driver";
+
             Statement statement = connectDB.createStatement();
             ResultSet queryOutput = statement.executeQuery(query);
 
@@ -151,6 +183,7 @@ public class DriversController {
                 driversList.add(new Drivers(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard, queryLicense));
 
             }
+
             idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             firstnameCol.setCellValueFactory(new PropertyValueFactory<>("fname"));
             secondNameCol.setCellValueFactory(new PropertyValueFactory<>("sname"));
@@ -163,11 +196,28 @@ public class DriversController {
             cardCol.setCellValueFactory(new PropertyValueFactory<>("card"));
             licenseCol.setCellValueFactory(new PropertyValueFactory<>("license"));
 
-
             accountTableView.setItems(driversList);
-            ;
 
-            //Wyszukiwarka
+///// edycja
+
+            this.firstnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.secondNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.lastnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.peselCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.bornCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.countryCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.cardCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
+            this.accountTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+                Drivers.setDriversObjectPropertyEdit(newValue);
+                accountTableView.setEditable(true);
+            });
+
+/////
+
+            //Wyszukiwanie kierowców
             FilteredList<Drivers> filteredData = new FilteredList<>(driversList, b -> true);
 
             searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -198,14 +248,30 @@ public class DriversController {
             sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
 
             accountTableView.setItems(sortedData);
-
+            //
 
         } catch (SQLException e) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        UpdateTable();
+        //loadData();
+    }
 
+ /*   public void loadData(){
+        ObservableList<Drivers> driversList = FXCollections.observableArrayList();
+        for (int i=0; i<7; i++){
+            driversList.add(new Drivers(String.valueOf(i), "fname"+i, "sname" +i, "lname"+i,"email"+1, new Button("update")));
+        }
+        accountTableView.setItems(driversList);
+    }
+*/
+
+    //Wstecz
     @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
@@ -213,21 +279,58 @@ public class DriversController {
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
     }
 
-    StackPane stackPane = new StackPane();
-    Scene secondScene = new Scene(stackPane, 950,420);
-    Stage secondStage = new Stage();
+    //Dodawanie
     public void getAddDrivers() throws Exception {
-        if(secondStage==null||!secondStage.isShowing()) {
-            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
-            stackPane.getChildren().add(fxmlLoader);
-            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
-            secondStage.setTitle("Dodaj kierowce");
-            secondStage.setScene(secondScene);
-            secondStage.show();
-        } else {
-            secondStage.toFront();
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
+        StackPane stackPane = new StackPane();
+        Scene secondScene = new Scene(stackPane, 950,420);
+        stackPane.getChildren().add(fxmlLoader);
+        Stage secondStage = new Stage();
+        secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+        secondStage.setTitle("Dodaj kierowce");
+        secondStage.setScene(secondScene);
+
+        UpdateTable();
+        secondStage.show();
+    }
+
+    //Edycja
+    public void onEditFname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+        Drivers.getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setEmail(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setPesel(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setCity(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setBorn(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setCountry(driversStringCellEditEvent.getNewValue());
+        Drivers.getDriversObjectPropertyEdit().setCard(driversStringCellEditEvent.getNewValue());
+
+    }
+
+
+
+    //Usuwanie
+    public void removeDriver(){
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection conn = connectNow.getDBConnection();
+        String query = "DELETE FROM driver WHERE id = ?";
+        Integer myIndex = accountTableView.getSelectionModel().getSelectedIndex();
+        int id = Integer.parseInt(String.valueOf(accountTableView.getItems().get(myIndex).getId()));
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, String.valueOf(id));
+            pst.executeUpdate();
+
+            pst.close();
+
+            JOptionPane.showMessageDialog(null, "Czy chcesz usunąć użytkownika ?");
+            UpdateTable();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
 }
-
 
