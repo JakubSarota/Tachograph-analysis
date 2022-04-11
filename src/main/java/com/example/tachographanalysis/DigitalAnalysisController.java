@@ -58,6 +58,8 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private BarChart barChart;
     @FXML
+    private BarChart barChartTMP;
+    @FXML
     private AreaChart chart;
     @FXML
     private ProgressBar progressBar;
@@ -287,7 +289,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void  generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick,"",barChart);
+        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick,"",barChartTMP);
         Thread.sleep(500);
         dragOver.setText("Plik PDF został utworzony!");
     }
@@ -431,6 +433,8 @@ public class DigitalAnalysisController implements Initializable {
 //        }
             barChart.getData().clear();
             barChart.getData().removeAll();
+            barChartTMP.getData().clear();
+            barChartTMP.getData().removeAll();
 
             counterEnter++;
 
@@ -441,6 +445,9 @@ public class DigitalAnalysisController implements Initializable {
             barChart.setTitle("Aktywność pracownika ");
             barChart.getXAxis().setLabel("Aktywność");
             barChart.getYAxis().setLabel("Godziny");
+            barChartTMP.setTitle("Aktywność pracownika ");
+            barChartTMP.getXAxis().setLabel("Aktywność");
+            barChartTMP.getYAxis().setLabel("Godziny");
 
             barChart.setAnimated(false);
 
@@ -449,10 +456,15 @@ public class DigitalAnalysisController implements Initializable {
             series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
             series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
             series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
-
+            XYChart.Series series2 = new XYChart.Series();
+            series2.setName(selectedDate);
+            series2.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
+            series2.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+            series2.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
             workSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork)/60))+parseInt(String.valueOf(timeDiffrence(activityDataDrive)/60)));
             breakSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60);
             barChart.getData().addAll(series1);
+            barChartTMP.getData().addAll(series2);
 
         savedData += selectedDate;
         counterEnter++;
@@ -824,6 +836,7 @@ public class DigitalAnalysisController implements Initializable {
         dataPicker.setVisible(true);
         barChart.setVisible(false);
         barChart.getData().clear();
+        barChartTMP.getData().clear();
         dataPicker.getEditor().clear();
         chart.setVisible(false);
 

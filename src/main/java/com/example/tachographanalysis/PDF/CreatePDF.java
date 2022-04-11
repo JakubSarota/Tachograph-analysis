@@ -1,12 +1,9 @@
 package com.example.tachographanalysis.PDF;
 
-import com.itextpdf.awt.DefaultFontMapper;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
@@ -17,7 +14,6 @@ import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,8 +52,13 @@ public class CreatePDF {
             doc.add(image);
         }
         if(barCharts.length>0){
+//            System.out.println(barCharts[0].getLayoutX());
+//            double layoutX=  barCharts[0].getLayoutX();
+//            double layoutY=  barCharts[0].getLayoutY();
             barCharts[0].setLayoutX(0);
             barCharts[0].setLayoutY(0);
+            barCharts[0].setVisible(true);
+//            System.out.println(barCharts[0].getLayoutX());
             Scene scene = new Scene(new Group(), barCharts[0].getWidth(), barCharts[0].getHeight());
             ((Group) scene.getRoot()).getChildren().add(barCharts[0]);
             //Saving the scene as image
@@ -70,6 +71,9 @@ public class CreatePDF {
             image1.scalePercent(scaler);
             doc.add(image1);
             file.deleteOnExit();
+//            barCharts[0].setLayoutX(layoutX);
+//            barCharts[0].setLayoutY(layoutY);
+//            System.out.println(barCharts[0].getLayoutX());
         }
         doc.close();
         System.out.println("Stop");
