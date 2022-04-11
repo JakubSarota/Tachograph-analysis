@@ -86,7 +86,7 @@ public class AnalogueAnalysisController {
             dragOver.setText("Rozmiar pliku jest za mały");
         } else if(selectedFile != null) {
             getImageOnClick(imageFile);
-            dragOver.setText(text);
+            dragOver.setText("Poprawnie załadowano plik!");
         } else if(selectedFile == null) {
             dragOver.setText(text);
         }
@@ -105,7 +105,7 @@ public class AnalogueAnalysisController {
             dragOver.setText("Rozmiar pliku jest za mały");
         } else {
             getImageDragAndDrop(files);
-            dragOver.setText(text);
+            dragOver.setText("Poprawnie załadowano plik!");
         }
     }
 
@@ -339,6 +339,7 @@ public class AnalogueAnalysisController {
     }
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
         CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+        dragOver.setText("Plik PDF został utworzony!");
     }
     public void openFolder(MouseEvent mouseEvent)  {
         Desktop desktop = Desktop.getDesktop();
