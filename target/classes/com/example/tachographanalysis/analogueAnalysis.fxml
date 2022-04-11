@@ -5,10 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
     <center>
         <VBox alignment="BOTTOM_CENTER" prefHeight="620.0" prefWidth="948.0" style="-fx-background-color: #186199;">
             <children>
@@ -53,22 +50,25 @@
                             </font></Text>
                     </children>
                 </AnchorPane>
-                <Button fx:id="dragOver" layoutX="16.0" layoutY="310.0" mnemonicParsing="false"
-                        onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton"
-                        onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="250.0"
-                        style="-fx-background-color: transparent; -fx-border-style: dotted;"
-                        text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
+                <Button fx:id="dragOver" layoutX="17.0" layoutY="205.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Button>
-                <Button layoutX="63.0" layoutY="231.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0"
-                        style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b"
-                        onMouseClicked="#addStats">
+                <Button layoutX="63.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#addStats" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
+                <Button layoutX="64.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#makePDF" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Twórz pdf" textFill="#47535b">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button layoutX="60.0" layoutY="534.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz folder PDF" textFill="#47535b">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font></Button>
             </children>
         </AnchorPane>
     </left>

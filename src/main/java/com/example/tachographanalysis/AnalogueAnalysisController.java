@@ -320,7 +320,7 @@ public class AnalogueAnalysisController {
         xmlfile.write(xml);
         xmlfile.close();
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
-        textArea.setText(s[1]);
+        textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
     }
     StackPane stackPane = new StackPane();
     Scene secondScene = new Scene(stackPane, 950,420);

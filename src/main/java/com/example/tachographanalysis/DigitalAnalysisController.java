@@ -280,14 +280,14 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void  generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()));
+        CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()),"");
         Thread.sleep(500);
         dragOver.setText("Plik PDF został utworzony!");
     }
     @FXML
     private void  generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick);
+        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick,"",barChart);
         Thread.sleep(500);
         dragOver.setText("Plik PDF został utworzony!");
     }
@@ -438,7 +438,7 @@ public class DigitalAnalysisController implements Initializable {
             //Barchart dzialający
             barChart.setVisible(true);
 
-            barChart.setTitle("Aktywność pracownka ");
+            barChart.setTitle("Aktywność pracownika ");
             barChart.getXAxis().setLabel("Aktywność");
             barChart.getYAxis().setLabel("Godziny");
 
