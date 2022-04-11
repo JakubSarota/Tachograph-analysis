@@ -14,9 +14,9 @@ import java.io.IOException;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 
 
-public class analysisCircle {
-    public static changeColor blackImage;
-    public static changeColor blackImage2;
+public class AnalysisCircle {
+    public static ChangeColor blackImage;
+    public static ChangeColor blackImage2;
     public BufferedImage[] getHuanByCircle(String file) throws IOException, InterruptedException {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imageFile = imread(file
@@ -28,7 +28,7 @@ public class analysisCircle {
         Mat dst = new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dst2=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
         Mat dstResize=new Mat(imageFile.rows(), imageFile.cols(), imageFile.type());
-        changeColor kola=new changeColor(HighGui.toBufferedImage(imageFile));
+        ChangeColor kola=new ChangeColor(HighGui.toBufferedImage(imageFile));
 
 //        kola.blackAndWhite(200);
 //        kola.petla_po_pikselach();
@@ -84,8 +84,8 @@ public class analysisCircle {
 
 
 
-        blackImage = new changeColor(HighGui.toBufferedImage(dst2));
-        blackImage2 = new changeColor(HighGui.toBufferedImage(dstResize));
+        blackImage = new ChangeColor(HighGui.toBufferedImage(dst2));
+        blackImage2 = new ChangeColor(HighGui.toBufferedImage(dstResize));
 
         blackImage.blackAndWhite(200);
         blackImage2.blackAndWhite(200);

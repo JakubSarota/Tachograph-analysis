@@ -1,6 +1,6 @@
 package com.example.tachographanalysis;
 
-import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
+import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
@@ -53,7 +53,7 @@ public class AnalogueAnalysisController {
 
     private String imageFile, text = "Wybierz plik albo upuść go tutaj";
     static double ip = 0;
-    analysisCircle analysisCircle = new analysisCircle();
+    AnalysisCircle analysisCircle = new AnalysisCircle();
 
     @FXML
     public void getBack() throws Exception {

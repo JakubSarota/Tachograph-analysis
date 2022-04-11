@@ -1,7 +1,7 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.PDF.CreatePDF;
-import com.example.tachographanalysis.database.addStats;
+import com.example.tachographanalysis.database.stats.AddStats;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.BaseFont;
@@ -1376,7 +1376,7 @@ private void colorPicker() throws ParserConfigurationException {
     }
     public void addStatsDigital() throws IOException {
         String file_name= UUID.randomUUID().toString() + ".DDD";
-        addStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
+        AddStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
                 inThisDayData, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(roadSum));
         System.out.println(roadSum);
         System.out.println("Pomyślnie dodano");
@@ -1385,7 +1385,7 @@ private void colorPicker() throws ParserConfigurationException {
     public void addStatsDigitalAll() throws IOException {
         for (int i = 0; i < 2; i++) {
             String file_name = UUID.randomUUID().toString() + ".DDD";
-            addStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
+            AddStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
                     inThisDayData, workSum, breakSum, file_name, "cyfrowy", parseInt("43"));
             System.out.println("Pomyślnie dodano");
         }

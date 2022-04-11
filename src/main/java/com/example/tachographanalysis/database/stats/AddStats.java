@@ -1,8 +1,9 @@
-package com.example.tachographanalysis.database;
+package com.example.tachographanalysis.database.stats;
 
 import com.example.tachographanalysis.AnalogueAnalysisController;
 import com.example.tachographanalysis.DigitalAnalysisController;
-import com.example.tachographanalysis.analogueAnalysis.analysisCircle;
+import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
+import com.example.tachographanalysis.database.DatabaseConnection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class addStats {
+public class AddStats {
 
     @FXML
     private DatePicker dataPicker;
@@ -73,8 +74,8 @@ public class addStats {
         });
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1]);
-        breakTime.setText(String.valueOf(analysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumBreak)));
-        workTime.setText(String.valueOf(analysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
+        breakTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumBreak)));
+        workTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
         dataPicker.setValue(LocalDate.now());
     }
     public void addStats() throws IOException {
