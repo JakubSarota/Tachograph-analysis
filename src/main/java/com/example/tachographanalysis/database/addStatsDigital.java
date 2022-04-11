@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -34,43 +33,8 @@ public class addStatsDigital {
     private String driver;
     @FXML
     private Text returnInfo;
-    @FXML
-    protected void initialize() throws Exception {
 
-//        try {
-//
-//
-//            while (queryOutput.next()) {
-//                String firstname = queryOutput.getString("first_name");
-//                String lastname = queryOutput.getString("second_name");
-//                int id = queryOutput.getInt("id");
-//                String listOut = id + " " + firstname + " " + lastname;
-//                accountListView.getItems().add(listOut);
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        accountListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                System.out.println("Aktwny kierowca zotał zmieniony z: "
-//                        + oldValue + " na:  " + newValue);
-//                driver=newValue;
-//                System.out.println(DigitalAnalysisController.filexmlStats);
-//            }
-//
-//        });
-//        //String.valueOf(DigitalAnalysisController.readData(DigitalAnalysisController.filexmlStats));
-//        breakTime.setText(DigitalAnalysisController.breakSum);
-//        workTime.setText(DigitalAnalysisController.workSum);
-//        dataPicker.setValue(LocalDate.parse(DigitalAnalysisController.dataPick));
-
-    }
-
-    public void addStatsDigital() throws IOException {
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getDBConnection();
+    public addStatsDigital() throws IOException {
 
         if(driver!=null) {
             Pattern p = Pattern.compile("[0-9]+");

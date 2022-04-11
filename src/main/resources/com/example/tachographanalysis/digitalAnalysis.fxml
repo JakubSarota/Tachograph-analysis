@@ -41,16 +41,16 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-<!--             <Button fx:id="btnAddStatsDigital" layoutX="60.0" layoutY="481.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Dnia" textFill="#47535b" visible="false">-->
-<!--                 <font>-->
-<!--                     <Font name="System Bold" size="14.0" />-->
-<!--                 </font>-->
-<!--             </Button>-->
-<!--             <Button fx:id="btnAddStatsDigitalAll" layoutX="60.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addStatsDigitalAll" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Całości" textFill="#47535b" visible="false">-->
-<!--                 <font>-->
-<!--                     <Font name="System Bold" size="14.0" />-->
-<!--                 </font>-->
-<!--             </Button>-->
+             <Button fx:id="btnAddStatsDigital" layoutX="60.0" layoutY="481.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Dnia" textFill="#47535b" visible="false">
+                 <font>
+                     <Font name="System Bold" size="14.0" />
+                 </font>
+             </Button>
+             <Button fx:id="btnAddStatsDigitalAll" layoutX="60.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addStatsDigitalAll" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Całości" textFill="#47535b" visible="false">
+                 <font>
+                     <Font name="System Bold" size="14.0" />
+                 </font>
+             </Button>
          </children>
       </AnchorPane>
    </left>

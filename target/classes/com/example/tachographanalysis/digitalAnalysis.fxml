@@ -23,25 +23,30 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="dragOver" layoutX="14.0" layoutY="378.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
+            <Button fx:id="dragOver" layoutX="8.0" layoutY="181.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="260.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font></Button>
-            <Button fx:id="btnRaportPDF" layoutX="66.0" layoutY="190.0" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport" textFill="#47535b" visible="false">
+            <Button fx:id="btnRaportPDF" layoutX="60.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="66.0" layoutY="546.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz folder PDF" textFill="#47535b">
+            <Button layoutX="60.0" layoutY="534.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz folder PDF" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Button fx:id="btnRaportPDFdnia" layoutX="66.0" layoutY="246.0" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport Dnia" textFill="#47535b" visible="false">
+            <Button fx:id="btnRaportPDFdnia" layoutX="60.0" layoutY="374.0" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport Dnia" textFill="#47535b" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-             <Button layoutX="66.0" layoutY="310.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Dodaj statystyki" textFill="#47535b">
+             <Button fx:id="btnAddStatsDigital" layoutX="60.0" layoutY="481.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Dnia" textFill="#47535b" visible="false">
+                 <font>
+                     <Font name="System Bold" size="14.0" />
+                 </font>
+             </Button>
+             <Button fx:id="btnAddStatsDigitalAll" layoutX="60.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addStatsDigitalAll" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Całości" textFill="#47535b" visible="false">
                  <font>
                      <Font name="System Bold" size="14.0" />
                  </font>
