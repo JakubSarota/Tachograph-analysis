@@ -1,6 +1,8 @@
 package com.example.tachographanalysis.database.driver.driverInfo;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
+import com.example.tachographanalysis.database.driver.driverInfo.Data;
+import com.example.tachographanalysis.database.driver.driverInfo.showData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ public class InfoDriver {
     public TableColumn<Data, Integer> idDriverCol;
     @FXML
     public TableColumn<Data, String> dateWorkCol, dateAddCol, sumWorkCol, sumBreakCol, fileCol, fileTypeCol;
-
+    @FXML
     private ObservableList<Data> dataList = FXCollections.observableArrayList();
 
     public void initialize() throws SQLException {
@@ -50,7 +52,7 @@ public class InfoDriver {
 
     public void infoDriver() throws SQLException {
         try {
-            dataList = ShowData.data();
+            dataList = showData.data();
             dateAddCol.setCellValueFactory(new PropertyValueFactory<>(""));
             dateWorkCol.setCellValueFactory(new PropertyValueFactory<>("date_work"));
             sumWorkCol.setCellValueFactory(new PropertyValueFactory<>("sum_work"));

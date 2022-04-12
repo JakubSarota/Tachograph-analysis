@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
    <left>
       <AnchorPane prefHeight="742.0" prefWidth="276.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -33,14 +33,6 @@
                      </font>
                       </Button>
                   <Button fx:id="btnDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getDrivers" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Kierowcy" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets bottom="25.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnReports" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getReports" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #29A1FA;" text="Raporty" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>

@@ -1,6 +1,7 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
+import com.example.tachographanalysis.database.driver.Driver;
 import com.example.tachographanalysis.database.driver.Driver.Drivers;
 import com.example.tachographanalysis.database.driver.ShowList;
 import com.example.tachographanalysis.size.SizeController;
@@ -26,8 +27,6 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class DriversController {
@@ -49,7 +48,6 @@ public class DriversController {
 
     private ObservableList<Drivers> driversList = FXCollections.observableArrayList();
     Drivers driver = null;
-
 
     public void initialize() {
         try {
@@ -75,44 +73,39 @@ public class DriversController {
             bornCol.setCellValueFactory(new PropertyValueFactory<>("born"));
             countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
             cardCol.setCellValueFactory(new PropertyValueFactory<>("card"));
-
-            Callback<TableColumn<Drivers, String>, TableCell<Drivers, String>> cellEdit = (TableColumn<Drivers, String> param) -> {
-                final TableCell<Drivers, String> cell = new TableCell<>() {
+            Callback<TableColumn<Drivers, String>, TableCell<Drivers,String>> cellEdit = (TableColumn<Drivers,String> param) -> {
+                final TableCell<Drivers,String> cell = new TableCell<>() {
                     @Override
-                    public void updateItem(String s, boolean b) {
+                    protected void updateItem(String s, boolean b) {
                         super.updateItem(s, b);
                         if(b) {
                             setGraphic(null);
-                            setText(null);
                         } else {
                             Button edit = new Button();
                             edit.setText("Dane");
                             edit.setStyle(
                                     "-fx-cursor: hand ;"
-                                            +"-fx-fill:#00E676;"
+                                   +"-fx-fill:#00E676;"
                             );
-
-                            edit.setOnMouseClicked((MouseEvent) -> {
+                            edit.setOnMouseClicked(mouseEvent -> {
                                 driver = accountTableView.getSelectionModel().getSelectedItem();
-
                                 FXMLLoader loader = new FXMLLoader();
                                 loader.setLocation(getClass().getResource("infoDriver.fxml"));
                                 try {
                                     loader.load();
                                 } catch (Exception e) { }
-
                                 Parent parent = loader.getRoot();
                                 Stage stage = new Stage();
                                 stage.setScene(new Scene(parent));
                                 stage.show();
                             });
 
-                            HBox managebtn = new HBox(edit);
-                            managebtn.setStyle("-fx-alignment:center");
+                            HBox hbox = new HBox(edit);
+                            hbox.setStyle("-fx-alignment:center");
                             HBox.setMargin(edit, new Insets(2, 2, 0, 3));
-                            setGraphic(managebtn);
-                            setText(null);
+                            setGraphic(hbox);
                         }
+                        setText(null);
                     }
                 };
                 return cell;
@@ -178,15 +171,15 @@ public class DriversController {
 
     //Edycja
     public void onEditFname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
-        Drivers.getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setEmail(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setPesel(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setCity(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setBorn(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setCountry(driversStringCellEditEvent.getNewValue());
-        Drivers.getDriversObjectPropertyEdit().setCard(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setEmail(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setPesel(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setCity(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setBorn(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setCountry(driversStringCellEditEvent.getNewValue());
+//        Drivers.getDriversObjectPropertyEdit().setCard(driversStringCellEditEvent.getNewValue());
 
     }
 

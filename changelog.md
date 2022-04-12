@@ -1,4 +1,18 @@
-#[1.3] - 2022-04-05
+#[1.3.1] - 2022-04-12
+
+###Dodano
+- Przycisk otwierający folder z plikami pdf w analizie analogowej oraz cyfrowej
+- Napis ładowania i powodzenie operacji w analizie cyfrowej
+- Przycisk odświeżania tablicy
+- W kierowcach użytkownika można skasować
+###Zmieniono
+- Wykres dnia pracy kierowcy w analizie cyfrowej
+- PDF generuje dni wraz z wykresem
+###Poprawiono
+
+#
+#
+###[1.3] - 2022-04-05
 
 ###Dodano
 - Raport w analizie analogowej
