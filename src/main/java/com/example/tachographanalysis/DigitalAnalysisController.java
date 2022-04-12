@@ -113,8 +113,8 @@ public class DigitalAnalysisController implements Initializable {
     public int id;
     static String lastDayOfWork= "";
     static int counterEnter = 0;
-    private int lastDaily;
-    private int firstDaily;
+    private String lastDaily;
+    private String firstDaily;
 
 
     public void getBack() throws Exception {
@@ -829,10 +829,10 @@ public class DigitalAnalysisController implements Initializable {
         int lastDataIndex = lastZLatter-19;
         String lastaDataString = (dataT.substring(lastDataIndex,lastDataIndex+10));
         //Nr ostatniego dnia pracy
-        lastDaily = Integer.parseInt((dataT.substring(lastDataIndex+55, lastDataIndex + 58)));
+        lastDaily = (dataT.substring(lastDataIndex+55, lastDataIndex + 58));
         int firstZLatter = dataT.indexOf("Z");
         int firstDataIndex = firstZLatter-19;
-        firstDaily = Integer.parseInt((dataT.substring(firstDataIndex+55, firstDataIndex + 58)));
+        firstDaily = (dataT.substring(firstDataIndex+55, firstDataIndex + 58));
 
         String year = (lastaDataString.substring(0,4));
         String month = (lastaDataString.substring(5,7));
@@ -1377,7 +1377,7 @@ private void colorPicker() throws ParserConfigurationException {
         }
 
 //---------------------------------------------------------------------------------------------------------------------//
-        int liczbaDni = lastDaily - firstDaily;
+        int liczbaDni = parseInt(lastDaily) - parseInt(firstDaily);
         String s = inThisDayData.substring(inThisDayData.indexOf("Dystans : ") + 10, inThisDayData.indexOf("km"));
         Pattern p = Pattern.compile("[0-9]+");
         Matcher m = p.matcher(s);
