@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -27,6 +28,8 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import static com.example.tachographanalysis.database.driver.Driver.Drivers.getDriversObjectPropertyEdit;
 
 
 public class DriversController {
@@ -44,10 +47,11 @@ public class DriversController {
     @FXML
     private TableColumn<Drivers, Integer> idCol;
     @FXML
-    private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol, editCol;
+    private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, peselCol, cardCol, editCol;
 
     private ObservableList<Drivers> driversList = FXCollections.observableArrayList();
     Drivers driver = null;
+
 
     public void initialize() {
         try {
@@ -59,6 +63,8 @@ public class DriversController {
         }
 
     }
+
+
 
     public void loadTable() {
         try {
@@ -112,6 +118,26 @@ public class DriversController {
             };
             editCol.setCellFactory(cellEdit);
             accountTableView.setItems(driversList);
+
+            ///// edycja
+
+            this.firstnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.secondNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.lastnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.peselCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.bornCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.countryCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            this.cardCol.setCellFactory(TextFieldTableCell.forTableColumn());
+
+            this.accountTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+                Drivers.setDriversObjectPropertyEdit(newValue);
+                accountTableView.setEditable(true);
+
+            });
+/////
+
         }catch (Exception e) { }
     }
 
@@ -145,6 +171,12 @@ public class DriversController {
         accountTableView.setItems(sortedData);
     }
 
+    private Connection getConnection() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection conn = connectNow.getDBConnection();
+        return conn;
+    }
+
     @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
@@ -171,18 +203,44 @@ public class DriversController {
 
     //Edycja
     public void onEditFname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
-//        Drivers.getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setEmail(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setPesel(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setCity(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setBorn(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setCountry(driversStringCellEditEvent.getNewValue());
-//        Drivers.getDriversObjectPropertyEdit().setCard(driversStringCellEditEvent.getNewValue());
+        getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
 
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  first_name = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
     }
 
+    public void onEditSname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
+
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+        System.out.println(value);
+
+        String query = "UPDATE driver SET  second_name = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
+
+    public void onEditLname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  last_name = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
 
 
     //Usuwanie
@@ -201,6 +259,18 @@ public class DriversController {
             pst.close();
 
             JOptionPane.showMessageDialog(null, "Czy chcesz usunąć użytkownika ?");
+            loadTable();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    //
+    private void extracted(Connection conn, String query) {
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.executeUpdate();
+            pst.close();
             loadTable();
 
         } catch (Exception e) {
