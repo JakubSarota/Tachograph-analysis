@@ -88,9 +88,10 @@ public class DriversController {
                             edit.setText("Dane");
                             edit.setStyle(
                                     "-fx-cursor: hand ;"
-                                   +"-fx-background-color: transparent;"
-                                    +"-fx-border-color: black;"
-                                    +"-fx-border-style: 2px solid"
+                                    +"-fx-fill:#00E676;"
+                                    +"-fx-border-radius: 20;"
+                                    +"-fx-background-color: #F8F9FA;"
+                                    +"-fx-border-color: #2A73FF;"
 
                             );
                             edit.setOnMouseClicked(mouseEvent -> {
@@ -248,7 +249,78 @@ public class DriversController {
 
         extracted(conn, query);
     }
+    public void onEditEmail(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setEmail(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
 
+        Connection conn = getConnection();
+        System.out.println(value);
+        String query = "UPDATE driver SET  email = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
+
+    public void onEditPesel(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setPesel(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  pesel = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
+    public void onEditCity(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setCity(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  city = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
+    public void onEditBorn(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setBorn(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  born_date = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
+    public void onEditCountry(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setCountry(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  country = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
+    public void onEditIdCard(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        getDriversObjectPropertyEdit().setCard(driversStringCellEditEvent.getNewValue());
+        String value = driversStringCellEditEvent.getNewValue();
+        String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
+
+        Connection conn = getConnection();
+
+        System.out.println(value);
+        String query = "UPDATE driver SET  id_card = '"+value+"' WHERE id = '"+driverId+"'";
+
+        extracted(conn, query);
+    }
 
     //Usuwanie
     public void removeDriver(){
