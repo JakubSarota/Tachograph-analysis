@@ -2,11 +2,9 @@ package com.example.tachographanalysis.database.driver;
 
 public class Driver {
 
-    public static class Drivers {
         Integer id;
-        String fname, sname, lname, email, city, country, license, born, pesel, card;
-
-        public Drivers(Integer id, String fname, String sname, String lname, String email, String pesel, String city, String born, String country, String card) {
+        String fname, sname, lname, email, city, country, born, pesel, card;
+        public Driver(Integer id, String fname, String sname, String lname, String email, String pesel, String city, String born, String country, String card) {
             this.id = id;
             this.fname = fname;
             this.sname = sname;
@@ -17,7 +15,6 @@ public class Driver {
             this.born = born;
             this.country = country;
             this.card = card;
-            this.license = license;
         }
 
         public Integer getId() { return id; }
@@ -47,7 +44,6 @@ public class Driver {
         }
         public String getCard() { return card; }
 
-
         public void setId(Integer id) {
             this.id = id;
         }
@@ -67,5 +63,4 @@ public class Driver {
         public void setCountry(String country) {this.country = country;}
         public void setCard(String card) {this.card = card;}
 
-    }
 }

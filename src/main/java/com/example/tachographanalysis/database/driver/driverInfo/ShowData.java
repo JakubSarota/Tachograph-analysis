@@ -1,8 +1,6 @@
 package com.example.tachographanalysis.database.driver.driverInfo;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
-import com.example.tachographanalysis.database.driver.Driver;
-import com.example.tachographanalysis.database.driver.driverInfo.Data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,11 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class showData {
+    static int idDriverData;
+    public static int getIdDriverData(int id) {
+        return idDriverData = id;
+    }
+
     public static ObservableList<Data> data() throws SQLException {
         ObservableList<Data> dataList = FXCollections.observableArrayList();
-        String query = "SELECT * FROM stats";
+        String query = "SELECT * FROM stats WHERE driver_id='"+idDriverData+"'";
         ResultSet queryOutput = DatabaseConnection.exQuery(query);
-        System.err.println(queryOutput);
+
         try {
             while (queryOutput.next()) {
                 Integer queryId = queryOutput.getInt("id");
@@ -27,19 +30,15 @@ public class showData {
                 String queryFile = queryOutput.getString("file");
                 String queryFileType = queryOutput.getString("file_type");
                 Integer querySumRoad = queryOutput.getInt("sum_road");
-
-                dataList.add(new Data(queryId, queryDriverId, queryDateAdd, queryDateWork, queryWorkInfo, querySumWork, querySumBreak, queryFileType, queryFile, querySumRoad));
-                try {
-                    if(queryOutput!=null) {
-                        queryOutput.close();
-                    }
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
+                dataList.add(new Data(queryId, queryDriverId, queryDateWork, queryDateAdd, queryWorkInfo, querySumWork, querySumBreak, queryFile, queryFileType, querySumRoad));
             }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        } catch (Exception e) { }
+        try {
+            if(queryOutput!=null) {
+                queryOutput.close();
+            }
+        } catch (Exception e) { }
+//        System.out.println(dataList);
         return dataList;
     }
 }

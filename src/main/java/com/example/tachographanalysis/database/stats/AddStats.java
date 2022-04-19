@@ -45,30 +45,29 @@ public class AddStats {
     private Text returnInfo;
     @FXML
     protected void initialize() throws Exception {
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getDBConnection();
-
         String connectQuery = "SELECT id,first_name,second_name, last_name FROM driver";
         try{
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery(connectQuery);
-
+            ResultSet queryOutput = DatabaseConnection.exQuery(connectQuery);
             while (queryOutput.next()){
                 String firstname = queryOutput.getString("first_name");
                 String lastname = queryOutput.getString("second_name");
-                int id=queryOutput.getInt("id");
+                int id = queryOutput.getInt("id");
                 String listOut =  id+" "+ firstname + " " + lastname;
                 accountListView.getItems().add(listOut);
-
             }
-        }catch (Exception e){
+            try {
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
+            } catch (Exception e) {}
+        } catch (Exception e){
             e.printStackTrace();
         }
         accountListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println("ListView selection changed from oldValue = "
-                        + oldValue + " to newValue = " + newValue);
+//                System.out.println("ListView selection changed from oldValue = "
+//                        + oldValue + " to newValue = " + newValue);
                 driver=newValue;
             }
         });
@@ -78,6 +77,7 @@ public class AddStats {
         workTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
         dataPicker.setValue(LocalDate.now());
     }
+
     public void addStats() throws IOException {
         if(driver!=null) {
             Pattern p = Pattern.compile("[0-9]+");
@@ -106,15 +106,12 @@ public class AddStats {
 
     public static String insertToDatabase(int driver_id, String date_work, String date_add, String work_info, String sumWork,
                                           String sumBreak, String file, String file_type, int sumRoad) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connectDB = databaseConnection.getDBConnection();
 
         try{
-            Statement statement = connectDB.createStatement();
-            ResultSet queryOutput = statement.executeQuery("SELECT * FROM stats WHERE date_work='"+date_work+
-                    "' AND driver_id='"+driver_id+"'");
+            String query = "SELECT * FROM stats WHERE date_work='"+date_work+"' AND driver_id='"+driver_id+"'";
+            ResultSet queryOutput =  DatabaseConnection.exQuery(query);
             if(!queryOutput.next()) {
-                    int status = statement.executeUpdate(
+                    int status = DatabaseConnection.exUpdate(
                             "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, sum_road)" +
                                     " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info + "','" + sumWork + "','" +
                                     sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "')");
@@ -122,12 +119,16 @@ public class AddStats {
                     if (status > 0) {
                         return "Dodano";
                     }
-
             }else{
                 return "Istnieją już statystyki dla tego kierowcy tego dnia";
             }
+            try {
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
+            } catch (Exception e) { }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+//            throwables.printStackTrace();
         }
         return "Nie udało się dodać";
     }

@@ -327,12 +327,12 @@ public class AnalogueAnalysisController {
     Stage secondStage = new Stage();
     public void addStats() throws IOException {
         if(secondStage==null || !secondStage.isShowing()) {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
-        stackPane.getChildren().add(fxmlLoader);
-        secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
-        secondStage.setTitle("Dodaj statystyki");
-        secondStage.setScene(secondScene);
-        secondStage.show();
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+            secondStage.setTitle("Dodaj statystyki");
+            secondStage.setScene(secondScene);
+            secondStage.show();
         } else {
             secondStage.toFront();
         }

@@ -24,7 +24,7 @@ public class TemplateMatching {
         List<String> findMinimum = new ArrayList<String>();
         List<String> findMinimumWithoutDegree = new ArrayList<String>();
 
-        for(int i=0;i<=360;i++) {
+        for(int i=0;i<=360;i=i+2) {
             Mat rotMatSRC = Imgproc.getRotationMatrix2D(rotPointSRC, i , 1);
             Imgproc.warpAffine(source, rotImgSRC, rotMatSRC, source.size(), Imgproc.WARP_INVERSE_MAP);
             int result_cols = rotImgSRC.cols() - template.cols() + 1;

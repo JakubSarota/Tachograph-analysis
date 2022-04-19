@@ -4,25 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity"
-            maxWidth="-Infinity"
-            minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="500.0"
-            prefWidth="1000.0"
-            xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.tachographanalysis.database.driver.driverInfo.InfoDriver"
->
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.driver.driverInfo.InfoDriver">
    <center>
-      <TableView fx:id="dataView" prefHeight="454.0" prefWidth="517.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="dataView" prefHeight="500.0" prefWidth="773.0" BorderPane.alignment="CENTER">
          <columns>
-            <TableColumn fx:id="dateAddCol" prefWidth="97.0" text="Data dodania"/>
-            <TableColumn fx:id="dateWorkCol" prefWidth="115.0" text="Data pracy"/>
-            <TableColumn fx:id="sumWorkCol" prefWidth="67.0" text="Praca"/>
-            <TableColumn fx:id="sumBreakCol" prefWidth="75.0" text="Przerwa"/>
-            <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" text="Typ pliku"/>
-            <TableColumn fx:id="fileCol" maxWidth="246.0" prefWidth="246.0" text="Plik"/>
+            <TableColumn fx:id="dateAddCol" prefWidth="97.0" text="Data dodania" />
+            <TableColumn fx:id="dateWorkCol" prefWidth="115.0" text="Data pracy" />
+            <TableColumn fx:id="sumWorkCol" prefWidth="67.0" text="Praca" />
+            <TableColumn fx:id="sumBreakCol" prefWidth="75.0" text="Przerwa" />
+            <TableColumn fx:id="sumRoadCol" prefWidth="75.0" text="Przejechane" />
+            <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" text="Typ pliku" />
+            <TableColumn fx:id="fileCol" maxWidth="246.0" prefWidth="246.0" text="Plik" />
          </columns>
       </TableView>
    </center>
@@ -33,16 +25,14 @@
                <children>
                   <AnchorPane prefHeight="100.0" prefWidth="291.0" style="-fx-background-color: #29A1FA;">
                      <children>
-                        <Label fx:id="firstname" alignment="CENTER" prefHeight="50.0" prefWidth="288.0"
-                               textFill="WHITE">
+                        <Label fx:id="firstname" alignment="CENTER" prefHeight="50.0" prefWidth="288.0" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="30.0"/>
+                              <Font name="System Bold" size="30.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lastname" alignment="CENTER" layoutY="50.0" prefHeight="45.0" prefWidth="288.0"
-                               textFill="WHITE">
+                        <Label fx:id="lastname" alignment="CENTER" layoutY="50.0" prefHeight="45.0" prefWidth="288.0" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="30.0"/>
+                              <Font name="System Bold" size="30.0" />
                            </font>
                         </Label>
                      </children>
@@ -51,30 +41,28 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="144.0" prefHeight="35.0" prefWidth="264.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="200.0"
-                         text="Drugie imię" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="200.0" text="Drugie imię" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="secondname" alignment="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="179.0" prefHeight="35.0" prefWidth="264.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="E-mail"
-                         textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="E-mail" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="email" alignment="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -83,73 +71,68 @@
                <children>
                   <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="100.0" text="Pesel" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="pesel" alignment="CENTER" prefHeight="35.0" prefWidth="195.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="214.0" prefHeight="35.0" prefWidth="264.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Adres"
-                         textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Adres" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="city" alignment="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="214.0" prefHeight="35.0" prefWidth="264.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Data ur."
-                         textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Data ur." textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="born" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="288.0"
-                         textFill="WHITE">
+                  <Label fx:id="born" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="250.0" prefHeight="35.0" prefWidth="264.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Kraj" textAlignment="CENTER"
-                         textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Kraj" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="country" alignment="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="285.0" prefHeight="35.0" prefWidth="264.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Nr karty"
-                         textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" text="Nr karty" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="cardnumber" alignment="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="15.0"/>
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>

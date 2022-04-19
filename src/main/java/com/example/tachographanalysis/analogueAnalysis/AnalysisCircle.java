@@ -64,10 +64,6 @@ public class AnalysisCircle {
         Mat rotateImage = RotateImage.RotateImage(findedCircle);
 //        rotateImage.copyTo(findedCircle);
 
-
-
-
-
         Imgproc.warpPolar(rotateImage, dst, rotateImage.size(),
                 new Point(rotateImage.width()/2,rotateImage.height()/2),
                 rotateImage.width()/2,

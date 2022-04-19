@@ -2,8 +2,9 @@ package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
 import com.example.tachographanalysis.database.driver.Driver;
-import com.example.tachographanalysis.database.driver.Driver.Drivers;
 import com.example.tachographanalysis.database.driver.ShowList;
+import com.example.tachographanalysis.database.driver.driverInfo.InfoDriver;
+import com.example.tachographanalysis.database.driver.driverInfo.showData;
 import com.example.tachographanalysis.size.SizeController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,6 @@ import javafx.util.Callback;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 
 public class DriversController {
@@ -40,18 +40,16 @@ public class DriversController {
     @FXML
     private TextField searchTextField;
     @FXML
-    private TableView<Drivers> accountTableView;
+    private TableView<Driver> accountTableView;
     @FXML
-    private TableColumn<Drivers, Integer> idCol;
+    private TableColumn<Driver, Integer> idCol;
     @FXML
-    private TableColumn<Drivers, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol, editCol;
+    private TableColumn<Driver, String>  firstnameCol, secondNameCol, lastnameCol, emailCol, cityCol, bornCol, countryCol, licenseCol, peselCol, cardCol, editCol;
 
-    private ObservableList<Drivers> driversList = FXCollections.observableArrayList();
-    Drivers driver = null;
-
+    ObservableList<Driver> driversList = FXCollections.observableArrayList();
+    Driver driver;
     public void initialize() {
         try {
-            System.out.println(driver);
             loadTable();
             search();
         } catch (Exception e) {
@@ -73,33 +71,39 @@ public class DriversController {
             bornCol.setCellValueFactory(new PropertyValueFactory<>("born"));
             countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
             cardCol.setCellValueFactory(new PropertyValueFactory<>("card"));
-            Callback<TableColumn<Drivers, String>, TableCell<Drivers,String>> cellEdit = (TableColumn<Drivers,String> param) -> {
-                final TableCell<Drivers,String> cell = new TableCell<>() {
+            Callback<TableColumn<Driver, String>, TableCell<Driver,String>> cellEdit = (TableColumn<Driver,String> param) -> {
+                final TableCell<Driver,String> cell = new TableCell<>() {
+                    private final Button edit = new Button();
                     @Override
-                    protected void updateItem(String s, boolean b) {
-                        super.updateItem(s, b);
-                        if(b) {
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(empty) {
                             setGraphic(null);
                         } else {
-                            Button edit = new Button();
                             edit.setText("Dane");
                             edit.setStyle(
                                     "-fx-cursor: hand ;"
-                                   +"-fx-fill:#00E676;"
+                                   +"-fx-background-color: transparent;"
+                                    +"-fx-border-color: black;"
+                                    +"-fx-border-style: 2px solid"
+
                             );
                             edit.setOnMouseClicked(mouseEvent -> {
-                                driver = accountTableView.getSelectionModel().getSelectedItem();
+                                driver = getTableView().getItems().get(getIndex());
+//                            System.out.println(driver.getId() + " " + driver.getPesel());
+                                InfoDriver.getIdDriver(driver.getId());
+                                showData.getIdDriverData(driver.getId());
                                 FXMLLoader loader = new FXMLLoader();
                                 loader.setLocation(getClass().getResource("infoDriver.fxml"));
                                 try {
                                     loader.load();
                                 } catch (Exception e) { }
+
                                 Parent parent = loader.getRoot();
                                 Stage stage = new Stage();
                                 stage.setScene(new Scene(parent));
                                 stage.show();
                             });
-
                             HBox hbox = new HBox(edit);
                             hbox.setStyle("-fx-alignment:center");
                             HBox.setMargin(edit, new Insets(2, 2, 0, 3));
@@ -117,7 +121,7 @@ public class DriversController {
 
     public void search() {
         //search engine
-        FilteredList<Drivers> filteredData = new FilteredList<>(driversList, b -> true);
+        FilteredList<Driver> filteredData = new FilteredList<>(driversList, b -> true);
 
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(Drivers ->{
@@ -140,7 +144,7 @@ public class DriversController {
             });
         });
 
-        SortedList<Drivers> sortedData = new SortedList<>(filteredData);
+        SortedList<Driver> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
         accountTableView.setItems(sortedData);
     }
@@ -170,7 +174,7 @@ public class DriversController {
     }
 
     //Edycja
-    public void onEditFname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+    public void onEditFname(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
 //        Drivers.getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
 //        Drivers.getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
 //        Drivers.getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
@@ -197,7 +201,6 @@ public class DriversController {
             PreparedStatement pst = conn.prepareStatement(query);
             pst.setString(1, String.valueOf(id));
             pst.executeUpdate();
-
             pst.close();
 
             JOptionPane.showMessageDialog(null, "Czy chcesz usunąć użytkownika ?");

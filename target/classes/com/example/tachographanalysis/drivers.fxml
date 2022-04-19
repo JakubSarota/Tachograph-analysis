@@ -50,9 +50,9 @@
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Text>
-                  <TableView fx:id="accountTableView" editable="true" layoutX="9.0" layoutY="133.0" prefHeight="473.0" prefWidth="977.0">
+                  <TableView fx:id="accountTableView" editable="true" layoutX="9.0" layoutY="133.0" prefHeight="473.0" prefWidth="977.0" style="-fx-background-color: transparent; -fx-background-radius: 7px 7px 0px 0px;">
                      <columns>
-                        <TableColumn fx:id="idCol" minWidth="20.0" prefWidth="34.0" style="-fx-alignment: center;" text="Id" />
+                        <TableColumn fx:id="idCol" minWidth="20.0" prefWidth="34.0" style="-fx-alignment: center; -fx-background-color: transparent;" text="Id" visible="false" />
                         <TableColumn fx:id="firstnameCol" minWidth="20.0" prefWidth="81.0" style="-fx-alignment: center;" text="Imię" />
                         <TableColumn fx:id="secondNameCol" minWidth="20.0" prefWidth="72.0" style="-fx-alignment: center;" text="Drugie imię" />
                         <TableColumn fx:id="lastnameCol" minWidth="20.0" prefWidth="73.0" style="-fx-alignment: center;" text="Nazwisko" />
@@ -61,17 +61,17 @@
                         <TableColumn fx:id="cityCol" minWidth="20.0" prefWidth="127.0" style="-fx-alignment: center;" text="Adres zamieszkania" />
                         <TableColumn fx:id="bornCol" minWidth="20.0" prefWidth="107.0" style="-fx-alignment: center;" text="Data urodzenia" />
                         <TableColumn fx:id="countryCol" minWidth="20.0" prefWidth="66.0" style="-fx-alignment: center;" text="Kraj" />
-                        <TableColumn fx:id="cardCol" minWidth="20.0" prefWidth="89.0" style="-fx-alignment: center;" text="Nr karty " />
-                        <TableColumn fx:id="editCol" maxWidth="110.0" minWidth="20.0" prefWidth="110.0" style="-fx-alignment: center;" text="Opcje" />
+                        <TableColumn fx:id="cardCol" minWidth="20.0" prefWidth="129.0" style="-fx-alignment: center;" text="Nr karty " />
+                        <TableColumn fx:id="editCol" maxWidth="144.0" minWidth="20.0" prefWidth="104.0" style="-fx-alignment: center;" />
                      </columns>
                   </TableView>
-                  <TextField fx:id="searchTextField" layoutX="161.0" layoutY="96.0" prefHeight="25.0" prefWidth="613.0" promptText="Szukaj w bazie ..." />
+                  <TextField fx:id="searchTextField" layoutX="161.0" layoutY="96.0" prefHeight="25.0" prefWidth="320.0" promptText="Szukaj w bazie ..." />
                   <Text fill="WHITE" layoutX="20.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wyszukaj kierowce:">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Button layoutX="790.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#loadTable" prefHeight="30.0" prefWidth="89.0" style="-fx-background-radius: 30 30 30 30; -fx-background-color: #F8F9FA;" text="Odśwież" textFill="#47535b">
+                  <Button layoutX="491.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#loadTable" prefHeight="30.0" prefWidth="89.0" style="-fx-background-radius: 30 30 30 30; -fx-background-color: #F8F9FA;" text="Odśwież" textFill="#47535b">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

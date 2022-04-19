@@ -1,7 +1,6 @@
 package com.example.tachographanalysis.database.driver;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
-import com.example.tachographanalysis.database.driver.Driver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -9,11 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ShowList {
-    public static ObservableList<Driver.Drivers> driversList() throws SQLException {
-        ObservableList<Driver.Drivers> driversList = FXCollections.observableArrayList();
+    public static ObservableList<Driver> driversList() throws SQLException {
+        ObservableList<Driver> driversList = FXCollections.observableArrayList();
         driversList.clear();
         String query = "SELECT * FROM driver";
         ResultSet queryOutput = DatabaseConnection.exQuery(query);
+
         try {
             while (queryOutput.next()) {
                 Integer queryId = queryOutput.getInt("id");
@@ -26,14 +26,16 @@ public class ShowList {
                 String  queryBorn = queryOutput.getString("born_date");
                 String queryCountry = queryOutput.getString("country");
                 String queryCard = queryOutput.getString("id_card");
-                driversList.add(new Driver.Drivers(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard));
+                driversList.add(new Driver(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard));
+
             }
+        } catch (Exception e) { }
+        try {
             if(queryOutput!=null) {
                 queryOutput.close();
             }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        } catch (Exception e) { }
+        System.out.println(driversList);
         return driversList;
     }
 

@@ -1,8 +1,6 @@
 package com.example.tachographanalysis.database.driver.driverInfo;
 
 import com.example.tachographanalysis.database.DatabaseConnection;
-import com.example.tachographanalysis.database.driver.driverInfo.Data;
-import com.example.tachographanalysis.database.driver.driverInfo.showData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,11 +18,15 @@ public class InfoDriver {
     @FXML
     public TableView<Data> dataView;
     @FXML
-    public TableColumn<Data, Integer> idDriverCol;
+    public TableColumn<Data, Integer> idDriverCol, sumRoadCol;
     @FXML
     public TableColumn<Data, String> dateWorkCol, dateAddCol, sumWorkCol, sumBreakCol, fileCol, fileTypeCol;
     @FXML
     private ObservableList<Data> dataList = FXCollections.observableArrayList();
+    static int idDriver;
+    public static int getIdDriver(int id) {
+        return idDriver = id;
+    }
 
     public void initialize() throws SQLException {
         loadDriver();
@@ -33,7 +35,7 @@ public class InfoDriver {
 
     public void loadDriver() throws SQLException {
         try {
-            String query = "SELECT * FROM driver";
+            String query = "SELECT * FROM driver WHERE id='"+idDriver+"'";
             ResultSet queryOutput = DatabaseConnection.exQuery(query);
             firstname.setText(queryOutput.getString("first_name"));
             lastname.setText(queryOutput.getString("last_name"));
@@ -44,7 +46,11 @@ public class InfoDriver {
             born.setText(queryOutput.getString("born_date"));
             country.setText(queryOutput.getString("country"));
             cardnumber.setText(queryOutput.getString("id_card"));
-
+            try {
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
+            } catch (Exception e) { }
         } catch (Exception e) {
 //            System.err.println(e.getMessage());
         }
@@ -53,14 +59,15 @@ public class InfoDriver {
     public void infoDriver() throws SQLException {
         try {
             dataList = showData.data();
-            dateAddCol.setCellValueFactory(new PropertyValueFactory<>(""));
+            dateAddCol.setCellValueFactory(new PropertyValueFactory<>("data_add"));
             dateWorkCol.setCellValueFactory(new PropertyValueFactory<>("date_work"));
             sumWorkCol.setCellValueFactory(new PropertyValueFactory<>("sum_work"));
             sumBreakCol.setCellValueFactory(new PropertyValueFactory<>("sum_break"));
-            fileTypeCol.setCellValueFactory(new PropertyValueFactory<>("file"));
-            fileCol.setCellValueFactory(new PropertyValueFactory<>(""));
+            sumRoadCol.setCellValueFactory(new PropertyValueFactory<>("sum_road"));
+            fileTypeCol.setCellValueFactory(new PropertyValueFactory<>("file_type"));
+            fileCol.setCellValueFactory(new PropertyValueFactory<>("file"));
             dataView.setItems(dataList);
-
+//            System.out.println(dataList);
         } catch (Exception e) {
 //            System.err.println(e.getMessage());
         }

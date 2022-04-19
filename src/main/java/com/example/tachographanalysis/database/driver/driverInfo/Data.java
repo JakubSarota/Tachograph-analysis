@@ -4,9 +4,8 @@ public class Data {
     Integer id, sum_road, driver_id;
     String date_work, data_add, work_info, sum_work, sum_break, file, file_type;
 
-    public Data(Integer id, Integer queryDriverId, String date_work, String data_add, String work_info, String sum_work, String sum_break, String file, String queryFile, Integer querySumRoad) {
+    public Data(Integer id, Integer driver_id, String date_work, String data_add, String work_info, String sum_work, String sum_break, String file, String file_type, Integer sum_road) {
         this.id = id;
-        this.sum_road = sum_road;
         this.driver_id = driver_id;
         this.date_work = date_work;
         this.data_add = data_add;
@@ -15,6 +14,7 @@ public class Data {
         this.sum_break = sum_break;
         this.file = file;
         this.file_type = file_type;
+        this.sum_road = sum_road;
     }
 
     public Integer getId() {
