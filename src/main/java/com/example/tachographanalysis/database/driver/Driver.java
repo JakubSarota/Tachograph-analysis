@@ -1,7 +1,9 @@
 package com.example.tachographanalysis.database.driver;
 
-public class Driver {
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
+public class Driver {
         Integer id;
         String fname, sname, lname, email, city, country, born, pesel, card;
         public Driver(Integer id, String fname, String sname, String lname, String email, String pesel, String city, String born, String country, String card) {
@@ -63,4 +65,21 @@ public class Driver {
         public void setCountry(String country) {this.country = country;}
         public void setCard(String card) {this.card = card;}
 
+        public ObjectProperty<Drivers> driversObjectProperty = new SimpleObjectProperty<>();
+        static ObjectProperty<Drivers>driversObjectPropertyEdit = new SimpleObjectProperty<>(new Drivers());
+
+        public static Drivers getDriversObjectPropertyEdit() {
+            return driversObjectPropertyEdit.get();
+        }
+
+        public static ObjectProperty<Drivers> driversObjectPropertyEditProperty() {
+            return driversObjectPropertyEdit;
+        }
+
+        public static void setDriversObjectPropertyEdit(Drivers driversObjectPropertyEdit) {
+            Drivers.driversObjectPropertyEdit.set(driversObjectPropertyEdit);
+        }
+
 }
+    
+
