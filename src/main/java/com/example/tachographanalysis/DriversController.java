@@ -24,13 +24,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.w3c.dom.Text;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import static com.example.tachographanalysis.database.driver.Driver.Drivers.getDriversObjectPropertyEdit;
-
+import static com.example.tachographanalysis.database.driver.Driver.getDriversObjectPropertyEdit;
 
 public class DriversController {
 
@@ -60,8 +62,6 @@ public class DriversController {
         }
 
     }
-
-
 
     public void loadTable() {
         try {
@@ -107,10 +107,17 @@ public class DriversController {
                                 Parent parent = loader.getRoot();
                                 Stage stage = new Stage();
                                 stage.setScene(new Scene(parent));
+                                stage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+                                stage.setTitle(driver.getFname()+" "+driver.getLname());
                                 stage.show();
+//                                if(stage==null || stage.isShowing()) {
+//
+//                                } else {
+//                                    stage.toFront();
+//                                }
                             });
                             HBox hbox = new HBox(edit);
-                            hbox.setStyle("-fx-alignment:center");
+                            hbox.setStyle("-fx-alignment: center");
                             HBox.setMargin(edit, new Insets(2, 2, 0, 3));
                             setGraphic(hbox);
                         }
@@ -135,7 +142,7 @@ public class DriversController {
             this.cardCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
             this.accountTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
-                Drivers.setDriversObjectPropertyEdit(newValue);
+                Driver.setDriversObjectPropertyEdit(newValue);
                 accountTableView.setEditable(true);
 
             });
@@ -205,20 +212,17 @@ public class DriversController {
     }
 
     //Edycja
-    public void onEditFname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+    public void onEditFname(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
         getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
         String value = driversStringCellEditEvent.getNewValue();
         String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
-
         Connection conn = getConnection();
-
         System.out.println(value);
         String query = "UPDATE driver SET  first_name = '"+value+"' WHERE id = '"+driverId+"'";
-
         extracted(conn, query);
     }
 
-    public void onEditSname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+    public void onEditSname(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
         getDriversObjectPropertyEdit().setSname(driversStringCellEditEvent.getNewValue());
 
         String value = driversStringCellEditEvent.getNewValue();
@@ -232,7 +236,7 @@ public class DriversController {
         extracted(conn, query);
     }
 
-    public void onEditLname(TableColumn.CellEditEvent<Drivers, String> driversStringCellEditEvent) {
+    public void onEditLname(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
         getDriversObjectPropertyEdit().setLname(driversStringCellEditEvent.getNewValue());
         String value = driversStringCellEditEvent.getNewValue();
         String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());

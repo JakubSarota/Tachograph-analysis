@@ -19,7 +19,9 @@ public class Driver {
             this.card = card;
         }
 
-        public Integer getId() { return id; }
+    public Driver() { }
+
+    public Integer getId() { return id; }
         public String getFname() {
             return fname;
         }
@@ -65,19 +67,20 @@ public class Driver {
         public void setCountry(String country) {this.country = country;}
         public void setCard(String card) {this.card = card;}
 
-        public ObjectProperty<Drivers> driversObjectProperty = new SimpleObjectProperty<>();
-        static ObjectProperty<Drivers>driversObjectPropertyEdit = new SimpleObjectProperty<>(new Drivers());
+        public ObjectProperty<Driver> driversObjectProperty = new SimpleObjectProperty<>();
+//        static ObjectProperty<Driver> driversObjectPropertyEdit = new SimpleObjectProperty<>(new Driver());
+        static ObjectProperty<Driver> driversObjectPropertyEdit = new SimpleObjectProperty<>(new Driver());
 
-        public static Drivers getDriversObjectPropertyEdit() {
+        public static Driver getDriversObjectPropertyEdit() {
             return driversObjectPropertyEdit.get();
         }
 
-        public static ObjectProperty<Drivers> driversObjectPropertyEditProperty() {
+        public static ObjectProperty<Driver> driversObjectPropertyEditProperty() {
             return driversObjectPropertyEdit;
         }
 
-        public static void setDriversObjectPropertyEdit(Drivers driversObjectPropertyEdit) {
-            Drivers.driversObjectPropertyEdit.set(driversObjectPropertyEdit);
+        public static void setDriversObjectPropertyEdit(Driver driversObjectPropertyEdit) {
+            Driver.driversObjectPropertyEdit.set(driversObjectPropertyEdit);
         }
 
 }
