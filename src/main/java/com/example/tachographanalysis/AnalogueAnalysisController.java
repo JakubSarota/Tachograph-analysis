@@ -1,7 +1,7 @@
 package com.example.tachographanalysis;
 
-import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import com.example.tachographanalysis.PDF.CreatePDF;
+import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import javafx.embed.swing.SwingFXUtils;
@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -18,6 +19,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -46,7 +49,12 @@ public class AnalogueAnalysisController {
     @FXML
     private ScrollPane scroll;
     @FXML
-    private TextArea textArea;
+    private TextArea textArea, fileText;
+    @FXML
+    private AnchorPane showAnalysis, showDragAndDrop;
+    @FXML
+    private Label loading;
+
     public static int sumBreak=0;
     public static int sumWork=0;
     public static String file_name;
@@ -54,13 +62,12 @@ public class AnalogueAnalysisController {
     private String imageFile, text = "Wybierz plik albo upuść go tutaj";
     static double ip = 0;
     AnalysisCircle analysisCircle = new AnalysisCircle();
-
+    File selectedFileAnalogue;
     @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
-//        scene.setMaximized(true);
     }
 
     @FXML
@@ -68,28 +75,36 @@ public class AnalogueAnalysisController {
         if(event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.ANY);
         }
+        if(event.isAccepted()) {
+            loading.setVisible(true);
+        }
         dragOver.setText("Upuść tutaj plik");
     }
 
     @FXML
     private void onDragClickedButton() throws Exception {
+        loading.setVisible(true);
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files",
                         "*.png","*.jpg"));
-        File selectedFile = fileChooser.showOpenDialog(null);
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if(selectedFile==null){
+            loading.setVisible(false);
+        }
+//        System.out.println("selectedFile "+ selectedFile);
         imageFile = selectedFile.toURI().toURL().toString();
+//        System.out.println("imageFile "+ imageFile);
         file_name=imageFile.replace("file:/","");
-        System.out.println(file_name);
         image = new Image(imageFile);
+        this.selectedFileAnalogue = selectedFile;
         if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("Rozmiar pliku jest za mały");
+            dragOver.setText("Rozmiar pliku jest za mały, spróbuj ponownie");
+            loading.setVisible(false);
         } else if(selectedFile != null) {
             getImageOnClick(imageFile);
-            dragOver.setText("Poprawnie załadowano plik!");
-        } else if(selectedFile == null) {
-            dragOver.setText(text);
         }
+
     }
 
     @FXML
@@ -100,12 +115,13 @@ public class AnalogueAnalysisController {
         if(!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
-            dragOver.setText("To nie jest plik graficzny!");
+            dragOver.setText("To nie jest plik graficzny, spróbuj ponownie");
+            loading.setVisible(false);
         } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
-            dragOver.setText("Rozmiar pliku jest za mały");
+            dragOver.setText("Rozmiar pliku jest za mały, spróbuj ponownie");
+            loading.setVisible(false);
         } else {
             getImageDragAndDrop(files);
-            dragOver.setText("Poprawnie załadowano plik!");
         }
     }
 
@@ -121,22 +137,33 @@ public class AnalogueAnalysisController {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(image);
 
         if(writableImage[0]!=null){
             WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
             imageView.setImage(wi);
         }
+
         if(writableImage[1]!=null){
             WritableImage wi2=SwingFXUtils.toFXImage(writableImage[1],null);
             imageView2.setImage(wi2);
         }
+
         if(analysisCircle.blackImage!=null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
-            analysisCircle.blackImage.save("png",image
-                    .replace("file:/","")+"praca.png");
-        }else
-            dragOver.setText("Nie odnaleziono tarczy");
+//            analysisCircle.blackImage.save("png",image
+//                    .replace("file:/","")+"praca.png");
+        }
+
+        if((writableImage[0]!=null) || (writableImage[1]!=null)) {
+            showDragAndDrop.setVisible(false);
+            showAnalysis.setVisible(true);
+        } else {
+            dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
+            selectedFileAnalogue = null;
+            loading.setVisible(false);
+        }
     }
 
     private void getImageDragAndDrop(List<File> files) throws Exception {
@@ -156,8 +183,19 @@ public class AnalogueAnalysisController {
             writeWork(analysisCircle.blackImage.czas_pracy());
             analysisCircle.blackImage.save("png",String.valueOf(files.get(0))
                     .replace("file:/","")+"praca.png");
-        }else
-            dragOver.setText("Nie odnaleziono tarczy");
+        } else {
+//            showDragAndDrop.setVisible(true);
+//            showAnalysis.setVisible(false);
+//            dragOver.setText("Nie odnaleziono tarczy");
+//            fileText.setText("Nie odnaleziono tarczy");
+        }
+        if((writableImage[0]!=null) || (writableImage[1]!=null)) {
+            showDragAndDrop.setVisible(false);
+            showAnalysis.setVisible(true);
+        } else {
+            dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
+            loading.setVisible(false);
+        }
     }
 
     private void writeWork(JSONObject json) throws Exception {
@@ -269,7 +307,7 @@ public class AnalogueAnalysisController {
                 "    <DriverActivityData>\n" +
                 "<CardDriverActivity>\n" +
         "            <CardActivityDailyRecord DateTime=\"\" DailyPresenceCounter=\"\" Distance=\"\">\n";
-//
+
         int lastWork=0,lastBreak=0;
         for (int i=0;i<jarr.length();i++) {
             boolean pracowal=false;
@@ -277,21 +315,20 @@ public class AnalogueAnalysisController {
 
             if(i>0) {
                 if (Integer.parseInt((String) jarr.get(i)) - 1 == Integer.parseInt((String) jarr.get(i - 1))) {
-
                     pracowal = true;
                 }
-                if(Integer.parseInt((String) jarr.get(i))-15  >= Integer.parseInt((String) jarr.get(i - 1))){
+
+                if(Integer.parseInt((String) jarr.get(i))-15  >= Integer.parseInt((String) jarr.get(i - 1))) {
                     przerwa=true;
                     xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                                     analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\" />\n";
-
                     sumWork+=Integer.parseInt((String) jarr.get(i - 1))-Integer.parseInt((String) jarr.get(lastWork));
                     lastBreak=i-1;
 //                    text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\n";
-                }else{
+                } else {
                     pracowal = true;
-                    if(przerwa){
-                        przerwa=false;
+                    if(przerwa) {
+                        przerwa = false;
                     }
                 }
             }
@@ -325,29 +362,48 @@ public class AnalogueAnalysisController {
     StackPane stackPane = new StackPane();
     Scene secondScene = new Scene(stackPane, 950,420);
     Stage secondStage = new Stage();
+
     public void addStats() throws IOException {
-        if(secondStage==null || !secondStage.isShowing()) {
-            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
-            stackPane.getChildren().add(fxmlLoader);
-            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
-            secondStage.setTitle("Dodaj statystyki");
-            secondStage.setScene(secondScene);
-            secondStage.show();
+        if(selectedFileAnalogue ==null) {
+            dragOver.setText("Nie można dodać do statystyk, plik nie został przesłany");
         } else {
-            secondStage.toFront();
+            if(secondStage==null || !secondStage.isShowing()) {
+                Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
+                stackPane.getChildren().add(fxmlLoader);
+                secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+                secondStage.setTitle("Dodaj statystyki");
+                secondStage.setScene(secondScene);
+                secondStage.show();
+            } else {
+                secondStage.toFront();
+            }
         }
     }
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
-        CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
-        dragOver.setText("Plik PDF został utworzony!");
+        if(selectedFileAnalogue ==null) {
+            dragOver.setText("Nie został presłany plik, operacja nieudana");
+        } else {
+            CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+//            dragOver.setText("Plik PDF został utworzony!");
+            JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+        }
+
     }
+
     public void openFolder(MouseEvent mouseEvent)  {
         Desktop desktop = Desktop.getDesktop();
         File dirToOpen = null;
         try {
             dirToOpen = new File(".\\PDF\\");
             desktop.open(dirToOpen);
-        } catch (IllegalArgumentException | IOException iae) {
-        }
+        } catch (IllegalArgumentException | IOException iae) { }
+    }
+
+    public void loadImageAgain() throws IOException {
+        selectedFileAnalogue =null;
+        dragOver.setText(text);
+        showAnalysis.setVisible(false);
+        showDragAndDrop.setVisible(true);
+        loading.setVisible(false);
     }
 }

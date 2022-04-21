@@ -18,7 +18,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button fx:id="btnBack" layoutX="86.0" layoutY="121.0" mnemonicParsing="false" onAction="#getBack" prefHeight="41.0" prefWidth="105.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Wróć" textFill="#47535b">
+            <Button fx:id="btnBack" layoutX="86.0" layoutY="121.0" mnemonicParsing="false" onAction="#getBack" prefHeight="41.0" prefWidth="105.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Wróć" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -27,12 +27,12 @@
                <font>
                   <Font size="15.0" />
                </font></Button>
-            <Button fx:id="btnRaportPDF" layoutX="61.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Generuj Raport" textFill="#47535b">
+            <Button fx:id="btnRaportPDF" layoutX="61.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA; -fx-cursor: hand;" text="Generuj Raport" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="60.0" layoutY="534.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Otwórz folder PDF" textFill="#47535b">
+            <Button layoutX="60.0" layoutY="534.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA; -fx-cursor: hand;" text="Otwórz folder PDF" textFill="#47535b">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
@@ -41,7 +41,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-             <Button fx:id="btnAddStatsDigital" layoutX="60.0" layoutY="481.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Dnia" textFill="#47535b">
+             <Button fx:id="btnAddStatsDigital" layoutX="60.0" layoutY="481.0" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA; -fx-cursor: hand;" text="Statystyki Dnia" textFill="#47535b">
                  <font>
                      <Font name="System Bold" size="14.0" />
                  </font>

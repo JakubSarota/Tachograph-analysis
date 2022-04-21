@@ -11,7 +11,7 @@ import static org.opencv.imgcodecs.Imgcodecs.imread;
 public class RotateImage {
     public static Mat RotateImage(Mat src) throws IOException, InterruptedException {
         TemplateMatching.TemplateMatching(src);
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
         Integer degree = FindMinimumNumber.FindMinimum();
         Mat rotate = Result.result(src, degree+90);
         return rotate;

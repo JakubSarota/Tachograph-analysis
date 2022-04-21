@@ -75,7 +75,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="450.0">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#addDriver" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Dodaj" textAlignment="CENTER" textFill="#47535b">
+                        <Button mnemonicParsing="false" onMouseClicked="#addDriver" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Dodaj" textAlignment="CENTER" textFill="#47535b">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

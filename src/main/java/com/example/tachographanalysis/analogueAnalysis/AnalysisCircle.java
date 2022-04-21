@@ -39,7 +39,6 @@ public class AnalysisCircle {
         JSONObject center = HoughCirclesRun.run(file
                 .replace("file:/","")+"black_circle.png");
 
-
         if(center==null){
             return new BufferedImage[]{null, null};
         }
@@ -78,8 +77,6 @@ public class AnalysisCircle {
 
         Mat work = CropWork.crop(dstResize);
 
-
-
         blackImage = new ChangeColor(HighGui.toBufferedImage(dst2));
         blackImage2 = new ChangeColor(HighGui.toBufferedImage(dstResize));
 
@@ -97,6 +94,5 @@ public class AnalysisCircle {
         Imgproc.resize(dst, dstResize, Resize, 0,0, Imgproc.INTER_AREA);
         return dstResize;
     }
-
 
 }

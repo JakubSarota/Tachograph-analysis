@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -9,39 +10,55 @@
     <center>
         <VBox alignment="BOTTOM_CENTER" prefHeight="620.0" prefWidth="948.0" style="-fx-background-color: #186199;">
             <children>
-                <AnchorPane prefHeight="620.0" prefWidth="916.0">
-                    <children>
-                        <Text fill="WHITE" layoutX="384.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zdjęcie tarczy">
-                            <font>
-                                <Font name="System Bold" size="17.0" />
-                            </font></Text>
-                        <TextArea fx:id="textArea" disable="false" layoutX="30.0" layoutY="83.0" prefHeight="300" prefWidth="300" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER">
-                            <font>
-                                <Font size="14.0" />
-                            </font></TextArea>
-                        <ImageView fx:id="imageView2" fitHeight="290.0" fitWidth="290.0" layoutX="353.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane fx:id="showDragAndDrop" prefHeight="620.0" prefWidth="997.0">
+                     <children>
+                            <Button fx:id="dragOver" layoutX="278.0" layoutY="310.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="185.0" prefWidth="442.0" style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
+                                <font>
+                                    <Font size="15.0" />
+                                </font>
+                            </Button>
+                        <Label fx:id="loading" layoutX="435.0" layoutY="251.0" text="Ładowanie..." textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                      <AnchorPane fx:id="showAnalysis" prefHeight="580.0" prefWidth="997.0" visible="false">
+                          <children>
+                              <Text fill="WHITE" layoutX="423.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                                  <font>
+                                      <Font name="System Bold" size="17.0" />
+                                  </font>
+                        </Text>
+                              <TextArea fx:id="textArea" disable="false" layoutX="23.0" layoutY="79.0" prefHeight="349.0" prefWidth="360.0" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                        </TextArea>
+                              <ImageView fx:id="imageView2" fitHeight="350.0" fitWidth="360.0" layoutX="588.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
                      </ImageView>
-                        <AnchorPane layoutX="8.0" layoutY="451.0" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="862.0">
-                            <children>
-                                <ScrollPane fx:id="scroll" layoutX="14.0" layoutY="9.0" prefHeight="151.0" prefWidth="839.0">
-                                    <content>
-                                        <ImageView fx:id="imageView" fitHeight="258.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: all-scroll;" />
-                                    </content>
-                                </ScrollPane>
-                            </children>
-                        </AnchorPane>
-                    </children>
-                </AnchorPane>
+                              <AnchorPane layoutX="8.0" layoutY="432.0" minHeight="0.0" minWidth="0.0" prefHeight="188.0" prefWidth="940.0">
+                                  <children>
+                                      <ScrollPane fx:id="scroll" layoutX="14.0" layoutY="9.0" prefHeight="165.0" prefWidth="925.0">
+                                          <content>
+                                              <ImageView fx:id="imageView" fitHeight="258.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: all-scroll;" />
+                                          </content>
+                                      </ScrollPane>
+                                  </children>
+                              </AnchorPane>
+                          </children>
+                      </AnchorPane>
+               </children>
+            </AnchorPane>
             </children>
         </VBox>
     </center>
     <left>
         <AnchorPane prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnBack" layoutX="62.0" layoutY="156.0" mnemonicParsing="false" onAction="#getBack" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Wróć" textFill="#47535b">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font></Button>
                 <AnchorPane layoutX="-2.0" prefHeight="85.0" prefWidth="285.0" style="-fx-background-color: #29A1FA;">
                     <children>
                         <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analiza analogowa">
@@ -50,25 +67,98 @@
                             </font></Text>
                     </children>
                 </AnchorPane>
-                <Button fx:id="dragOver" layoutX="17.0" layoutY="205.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="137.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-border-style: dotted;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="63.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#addStats" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA; -fx-cursor: hand;" text="Dodaj statystyki" textFill="#47535b">
-                    <font>
+            <VBox alignment="TOP_CENTER" layoutY="105.0" prefHeight="515.0" prefWidth="283.0" AnchorPane.topAnchor="105.0">
+               <children>
+                      <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Wróć" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-home-48.png" />
+                           </image></ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                      <Button mnemonicParsing="false" onMouseClicked="#addStats" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Dodaj statystyki" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-write-66.png" />
+                           </image></ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                      </Button>
+                      <Button mnemonicParsing="false" onMouseClicked="#makePDF" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Twórz pdf" textAlignment="CENTER" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-create-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                      </Button>
+                      <Button mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Otwórz folder PDF" textFill="WHITE">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-shared-folder-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button layoutX="64.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#loadImageAgain" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Użuj skanera" textFill="WHITE">
+                     <font>
                         <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button layoutX="64.0" layoutY="362.0" mnemonicParsing="false" onMouseClicked="#makePDF" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA; -fx-cursor: hand;" text="Twórz pdf" textFill="#47535b">
-                    <font>
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-scanner-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#loadImageAgain" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Załaduj inny plik" textFill="WHITE">
+                     <font>
                         <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button layoutX="60.0" layoutY="534.0" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA; -fx-cursor: hand;" text="Otwórz folder PDF" textFill="#47535b">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font></Button>
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-new-file-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
             </children>
         </AnchorPane>
     </left>

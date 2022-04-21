@@ -95,27 +95,24 @@ public class DriversController {
 
                             );
                             edit.setOnMouseClicked(mouseEvent -> {
-                                driver = getTableView().getItems().get(getIndex());
-//                            System.out.println(driver.getId() + " " + driver.getPesel());
-                                InfoDriver.getIdDriver(driver.getId());
-                                showData.getIdDriverData(driver.getId());
-                                FXMLLoader loader = new FXMLLoader();
-                                loader.setLocation(getClass().getResource("infoDriver.fxml"));
-                                try {
-                                    loader.load();
-                                } catch (Exception e) { }
-
-                                Parent parent = loader.getRoot();
                                 Stage stage = new Stage();
-                                stage.setScene(new Scene(parent));
-                                stage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
-                                stage.setTitle(driver.getFname()+" "+driver.getLname());
-                                stage.show();
-//                                if(stage==null || stage.isShowing()) {
-//
-//                                } else {
-//                                    stage.toFront();
-//                                }
+                                FXMLLoader loader = new FXMLLoader();
+                                if(stage==null || !stage.isShowing()) {
+                                    driver = getTableView().getItems().get(getIndex());
+                                    InfoDriver.getIdDriver(driver.getId());
+                                    showData.getIdDriverData(driver.getId());
+                                    loader.setLocation(getClass().getResource("infoDriver.fxml"));
+                                    try {
+                                        loader.load();
+                                    } catch (Exception e) { }
+                                    Parent parent = loader.getRoot();
+                                    stage.setScene(new Scene(parent));
+                                    stage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+                                    stage.setTitle(driver.getFname()+" "+driver.getLname());
+                                    stage.show();
+                                } else {
+                                    stage.toFront();
+                                }
                             });
                             HBox hbox = new HBox(edit);
                             hbox.setStyle("-fx-alignment: center");
