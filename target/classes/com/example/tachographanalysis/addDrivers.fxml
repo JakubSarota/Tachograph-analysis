@@ -75,7 +75,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="450.0">
                      <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#addDriver" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Dodaj" textAlignment="CENTER" textFill="#47535b">
+                        <Button mnemonicParsing="false" onMouseClicked="#addDriver" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Dodaj kierowce" textAlignment="CENTER" textFill="#47535b">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -89,7 +89,7 @@
                   <HBox prefHeight="45.0" prefWidth="475.0" />
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="*Miasto:" textAlignment="CENTER" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="150.0" text="*Miasto:" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -101,7 +101,7 @@
                      </children></HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="*Kraj:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="150.0" text="*Kraj:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -115,7 +115,7 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="*PESEL:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="150.0" text="*PESEL:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -128,7 +128,7 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="135.0" text="*Nr Karty:" textFill="WHITE">
+                        <Label prefHeight="21.0" prefWidth="150.0" text="*Nr Karty kierowcy:" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>

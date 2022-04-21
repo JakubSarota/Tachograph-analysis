@@ -14,12 +14,14 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +32,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -78,7 +81,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private TextArea dailyTextAreaDataChart;
     @FXML
-    private Button btnBack, btnUpload, btnRaport;
+    private Button btnBack, btnUpload, btnRaport, loadAnotherFile;
     @FXML
     public Button dragOver;
     @FXML
@@ -97,6 +100,10 @@ public class DigitalAnalysisController implements Initializable {
     private Button btnAddStatsDigitalAll;
     @FXML
     private TextField sumRoad;
+    @FXML
+    private AnchorPane dataDigital, draganddropPane;
+
+
     List<String> lstFile;
     private String inThisDayData;
 
@@ -131,7 +138,7 @@ public class DigitalAnalysisController implements Initializable {
         }
         dragOver.setText("Upuść tutaj");
         TextError.setText("");
-        TextLoading.setText("Przetwarzanie...");
+        TextLoading.setText("Ładowanie...");
     }
 
 
@@ -139,7 +146,7 @@ public class DigitalAnalysisController implements Initializable {
     void onDragClickedButton(MouseEvent event) throws Exception {
 
         TextError.setText("");
-        TextLoading.setText("Przetwarzanie...");
+        TextLoading.setText("Ładowanie...");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("DDD Files", "*.ddd", "*.DDD", "*.xml"));
@@ -148,6 +155,9 @@ public class DigitalAnalysisController implements Initializable {
         if (file == null) {
             TextLoading.setText("");
         } else {
+            draganddropPane.setVisible(false);
+            dataDigital.setVisible(true);
+            loadAnotherFile.setVisible(true);
             this.file=file;
             TitleFileName.setText("Dane z pliku " + file.getName());
 
@@ -200,7 +210,7 @@ public class DigitalAnalysisController implements Initializable {
 
                             if (filexml.exists() && kiloBytes > 0) {
                                 System.out.println("Poprawnie zaimportowano plik .ddd");
-                                dragOver.setText("Poprawnie załadowano plik!");
+//                                dragOver.setText("Poprawnie załadowano plik!");
                                 f.deleteOnExit();
                                 String[] readedData = readData(filexml);
                                 showData(readedData);
@@ -213,6 +223,7 @@ public class DigitalAnalysisController implements Initializable {
                                     logDataWrite.close();
                                     f.delete();
                                     TextLoading.setText("Spróbuj ponownie");
+                                    dragOver.setVisible(true);
                                     System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
 
                                 } else {
@@ -286,18 +297,18 @@ public class DigitalAnalysisController implements Initializable {
     private void  generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
         CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()),"");
-        dragOver.setText("Plik PDF został utworzony!");
+//        dragOver.setText("Plik PDF został utworzony!");
+        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
     }
     @FXML
     private void  generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
         CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick,"",barChartTMP);
-        dragOver.setText("Plik PDF został utworzony!");
+//        dragOver.setText("Plik PDF został utworzony!");
+        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
     }
     @FXML
     private void showData(String[] readedData) throws InterruptedException, DocumentException, IOException, ParserConfigurationException, SAXException {
-
-
         TextLoading.setText("");
         TextError.setText("");
         chart.getData().removeAll();
@@ -1206,7 +1217,9 @@ private void colorPicker() throws ParserConfigurationException {
             try {
                    File filepath = files.get(0);
                     System.out.println(filepath);
-                    dragOver.setText("Poprawnie załadowano plik!");
+//                    dragOver.setText("Poprawnie załadowano plik!");
+                    dataDigital.setVisible(true);
+                    loadAnotherFile.setVisible(true);
 
                 if(file == null)
                 {
@@ -1406,12 +1419,22 @@ private void colorPicker() throws ParserConfigurationException {
 //    }
 
     public void openFolder(MouseEvent mouseEvent)  {
-    Desktop desktop = Desktop.getDesktop();
-    File dirToOpen = null;
-            try {
-        dirToOpen = new File(".\\PDF\\");
-        desktop.open(dirToOpen);
-    } catch (IllegalArgumentException | IOException iae) {
+        Desktop desktop = Desktop.getDesktop();
+        File dirToOpen = null;
+                try {
+            dirToOpen = new File(".\\PDF\\");
+            desktop.open(dirToOpen);
+        } catch (IllegalArgumentException | IOException iae) { }
     }
-}
+
+    public void loadFileAgain() {
+        file = null;
+        TitleFileName.setText(null);
+        dataDigital.setVisible(false);
+        draganddropPane.setVisible(true);
+        btnRaportPDF.setVisible(false);
+        btnRaportPDFdnia.setVisible(false);
+        dragOver.setText("Wybierz plik albo upuść go tutaj");
+        loadAnotherFile.setVisible(false);
+    }
 }

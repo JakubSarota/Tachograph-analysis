@@ -60,7 +60,7 @@ public class MainController {
     public void aboutProgram() throws Exception {
         if(secondStage==null || !secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("aboutProgram.fxml"));
-            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("INFO.png")));
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/INFO.png")));
             stackPane.getChildren().add(fxmlLoader);
             secondStage.setTitle("");
             secondStage.setScene(secondScene);

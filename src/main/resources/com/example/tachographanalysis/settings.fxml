@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.SettingsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.SettingsController">
    <left>
-      <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" prefHeight="43.0" prefWidth="103.0" text="Wróć" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="620.0" prefWidth="275.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: #29A1FA;">
+               <children>
+                  <Label layoutX="71.0" layoutY="29.0" text="Ustawienia" textFill="WHITE">
+                     <font>
+                        <Font size="28.0" />
+                     </font></Label>
+               </children></AnchorPane>
+            <VBox prefHeight="525.0" prefWidth="250.0">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#getBack" prefHeight="43.0" prefWidth="299.0" stylesheets="@css/analogueAnalysis.css" text="Wróć" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-home-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+               </children>
+            </VBox>
+         </children></VBox>
    </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

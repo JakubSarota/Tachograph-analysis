@@ -15,7 +15,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), SizeController.sizeW, SizeController.sizeH);
         stage.setTitle("Tachfive 1.3.2");
         stage.setScene(scene);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("ICON.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("images/ICON.png")));
 //        stage.setMaximized(true);
         stage.show();
     }
