@@ -1,7 +1,7 @@
 .button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-alignment: left;
+   
 }
 .button:hover {
     -fx-background-color: rgba(40, 40, 40, 0.7);
