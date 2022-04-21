@@ -14,7 +14,6 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
@@ -369,7 +368,7 @@ public class DigitalAnalysisController implements Initializable {
         if(!two.isSelected()) {
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
-//            btnAddStatsDigital.setVisible(false);
+            btnAddStatsDigital.setVisible(false);
 //            btnAddStatsDigitalAll.setVisible(false);
 
         }
@@ -399,7 +398,7 @@ public class DigitalAnalysisController implements Initializable {
         TextArea dailyDataDriver = (TextArea) two.getContent();
 
         btnRaportPDFdnia.setVisible(true);
-//        btnAddStatsDigital.setVisible(true);
+        btnAddStatsDigital.setVisible(true);
 //        btnAddStatsDigitalAll.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
@@ -806,9 +805,9 @@ public class DigitalAnalysisController implements Initializable {
                 if(btnRaportPDFdnia!=null) {
                     btnRaportPDFdnia.setVisible(false);
                 }
-//                if(btnAddStatsDigital!=null) {
-//                btnAddStatsDigital.setVisible(false);
-//                }
+                if(btnAddStatsDigital!=null) {
+                btnAddStatsDigital.setVisible(false);
+                }
 //            if(btnAddStatsDigitalAll!=null) {
 //                btnAddStatsDigitalAll.setVisible(false);
 //            }
@@ -1385,9 +1384,14 @@ private void colorPicker() throws ParserConfigurationException {
         Statement stmt = connectDB.createStatement();
 
         ResultSet rs = stmt.executeQuery("SELECT id FROM driver WHERE id_card='" + serial + "'");
+
         while (rs.next()) {
             id=rs.getInt("id");
+
         }
+        if(id == 0){
+            JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
+        }else {
 
 //---------------------------------------------------------------------------------------------------------------------//
         int liczbaDni = parseInt(lastDaily) - parseInt(firstDaily);
@@ -1404,19 +1408,41 @@ private void colorPicker() throws ParserConfigurationException {
             AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataPicker.getValue().toString(), LocalDate.now().toString(),
                     inThisDayData, workSum + "h", breakSum + "h", file_name, "cyfrowy", Integer.parseInt(d));
 //        }
-            dragOver.setText("Pomyślnie dodano!");
+            JOptionPane.showMessageDialog(null, "Pomyślnie dodano!");
+        }
         }
     }
 
-//    public void addStatsDigitalAll() throws IOException {
-//        for (int i = 0; i < 2; i++) {
-//            String file_name = UUID.randomUUID().toString() + ".DDD";
-//            addStats.insertToDatabase(Integer.parseInt("1"), dataPicker.getValue().toString(), LocalDate.now().toString(),
-//                    inThisDayData, workSum, breakSum, file_name, "cyfrowy", parseInt("43"));
-//            System.out.println("Pomyślnie dodano");
-//        }
 
-//    }
+    public void addStatsDigitalAll() throws IOException, SQLException {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        Connection connectDB = databaseConnection.getDBConnection();
+
+        Statement stmt = connectDB.createStatement();
+
+        ResultSet rs = stmt.executeQuery("SELECT id FROM driver WHERE id_card='" + serial + "'");
+        while (rs.next()) {
+            id=rs.getInt("id");
+        }
+
+//---------------------------------------------------------------------------------------------------------------------//
+        int liczbaDni = parseInt(lastDaily) - parseInt(firstDaily);
+        String s = inThisDayData.substring(inThisDayData.indexOf("Dystans : ") + 10, inThisDayData.indexOf("km"));
+        Pattern p = Pattern.compile("[0-9]+");
+        Matcher m = p.matcher(s);
+        String d="0";
+        while(m.find()){
+            d=m.group();
+        }
+        if(d!="0") {
+            for (int i = 0; i < 2; i++) {
+                String file_name = UUID.randomUUID().toString() + ".DDD";
+                AddStats.insertToDatabase(parseInt(String.valueOf(id)), lastDayOfWork+1, LocalDate.now().toString(),
+                        String.valueOf(dataGD), workSum, breakSum, file_name, "cyfrowy", parseInt("43"));
+                System.out.println("Pomyślnie dodano");
+            }
+        }
+    }
 
     public void openFolder(MouseEvent mouseEvent)  {
         Desktop desktop = Desktop.getDesktop();
@@ -1434,7 +1460,7 @@ private void colorPicker() throws ParserConfigurationException {
         draganddropPane.setVisible(true);
         btnRaportPDF.setVisible(false);
         btnRaportPDFdnia.setVisible(false);
+        btnAddStatsDigital.setVisible(false);
         dragOver.setText("Wybierz plik albo upuść go tutaj");
         loadAnotherFile.setVisible(false);
-    }
-}
+    }}
