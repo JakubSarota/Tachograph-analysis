@@ -24,20 +24,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.w3c.dom.Text;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import static com.example.tachographanalysis.database.driver.Driver.getDriversObjectPropertyEdit;
 
 public class DriversController {
 
     @FXML
-    private Button btnBack, btnDrivers;
+    private Button btnBack, btnDrivers, generateOsw;
     @FXML
     private Pane boxDrivers;
     @FXML
