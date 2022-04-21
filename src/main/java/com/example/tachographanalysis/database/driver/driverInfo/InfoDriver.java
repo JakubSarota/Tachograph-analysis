@@ -1,12 +1,8 @@
 package com.example.tachographanalysis.database.driver.driverInfo;
 
+import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.database.DatabaseConnection;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,9 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,34 +83,12 @@ public class InfoDriver {
         }
 
     }
+
     @FXML
-    public void generateOsw(MouseEvent mouseEvent) throws DocumentException, IOException {
+    public void generateOsw(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
         System.out.println("Creating PDF");
         String fileName = firstName + "_" + lastName + "_oswiadczenie_";
-        Document doc = new Document();
-        PdfWriter writer;
-        File dir = new File(".\\PDF\\");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File issetPDF=new File(".\\PDF\\" + fileName +".pdf");
-        int licznik=1;
-        String tmpName=fileName;
-        while (issetPDF.exists()){
-            fileName=tmpName+"_"+licznik;
-            licznik++;
-            issetPDF=new File(".\\PDF\\" + fileName + ".pdf");
-        }
-
-        writer = PdfWriter.getInstance(doc,
-                new FileOutputStream(".\\PDF\\" + fileName + ".pdf"));
-        BaseFont helvetica = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.EMBEDDED);
-        Font polskieFonty=new Font(helvetica,10);
-        doc.open();
-        doc.add(new Paragraph("Oświadczenie",polskieFonty));
-        doc.add(new Paragraph(firstName+" "+lastName+" jest upoważnionwy do jazdy.",polskieFonty));
-        doc.close();
-        System.out.println("Created PDF");
+        CreatePDF.createPDF(new String[]{" test "} ,fileName,"" );
 
     }
 }
