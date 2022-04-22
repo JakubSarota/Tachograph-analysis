@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 
 public class AnalogueAnalysisController {
     @FXML
-    private Button btnBack, dragOver;
+    private Button btnBack, dragOver, addStats, createPDF, loadAnotherFile, btnScanner;
     @FXML
     private ImageView imageView, imageView2;
     @FXML
@@ -159,6 +159,10 @@ public class AnalogueAnalysisController {
         if((writableImage[0]!=null) || (writableImage[1]!=null)) {
             showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
+            addStats.setVisible(true);
+            createPDF.setVisible(true);
+            loadAnotherFile.setVisible(true);
+            btnScanner.setDisable(true);
         } else {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             selectedFileAnalogue = null;
@@ -192,6 +196,9 @@ public class AnalogueAnalysisController {
         if((writableImage[0]!=null) || (writableImage[1]!=null)) {
             showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
+            addStats.setVisible(true);
+            createPDF.setVisible(true);
+            loadAnotherFile.setVisible(true);
         } else {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             loading.setVisible(false);
@@ -364,30 +371,20 @@ public class AnalogueAnalysisController {
     Stage secondStage = new Stage();
 
     public void addStats() throws IOException {
-        if(selectedFileAnalogue ==null) {
-            dragOver.setText("Nie można dodać do statystyk, plik nie został przesłany");
+        if(secondStage==null || !secondStage.isShowing()) {
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
+            secondStage.setTitle("Dodaj statystyki");
+            secondStage.setScene(secondScene);
+            secondStage.show();
         } else {
-            if(secondStage==null || !secondStage.isShowing()) {
-                Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
-                stackPane.getChildren().add(fxmlLoader);
-                secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
-                secondStage.setTitle("Dodaj statystyki");
-                secondStage.setScene(secondScene);
-                secondStage.show();
-            } else {
-                secondStage.toFront();
-            }
+            secondStage.toFront();
         }
     }
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
-        if(selectedFileAnalogue ==null) {
-            dragOver.setText("Nie został presłany plik, operacja nieudana");
-        } else {
-            CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
-//            dragOver.setText("Plik PDF został utworzony!");
-            JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
-        }
-
+        CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
     }
 
     public void openFolder(MouseEvent mouseEvent)  {
@@ -399,11 +396,37 @@ public class AnalogueAnalysisController {
         } catch (IllegalArgumentException | IOException iae) { }
     }
 
+
+
     public void loadImageAgain() throws IOException {
-        selectedFileAnalogue =null;
+        selectedFileAnalogue = null;
         dragOver.setText(text);
         showAnalysis.setVisible(false);
         showDragAndDrop.setVisible(true);
         loading.setVisible(false);
+        addStats.setVisible(false);
+        createPDF.setVisible(false);
+        loadAnotherFile.setVisible(false);
+        btnScanner.setDisable(false);
+    }
+
+    Stage stageScanner = new Stage();
+    FXMLLoader scanner = new FXMLLoader();
+    Parent parentScanner = scanner.getRoot();
+
+    public void openScanner() {
+
+        if(stageScanner==null || !stageScanner.isShowing()) {
+            scanner.setLocation(getClass().getResource("scanner.fxml"));
+            try {
+                scanner.load();
+            } catch (Exception e) { }
+            stageScanner.setScene(new Scene(parentScanner));
+            stageScanner.getIcons().add(new Image(getClass().getResourceAsStream("icons/icons8-scanner-65.png")));
+            stageScanner.setTitle("Użyj skanera");
+            stageScanner.show();
+        } else {
+            stageScanner.toFront();
+        }
     }
 }

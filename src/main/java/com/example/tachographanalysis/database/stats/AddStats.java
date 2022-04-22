@@ -50,12 +50,12 @@ public class AddStats {
     private Text returnInfo;
     @FXML
     protected void initialize() throws Exception {
-        String connectQuery = "SELECT id,first_name,second_name, last_name FROM driver";
+        String connectQuery = "SELECT id,first_name,last_name, last_name FROM driver";
         try{
             ResultSet queryOutput = DatabaseConnection.exQuery(connectQuery);
             while (queryOutput.next()){
                 String firstname = queryOutput.getString("first_name");
-                String lastname = queryOutput.getString("second_name");
+                String lastname = queryOutput.getString("last_name");
                 int id = queryOutput.getInt("id");
                 String listOut =  id+" "+ firstname + " " + lastname;
                 accountListView.getItems().add(listOut);

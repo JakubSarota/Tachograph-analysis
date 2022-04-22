@@ -104,7 +104,7 @@ public class DriversController {
                                     } catch (Exception e) { }
                                     Parent parent = loader.getRoot();
                                     stage.setScene(new Scene(parent));
-                                    stage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+                                    stage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
                                     stage.setTitle(driver.getFname()+" "+driver.getLname());
                                     stage.show();
                                 } else {
@@ -197,7 +197,7 @@ public class DriversController {
         if(secondStage==null||!secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
             stackPane.getChildren().add(fxmlLoader);
-            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("DRIVER.png")));
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
             secondStage.setTitle("Dodaj kierowce");
             secondStage.setScene(secondScene);
             secondStage.show();

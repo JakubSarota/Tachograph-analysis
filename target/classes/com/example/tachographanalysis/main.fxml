@@ -67,7 +67,7 @@
                <graphic>
                   <ImageView fitHeight="33.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@gear.png" />
+                        <Image url="@images/gear.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -81,7 +81,7 @@
          <children>
             <ImageView fitHeight="586.0" fitWidth="533.0" layoutX="236.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Tach5-logos_transparent.png" />
+                  <Image url="@images/Tach5-logos_transparent.png" />
                </image>
             </ImageView>
             <Circle fill="DODGERBLUE" layoutX="502.0" layoutY="325.0" radius="224.0" stroke="BLACK" strokeType="INSIDE" />
@@ -97,14 +97,14 @@
             </Text>
             <ImageView fitHeight="130.0" fitWidth="190.0" layoutX="873.0" layoutY="484.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@delivery-truck.png" />
+                  <Image url="@images/delivery-truck.png" />
                </image>
             </ImageView>
             <Button layoutX="919.0" layoutY="23.0" mnemonicParsing="false" onAction="#aboutProgram" prefHeight="43.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
                <graphic>
                   <ImageView fitHeight="46.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8-info-50.png" />
+                        <Image url="@images/icons8-info-50.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
