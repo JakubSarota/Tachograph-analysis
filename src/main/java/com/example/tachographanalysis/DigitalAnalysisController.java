@@ -1389,7 +1389,8 @@ private void colorPicker() throws ParserConfigurationException {
 //            for (int i=0; i<liczbaDni; i++){
             String file_name = UUID.randomUUID().toString() + ".DDD";
             AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataPicker.getValue().toString(), LocalDate.now().toString(),
-                    inThisDayData, workSum + "h", breakSum + "h", file_name, "cyfrowy", Integer.parseInt(d));
+                    inThisDayData, workSum + "h", breakSum + "h", file_name, "cyfrowy", Integer.parseInt(d),
+                    "","","");
 //        }
             dragOver.setText("Pomyślnie dodano!");
         }

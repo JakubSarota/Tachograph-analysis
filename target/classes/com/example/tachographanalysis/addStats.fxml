@@ -62,12 +62,23 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="450.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Data pracy" wrappingWidth="148.0000228881836">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Data rozpoczęcia pracy" wrappingWidth="148.0000228881836">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Text>
                         <DatePicker fx:id="dataPicker" editable="false" prefHeight="26.0" prefWidth="209.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="450.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Godzina rozpoczęcia pracy" wrappingWidth="148.0000228881836">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <ListView fx:id="timeListView" prefHeight="40.0" prefWidth="214.0">
+                        </ListView>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="64.0" prefWidth="502.0">
