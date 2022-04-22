@@ -1,10 +1,16 @@
 package com.example.tachographanalysis;
 
+import com.asprise.imaging.core.Imaging;
+import com.asprise.imaging.core.Request;
+import com.asprise.imaging.core.RequestOutputItem;
+import com.asprise.imaging.core.Result;
+import com.asprise.imaging.scan.ui.workbench.AspriseScanUI;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,7 +43,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
+import com.asprise.imaging.core.Imaging;;
+
 
 public class AnalogueAnalysisController {
     @FXML
@@ -415,18 +424,13 @@ public class AnalogueAnalysisController {
     Parent parentScanner = scanner.getRoot();
 
     public void openScanner() {
+        Result result = new AspriseScanUI().setRequest(
+                        new Request().addOutputItem(
+                                new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PDF)
+                                        .setSavePath("${TMP}\\\\${TMS}${EXT}")))
+                .setInstruction("Scan <b>test</b>")
+                .showDialog(null, "Dialog Title", true, null);
 
-        if(stageScanner==null || !stageScanner.isShowing()) {
-            scanner.setLocation(getClass().getResource("scanner.fxml"));
-            try {
-                scanner.load();
-            } catch (Exception e) { }
-            stageScanner.setScene(new Scene(parentScanner));
-            stageScanner.getIcons().add(new Image(getClass().getResourceAsStream("icons/icons8-scanner-65.png")));
-            stageScanner.setTitle("Użyj skanera");
-            stageScanner.show();
-        } else {
-            stageScanner.toFront();
-        }
+        System.out.println(result == null ? "(null)" : result.getPdfFile());
     }
 }
