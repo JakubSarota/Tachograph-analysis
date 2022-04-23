@@ -427,12 +427,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/Desktop/opencv/build/java/opencv-455.jar!/" />
-          <root url="jar://$USER_HOME$/Desktop/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -441,8 +441,17 @@
         <CLASSES />
         <JAVADOC />
         <NATIVE>
-          <root url="file://$USER_HOME$/Desktop/opencv/build/java/x64" />
+          <root url="file://$MODULE_DIR$/../../opencv/build/java/x64" />
         </NATIVE>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/opencv/aspire/asprise-scan-java-12.0-trial/asprise_scan.jar!/" />
+        </CLASSES>
+        <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>

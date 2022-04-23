@@ -222,7 +222,8 @@ public class DigitalAnalysisController implements Initializable {
                                     logDataWrite.close();
                                     f.delete();
                                     TextLoading.setText("Spróbuj ponownie");
-                                    dragOver.setVisible(true);
+                                    dataDigital.setVisible(false);
+                                    draganddropPane.setVisible(true);
                                     System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
 
                                 } else {
@@ -231,6 +232,8 @@ public class DigitalAnalysisController implements Initializable {
                                     logDataWrite.close();
                                     f.delete();
                                     TextLoading.setText("Spróbuj ponownie");
+                                    dataDigital.setVisible(false);
+                                    draganddropPane.setVisible(true);
                                     System.out.println("Błąd plik nie został poprawnie załadowany bądź jest uszkodzony");
                                 }
                             }
@@ -287,7 +290,6 @@ public class DigitalAnalysisController implements Initializable {
                         System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
                     }
                 }
-
             }
         }
     }
@@ -1438,8 +1440,8 @@ private void colorPicker() throws ParserConfigurationException {
         if(d!="0") {
             for (int i = 0; i < 2; i++) {
                 String file_name = UUID.randomUUID().toString() + ".DDD";
-                AddStats.insertToDatabase(parseInt(String.valueOf(id)), lastDayOfWork+1, LocalDate.now().toString(),
-                        String.valueOf(dataGD), workSum, breakSum, file_name, "cyfrowy", parseInt("43"));
+//                AddStats.insertToDatabase(parseInt(String.valueOf(id)), lastDayOfWork+1, LocalDate.now().toString(),
+//                        String.valueOf(dataGD), workSum, breakSum, file_name, "cyfrowy", parseInt("43"));
                 System.out.println("Pomyślnie dodano");
             }
         }

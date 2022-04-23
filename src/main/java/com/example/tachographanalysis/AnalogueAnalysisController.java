@@ -419,14 +419,10 @@ public class AnalogueAnalysisController {
         btnScanner.setDisable(false);
     }
 
-    Stage stageScanner = new Stage();
-    FXMLLoader scanner = new FXMLLoader();
-    Parent parentScanner = scanner.getRoot();
-
     public void openScanner() {
         Result result = new AspriseScanUI().setRequest(
                         new Request().addOutputItem(
-                                new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PDF)
+                                new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
                                         .setSavePath("${TMP}\\\\${TMS}${EXT}")))
                 .setInstruction("Scan <b>test</b>")
                 .showDialog(null, "Dialog Title", true, null);

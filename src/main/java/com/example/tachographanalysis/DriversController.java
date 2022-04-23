@@ -87,7 +87,7 @@ public class DriversController {
                                     "-fx-cursor: hand ;"
                                     +"-fx-fill:#00E676;"
                                     +"-fx-border-radius: 20;"
-                                    +"-fx-background-color: #F8F9FA;"
+                                    +"-fx-background-color: transparent;"
                                     +"-fx-border-color: #2A73FF;"
 
                             );

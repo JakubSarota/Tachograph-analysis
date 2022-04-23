@@ -5,19 +5,6 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.driver.driverInfo.InfoDriver">
-   <center>
-      <TableView fx:id="dataView" prefHeight="500.0" prefWidth="773.0" BorderPane.alignment="CENTER">
-         <columns>
-            <TableColumn fx:id="dateAddCol" prefWidth="97.0" text="Data dodania" />
-            <TableColumn fx:id="dateWorkCol" prefWidth="115.0" text="Data pracy" />
-            <TableColumn fx:id="sumWorkCol" prefWidth="67.0" text="Praca" />
-            <TableColumn fx:id="sumBreakCol" prefWidth="75.0" text="Przerwa" />
-            <TableColumn fx:id="sumRoadCol" prefWidth="75.0" text="Przejechane" />
-            <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" text="Typ pliku" />
-            <TableColumn fx:id="fileCol" maxWidth="246.0" prefWidth="246.0" text="Plik" />
-         </columns>
-      </TableView>
-   </center>
    <left>
       <VBox prefHeight="500.0" prefWidth="264.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -140,7 +127,7 @@
             <HBox layoutX="10.0" layoutY="340.0" prefHeight="35.0" prefWidth="264.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="generateOsw" layoutX="70.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#generateOsw" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30;" text="Generuj Oświadczenie" textFill="#47535b">
+                  <Button fx:id="generateOsw" layoutX="70.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#generateOsw" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Generuj Oświadczenie" textFill="#47535b">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -150,4 +137,21 @@
          </children>
       </VBox>
    </left>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="dataView" prefHeight="500.0" prefWidth="539.0" stylesheets="@css/style.css">
+               <columns>
+                  <TableColumn fx:id="dateAddCol" prefWidth="97.0" text="Data dodania" />
+                  <TableColumn fx:id="dateWorkCol" prefWidth="115.0" text="Data pracy" />
+                  <TableColumn fx:id="sumWorkCol" prefWidth="67.0" text="Praca" />
+                  <TableColumn fx:id="sumBreakCol" prefWidth="75.0" text="Przerwa" />
+                  <TableColumn fx:id="sumRoadCol" prefWidth="75.0" text="Przejechane" />
+                  <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" text="Typ pliku" />
+               </columns>
+            </TableView>
+            <TextArea fx:id="work_info" editable="false" prefHeight="500.0" prefWidth="249.0" />
+         </children>
+      </HBox>
+   </center>
 </BorderPane>
