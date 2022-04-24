@@ -105,7 +105,6 @@ public class DigitalAnalysisController implements Initializable {
 
     List<String> lstFile;
     private String inThisDayData;
-
     static String PDF =  "";
     static String dataT =  "";
     public static File filexmlStats;
@@ -113,14 +112,11 @@ public class DigitalAnalysisController implements Initializable {
     public static String dataPick;
     static String savedData = "";
     static String dataPick1;
-    static String workSum;
-    static String breakSum;
-    static String serial;
+    static String breakSum,workSum,serial;
     public int id;
     static String lastDayOfWork= "";
     static int counterEnter = 0;
-    private String lastDaily;
-    private String firstDaily;
+    private String lastDaily,firstDaily;
 
 
     public void getBack() throws Exception {
@@ -161,7 +157,6 @@ public class DigitalAnalysisController implements Initializable {
             TitleFileName.setText("Dane z pliku " + file.getName());
 
             fileChooser.setTitle("Open Resource File");
-            //
 
             InputStream inputStream = new FileInputStream(file);
             Thread.sleep(500);
@@ -209,7 +204,6 @@ public class DigitalAnalysisController implements Initializable {
 
                             if (filexml.exists() && kiloBytes > 0) {
                                 System.out.println("Poprawnie zaimportowano plik .ddd");
-//                                dragOver.setText("Poprawnie załadowano plik!");
                                 f.deleteOnExit();
                                 String[] readedData = readData(filexml);
                                 showData(readedData);
@@ -298,14 +292,12 @@ public class DigitalAnalysisController implements Initializable {
     private void  generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
         CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()),"");
-//        dragOver.setText("Plik PDF został utworzony!");
         JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
     }
     @FXML
     private void  generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
         CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick,"",barChartTMP);
-//        dragOver.setText("Plik PDF został utworzony!");
         JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
     }
     @FXML
@@ -341,9 +333,6 @@ public class DigitalAnalysisController implements Initializable {
 
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
-        //TextArea dailyDataDriver = (TextArea) two.getContent();
-//        dailyDataDriver.appendText(readedData[1]);
-
         dataT=readedData[1]+" \n\n d";
 
         if(dataPicker!=null) {
@@ -372,8 +361,6 @@ public class DigitalAnalysisController implements Initializable {
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
-//            btnAddStatsDigitalAll.setVisible(false);
-
         }
     }
 
@@ -402,7 +389,6 @@ public class DigitalAnalysisController implements Initializable {
 
         btnRaportPDFdnia.setVisible(true);
         btnAddStatsDigital.setVisible(true);
-//        btnAddStatsDigitalAll.setVisible(true);
 
         if(indexOfDataPickerTime.equals("-1")) {
         }
@@ -423,9 +409,6 @@ public class DigitalAnalysisController implements Initializable {
         }
 
     }
-
-
-
 
     @FXML
     private void showChart(String data) throws ParseException {
@@ -739,8 +722,6 @@ public class DigitalAnalysisController implements Initializable {
             }
         }
 
-
-//        String[] timeDiffOneDayTable = new String[3];
         Object[] timeDiffOneDayTable = new Object[3];
 
         timeDiffOneDayTable[0]= activityDataWork;
@@ -748,9 +729,6 @@ public class DigitalAnalysisController implements Initializable {
         timeDiffOneDayTable[2]= activityDataBreak;
 
 
-//        System.out.println(timeDiffrence(activityDataWork));
-//        System.out.println(timeDiffrence(activityDataDrive));
-//        System.out.println(timeDiffrence(activityDataBreak));
         return timeDiffOneDayTable;
 
 
@@ -811,9 +789,6 @@ public class DigitalAnalysisController implements Initializable {
                 if(btnAddStatsDigital!=null) {
                 btnAddStatsDigital.setVisible(false);
                 }
-//            if(btnAddStatsDigitalAll!=null) {
-//                btnAddStatsDigitalAll.setVisible(false);
-//            }
                 if(chart!=null) {
                     chart.setVisible(false);
                 }
@@ -854,7 +829,6 @@ public class DigitalAnalysisController implements Initializable {
         int parseDay = parseInt(day);
         int parseMonth = parseInt(month);
         int parseYear = parseInt(year);
-//        dataPicker.setValue(null);
         if((parseMonth==4 || parseMonth==6 || parseMonth==9 || parseMonth==11 )&& parseDay==30 && parseMonth!=12) {
             dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
         }else if (parseMonth==2 && parseDay == 28){
@@ -870,33 +844,6 @@ public class DigitalAnalysisController implements Initializable {
 
     }
 
-//    private void getDataPickerValue(){
-//        int lastZLatter = dataT.lastIndexOf("Z");
-//        lastDayOfWork = String.valueOf(dataPicker.getValue());
-//        int lastDataIndex = lastZLatter-19;
-//        String lastaDataString = (dataT.substring(lastDataIndex,lastDataIndex+10));
-//
-//        String year = (lastaDataString.substring(0,4));
-//        String month = (lastaDataString.substring(5,7));
-//        String day = (lastaDataString.substring(8,10));
-//
-//        int parseDay = parseInt(day);
-//        int parseMonth = parseInt(month);
-//        int parseYear = parseInt(year);
-////        dataPicker.setValue(null);
-//        if((parseMonth==4 || parseMonth==6 || parseMonth==9 || parseMonth==11 )&& parseDay==30 && parseMonth!=12) {
-//            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
-//        }else if (parseMonth==2 && parseDay == 28){
-//            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
-//        }else if (parseMonth==12 && parseDay == 31 ){
-//            dataPicker.setValue(LocalDate.of(parseYear+1,1,1));
-//        }else if ((parseMonth==1 || parseMonth==3 || parseMonth==5 || parseMonth==7 || parseMonth==8 || parseMonth==10 || parseMonth==12 )&& parseDay==31){
-//            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
-//        }
-//        else{
-//            dataPicker.setValue(LocalDate.of(parseYear,parseMonth,parseDay+1));
-//        }
-//    }
 
     @FXML
     private void visiblityChartArea(){
@@ -1117,19 +1064,14 @@ private void colorPicker() throws ParserConfigurationException {
                             item(0).getTextContent() + "\n");
                     generalDataS +=("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
                             item(0).getTextContent() + "\n");
-//
-
-
 
 
                     // Aktywnośc dzienna kierowcy
                     int k = 0;
                     NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
-                    NodeList ActivityChangeInfo = doc.getElementsByTagName("ActivityChangeInfo");
+
                     for(int i=0;i<CardActivityDailyRecord.getLength();i++){
         NodeList t=CardActivityDailyRecord.item(i).getChildNodes();
-//                        roadSum =(CardActivityDailyRecord.item(i).
-//                                getAttributes().item(2).getNodeValue());
                         dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(1).getNodeValue() + " \n");
                         dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(i).
@@ -1159,8 +1101,6 @@ private void colorPicker() throws ParserConfigurationException {
                         driverRouteS +=("  Przebieg: " + eElement.getElementsByTagName("VehicleOdometerValue").item(i).getTextContent() + " km \n");
                     }
 
-
-
                     //Przebieg
                     NodeList elCardVehicleRecord = doc.getElementsByTagName("CardVehicleRecord");
 
@@ -1175,10 +1115,8 @@ private void colorPicker() throws ParserConfigurationException {
                         mileageCarS +=(" do: " + VehicleLastUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
                         mileageCarS +=(" Numer rejestracyjny: " + elElement.getElementsByTagName("VehicleRegistrationNumber").item(i).getTextContent() + " \n");
                     }
-
                 }
             }
-//            progressBar.progressProperty().bind(progressBar.progressProperty());
             dailyActivityS=dailyActivityS.replace("Time=","");
             dailyActivityS=dailyActivityS.replace("\"","");
             dailyActivityS=dailyActivityS.replace("Activity=","");
@@ -1194,10 +1132,6 @@ private void colorPicker() throws ParserConfigurationException {
         if (deleteXML.contains("data") && deleteXML.contains("driver")) {
             filexml.deleteOnExit();
         }
-
-
-//        dragOver.setText("Czytanie danych");
-
         return xmlDate;
     }
 
@@ -1219,7 +1153,6 @@ private void colorPicker() throws ParserConfigurationException {
             try {
                    File filepath = files.get(0);
                     System.out.println(filepath);
-//                    dragOver.setText("Poprawnie załadowano plik!");
                     dataDigital.setVisible(true);
                     loadAnotherFile.setVisible(true);
 
@@ -1406,7 +1339,7 @@ private void colorPicker() throws ParserConfigurationException {
             d=m.group();
         }
         if(d!="0") {
-            String file_name = UUID.randomUUID().toString() + ".DDD";
+            String file_name = UUID.randomUUID() + ".DDD";
             AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataPicker.getValue().toString(), LocalDate.now().toString(),
                     inThisDayData, workSum + "h", breakSum + "h", file_name, "cyfrowy", Integer.parseInt(d),
                     "","","");
@@ -1429,7 +1362,7 @@ private void colorPicker() throws ParserConfigurationException {
             JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
         }else {
             int i = 0;
-            String file_name = UUID.randomUUID().toString() + ".DDD";
+            String file_name = UUID.randomUUID() + ".DDD";
 
             for (String dataGD1 :
                     dataGD[1].split("data aktywności:")) {
@@ -1445,7 +1378,7 @@ private void colorPicker() throws ParserConfigurationException {
 
     public void openFolder(MouseEvent mouseEvent)  {
         Desktop desktop = Desktop.getDesktop();
-        File dirToOpen = null;
+        File dirToOpen;
                 try {
             dirToOpen = new File(".\\PDF\\");
             desktop.open(dirToOpen);
