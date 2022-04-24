@@ -94,6 +94,21 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                   <Button fx:id="btnAddStatsDigitalAll" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#addStatsDigitalAll" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Statystyki Całości" textFill="WHITE" visible="false">
+                       <font>
+                           <Font name="System Bold" size="14.0" />
+                       </font>
+                       <VBox.margin>
+                           <Insets bottom="5.0" top="5.0" />
+                       </VBox.margin>
+                       <graphic>
+                           <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                               <image>
+                                   <Image url="@icons/icons8-combo-chart-60.png" />
+                               </image>
+                           </ImageView>
+                       </graphic>
+                   </Button>
                    <Button fx:id="btnAddStatsDigital" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#addStatsDigital" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/analogueAnalysis.css" text="Statystyki Dnia" textFill="WHITE" visible="false">
                        <font>
                            <Font name="System Bold" size="14.0" />
@@ -117,11 +132,6 @@
                   <Insets top="10.0" />
                </padding>
             </VBox>
-<!--             <Button fx:id="btnAddStatsDigitalAll" layoutX="60.0" layoutY="427.0" mnemonicParsing="false" onMouseClicked="#addStatsDigitalAll" prefHeight="40.0" prefWidth="155.0" style="-fx-background-color: #F8F9FA;" text="Statystyki Całości" textFill="#47535b" visible="false">-->
-<!--                 <font>-->
-<!--                     <Font name="System Bold" size="14.0" />-->
-<!--                 </font>-->
-<!--             </Button>-->
          </children>
       </AnchorPane>
    </left>
