@@ -21,7 +21,7 @@
             </AnchorPane>
             <VBox layoutY="85.0" prefHeight="534.0" prefWidth="285.0">
                <children>
-                  <Button fx:id="btnBack" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getBack" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/analogueAnalysis.css" text="Wróć" textFill="WHITE">
+                  <Button fx:id="btnBack" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getBack" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Wróć" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -39,7 +39,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btnAddDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getAddDrivers" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/analogueAnalysis.css" text="Dodaj kierowcę" textFill="WHITE">
+                  <Button fx:id="btnAddDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getAddDrivers" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Dodaj kierowcę" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -57,7 +57,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btnRemoveDriver" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removeDriver" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/analogueAnalysis.css" text="Usuń kierowcę" textFill="WHITE">
+                  <Button fx:id="btnRemoveDriver" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removeDriver" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Usuń kierowcę" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -95,7 +95,7 @@
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Text>
-                  <TableView fx:id="accountTableView" editable="true" layoutX="15.0" layoutY="133.0" prefHeight="473.0" prefWidth="965.0" style="-fx-background-radius: 25 25 25 25;" stylesheets="@css/style.css">
+                  <TableView fx:id="accountTableView" editable="true" layoutX="15.0" layoutY="133.0" prefHeight="473.0" prefWidth="965.0" style="-fx-background-radius: 25 25 25 25;" stylesheets="@css/style1.css">
                      <columns>
                         <TableColumn fx:id="idCol" minWidth="20.0" prefWidth="25.0" style="-fx-alignment: center;" text="Id" />
                         <TableColumn fx:id="firstnameCol" minWidth="20.0" onEditCommit="#onEditFname" prefWidth="82.0" style="-fx-alignment: center;" text="Imię" />

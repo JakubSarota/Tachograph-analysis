@@ -140,7 +140,7 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="dataView" prefHeight="500.0" prefWidth="539.0" stylesheets="@css/style.css">
+            <TableView fx:id="dataView" prefHeight="500.0" prefWidth="539.0" stylesheets="@css/style1.css">
                <columns>
                   <TableColumn fx:id="dateAddCol" prefWidth="97.0" text="Data dodania" />
                   <TableColumn fx:id="dateWorkCol" prefWidth="115.0" text="Data pracy" />
