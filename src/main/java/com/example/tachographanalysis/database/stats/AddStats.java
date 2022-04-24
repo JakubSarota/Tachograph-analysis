@@ -129,6 +129,7 @@ public class AddStats {
                 for (int t=0;t<time_arr.size();t++) {
                     if(time_start.equals(time_arr.get(t))) {
                         indexWork = t;
+                        if(indexWork!=0)
                         indexWorkEnd=t-1;
                     }
                 }
