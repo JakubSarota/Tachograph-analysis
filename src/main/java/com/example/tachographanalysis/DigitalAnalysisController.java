@@ -1372,16 +1372,27 @@ private void colorPicker() throws ParserConfigurationException {
         }else {
             int i = 0;
             String file_name = UUID.randomUUID() + ".DDD";
-
             for (String dataGD1 :
                     dataGD[1].split("data aktywności:")) {
-                if (dataGD1.length() > 4)
-                    AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 15), LocalDate.now().toString(),
-                            dataGD1, "0", "0", file_name, "cyfrowy", Integer.parseInt("0"),
-                            "", "", "");
-                i++;
+
+                String s = dataGD1.substring(dataGD1.indexOf("Dystans : ")+1, dataGD1.indexOf("km")+2);
+                Pattern p = Pattern.compile("[0-9]+");
+                Matcher m = p.matcher(s);
+                String d = "0";
+                while(m.find()){
+                    d=m.group();
+                }
+                if (d != "0") {
+                    if (dataGD1.length() > 4)
+                        AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11), LocalDate.now().toString(),
+                                dataGD1, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(d),
+                                "", "", "");
+
+                    i++;
+                }
             }
             JOptionPane.showMessageDialog(null, "Pomyślnie dodano " + i + " rekordów");
+
         }
     }
 
