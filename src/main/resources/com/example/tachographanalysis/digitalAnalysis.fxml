@@ -124,23 +124,23 @@
                         </ImageView>
                      </graphic>
                    </Button>
-                   <Button fx:id="btnAddStatsDigitalAll" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                           onMouseClicked="#addStatsDigitalAll" prefHeight="50.0" prefWidth="283.0"
-                           stylesheets="@css/analogueAnalysis.css" text="Statystyki Dnia" textFill="WHITE">
-                       <font>
-                           <Font name="System Bold" size="14.0" />
-                       </font>
-                       <VBox.margin>
-                           <Insets bottom="5.0" top="5.0" />
-                       </VBox.margin>
-                       <graphic>
-                           <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                               <image>
-                                   <Image url="@icons/icons8-combo-chart-60.png" />
-                               </image>
-                           </ImageView>
-                       </graphic>
-                   </Button>
+<!--                   <Button fx:id="btnAddStatsDigitalAll" alignment="BASELINE_LEFT" mnemonicParsing="false"-->
+<!--                           onMouseClicked="#addStatsDigitalAll" prefHeight="50.0" prefWidth="283.0"-->
+<!--                           stylesheets="@css/analogueAnalysis.css" text="Statystyki Dnia" textFill="WHITE">-->
+<!--                       <font>-->
+<!--                           <Font name="System Bold" size="14.0" />-->
+<!--                       </font>-->
+<!--                       <VBox.margin>-->
+<!--                           <Insets bottom="5.0" top="5.0" />-->
+<!--                       </VBox.margin>-->
+<!--                       <graphic>-->
+<!--                           <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                               <image>-->
+<!--                                   <Image url="@icons/icons8-combo-chart-60.png" />-->
+<!--                               </image>-->
+<!--                           </ImageView>-->
+<!--                       </graphic>-->
+<!--                   </Button>-->
                </children>
                <opaqueInsets>
                   <Insets />
