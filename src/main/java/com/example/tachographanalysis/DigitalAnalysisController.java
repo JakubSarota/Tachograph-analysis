@@ -1350,8 +1350,8 @@ private void colorPicker() throws ParserConfigurationException {
         if(d!="0") {
             String file_name = UUID.randomUUID() + ".DDD";
             AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataPicker.getValue().toString(), LocalDate.now().toString(),
-                    inThisDayData, workSum + "h", breakSum + "h", file_name, "cyfrowy", Integer.parseInt(d),
-                    "","","");
+                    inThisDayData, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(d),
+                    dataPicker.getValue().toString(),"","");
             JOptionPane.showMessageDialog(null, "Pomyślnie dodano!");
         }
         }
@@ -1374,7 +1374,6 @@ private void colorPicker() throws ParserConfigurationException {
             String file_name = UUID.randomUUID() + ".DDD";
             for (String dataGD1 :
                     dataGD[1].split("data aktywności:")) {
-
                 String s = dataGD1.substring(dataGD1.indexOf("Dystans : ")+1, dataGD1.indexOf("km")+2);
                 Pattern p = Pattern.compile("[0-9]+");
                 Matcher m = p.matcher(s);
@@ -1385,8 +1384,8 @@ private void colorPicker() throws ParserConfigurationException {
                 if (d != "0") {
                     if (dataGD1.length() > 4)
                         AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11), LocalDate.now().toString(),
-                                dataGD1, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(d),
-                                "", "", "");
+                                dataGD1, "", "breakSum", file_name, "cyfrowy", Integer.parseInt(d),
+                                dataGD1.substring(0, 11), "", "");
 
                     i++;
                 }
