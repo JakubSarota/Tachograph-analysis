@@ -36,7 +36,7 @@ public class InfoDriver {
     private ObservableList<Data> dataList = FXCollections.observableArrayList();
 
     static int idDriver;
-    static String firstName, lastName;
+    static String firstName, lastName, Born, cardNumber;
     int idStats;
     Integer data;
 
@@ -65,6 +65,8 @@ public class InfoDriver {
             cardnumber.setText(queryOutput.getString("id_card"));
             firstName=queryOutput.getString("first_name");
             lastName=queryOutput.getString("last_name");
+            Born=queryOutput.getString("born_date");
+            cardNumber=queryOutput.getString("id_card");
 
             try {
                 if(queryOutput!=null) {
@@ -118,7 +120,66 @@ public class InfoDriver {
     public void generateOsw(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
         System.out.println("Creating PDF");
         String fileName = firstName + "_" + lastName + "_oswiadczenie_";
-        CreatePDF.createPDF(new String[]{" test "} ,fileName,"" );
+        System.out.println(firstname);
+
+
+        CreatePDF.createPDF(new String[]{
+                "                                          " +
+                        "                   " +
+                "ZAŚWIADCZENIE O DZIAŁALNOŚCI " +
+                        "                                                                   " +
+                        "                                             " +
+                        "(ROZPORZĄDZENIE (WE) NR 561/2006 LUB AETR (1))" +
+                        "                                          " +
+                "                                      \n" +
+                "Część wypełniana przez przedsiębiorstwo: \n" +
+                " 1. Nazwa firmy:         ..............................................................................................................................\n" +
+                " 2. Ulica i numer:        ..............................................................................................................................\n" +
+                " 3. Kod pocztowy:       .............................................................................................................................. \n" +
+                " 4. Miejscowość:        .............................................................................................................................. \n" +
+                " 5. Państwo:               .............................................................................................................................\n" +
+                " 6. Numer telefonu:      ..............................................................................................................................\n" +
+                " 7. Numer faksu:          ..............................................................................................................................\n" +
+                " 8. Adres email:           ..............................................................................................................................\n\n" +
+                "Ja niżej podpisany: \n" +
+                " 9. Imię i nazwisko:        ..............................................................................................................................\n" +
+                " 10. Stanowisko:              ................................................................................................................................\n\n" +
+                "oświadczam, że kierowca: \n" +
+                " 11. Imię nazwisko: " + firstname.getText() + " " + lastname.getText() + "\n" +
+                " 12. Data urodzenia: " + Born + "\n" +
+                " 13. Karta kierowcy: " + cardNumber + "\n\n" +
+                "w okresie: \n" +
+                " 14. od (godzina-dzień-miesiąc-rok): ...............................................................................................................\n" +
+                " 15. do (godzina-dzień-miesiąc-rok): ...............................................................................................................\n\n" +
+                " 16. [  ] pozostawał w gotowości (*)\n" +
+                " 17. [  ] przebywał na zwolnieniu chorobowym (*)\n" +
+                " 18. [  ] przebywał na urlopie wypoczynkowym (*)\n" +
+                " 18. [  ] miał czas wolny od pracy lub odpoczywał (*)\n" +
+                " 19. [  ] wykonywał pracę inną niż prowadzenie pojazdu (*)\n" +
+                " 20. [  ] prowadził pojazd wyłączony z zakresu stosowania rozporządzenia (WE) nr 561/2006 lub AETR (*)\n\n\n" +
+                "                                          " +
+                "                                          " +
+                "                                   " +
+                " ................................................................" +
+                "                                          " +
+                "                                          " +
+                "                                          " +
+                "" +
+                "(Miejscowość, data i podpis pracownika)\n\n" +
+                " 21. Ja, jako kierowca, potwierdzam, że w wyżej wymienionym okresie nie prowadziłem pojazdu wchodzącego\n       w zakres stosowania rozporządzenia (WE) nr 561/2006 lub AETR. \n" +
+                        "                                          " +
+                        "                                          " +
+                        "                                      " +
+                        " ................................................................" +
+                        "                                          " +
+                        "                                          " +
+                        "                                          " +
+                        "" +
+                        "(Miejscowość, data i podpis kierowcy)\n\n" +
+                        "----------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                        "(1) Umowa europejska dotyczy pracy zasług pojazdów wykonujących międzynarodowa przewozy drogowe.\n" +
+                        "(*) Można wybrać tylko jedną z rubryk." +
+                        ""} ,fileName,"" );
 
     }
 }

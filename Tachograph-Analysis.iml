@@ -324,15 +324,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/../../opencv/build/java/x64" />
+          <root url="file://$USER_HOME$/opencv/build/java/x64" />
         </NATIVE>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -354,12 +354,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -368,7 +368,7 @@
         <CLASSES />
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/../../opencv/build/java/x64" />
+          <root url="file://$USER_HOME$/opencv/build/java/x64" />
         </NATIVE>
         <SOURCES />
       </library>
@@ -376,12 +376,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -390,7 +390,7 @@
         <CLASSES />
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/../../opencv/build/java/x64" />
+          <root url="file://$USER_HOME$/opencv/build/java/x64" />
         </NATIVE>
         <SOURCES />
       </library>
@@ -427,12 +427,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -441,7 +441,7 @@
         <CLASSES />
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/../../opencv/build/java/x64" />
+          <root url="file://$USER_HOME$/opencv/build/java/x64" />
         </NATIVE>
         <SOURCES />
       </library>
@@ -458,22 +458,31 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/../../opencv/build/java/x64" />
+          <root url="file://$USER_HOME$/opencv/build/java/x64" />
         </NATIVE>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
+          <root url="jar://$USER_HOME$/opencv/build/java/opencv-455.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../scan/asprise_scan.jar!/" />
+          <root url="jar://$USER_HOME$/scan/asprise_scan.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Java/Compressed/asprise_scan.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
