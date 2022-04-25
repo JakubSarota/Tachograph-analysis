@@ -40,8 +40,9 @@ public class HoughCirclesRun {
             jo.put("centery",center.y);
             jo.put("radius",radius);
 //            Imgcodecs.imwrite(filename
-//                    .replace("file:/","")+"test__2_.png",src);
-            return jo;
+//                    .replace("file:/","")+"test__"+x+"_.png",src);
+            if(center.x+radius<src.width()&&center.y+radius<src.height())
+                return jo;
         }
 
         return null;
