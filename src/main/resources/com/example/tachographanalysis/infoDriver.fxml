@@ -26,6 +26,7 @@
                   </AnchorPane>
                </children>
             </HBox>
+            <HBox prefHeight="110.0" prefWidth="288.0" />
             <HBox layoutX="10.0" layoutY="144.0" prefHeight="35.0" prefWidth="264.0">
                <children>
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="200.0" text="Drugie imię" textAlignment="CENTER" textFill="WHITE">

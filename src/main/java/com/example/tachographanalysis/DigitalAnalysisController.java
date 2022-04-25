@@ -139,7 +139,6 @@ public class DigitalAnalysisController implements Initializable {
 
     @FXML
     void onDragClickedButton(MouseEvent event) throws Exception {
-
         TextError.setText("");
         TextLoading.setText("Ładowanie...");
         FileChooser fileChooser = new FileChooser();
@@ -263,7 +262,7 @@ public class DigitalAnalysisController implements Initializable {
 
                 if (kiloBytesXML > 0) {
                     System.out.println("Poprawnie zaimportowano plik .xml");
-                    dragOver.setText("Poprawnie załadowano plik!");
+//                    dragOver.setText("Poprawnie załadowano plik!");
                     String[] readedData = readData(file);
                     showData(readedData);
                 } else {
@@ -273,6 +272,9 @@ public class DigitalAnalysisController implements Initializable {
                         logDataWrite.append(dtf.format(now) + " błąd plik " + fileNameXML + " nie został poprawnie załadowany bądź jest uszkodzony\n");
                         logDataWrite.close();
                         file.delete();
+                        dataDigital.setVisible(false);
+                        draganddropPane.setVisible(true);
+                        loadAnotherFile.setVisible(false);
                         TextLoading.setText("Spróbuj ponownie");
                         System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
                     } else {
@@ -280,6 +282,9 @@ public class DigitalAnalysisController implements Initializable {
                         logDataWrite.append(dtf.format(now) + " błąd plik: '" + fileNameXML + "' nie został poprawnie załadowany bądź jest uszkodzony \n");
                         logDataWrite.close();
                         file.delete();
+                        dataDigital.setVisible(false);
+                        draganddropPane.setVisible(true);
+                        loadAnotherFile.setVisible(false);
                         TextLoading.setText("Spróbuj ponownie");
                         System.out.println("Błąd plik XML nie został poprawnie załadowany bądź jest uszkodzony");
                     }
@@ -304,6 +309,9 @@ public class DigitalAnalysisController implements Initializable {
     private void showData(String[] readedData) throws InterruptedException, DocumentException, IOException, ParserConfigurationException, SAXException {
         TextLoading.setText("");
         TextError.setText("");
+        draganddropPane.setVisible(false);
+        dataDigital.setVisible(true);
+        TitleFileName.setText("Dane z pliku");
         chart.getData().removeAll();
         chart.getData().clear();
         showWeaklyChart(readedData[1]+" \n\n d");
@@ -1149,6 +1157,7 @@ private void colorPicker() throws ParserConfigurationException {
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
             dragOver.setText("To nie jest plik .ddd");
+            TextLoading.setText("");
         } else {
             try {
                    File filepath = files.get(0);

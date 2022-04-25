@@ -51,7 +51,7 @@ public class AddDriver {
         String id_card = tf_id_card.getText();
 
         try {
-            if(!checkIsAllFill(last_name, first_name, pesel, city, born, country, id_card)==true) {
+            if(!checkIsAllFill(last_name, first_name, pesel, city, born, country)==true) {
                 hint.setTextFill(Color.web("#ff0000"));
                 hint.setText("Uzupełnij wszystkie pola oznaczone *");
             } else if(!CheckIsExist(pesel, id_card) == true) {
@@ -60,9 +60,6 @@ public class AddDriver {
             } else if(tf_pesel.getText().length() != 11) {
                 hint.setTextFill(Color.web("#ff0000"));
                 hint.setText("Nieprawidłowy PESEL");
-            } else if(tf_id_card.getText().length() != 15) {
-                hint.setTextFill(Color.web("#ff0000"));
-                hint.setText("Nieprawidłowy numer kierowcy");
             } else {
                 insertToDatabase(last_name, first_name, second_name, email, pesel, city, born, country, id_card);
 
@@ -77,9 +74,8 @@ public class AddDriver {
                                   String pesel,
                                   String city,
                                   String born,
-                                  String country,
-                                  String id_card) throws SQLException {
-        if(first_name == "" || last_name == "" || pesel == "" || city == "" || born == "" || id_card == "" || country == "") {
+                                  String country) throws SQLException {
+        if(first_name == "" || last_name == "" || pesel == "" || city == "" || born == "" || country == "") {
             return false;
         } else {
             hint.setTextFill(Color.web("#ffffff"));

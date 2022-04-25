@@ -126,11 +126,15 @@ public class AddStats {
                         Path.of(".\\archiwum\\" + name_of_file));
                 int indexWork=0;
                 int indexWorkEnd=time_arr.size()-1;
-                for (int t=0;t<time_arr.size();t++) {
-                    if(time_start.equals(time_arr.get(t))) {
-                        indexWork = t;
-                        if(indexWork!=0)
-                        indexWorkEnd=t-1;
+                if(time_start==null) {
+                    returnInfo.setText("Zaznacz godzinę rozpoczęcia pracy");
+                } else {
+                    for (int t=0;t<time_arr.size();t++) {
+                        if(time_start.equals(time_arr.get(t))) {
+                            indexWork = t;
+                            if(indexWork!=0)
+                                indexWorkEnd=t-1;
+                        }
                     }
                 }
                 returnInfo.setText(insertToDatabase(Integer.parseInt(d), dataPicker.getValue().toString(), LocalDate.now().toString(),
@@ -164,11 +168,9 @@ public class AddStats {
             }else{
                 return "Istnieją już statystyki dla tego kierowcy tego dnia";
             }
-            try {
-                if(queryOutput!=null) {
-                    queryOutput.close();
-                }
-            } catch (Exception e) { }
+            if(queryOutput!=null) {
+                queryOutput.close();
+            }
         } catch (SQLException throwables) {
 //            throwables.printStackTrace();
         }

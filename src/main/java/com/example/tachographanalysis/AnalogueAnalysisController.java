@@ -143,6 +143,7 @@ public class AnalogueAnalysisController {
     }
 
     private void getImageOnClick(String image) throws Exception {
+//        System.out.println(image);
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
@@ -419,14 +420,28 @@ public class AnalogueAnalysisController {
         btnScanner.setDisable(false);
     }
 
-    public void openScanner() {
+    public void openScanner() throws Exception {
         Result result = new AspriseScanUI().setRequest(
                         new Request().addOutputItem(
                                 new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
-                                        .setSavePath("${TMP}\\\\${TMS}${EXT}")))
-                .setInstruction("Scan <b>test</b>")
-                .showDialog(null, "Dialog Title", true, null);
+                                        .setSavePath("C:\\Users\\Public\\Documents\\\\${TMS}${EXT}")))
+                .showDialog(null, "Użyj skanera", true, null);
 
-        System.out.println(result == null ? "(null)" : result.getPdfFile());
+//        System.out.println(result == null ? "(null)" : result.getImageFiles());
+        if(result==null) {
+            dragOver.setText("Nie udało się załadować pliku ze skanera");
+        } else {
+            imageFile = String.valueOf(result.getImageFiles());
+            file_name=imageFile.replace("[","");
+            file_name=file_name.replace("]", "");
+//            System.out.println(file_name);
+            if(file_name==null) {
+                loading.setVisible(false);
+                dragOver.setText("Nie udało się załadować pliku ze skanera");
+            } else {
+                loading.setVisible(true);
+                getImageOnClick(file_name);
+            }
+        }
     }
 }
