@@ -153,7 +153,10 @@ public class AddStats {
 
         try{
             String query = "SELECT * FROM stats WHERE date_work='"+date_work+"' AND driver_id='"+driver_id+"'";
+            System.out.println(query);
             ResultSet queryOutput =  DatabaseConnection.exQuery(query);
+            System.out.println(queryOutput);
+            System.out.println(queryOutput==null);
             if(!queryOutput.next()) {
                     int status = DatabaseConnection.exUpdate(
             "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, " +
@@ -162,10 +165,16 @@ public class AddStats {
                   sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "','" + date_work_end + "','" +
                     time_work_start + "','" + time_work_end + "')");
 
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
                     if (status > 0) {
                         return "Dodano";
                     }
             }else{
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
                 return "Istnieją już statystyki dla tego kierowcy tego dnia";
             }
             if(queryOutput!=null) {

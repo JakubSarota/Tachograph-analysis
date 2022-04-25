@@ -184,6 +184,7 @@ public class AnalogueAnalysisController {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        file_name=String.valueOf(files.get(0)).replace("file:/","");
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(String.valueOf(files.get(0)));
         if(writableImage[0]!=null){
             WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
