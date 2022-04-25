@@ -62,7 +62,7 @@ import static java.lang.Integer.parseInt;
 public class DigitalAnalysisController implements Initializable {
 
     @FXML
-    private Text TitleFileName,TextLoading,TextError;
+    private Text TitleFileName, TextLoading, TextError;
     @FXML
     private BarChart barChart;
     @FXML
@@ -105,18 +105,18 @@ public class DigitalAnalysisController implements Initializable {
 
     List<String> lstFile;
     private String inThisDayData;
-    static String PDF =  "";
-    static String dataT =  "";
+    static String PDF = "";
+    static String dataT = "";
     public static File filexmlStats;
     static String[] dataGD;
     public static String dataPick;
     static String savedData = "";
     static String dataPick1;
-    static String breakSum,workSum,serial;
+    static String breakSum, workSum, serial;
     public int id;
-    static String lastDayOfWork= "";
+    static String lastDayOfWork = "";
     static int counterEnter = 0;
-    private String lastDaily,firstDaily;
+    private String lastDaily, firstDaily;
 
 
     public void getBack() throws Exception {
@@ -152,7 +152,7 @@ public class DigitalAnalysisController implements Initializable {
             draganddropPane.setVisible(false);
             dataDigital.setVisible(true);
             loadAnotherFile.setVisible(true);
-            this.file=file;
+            this.file = file;
             TitleFileName.setText("Dane z pliku " + file.getName());
 
             fileChooser.setTitle("Open Resource File");
@@ -262,7 +262,6 @@ public class DigitalAnalysisController implements Initializable {
 
                 if (kiloBytesXML > 0) {
                     System.out.println("Poprawnie zaimportowano plik .xml");
-//                    dragOver.setText("Poprawnie załadowano plik!");
                     String[] readedData = readData(file);
                     showData(readedData);
                 } else {
@@ -294,17 +293,19 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    private void  generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
+    private void generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()),"");
+        CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
         JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
     }
+
     @FXML
-    private void  generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
+    private void generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName())+dataPick,"",barChartTMP);
+        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName()) + dataPick, "", barChartTMP);
         JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
     }
+
     @FXML
     private void showData(String[] readedData) throws InterruptedException, DocumentException, IOException, ParserConfigurationException, SAXException {
         TextLoading.setText("");
@@ -314,25 +315,25 @@ public class DigitalAnalysisController implements Initializable {
         TitleFileName.setText("Dane z pliku");
         chart.getData().removeAll();
         chart.getData().clear();
-        showWeaklyChart(readedData[1]+" \n\n d");
+        showWeaklyChart(readedData[1] + " \n\n d");
 
         try {
             colorPicker();
-            dataGD=readedData;
+            dataGD = readedData;
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
 
         btnRaportPDF.setVisible(true);
-            tabPane.setVisible(true);
-            if(btnRaportPDF.isPressed()) {
-                generatePDF2();
-            }
-            if(btnRaportPDFdnia.isPressed()) {
-                generatePDF3();
+        tabPane.setVisible(true);
+        if (btnRaportPDF.isPressed()) {
+            generatePDF2();
         }
-            btnAddStatsDigitalAll.setVisible(true);
+        if (btnRaportPDFdnia.isPressed()) {
+            generatePDF3();
+        }
+        btnAddStatsDigitalAll.setVisible(true);
 
         TextArea generalData = new TextArea("");
         one.setContent(generalData);
@@ -341,9 +342,9 @@ public class DigitalAnalysisController implements Initializable {
 
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
-        dataT=readedData[1]+" \n\n d";
+        dataT = readedData[1] + " \n\n d";
 
-        if(dataPicker!=null) {
+        if (dataPicker != null) {
             visibilityDataPickerEnter();
         }
 
@@ -351,7 +352,6 @@ public class DigitalAnalysisController implements Initializable {
         three.setContent(driverRoute);
         TextArea driverRouteArea = (TextArea) three.getContent();
         driverRouteArea.appendText(readedData[2]);
-
 
 
         TextArea vehicleHistory = new TextArea("");
@@ -365,7 +365,7 @@ public class DigitalAnalysisController implements Initializable {
         TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
         dataChartTwoWeekendArea.setEditable(false);
 
-        if(!two.isSelected()) {
+        if (!two.isSelected()) {
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
@@ -373,7 +373,7 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    private void  setDataPicker() {
+    private void setDataPicker() {
         try {
             setDataPicker2(dataT);
         } catch (ParseException e) {
@@ -384,12 +384,12 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void setDataPicker2(String dataXml) throws ParseException {
 
-          String datePickerTime = String.valueOf(dataPicker.getValue());
-          String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
-          inThisDayData = "";
+        String datePickerTime = String.valueOf(dataPicker.getValue());
+        String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
+        inThisDayData = "";
 
-          dataPick= datePickerTime;
-          dataPick1= indexOfDataPickerTime;
+        dataPick = datePickerTime;
+        dataPick1 = indexOfDataPickerTime;
 
         TextArea dailyData = new TextArea("");
         two.setContent(dailyData);
@@ -398,9 +398,8 @@ public class DigitalAnalysisController implements Initializable {
         btnRaportPDFdnia.setVisible(true);
         btnAddStatsDigital.setVisible(true);
 
-        if(indexOfDataPickerTime.equals("-1")) {
-        }
-        else {
+        if (indexOfDataPickerTime.equals("-1")) {
+        } else {
 
             dailyDataDriver.appendText("Dzienna Aktywność: ");
             int indeksString = parseInt(indexOfDataPickerTime);
@@ -423,46 +422,46 @@ public class DigitalAnalysisController implements Initializable {
 
         Object[] dataDiffOneDaTable = dataDiffOneDay(data);
 
-        String selectedDate = data.substring(0,10);
+        String selectedDate = data.substring(0, 10);
 
         String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
         String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
         String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
 
-            barChart.getData().clear();
-            barChart.getData().removeAll();
-            barChartTMP.getData().clear();
-            barChartTMP.getData().removeAll();
+        barChart.getData().clear();
+        barChart.getData().removeAll();
+        barChartTMP.getData().clear();
+        barChartTMP.getData().removeAll();
 
-            counterEnter++;
+        counterEnter++;
 
 
-            //Barchart dzialający
-            barChart.setVisible(true);
+        //Barchart dzialający
+        barChart.setVisible(true);
 
-            barChart.setTitle("Aktywność pracownika ");
-            barChart.getXAxis().setLabel("Aktywność");
-            barChart.getYAxis().setLabel("Godziny");
-            barChartTMP.setTitle("Aktywność pracownika ");
-            barChartTMP.getXAxis().setLabel("Aktywność");
-            barChartTMP.getYAxis().setLabel("Godziny");
+        barChart.setTitle("Aktywność pracownika ");
+        barChart.getXAxis().setLabel("Aktywność");
+        barChart.getYAxis().setLabel("Godziny");
+        barChartTMP.setTitle("Aktywność pracownika ");
+        barChartTMP.getXAxis().setLabel("Aktywność");
+        barChartTMP.getYAxis().setLabel("Godziny");
 
-            barChart.setAnimated(false);
+        barChart.setAnimated(false);
 
-            XYChart.Series series1 = new XYChart.Series();
-            series1.setName(selectedDate);
-            series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
-            series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
-            series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
-            XYChart.Series series2 = new XYChart.Series();
-            series2.setName(selectedDate);
-            series2.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
-            series2.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
-            series2.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
-            workSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork)/60))+parseInt(String.valueOf(timeDiffrence(activityDataDrive)/60)));
-            breakSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60);
-            barChart.getData().addAll(series1);
-            barChartTMP.getData().addAll(series2);
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName(selectedDate);
+        series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
+        series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+        series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName(selectedDate);
+        series2.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60));
+        series2.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60));
+        series2.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60));
+        workSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork) / 60)) + parseInt(String.valueOf(timeDiffrence(activityDataDrive) / 60)));
+        breakSum = String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60);
+        barChart.getData().addAll(series1);
+        barChartTMP.getData().addAll(series2);
 
         savedData += selectedDate;
         counterEnter++;
@@ -529,11 +528,11 @@ public class DigitalAnalysisController implements Initializable {
             int indeksString = parseInt(indexOfDataPickerTime[counter14days]);
             int i = 0;
 
-                while ((!String.valueOf(readedData.charAt(indeksString + i)).equals("d"))) {
-                    inThisDayData[counter14days] += String.valueOf(readedData.charAt(parseInt(indexOfDataPickerTime[counter14days]) + i));
-                    i += 1;
-                }
-                counter14days++;
+            while ((!String.valueOf(readedData.charAt(indeksString + i)).equals("d"))) {
+                inThisDayData[counter14days] += String.valueOf(readedData.charAt(parseInt(indexOfDataPickerTime[counter14days]) + i));
+                i += 1;
+            }
+            counter14days++;
 //            }
         }
 
@@ -541,11 +540,10 @@ public class DigitalAnalysisController implements Initializable {
         int lastIndexOfTheDay = 0;
 
         for (int i = 0; i < 14; i++) {
-            if( inThisDayData[i].startsWith("null")) {
+            if (inThisDayData[i].startsWith("null")) {
                 lastIndexOfTheDay = inThisDayData[i].length();
                 inThisDayDataCorrectly[i] = inThisDayData[i].substring(4, lastIndexOfTheDay);
-            }
-            else{
+            } else {
                 inThisDayDataCorrectly[i] = inThisDayData[i].substring(0, lastIndexOfTheDay);
             }
         }
@@ -567,7 +565,7 @@ public class DigitalAnalysisController implements Initializable {
             activityDataDrive = (String[]) dataDiffOneDaTable[1];
             activityDataBreak = (String[]) dataDiffOneDaTable[2];
 
-            activityDataWorkObject[i] =  activityDataWork;
+            activityDataWorkObject[i] = activityDataWork;
             activityDataDriveObject[i] = activityDataDrive;
             activityDataBreakObject[i] = activityDataBreak;
 
@@ -592,10 +590,10 @@ public class DigitalAnalysisController implements Initializable {
         seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[7]))) / 60));
         seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[8]))) / 60));
         seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[9]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[10]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[11]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[12]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13],parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[13]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[10]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[11]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[12]))) / 60));
+        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[13]))) / 60));
 
         XYChart.Series seriesChart2 = new XYChart.Series();
         seriesChart2.setName("Przerwa");
@@ -609,10 +607,10 @@ public class DigitalAnalysisController implements Initializable {
         seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[7]))) / 60));
         seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[8]))) / 60));
         seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[9]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[10]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[11]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[12]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13],parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[13]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[10]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[11]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[12]))) / 60));
+        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[13]))) / 60));
 
         XYChart.Series seriesChart3 = new XYChart.Series();
         seriesChart3.setName("Jazda");
@@ -638,7 +636,7 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    private Object[] dataDiffOneDay(String data){
+    private Object[] dataDiffOneDay(String data) {
 
         int firstActivity = data.indexOf("Aktywność");
         int bTime = 0;
@@ -705,7 +703,6 @@ public class DigitalAnalysisController implements Initializable {
         }
 
 
-
         // work hours
         count = 0;
         count2 = 0;
@@ -732,9 +729,9 @@ public class DigitalAnalysisController implements Initializable {
 
         Object[] timeDiffOneDayTable = new Object[3];
 
-        timeDiffOneDayTable[0]= activityDataWork;
-        timeDiffOneDayTable[1]= activityDataDrive;
-        timeDiffOneDayTable[2]= activityDataBreak;
+        timeDiffOneDayTable[0] = activityDataWork;
+        timeDiffOneDayTable[1] = activityDataDrive;
+        timeDiffOneDayTable[2] = activityDataBreak;
 
 
         return timeDiffOneDayTable;
@@ -743,27 +740,27 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    public int timeDiffrence(String[] activity){
+    public int timeDiffrence(String[] activity) {
 
-        int sumActivityDataBreakM= 0;
+        int sumActivityDataBreakM = 0;
         String[] dateBreakHM = new String[8];
         String start = "";
         String stop = "";
 
-        for (int i = 1 ; i<activity.length ; i++){
+        for (int i = 1; i < activity.length; i++) {
 
-            dateBreakHM[0]= String.valueOf(activity[i].charAt(0));
-            dateBreakHM[1]= String.valueOf(activity[i].charAt(1));
-            dateBreakHM[2]= String.valueOf(activity[i].charAt(3));
-            dateBreakHM[3]= String.valueOf(activity[i].charAt(4));
-            dateBreakHM[4]= String.valueOf(activity[i].charAt(6));
-            dateBreakHM[5]= String.valueOf(activity[i].charAt(7));
-            dateBreakHM[6]= String.valueOf(activity[i].charAt(9));
-            dateBreakHM[7]= String.valueOf(activity[i].charAt(10));
+            dateBreakHM[0] = String.valueOf(activity[i].charAt(0));
+            dateBreakHM[1] = String.valueOf(activity[i].charAt(1));
+            dateBreakHM[2] = String.valueOf(activity[i].charAt(3));
+            dateBreakHM[3] = String.valueOf(activity[i].charAt(4));
+            dateBreakHM[4] = String.valueOf(activity[i].charAt(6));
+            dateBreakHM[5] = String.valueOf(activity[i].charAt(7));
+            dateBreakHM[6] = String.valueOf(activity[i].charAt(9));
+            dateBreakHM[7] = String.valueOf(activity[i].charAt(10));
 
-            start =  dateBreakHM[0]+dateBreakHM[1]+":"+dateBreakHM[2]+dateBreakHM[3];
-            stop = dateBreakHM[4]+dateBreakHM[5]+":"+dateBreakHM[6]+dateBreakHM[7];
-            SimpleDateFormat  format = new SimpleDateFormat("HH:mm");
+            start = dateBreakHM[0] + dateBreakHM[1] + ":" + dateBreakHM[2] + dateBreakHM[3];
+            stop = dateBreakHM[4] + dateBreakHM[5] + ":" + dateBreakHM[6] + dateBreakHM[7];
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm");
             Date date1 = null;
             try {
                 date1 = format.parse(start);
@@ -776,42 +773,43 @@ public class DigitalAnalysisController implements Initializable {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            long diffrence = date2.getTime()-date1.getTime();
+            long diffrence = date2.getTime() - date1.getTime();
 
-            sumActivityDataBreakM+=diffrence/1000/60;
+            sumActivityDataBreakM += diffrence / 1000 / 60;
 
         }
         return sumActivityDataBreakM;
     }
+
     @FXML
-    private void visibilityDataPickerLeave(){
+    private void visibilityDataPickerLeave() {
 
-        if(dataT.length()!=0 ) {
+        if (dataT.length() != 0) {
 
-                if(dataPicker!=null) {
-                    dataPicker.setVisible(false);
-                }
-                if(btnRaportPDFdnia!=null) {
-                    btnRaportPDFdnia.setVisible(false);
-                }
-                if(btnAddStatsDigital!=null) {
+            if (dataPicker != null) {
+                dataPicker.setVisible(false);
+            }
+            if (btnRaportPDFdnia != null) {
+                btnRaportPDFdnia.setVisible(false);
+            }
+            if (btnAddStatsDigital != null) {
                 btnAddStatsDigital.setVisible(false);
-                }
-                if(chart!=null) {
-                    chart.setVisible(false);
-                }
-                if(barChart!=null) {
-                    barChart.setVisible(false);
-                }
-                savedData = "";
-
+            }
+            if (chart != null) {
+                chart.setVisible(false);
+            }
+            if (barChart != null) {
+                barChart.setVisible(false);
+            }
+            savedData = "";
 
 
         }
 
     }
+
     @FXML
-    private void visibilityDataPickerEnter(){
+    private void visibilityDataPickerEnter() {
 
         dataPicker.setVisible(true);
         barChart.setVisible(false);
@@ -822,110 +820,108 @@ public class DigitalAnalysisController implements Initializable {
 
         int lastZLatter = dataT.lastIndexOf("Z");
         lastDayOfWork = String.valueOf(dataPicker.getValue());
-        int lastDataIndex = lastZLatter-19;
-        String lastaDataString = (dataT.substring(lastDataIndex,lastDataIndex+10));
+        int lastDataIndex = lastZLatter - 19;
+        String lastaDataString = (dataT.substring(lastDataIndex, lastDataIndex + 10));
         //Nr ostatniego dnia pracy
-        lastDaily = (dataT.substring(lastDataIndex+55, lastDataIndex + 58));
+        lastDaily = (dataT.substring(lastDataIndex + 55, lastDataIndex + 58));
         int firstZLatter = dataT.indexOf("Z");
-        int firstDataIndex = firstZLatter-19;
-        firstDaily = (dataT.substring(firstDataIndex+55, firstDataIndex + 58));
+        int firstDataIndex = firstZLatter - 19;
+        firstDaily = (dataT.substring(firstDataIndex + 55, firstDataIndex + 58));
 
-        String year = (lastaDataString.substring(0,4));
-        String month = (lastaDataString.substring(5,7));
-        String day = (lastaDataString.substring(8,10));
+        String year = (lastaDataString.substring(0, 4));
+        String month = (lastaDataString.substring(5, 7));
+        String day = (lastaDataString.substring(8, 10));
 
         int parseDay = parseInt(day);
         int parseMonth = parseInt(month);
         int parseYear = parseInt(year);
-        if((parseMonth==4 || parseMonth==6 || parseMonth==9 || parseMonth==11 )&& parseDay==30 && parseMonth!=12) {
-            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
-        }else if (parseMonth==2 && parseDay == 28){
-            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
-        }else if (parseMonth==12 && parseDay == 31 ){
-            dataPicker.setValue(LocalDate.of(parseYear+1,1,1));
-        }else if ((parseMonth==1 || parseMonth==3 || parseMonth==5 || parseMonth==7 || parseMonth==8 || parseMonth==10 || parseMonth==12 )&& parseDay==31){
-            dataPicker.setValue(LocalDate.of(parseYear,parseMonth+1,1));
-        }
-        else{
-            dataPicker.setValue(LocalDate.of(parseYear,parseMonth,parseDay+1));
+        if ((parseMonth == 4 || parseMonth == 6 || parseMonth == 9 || parseMonth == 11) && parseDay == 30 && parseMonth != 12) {
+            dataPicker.setValue(LocalDate.of(parseYear, parseMonth + 1, 1));
+        } else if (parseMonth == 2 && parseDay == 28) {
+            dataPicker.setValue(LocalDate.of(parseYear, parseMonth + 1, 1));
+        } else if (parseMonth == 12 && parseDay == 31) {
+            dataPicker.setValue(LocalDate.of(parseYear + 1, 1, 1));
+        } else if ((parseMonth == 1 || parseMonth == 3 || parseMonth == 5 || parseMonth == 7 || parseMonth == 8 || parseMonth == 10 || parseMonth == 12) && parseDay == 31) {
+            dataPicker.setValue(LocalDate.of(parseYear, parseMonth + 1, 1));
+        } else {
+            dataPicker.setValue(LocalDate.of(parseYear, parseMonth, parseDay + 1));
         }
 
     }
 
 
     @FXML
-    private void visiblityChartArea(){
+    private void visiblityChartArea() {
         chart.setVisible(true);
 
     }
 
     @FXML
-    private void btnRaportPDFdnia(){
+    private void btnRaportPDFdnia() {
         btnRaportPDFdnia.setVisible(true);
     }
 
-private void colorPicker() throws ParserConfigurationException {
+    private void colorPicker() throws ParserConfigurationException {
 
-    List<LocalDate> work = new ArrayList<>();
+        List<LocalDate> work = new ArrayList<>();
 
-    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-    DocumentBuilder db = dbf.newDocumentBuilder();
-    Document doc = null;
-    try {
-        doc = db.parse(PDF);
-    } catch (SAXException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = null;
+        try {
+            doc = db.parse(PDF);
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    doc.getDocumentElement().normalize();
-    NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
+        doc.getDocumentElement().normalize();
+        NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
 
-    for (int i = 0; i < CardActivityDailyRecord.getLength(); i++) {
+        for (int i = 0; i < CardActivityDailyRecord.getLength(); i++) {
 
-        String year = "";
-        String month = "";
-        String day = "";
-        String dataCalendar = CardActivityDailyRecord.item(i).getAttributes().item(1).getNodeValue();
+            String year = "";
+            String month = "";
+            String day = "";
+            String dataCalendar = CardActivityDailyRecord.item(i).getAttributes().item(1).getNodeValue();
 
-        year += dataCalendar.charAt(0);
-        year += dataCalendar.charAt(1);
-        year += dataCalendar.charAt(2);
-        year += dataCalendar.charAt(3);
+            year += dataCalendar.charAt(0);
+            year += dataCalendar.charAt(1);
+            year += dataCalendar.charAt(2);
+            year += dataCalendar.charAt(3);
 
-        month += dataCalendar.charAt(5);
-        month += dataCalendar.charAt(6);
+            month += dataCalendar.charAt(5);
+            month += dataCalendar.charAt(6);
 
-        day += dataCalendar.charAt(8);
-        day += dataCalendar.charAt(9);
-
-
-        work.add(LocalDate.of(parseInt(year), parseInt(month), parseInt(day)));
-    }
+            day += dataCalendar.charAt(8);
+            day += dataCalendar.charAt(9);
 
 
-    dataPicker.setDayCellFactory(new Callback<DatePicker, DateCell>() {
-        @Override
-        public DateCell call(DatePicker param) {
-            return new DateCell() {
-                @Override
-                public void updateItem(LocalDate item, boolean empty) {
-                    super.updateItem(item, empty);
+            work.add(LocalDate.of(parseInt(year), parseInt(month), parseInt(day)));
+        }
 
-                    if (!empty && item != null) {
-                        if (work.contains(item)) {
-                            this.setStyle("-fx-background-color: pink");
-                        }
-                        else{
-                            this.setDisable(true);
+
+        dataPicker.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (!empty && item != null) {
+                            if (work.contains(item)) {
+                                this.setStyle("-fx-background-color: pink");
+                            } else {
+                                this.setDisable(true);
+                            }
                         }
                     }
-                }
-            };
-        }
-    });
-}
+                };
+            }
+        });
+    }
 
     public static String[] readData(File filexml) throws Exception {
 
@@ -958,119 +954,119 @@ private void colorPicker() throws ParserConfigurationException {
                     generalDataS += (eElement.getElementsByTagName("CardHolderSurname").
                             item(0).getTextContent() + ", ");
 
-                    generalDataS +=(eElement.getElementsByTagName("CardHolderFirstNames").
+                    generalDataS += (eElement.getElementsByTagName("CardHolderFirstNames").
                             item(0).getTextContent() + ", ");
-                    generalDataS +=(eElement.getElementsByTagName("CardHolderPreferredLanguage").
+                    generalDataS += (eElement.getElementsByTagName("CardHolderPreferredLanguage").
                             item(0).getTextContent() + "\n\n");
                     // CardExtendedSerialNumber
 
                     // dodać serial number / data / rfu/  (jak wyciąga się value xml elementu month year itp..)
-                    generalDataS +=("Identyfikacja karty ICC:  \n");
-                    generalDataS +=("\t ClockStop: " + eElement.getElementsByTagName("ClockStop").
+                    generalDataS += ("Identyfikacja karty ICC:  \n");
+                    generalDataS += ("\t ClockStop: " + eElement.getElementsByTagName("ClockStop").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t CardExtendedSerialNumber: " + eElement.getElementsByTagName("CardExtendedSerialNumber").
+                    generalDataS += ("\t CardExtendedSerialNumber: " + eElement.getElementsByTagName("CardExtendedSerialNumber").
                             item(0).getTextContent() + "\n");
-                    serial =(eElement.getElementsByTagName("CardExtendedSerialNumber").
+                    serial = (eElement.getElementsByTagName("CardExtendedSerialNumber").
                             item(0).getTextContent());
-                    generalDataS +=("\t Numer zatwierdzenia karty: " + eElement.getElementsByTagName("CardApprovalNumber").
+                    generalDataS += ("\t Numer zatwierdzenia karty: " + eElement.getElementsByTagName("CardApprovalNumber").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t CardPersonaliserId: " + eElement.getElementsByTagName("CardPersonaliserId").
+                    generalDataS += ("\t CardPersonaliserId: " + eElement.getElementsByTagName("CardPersonaliserId").
                             item(0).getTextContent() + "\n");
                     //EmbedderIcAssemblerId
-                    generalDataS +=("\t EmbedderIcAssemblerId: " + "\n");
-                    generalDataS +=("\t\t -CountryCode: " + eElement.getElementsByTagName("CountryCode").
+                    generalDataS += ("\t EmbedderIcAssemblerId: " + "\n");
+                    generalDataS += ("\t\t -CountryCode: " + eElement.getElementsByTagName("CountryCode").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t -ModuleEmbedder: " + eElement.getElementsByTagName("CountryCode").
+                    generalDataS += ("\t\t -ModuleEmbedder: " + eElement.getElementsByTagName("CountryCode").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t -ManufacturerInformation: " + eElement.getElementsByTagName("ManufacturerInformation").
+                    generalDataS += ("\t\t -ManufacturerInformation: " + eElement.getElementsByTagName("ManufacturerInformation").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t IcIdentifier: " + eElement.getElementsByTagName("IcIdentifier").
+                    generalDataS += ("\t IcIdentifier: " + eElement.getElementsByTagName("IcIdentifier").
                             item(0).getTextContent() + "\n");
                     //CardChipIdentyfiaction
-                    generalDataS +=("CardChipIdentification: " + eElement.getElementsByTagName("CardChipIdentification").
+                    generalDataS += ("CardChipIdentification: " + eElement.getElementsByTagName("CardChipIdentification").
                             item(0).getTextContent() + "\n");
                     // ext value
-                    generalDataS +=("\t IcSerialNumber: " + eElement.getElementsByTagName("IcSerialNumber").
+                    generalDataS += ("\t IcSerialNumber: " + eElement.getElementsByTagName("IcSerialNumber").
                             item(0).getTextContent() + "\n");
                     // ext value
-                    generalDataS +=("\t IcManufacturingReferences: " + eElement.getElementsByTagName("IcManufacturingReferences").
+                    generalDataS += ("\t IcManufacturingReferences: " + eElement.getElementsByTagName("IcManufacturingReferences").
                             item(0).getTextContent() + "\n");
                     //DriverCardApplicationIdentyfication
-                    generalDataS +=(" DriverCardApplicationIdentification: " + "\n");
-                    generalDataS +=("\t Type: " + eElement.getElementsByTagName("Type").
+                    generalDataS += (" DriverCardApplicationIdentification: " + "\n");
+                    generalDataS += ("\t Type: " + eElement.getElementsByTagName("Type").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t Version: " + eElement.getElementsByTagName("Version").
+                    generalDataS += ("\t Version: " + eElement.getElementsByTagName("Version").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t NoOfEventsPerType: " + eElement.getElementsByTagName("NoOfEventsPerType").
+                    generalDataS += ("\t NoOfEventsPerType: " + eElement.getElementsByTagName("NoOfEventsPerType").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t NoOfFaultsPerType: " + eElement.getElementsByTagName("NoOfFaultsPerType").
+                    generalDataS += ("\t NoOfFaultsPerType: " + eElement.getElementsByTagName("NoOfFaultsPerType").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t ActivityStructureLength: " + eElement.getElementsByTagName("ActivityStructureLength").
+                    generalDataS += ("\t ActivityStructureLength: " + eElement.getElementsByTagName("ActivityStructureLength").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t NoOfCardVehicleRecords: " + eElement.getElementsByTagName("NoOfCardVehicleRecords").
+                    generalDataS += ("\t NoOfCardVehicleRecords: " + eElement.getElementsByTagName("NoOfCardVehicleRecords").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t NoOfCardPlaceRecords: " + eElement.getElementsByTagName("NoOfCardPlaceRecords").
+                    generalDataS += ("\t NoOfCardPlaceRecords: " + eElement.getElementsByTagName("NoOfCardPlaceRecords").
                             item(0).getTextContent() + "\n");
                     //CardCertificate
-                    generalDataS +=(" CardCertificate: " + "\n");
+                    generalDataS += (" CardCertificate: " + "\n");
                     //ext value
-                    generalDataS +=("\t Signature: " + eElement.getElementsByTagName("Signature").
+                    generalDataS += ("\t Signature: " + eElement.getElementsByTagName("Signature").
                             item(0).getTextContent() + "\n");
                     //ext value
-                    generalDataS +=("\t PublicKeyRemainder: " + eElement.getElementsByTagName("PublicKeyRemainder").
+                    generalDataS += ("\t PublicKeyRemainder: " + eElement.getElementsByTagName("PublicKeyRemainder").
                             item(0).getTextContent() + "\n");
                     //CertificationAuthorityReference
-                    generalDataS +=("\t CertificationAuthorityReference: " + "\n");
-                    generalDataS +=("\t\t Nation: " + eElement.getElementsByTagName("Nation").
+                    generalDataS += ("\t CertificationAuthorityReference: " + "\n");
+                    generalDataS += ("\t\t Nation: " + eElement.getElementsByTagName("Nation").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t NationCode: " + eElement.getElementsByTagName("NationCode").
+                    generalDataS += ("\t\t NationCode: " + eElement.getElementsByTagName("NationCode").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t SerialNumber: " + eElement.getElementsByTagName("SerialNumber").
+                    generalDataS += ("\t\t SerialNumber: " + eElement.getElementsByTagName("SerialNumber").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t AdditionalInfo: " + eElement.getElementsByTagName("AdditionalInfo").
+                    generalDataS += ("\t\t AdditionalInfo: " + eElement.getElementsByTagName("AdditionalInfo").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t CaIdentifier: " + eElement.getElementsByTagName("CaIdentifier").
+                    generalDataS += ("\t\t CaIdentifier: " + eElement.getElementsByTagName("CaIdentifier").
                             item(0).getTextContent() + "\n");
                     //Identification
-                    generalDataS +=(" Identification: " + "\n");
+                    generalDataS += (" Identification: " + "\n");
                     //CardIdentyfication
-                    generalDataS +=("\t CardIdentification: " + "\n");
-                    generalDataS +=("\t\t CardIssuingMemberState: " + eElement.getElementsByTagName("CardIssuingMemberState").
+                    generalDataS += ("\t CardIdentification: " + "\n");
+                    generalDataS += ("\t\t CardIssuingMemberState: " + eElement.getElementsByTagName("CardIssuingMemberState").
                             item(0).getTextContent() + "\n");
                     // ext value
-                    generalDataS +=("\t\t CardNumber: " + eElement.getElementsByTagName("CardNumber").
+                    generalDataS += ("\t\t CardNumber: " + eElement.getElementsByTagName("CardNumber").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t CardIssuingAuthorityName: " + eElement.getElementsByTagName("CardIssuingAuthorityName").
-                            item(0).getTextContent() + "\n");
-                    // ext value
-                    generalDataS +=("\t\t CardIssueDate: " + eElement.getElementsByTagName("CardIssueDate").
+                    generalDataS += ("\t\t CardIssuingAuthorityName: " + eElement.getElementsByTagName("CardIssuingAuthorityName").
                             item(0).getTextContent() + "\n");
                     // ext value
-                    generalDataS +=("\t\t CardValidityBegin: " + eElement.getElementsByTagName("CardValidityBegin").
+                    generalDataS += ("\t\t CardIssueDate: " + eElement.getElementsByTagName("CardIssueDate").
                             item(0).getTextContent() + "\n");
                     // ext value
-                    generalDataS +=("\t\t CardExpiryDate: " + eElement.getElementsByTagName("CardExpiryDate").
+                    generalDataS += ("\t\t CardValidityBegin: " + eElement.getElementsByTagName("CardValidityBegin").
+                            item(0).getTextContent() + "\n");
+                    // ext value
+                    generalDataS += ("\t\t CardExpiryDate: " + eElement.getElementsByTagName("CardExpiryDate").
                             item(0).getTextContent() + "\n");
                     //DriverCardHolderIdentyfication
-                    generalDataS +=("\t DriverCardHolderIdentification: " + eElement.getElementsByTagName("DriverCardHolderIdentification").
+                    generalDataS += ("\t DriverCardHolderIdentification: " + eElement.getElementsByTagName("DriverCardHolderIdentification").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t CardHolderSurname: " + eElement.getElementsByTagName("CardHolderSurname").
+                    generalDataS += ("\t\t CardHolderSurname: " + eElement.getElementsByTagName("CardHolderSurname").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t CardHolderFirstNames: " + eElement.getElementsByTagName("CardHolderFirstNames").
+                    generalDataS += ("\t\t CardHolderFirstNames: " + eElement.getElementsByTagName("CardHolderFirstNames").
                             item(0).getTextContent() + "\n");
                     // ect value
-                    generalDataS +=("\t\t CardHolderBirthDate: " + eElement.getElementsByTagName("CardHolderBirthDate").
+                    generalDataS += ("\t\t CardHolderBirthDate: " + eElement.getElementsByTagName("CardHolderBirthDate").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t CardHolderPreferredLanguage: " + eElement.getElementsByTagName("CardHolderPreferredLanguage").
+                    generalDataS += ("\t\t CardHolderPreferredLanguage: " + eElement.getElementsByTagName("CardHolderPreferredLanguage").
                             item(0).getTextContent() + "\n");
                     //CardDrivingLicenceInformation
-                    generalDataS +=("\t CardDrivingLicenceInformation: " + eElement.getElementsByTagName("CardDrivingLicenceInformation").
+                    generalDataS += ("\t CardDrivingLicenceInformation: " + eElement.getElementsByTagName("CardDrivingLicenceInformation").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t DrivingLicenceIssuingAuthority: " + eElement.getElementsByTagName("DrivingLicenceIssuingAuthority").
+                    generalDataS += ("\t\t DrivingLicenceIssuingAuthority: " + eElement.getElementsByTagName("DrivingLicenceIssuingAuthority").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t DrivingLicenceIssuingNation: " + eElement.getElementsByTagName("DrivingLicenceIssuingNation").
+                    generalDataS += ("\t\t DrivingLicenceIssuingNation: " + eElement.getElementsByTagName("DrivingLicenceIssuingNation").
                             item(0).getTextContent() + "\n");
-                    generalDataS +=("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
+                    generalDataS += ("\t\t DrivingLicenceNumber: " + eElement.getElementsByTagName("DrivingLicenceNumber").
                             item(0).getTextContent() + "\n");
 
 
@@ -1078,16 +1074,16 @@ private void colorPicker() throws ParserConfigurationException {
                     int k = 0;
                     NodeList CardActivityDailyRecord = doc.getElementsByTagName("CardActivityDailyRecord");
 
-                    for(int i=0;i<CardActivityDailyRecord.getLength();i++){
-        NodeList t=CardActivityDailyRecord.item(i).getChildNodes();
-                        dailyActivityS +=(" \n\n data aktywności: " + CardActivityDailyRecord.item(i).
+                    for (int i = 0; i < CardActivityDailyRecord.getLength(); i++) {
+                        NodeList t = CardActivityDailyRecord.item(i).getChildNodes();
+                        dailyActivityS += (" \n\n data aktywności: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(1).getNodeValue() + " \n");
-                        dailyActivityS +=(" Dystans : " + CardActivityDailyRecord.item(i).
+                        dailyActivityS += (" Dystans : " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(2).getNodeValue() + " km \n");
-                        dailyActivityS +=(" Dzień pracy: " + CardActivityDailyRecord.item(i).
+                        dailyActivityS += (" Dzień pracy: " + CardActivityDailyRecord.item(i).
                                 getAttributes().item(0).getNodeValue() + " \n\n");
-                        for (int j=0;j<t.getLength();j++){
-                            if(t.item(j).getAttributes()!=null) {
+                        for (int j = 0; j < t.getLength(); j++) {
+                            if (t.item(j).getAttributes() != null) {
                                 dailyActivityS += (" \t Aktywność: " + t.item(j).getAttributes().getNamedItem("Activity"));
                                 dailyActivityS += (" Czas: " + t.item(j).getAttributes().getNamedItem("Time") + "\n");
                             }
@@ -1102,11 +1098,11 @@ private void colorPicker() throws ParserConfigurationException {
                     NodeList EntryTime = doc.getElementsByTagName("EntryTime");
                     NodeList DailyWorkPeriodCountry = doc.getElementsByTagName("DailyWorkPeriodCountry"); //atrib
 
-                    driverRouteS +=("\n Trasa kierowcy: \n\n");
+                    driverRouteS += ("\n Trasa kierowcy: \n\n");
                     for (int i = 0; i < elPlaceRecord.getLength(); i++) {
-                        driverRouteS +=("\t Kraj: " + DailyWorkPeriodCountry.item(i).getAttributes().item(0).getNodeValue() + " ");
-                        driverRouteS +=(" Data i godzina: " + EntryTime.item(i).getAttributes().item(0).getNodeValue());
-                        driverRouteS +=("  Przebieg: " + eElement.getElementsByTagName("VehicleOdometerValue").item(i).getTextContent() + " km \n");
+                        driverRouteS += ("\t Kraj: " + DailyWorkPeriodCountry.item(i).getAttributes().item(0).getNodeValue() + " ");
+                        driverRouteS += (" Data i godzina: " + EntryTime.item(i).getAttributes().item(0).getNodeValue());
+                        driverRouteS += ("  Przebieg: " + eElement.getElementsByTagName("VehicleOdometerValue").item(i).getTextContent() + " km \n");
                     }
 
                     //Przebieg
@@ -1115,19 +1111,19 @@ private void colorPicker() throws ParserConfigurationException {
                     NodeList VehicleFirstUse = doc.getElementsByTagName("VehicleFirstUse");
                     NodeList VehicleLastUse = doc.getElementsByTagName("VehicleLastUse"); //atrib
 
-                    mileageCarS +=("\n Dane pojazdu: \n\n");
+                    mileageCarS += ("\n Dane pojazdu: \n\n");
                     for (int i = 0; i < elCardVehicleRecord.getLength(); i++) {
-                        mileageCarS +=("\t Przebieg startowy: " + eElement.getElementsByTagName("VehicleOdometerBegin").item(i).getTextContent() + " km, ");
-                        mileageCarS +=(" przebieg końcowy: " + eElement.getElementsByTagName("VehicleOdometerEnd").item(i).getTextContent() + " km, ");
-                        mileageCarS +=(" od: " + VehicleFirstUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
-                        mileageCarS +=(" do: " + VehicleLastUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
-                        mileageCarS +=(" Numer rejestracyjny: " + elElement.getElementsByTagName("VehicleRegistrationNumber").item(i).getTextContent() + " \n");
+                        mileageCarS += ("\t Przebieg startowy: " + eElement.getElementsByTagName("VehicleOdometerBegin").item(i).getTextContent() + " km, ");
+                        mileageCarS += (" przebieg końcowy: " + eElement.getElementsByTagName("VehicleOdometerEnd").item(i).getTextContent() + " km, ");
+                        mileageCarS += (" od: " + VehicleFirstUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
+                        mileageCarS += (" do: " + VehicleLastUse.item(i).getAttributes().item(0).getNodeValue() + ", ");
+                        mileageCarS += (" Numer rejestracyjny: " + elElement.getElementsByTagName("VehicleRegistrationNumber").item(i).getTextContent() + " \n");
                     }
                 }
             }
-            dailyActivityS=dailyActivityS.replace("Time=","");
-            dailyActivityS=dailyActivityS.replace("\"","");
-            dailyActivityS=dailyActivityS.replace("Activity=","");
+            dailyActivityS = dailyActivityS.replace("Time=", "");
+            dailyActivityS = dailyActivityS.replace("\"", "");
+            dailyActivityS = dailyActivityS.replace("Activity=", "");
             xmlDate[0] = generalDataS;
             xmlDate[1] = dailyActivityS;
             xmlDate[2] = driverRouteS;
@@ -1144,8 +1140,6 @@ private void colorPicker() throws ParserConfigurationException {
     }
 
 
-
-
     @FXML
     private void handleDroppedButton(DragEvent event) throws FileNotFoundException {
         List<File> files = event.getDragboard().getFiles();
@@ -1160,16 +1154,14 @@ private void colorPicker() throws ParserConfigurationException {
             TextLoading.setText("");
         } else {
             try {
-                   File filepath = files.get(0);
-                    System.out.println(filepath);
-                    dataDigital.setVisible(true);
-                    loadAnotherFile.setVisible(true);
+                File filepath = files.get(0);
+                System.out.println(filepath);
+                dataDigital.setVisible(true);
+                loadAnotherFile.setVisible(true);
 
-                if(file == null)
-                {
+                if (file == null) {
 
-                }
-                else {
+                } else {
 
                     //
 
@@ -1304,8 +1296,6 @@ private void colorPicker() throws ParserConfigurationException {
     }
 
 
-
-
     public String getExtension(String fileName) {
         String extension = "";
 
@@ -1322,6 +1312,7 @@ private void colorPicker() throws ParserConfigurationException {
         lstFile.add("*.ddd");
         lstFile.add("*.DDD");
     }
+
     public void addStatsDigital() throws IOException, SQLException {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connectDB = databaseConnection.getDBConnection();
@@ -1331,67 +1322,78 @@ private void colorPicker() throws ParserConfigurationException {
         ResultSet rs = stmt.executeQuery("SELECT id FROM driver WHERE id_card='" + serial + "'");
 
         while (rs.next()) {
-            id=rs.getInt("id");
+            id = rs.getInt("id");
 
         }
-        if(id == 0){
+        if (id == 0) {
             JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
-        }else {
+        } else {
 
 //---------------------------------------------------------------------------------------------------------------------//
-        int liczbaDni = parseInt(lastDaily) - parseInt(firstDaily);
-        String s = inThisDayData.substring(inThisDayData.indexOf("Dystans : ") + 10, inThisDayData.indexOf("km"));
-        Pattern p = Pattern.compile("[0-9]+");
-        Matcher m = p.matcher(s);
-        String d="0";
-        while(m.find()){
-            d=m.group();
-        }
-        if(d!="0") {
-            String file_name = UUID.randomUUID() + ".DDD";
-            AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataPicker.getValue().toString(), LocalDate.now().toString(),
-                    inThisDayData, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(d),
-                    dataPicker.getValue().toString(),"","");
-            JOptionPane.showMessageDialog(null, "Pomyślnie dodano!");
-        }
+            int liczbaDni = parseInt(lastDaily) - parseInt(firstDaily);
+            String s = inThisDayData.substring(inThisDayData.indexOf("Dystans : ") + 10, inThisDayData.indexOf("km"));
+            Pattern p = Pattern.compile("[0-9]+");
+            Matcher m = p.matcher(s);
+            String d = "0";
+            while (m.find()) {
+                d = m.group();
+            }
+            if (d != "0") {
+                String file_name = UUID.randomUUID() + ".DDD";
+                AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataPicker.getValue().toString(), LocalDate.now().toString(),
+                        inThisDayData, workSum, breakSum, file_name, "cyfrowy", Integer.parseInt(d),
+                        dataPicker.getValue().toString(), "", "");
+                JOptionPane.showMessageDialog(null, "Pomyślnie dodano!");
+            }
         }
     }
 
 
-    public void addStatsDigitalAll() throws IOException, SQLException {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connectDB = databaseConnection.getDBConnection();
+    public void addStatsDigitalAll() throws Exception, SQLException {
+        String connectQuery = "SELECT id FROM driver WHERE id_card='" + serial + "'";
+        try {
+            ResultSet queryOutput = DatabaseConnection.exQuery(connectQuery);
+            while (queryOutput.next()) {
+                id = queryOutput.getInt("id");
+            }
+            if (id == 0) {
+                JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
+            } else {
+                int i = 0;
+                String file_name = UUID.randomUUID() + ".DDD";
+                for (String dataGD1 :
+                        dataGD[1].split("data aktywności:")) {
+                    String s = dataGD1.substring(dataGD1.indexOf("Dystans : ") + 1, dataGD1.indexOf("km") + 2);
+                    Pattern p = Pattern.compile("[0-9]+");
+                    Matcher m = p.matcher(s);
+                    String d = "0";
+                    while (m.find()) {
+                        d = m.group();
+                    }
+                    if (d != "0") {
+                        if (dataGD1.length() > 4)
+                            AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11), LocalDate.now().toString(),
+                                    dataGD1, "", "breakSum", file_name, "cyfrowy", Integer.parseInt(d),
+                                    dataGD1.substring(0, 11), "", "");
 
-        Statement stmt = connectDB.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT id FROM driver WHERE id_card='" + serial + "'");
-        while (rs.next()) {
-            id = rs.getInt("id");
-        }
-        if(id == 0){
-            JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
-        }else {
-            int i = 0;
-            String file_name = UUID.randomUUID() + ".DDD";
-            for (String dataGD1 :
-                    dataGD[1].split("data aktywności:")) {
-                String s = dataGD1.substring(dataGD1.indexOf("Dystans : ")+1, dataGD1.indexOf("km")+2);
-                Pattern p = Pattern.compile("[0-9]+");
-                Matcher m = p.matcher(s);
-                String d = "0";
-                while(m.find()){
-                    d=m.group();
+                        i++;
+                    }
                 }
-                if (d != "0") {
-                    if (dataGD1.length() > 4)
-                        AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11), LocalDate.now().toString(),
-                                dataGD1, "", "breakSum", file_name, "cyfrowy", Integer.parseInt(d),
-                                dataGD1.substring(0, 11), "", "");
-
-                    i++;
+                JOptionPane.showMessageDialog(null, "Pomyślnie dodano " + i + " rekordów");
+                try {
+                    if (queryOutput != null) {
+                        queryOutput.close();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-            JOptionPane.showMessageDialog(null, "Pomyślnie dodano " + i + " rekordów");
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (HeadlessException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1415,4 +1417,5 @@ private void colorPicker() throws ParserConfigurationException {
         btnAddStatsDigitalAll.setVisible(false);
         dragOver.setText("Wybierz plik albo upuść go tutaj");
         loadAnotherFile.setVisible(false);
-    }}
+    }
+}
