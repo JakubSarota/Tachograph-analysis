@@ -160,12 +160,6 @@ public class AnalogueAnalysisController {
             imageView2.setImage(wi2);
         }
 
-        if(analysisCircle.blackImage!=null) {
-            writeWork(analysisCircle.blackImage.czas_pracy());
-//            analysisCircle.blackImage.save("png",image
-//                    .replace("file:/","")+"praca.png");
-        }
-
         if((writableImage[0]!=null) || (writableImage[1]!=null)) {
             showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
@@ -177,6 +171,12 @@ public class AnalogueAnalysisController {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             selectedFileAnalogue = null;
             loading.setVisible(false);
+        }
+
+        if(analysisCircle.blackImage!=null) {
+            writeWork(analysisCircle.blackImage.czas_pracy());
+//            analysisCircle.blackImage.save("png",image
+//                    .replace("file:/","")+"praca.png");
         }
     }
 
@@ -406,7 +406,34 @@ public class AnalogueAnalysisController {
         } catch (IllegalArgumentException | IOException iae) { }
     }
 
+    public void openScanner() throws Exception {
+        loading.setVisible(true);
+        Result result = new AspriseScanUI().setRequest(
+                        new Request().addOutputItem(
+                                new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
+                                        .setSavePath("C:\\Users\\Public\\Documents\\\\${TMS}${EXT}")))
+                .showDialog(null, "Użyj skanera", true, null);
 
+//        System.out.println(result == null ? "(null)" : result.getImageFiles());
+        if(result==null) {
+            loading.setVisible(false);
+            dragOver.setText(text);
+            selectedFileAnalogue = null;
+        } else {
+            imageFile = String.valueOf(result.getImageFiles());
+            file_name=imageFile.replace("[","");
+            file_name=file_name.replace("]", "");
+            System.out.println(file_name);
+            if(file_name==null) {
+                loading.setVisible(false);
+                dragOver.setText("Nie udało się załadować pliku ze skanera");
+                selectedFileAnalogue = null;
+            } else {
+                loading.setVisible(true);
+                getImageOnClick(file_name);
+            }
+        }
+    }
 
     public void loadImageAgain() throws IOException {
         selectedFileAnalogue = null;
@@ -418,30 +445,5 @@ public class AnalogueAnalysisController {
         createPDF.setVisible(false);
         loadAnotherFile.setVisible(false);
         btnScanner.setDisable(false);
-    }
-
-    public void openScanner() throws Exception {
-        Result result = new AspriseScanUI().setRequest(
-                        new Request().addOutputItem(
-                                new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
-                                        .setSavePath("C:\\Users\\Public\\Documents\\\\${TMS}${EXT}")))
-                .showDialog(null, "Użyj skanera", true, null);
-
-//        System.out.println(result == null ? "(null)" : result.getImageFiles());
-        if(result==null) {
-            dragOver.setText("Nie udało się załadować pliku ze skanera");
-        } else {
-            imageFile = String.valueOf(result.getImageFiles());
-            file_name=imageFile.replace("[","");
-            file_name=file_name.replace("]", "");
-//            System.out.println(file_name);
-            if(file_name==null) {
-                loading.setVisible(false);
-                dragOver.setText("Nie udało się załadować pliku ze skanera");
-            } else {
-                loading.setVisible(true);
-                getImageOnClick(file_name);
-            }
-        }
     }
 }
