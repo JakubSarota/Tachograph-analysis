@@ -160,10 +160,16 @@ public class AddStats {
                   sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "','" + date_work_end + "','" +
                     time_work_start + "','" + time_work_end + "')");
 
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
                     if (status > 0) {
                         return "Dodano";
                     }
             }else{
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
                 return "Istnieją już statystyki dla tego kierowcy tego dnia";
             }
             if(queryOutput!=null) {

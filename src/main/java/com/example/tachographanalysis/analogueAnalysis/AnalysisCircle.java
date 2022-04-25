@@ -18,6 +18,8 @@ public class AnalysisCircle {
     public static ChangeColor blackImage;
     public static ChangeColor blackImage2;
     public BufferedImage[] getHuanByCircle(String file) throws IOException, InterruptedException {
+        blackImage=null;
+        blackImage2=null;
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat imageFile = imread(file
                 .replace("file:/",""),
