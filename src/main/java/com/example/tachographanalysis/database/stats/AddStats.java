@@ -153,10 +153,7 @@ public class AddStats {
 
         try{
             String query = "SELECT * FROM stats WHERE date_work='"+date_work+"' AND driver_id='"+driver_id+"'";
-            System.out.println(query);
             ResultSet queryOutput =  DatabaseConnection.exQuery(query);
-            System.out.println(queryOutput);
-            System.out.println(queryOutput==null);
             if(!queryOutput.next()) {
                     int status = DatabaseConnection.exUpdate(
             "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, " +
