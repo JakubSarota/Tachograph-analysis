@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -122,7 +123,7 @@ public class InfoDriver {
         System.out.println("Creating PDF");
         String fileName = firstName + "_" + lastName + "_oswiadczenie_";
         System.out.println(firstname);
-
+        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
 
         CreatePDF.createPDF(new String[]{
                 "                                          " +
