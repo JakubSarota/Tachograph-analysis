@@ -23,16 +23,11 @@ lib/javax.servlet.jsp.jstl.jar
 lib/javax.transaction.jar
 out/artifacts/Tachograph_Analysis/Tachograph_Analysis.jar
 out/artifacts/Tachograph_Analysis_jar/Tachograph-Analysis.jar
-=======
-ddd_to_xml/data/driver/C_A_Nowak_.DDD
-ddd_to_xml/data/driver/C_A_Nowak_.DDD.xml
->>>>>>> Stashed changes
-ddd_to_xml/data/driver/Readme.txt
 ddd_to_xml/data/driver/Readme.txt
 *.DDD
 *.xml
 src/main/java/com/example/tachographanalysis/GeneratePDF.java
-*.pdf
+/PDF/
 .log
 target/classes/com/example/tachographanalysis/truck.gif
 target/

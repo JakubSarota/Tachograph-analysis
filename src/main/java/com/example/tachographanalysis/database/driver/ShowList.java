@@ -35,7 +35,7 @@ public class ShowList {
                 queryOutput.close();
             }
         } catch (Exception e) { }
-        System.out.println(driversList);
+//        System.out.println(driversList);
         return driversList;
     }
 

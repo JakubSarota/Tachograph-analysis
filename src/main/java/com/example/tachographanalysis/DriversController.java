@@ -124,7 +124,7 @@ public class DriversController {
             editCol.setCellFactory(cellEdit);
             accountTableView.setItems(driversList);
 
-            ///// edycja
+            ///// Edit data
 
             this.firstnameCol.setCellFactory(TextFieldTableCell.forTableColumn());
             this.secondNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -135,7 +135,7 @@ public class DriversController {
             this.bornCol.setCellFactory(TextFieldTableCell.forTableColumn());
             this.countryCol.setCellFactory(TextFieldTableCell.forTableColumn());
             this.cardCol.setCellFactory(TextFieldTableCell.forTableColumn());
-
+            accountListView.setPlaceholder(new Label("Brak kierowców"));
             this.accountTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
                 Driver.setDriversObjectPropertyEdit(newValue);
                 accountTableView.setEditable(true);
@@ -206,7 +206,7 @@ public class DriversController {
         }
     }
 
-    //Edycja
+    //Edit data
     public void onEditFname(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
         getDriversObjectPropertyEdit().setFname(driversStringCellEditEvent.getNewValue());
         String value = driversStringCellEditEvent.getNewValue();
@@ -316,7 +316,7 @@ public class DriversController {
         extracted(conn, query);
     }
 
-    //Usuwanie
+    //Delete data
     public void removeDriver(){
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection conn = connectNow.getDBConnection();

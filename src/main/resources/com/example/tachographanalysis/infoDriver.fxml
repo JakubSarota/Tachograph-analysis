@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -26,13 +27,16 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox prefHeight="110.0" prefWidth="288.0" />
+            <HBox prefHeight="55.0" prefWidth="288.0" />
             <HBox layoutX="10.0" layoutY="144.0" prefHeight="35.0" prefWidth="264.0">
                <children>
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="200.0" text="Drugie imię" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
                   </Label>
                   <Label fx:id="secondname" alignment="CENTER" prefHeight="35.0" prefWidth="288.0" textFill="WHITE">
                      <font>
@@ -54,6 +58,9 @@
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="264.0">
                <children>
@@ -68,6 +75,9 @@
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
             </HBox>
             <HBox layoutX="10.0" layoutY="214.0" prefHeight="35.0" prefWidth="264.0">
                <children>
@@ -82,6 +92,9 @@
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
             </HBox>
             <HBox layoutX="10.0" layoutY="214.0" prefHeight="35.0" prefWidth="264.0">
                <children>
@@ -96,6 +109,9 @@
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
             </HBox>
             <HBox layoutX="10.0" layoutY="250.0" prefHeight="35.0" prefWidth="264.0">
                <children>
@@ -110,6 +126,9 @@
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
             </HBox>
             <HBox layoutX="10.0" layoutY="285.0" prefHeight="35.0" prefWidth="264.0">
                <children>
@@ -124,6 +143,9 @@
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
             </HBox>
             <HBox layoutX="10.0" layoutY="340.0" prefHeight="35.0" prefWidth="264.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -143,12 +165,12 @@
          <children>
             <TableView fx:id="dataView" prefHeight="500.0" prefWidth="539.0" stylesheets="@css/style1.css">
                <columns>
-                  <TableColumn fx:id="dateAddCol" prefWidth="97.0" text="Data dodania" />
-                  <TableColumn fx:id="dateWorkCol" prefWidth="115.0" text="Data pracy" />
-                  <TableColumn fx:id="sumWorkCol" prefWidth="67.0" text="Praca" />
-                  <TableColumn fx:id="sumBreakCol" prefWidth="75.0" text="Przerwa" />
-                  <TableColumn fx:id="sumRoadCol" prefWidth="75.0" text="Przejechane" />
-                  <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" text="Typ pliku" />
+                  <TableColumn fx:id="dateAddCol" prefWidth="97.0" style="-fx-alignment: center;" text="Data dodania" />
+                  <TableColumn fx:id="dateWorkCol" prefWidth="115.0" style="-fx-alignment: center;" text="Data pracy" />
+                  <TableColumn fx:id="sumWorkCol" prefWidth="67.0" style="-fx-alignment: center;" text="Praca" />
+                  <TableColumn fx:id="sumBreakCol" prefWidth="75.0" style="-fx-alignment: center;" text="Przerwa" />
+                  <TableColumn fx:id="sumRoadCol" prefWidth="75.0" style="-fx-alignment: center;" text="Przejechane" />
+                  <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" style="-fx-alignment: center;" text="Typ pliku" />
                </columns>
             </TableView>
             <TextArea fx:id="work_info" editable="false" prefHeight="500.0" prefWidth="249.0" />
