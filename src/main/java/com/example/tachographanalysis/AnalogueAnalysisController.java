@@ -395,8 +395,15 @@ public class AnalogueAnalysisController {
         }
     }
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
-        CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
-        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+        System.out.println(file_name);
+        if(file_name.indexOf("/")!=-1) {
+            CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+            JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+        }
+        if(file_name.indexOf("\\")!=-1) {
+            CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("\\")+1),file_name);
+            JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+        }
     }
 
     public void openFolder(MouseEvent mouseEvent)  {
