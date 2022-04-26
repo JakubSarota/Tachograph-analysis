@@ -121,6 +121,7 @@ public class AnalogueAnalysisController {
         List<File> files = event.getDragboard().getFiles();
         List<String> validExtensions = Arrays.asList("jpg", "png");
         image = new Image(new FileInputStream(files.get(0)));
+//        System.out.println(event.getDragboard().getFiles().stream().map(file -> getExtension(String.valueOf(file.length()))));
         if(!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
@@ -430,7 +431,6 @@ public class AnalogueAnalysisController {
                 dragOver.setText("Nie udało się załadować pliku ze skanera");
                 selectedFileAnalogue = null;
             } else {
-                loading.setVisible(true);
                 getImageOnClick(file_name);
             }
         }

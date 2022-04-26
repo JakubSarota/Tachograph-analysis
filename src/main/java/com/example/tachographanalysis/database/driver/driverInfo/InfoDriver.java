@@ -81,6 +81,7 @@ public class InfoDriver {
     public void infoDriver() throws SQLException {
         try {
             dataList = showData.data();
+            dataView.setPlaceholder(new Label("Brak danych"));
             dateAddCol.setCellValueFactory(new PropertyValueFactory<>("data_add"));
             dateWorkCol.setCellValueFactory(new PropertyValueFactory<>("date_work"));
             sumWorkCol.setCellValueFactory(new PropertyValueFactory<>("sum_work"));

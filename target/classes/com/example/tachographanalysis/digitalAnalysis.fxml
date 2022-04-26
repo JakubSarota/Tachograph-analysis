@@ -162,12 +162,12 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                   <Text fx:id="TextError" fill="WHITE" layoutX="344.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="320.0">
+                   <Text fx:id="TextError" fill="WHITE" layoutX="239.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="515.0">
                        <font>
                            <Font name="System Bold" size="30.0" />
                        </font>
                    </Text>
-                   <Text fx:id="TextLoading" fill="LIGHTBLUE" layoutX="404.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.0">
+                   <Text fx:id="TextLoading" fill="LIGHTBLUE" layoutX="254.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="500.0">
                        <font>
                            <Font name="System Bold" size="30.0" />
                        </font>
