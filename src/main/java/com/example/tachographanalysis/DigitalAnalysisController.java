@@ -427,7 +427,6 @@ public class DigitalAnalysisController implements Initializable {
         String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
         String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
         String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
-
         barChart.getData().clear();
         barChart.getData().removeAll();
         barChartTMP.getData().clear();
@@ -475,7 +474,6 @@ public class DigitalAnalysisController implements Initializable {
         String splitedData[] = new String[lastIndexOfData];
         String newSplitedData[] = new String[lastIndexOfData];
         String twoWeeksData[] = new String[14];
-        //          System.out.println(readedData);
         for (int i = 0; i < readedData.length(); i++) {
             splitedData[i] = String.valueOf(readedData.charAt(i));
         }
@@ -664,14 +662,16 @@ public class DigitalAnalysisController implements Initializable {
 
         String activityDataBreak[] = new String[count + 1];
 
-
         for (int i = 0; i < split.length; i++) {
             if (activity[0].equals(split[i])) {
                 count2++;
                 if (split.length - i == 4) {
                     activityDataBreak[count2] = split[i + 2] + "24:00";
                 } else {
+                    if(i + 7<split.length)
                     activityDataBreak[count2] = split[i + 2] + split[i + 7];
+                    else
+                        activityDataBreak[count2] = split[i + 2] + "24:00";
                 }
             }
         }
@@ -1363,6 +1363,8 @@ public class DigitalAnalysisController implements Initializable {
                 String file_name = UUID.randomUUID() + ".DDD";
                 for (String dataGD1 :
                         dataGD[1].split("data aktywności:")) {
+
+
                     String s = dataGD1.substring(dataGD1.indexOf("Dystans : ") + 1, dataGD1.indexOf("km") + 2);
                     Pattern p = Pattern.compile("[0-9]+");
                     Matcher m = p.matcher(s);
@@ -1371,12 +1373,22 @@ public class DigitalAnalysisController implements Initializable {
                         d = m.group();
                     }
                     if (d != "0") {
-                        if (dataGD1.length() > 4)
-                            AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11), LocalDate.now().toString(),
-                                    dataGD1, "", "breakSum", file_name, "cyfrowy", Integer.parseInt(d),
-                                    dataGD1.substring(0, 11), "", "");
+                        if (dataGD1.length() > 4) {
+                            Object[] dataDiffOneDaTable = dataDiffOneDay(dataGD1);
+                            String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
+                            String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
+                            String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
 
-                        i++;
+                            String tmpS=AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11),
+                                    LocalDate.now().toString(),dataGD1,
+                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60+
+                                            parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60),
+                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60),
+                                    file_name, "cyfrowy", Integer.parseInt(d),
+                                    dataGD1.substring(0, 11), "", "");
+                            if(tmpS.equals("Dodano"))
+                                i++;
+                        }
                     }
                 }
                 JOptionPane.showMessageDialog(null, "Pomyślnie dodano " + i + " rekordów");
