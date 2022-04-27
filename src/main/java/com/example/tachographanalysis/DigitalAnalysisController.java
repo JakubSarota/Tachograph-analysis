@@ -365,11 +365,15 @@ public class DigitalAnalysisController implements Initializable {
         TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
         dataChartTwoWeekendArea.setEditable(false);
 
+
         if (!two.isSelected()) {
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
         }
+
+
+
     }
 
     @FXML
@@ -853,7 +857,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void visiblityChartArea() {
         chart.setVisible(true);
-
+        dataPicker.setVisible(false);
     }
 
     @FXML
