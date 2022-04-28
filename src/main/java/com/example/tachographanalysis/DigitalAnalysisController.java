@@ -17,10 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -1330,7 +1332,24 @@ public class DigitalAnalysisController implements Initializable {
 
         }
         if (id == 0) {
-            JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
+            //JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
+            String[] options = {"Dodaj użytkownika","Anuluj"};
+            int odp = JOptionPane.showOptionDialog(null, "W bazie nie ma takiego użytkownika!", "Uwaga!",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                    null, options, options[0]);
+            if(odp==JOptionPane.YES_OPTION){
+                StackPane stackPane = new StackPane();
+                Scene secondScene = new Scene(stackPane);
+                Stage secondStage = new Stage();
+                if(secondStage==null||!secondStage.isShowing()) {
+                    Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
+                    stackPane.getChildren().add(fxmlLoader);
+                    secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
+                    secondStage.setTitle("Dodaj kierowce");
+                    secondStage.setScene(secondScene);
+                    secondStage.show();
+                }}
+
         } else {
 
 //---------------------------------------------------------------------------------------------------------------------//
@@ -1361,7 +1380,24 @@ public class DigitalAnalysisController implements Initializable {
                 id = queryOutput.getInt("id");
             }
             if (id == 0) {
-                JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
+                //JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
+                String[] options = {"Dodaj użytkownika","Anuluj"};
+                int odp = JOptionPane.showOptionDialog(null, "W bazie nie ma takiego użytkownika!", "Uwaga!",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, options, options[0]);
+                if(odp==JOptionPane.YES_OPTION){
+                    StackPane stackPane = new StackPane();
+                    Scene secondScene = new Scene(stackPane);
+                    Stage secondStage = new Stage();
+                    if(secondStage==null||!secondStage.isShowing()) {
+                        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
+                        stackPane.getChildren().add(fxmlLoader);
+                        secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
+                        secondStage.setTitle("Dodaj kierowce");
+                        secondStage.setScene(secondScene);
+                        secondStage.show();
+                    }}
+
             } else {
                 int i = 0;
                 String file_name = UUID.randomUUID() + ".DDD";
