@@ -4,21 +4,26 @@ import com.example.tachographanalysis.DriversController;
 import com.example.tachographanalysis.database.DatabaseConnection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
-public class AddDriver {
+public class AddDriver implements Initializable {
 
     @FXML
     private TextField tf_first_name, tf_last_name, tf_second_name, tf_email, tf_pesel, tf_city, tf_country, tf_id_card;
@@ -38,6 +43,19 @@ public class AddDriver {
             tf_born.setValue(LocalDate.of(1990,01,01));
         }
     }
+    @FXML
+    private ComboBox<String> tf_CountryBox;
+
+    @FXML
+    public void selectCountry(ActionEvent event) {
+        tf_CountryBox.getItems();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        ObservableList<String> list = FXCollections.observableArrayList("Polska", "Niemcy","Belgia");
+        tf_CountryBox.setItems(list);
+        tf_CountryBox.getSelectionModel().select(0);
+    }
 
     public void addDriver() throws SQLException {
         String last_name = tf_last_name.getText();
@@ -47,7 +65,7 @@ public class AddDriver {
         String pesel = tf_pesel.getText();
         String city = tf_city.getText();
         String born = tf_born.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String country = tf_country.getText();
+        String country = tf_CountryBox.getValue();
         String id_card = tf_id_card.getText();
 
         try {

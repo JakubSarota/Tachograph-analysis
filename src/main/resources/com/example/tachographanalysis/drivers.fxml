@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#initialize" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#initialize" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #186199;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.DriversController">
    <left>
       <AnchorPane prefHeight="620.0" prefWidth="229.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -57,8 +65,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btnRemoveDriver" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removeDriver"
-                          prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Usuń kierowcę" textFill="WHITE">
+                  <Button fx:id="btnRemoveDriver" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removeDriver" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Usuń kierowcę" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -75,16 +82,14 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btnBackupDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                          onAction="#backupDrivers" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css"
-                          text="Przywróć" textFill="WHITE">
+                  <Button fx:id="btnBackupDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#backupDrivers" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Przywróć" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@icons/icons8-add-user-male-60.png" />
+                              <Image url="@icons/icons8-data-backup-60.png" />
                            </image>
                         </ImageView>
                      </graphic>
