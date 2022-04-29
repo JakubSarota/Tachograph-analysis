@@ -57,7 +57,8 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="btnRemoveDriver" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removeDriver" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Usuń kierowcę" textFill="WHITE">
+                  <Button fx:id="btnRemoveDriver" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removeDriver"
+                          prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css" text="Usuń kierowcę" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -66,6 +67,26 @@
                            <image>
                               <Image url="@icons/icons8-denied-60.png" />
                            </image></ImageView>
+                     </graphic>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnBackupDrivers" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                          onAction="#backupDrivers" prefHeight="50.0" prefWidth="285.0" stylesheets="@css/style2.css"
+                          text="Przywróć" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-add-user-male-60.png" />
+                           </image>
+                        </ImageView>
                      </graphic>
                      <opaqueInsets>
                         <Insets bottom="10.0" />

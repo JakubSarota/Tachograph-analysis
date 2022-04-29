@@ -26,7 +26,10 @@ public class ShowList {
                 String  queryBorn = queryOutput.getString("born_date");
                 String queryCountry = queryOutput.getString("country");
                 String queryCard = queryOutput.getString("id_card");
-                driversList.add(new Driver(queryId, queryFirstName, querySecondName, queryLastName, queryEmail, queryPesel, queryCity, queryBorn, queryCountry, queryCard));
+                String queryLCard = queryOutput.getString("license_drive");
+                driversList.add(new Driver(queryId, queryFirstName, querySecondName,
+                        queryLastName, queryEmail, queryPesel, queryCity, queryBorn,
+                        queryCountry, queryCard,queryLCard));
 
             }
         } catch (Exception e) { }

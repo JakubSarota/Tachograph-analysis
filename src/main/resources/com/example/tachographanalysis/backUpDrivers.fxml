@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="373.0" prefWidth="950.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.driver.BackupDriver">
+   <HBox prefHeight="360.0" prefWidth="950.0">
+      <children>
+         <VBox alignment="CENTER" prefHeight="320.0" prefWidth="196.0" spacing="5.0">
+            <children>
+               <Label text="Lista kierowców" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="15.0" />
+                  </font>
+               </Label>
+               <ScrollPane prefHeight="306.0" prefWidth="148.0">
+                  <content>
+                     <ListView fx:id="accountListView" prefHeight="295.0" prefWidth="186.0">
+               </ListView>
+                  </content>
+               </ScrollPane>
+            </children>
+         </VBox>
+         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="154.0" text="Przywróć" fx:id="btnBackup"
+                 onMouseClicked="#backUpData" />
+      </children>
+   </HBox>
+</AnchorPane>

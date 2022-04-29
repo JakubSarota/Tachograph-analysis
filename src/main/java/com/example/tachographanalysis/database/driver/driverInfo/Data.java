@@ -4,7 +4,8 @@ public class Data {
     Integer id, sum_road, driver_id;
     String date_work, data_add, work_info, sum_work, sum_break, file, file_type;
 
-    public Data(Integer id, Integer driver_id, String date_work, String data_add, String work_info, String sum_work, String sum_break, String file, String file_type, Integer sum_road) {
+    public Data(Integer id, Integer driver_id, String date_work, String data_add, String work_info, String sum_work,
+                String sum_break, String file, String file_type, Integer sum_road) {
         this.id = id;
         this.driver_id = driver_id;
         this.date_work = date_work;

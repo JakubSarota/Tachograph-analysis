@@ -109,22 +109,24 @@ public class AddDriver {
         return status;
     }
 
-    public void insertToDatabase(String last_name,
-                                 String first_name,
-                                 String second_name,
-                                 String email,
-                                 String pesel,
-                                 String city,
-                                 String born,
-                                 String country,
-                                 String id_card) throws SQLException {
+    public static void insertToDatabase(String last_name,
+                                        String first_name,
+                                        String second_name,
+                                        String email,
+                                        String pesel,
+                                        String city,
+                                        String born,
+                                        String country,
+                                        String id_card) throws SQLException {
         try {
-            String insert = "INSERT INTO driver (first_name, second_name, last_name, email, pesel, city, born_date, country, id_card) VALUES('"+first_name+"','"+second_name+"','"+last_name+"','"+email+"','"+pesel+"','"+city+"','"+born+"','"+country+"','"+id_card+"')";
+            String insert = "INSERT INTO driver (first_name, second_name, last_name, email, " +
+                    "pesel, city, born_date, country, id_card) " +
+                    "VALUES('"+first_name+"','"+second_name+"','"+last_name+"','"+email+"','"
+                    +pesel+"','"+city+"','"+born+"','"+country+"','"+id_card+"')";
             ResultSet rs = DatabaseConnection.exQuery(insert);
         } catch (Exception e) {
-//            System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
-
     }
 
     public void digitOnlyPesel() {

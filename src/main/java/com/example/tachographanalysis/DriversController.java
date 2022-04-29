@@ -5,11 +5,13 @@ import com.example.tachographanalysis.database.driver.Driver;
 import com.example.tachographanalysis.database.driver.ShowList;
 import com.example.tachographanalysis.database.driver.driverInfo.InfoDriver;
 import com.example.tachographanalysis.database.driver.driverInfo.showData;
+import com.example.tachographanalysis.database.trash.Trash;
 import com.example.tachographanalysis.size.SizeController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,8 +28,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import static com.example.tachographanalysis.database.driver.Driver.getDriversObjectPropertyEdit;
 
@@ -317,7 +321,7 @@ public class DriversController {
     }
 
     //Delete data
-    public void removeDriver(){
+    public void removeDriver() throws SQLException {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection conn = connectNow.getDBConnection();
         String query = "DELETE FROM driver WHERE id = ?";
@@ -325,12 +329,14 @@ public class DriversController {
         int id = Integer.parseInt(String.valueOf(accountTableView.getItems().get(myIndex).getId()));
 
         try {
+            Trash.deleteUserWithData(accountTableView.getItems()
+                    .get(accountTableView.getSelectionModel().getSelectedIndex()));
             PreparedStatement pst = conn.prepareStatement(query);
             pst.setString(1, String.valueOf(id));
             pst.executeUpdate();
             pst.close();
 
-            JOptionPane.showMessageDialog(null, "Czy chcesz usunąć użytkownika ?");
+            JOptionPane.showMessageDialog(null, "Usunięto kierowce");
             loadTable();
 
         } catch (Exception e) {
@@ -347,6 +353,19 @@ public class DriversController {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void backupDrivers(ActionEvent actionEvent) throws IOException {
+        if(secondStage==null||!secondStage.isShowing()) {
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("backUpDrivers.fxml"));
+            stackPane.getChildren().add(fxmlLoader);
+            secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
+            secondStage.setTitle("Odzyskaj kierowcę");
+            secondStage.setScene(secondScene);
+            secondStage.show();
+        } else {
+            secondStage.toFront();
         }
     }
 }
