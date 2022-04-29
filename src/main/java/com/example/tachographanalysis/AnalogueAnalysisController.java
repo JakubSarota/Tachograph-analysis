@@ -9,6 +9,7 @@ import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
+import javafx.application.HostServices;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,10 +38,7 @@ import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -50,17 +48,17 @@ import com.asprise.imaging.core.Imaging;;
 
 public class AnalogueAnalysisController {
     @FXML
-    private Button btnBack, dragOver, addStats, createPDF, loadAnotherFile, btnScanner;
+    private Button btnBack, dragOver, addStats, createPDF, loadAnotherFile, btnScanner, btnOpenAnalogue;
     @FXML
-    private ImageView imageView, imageView2;
+    private ImageView imageView, imageView2, imgViewOpenAnalogue;
     @FXML
-    private Image image;
+    private Image image, imgOpenAnalogue;
     @FXML
     private ScrollPane scroll;
     @FXML
     private TextArea textArea, fileText;
     @FXML
-    private AnchorPane showAnalysis, showDragAndDrop;
+    private AnchorPane showAnalysis, showDragAndDrop, OpenAnalogueData;
     @FXML
     private Label loading;
 
@@ -72,6 +70,7 @@ public class AnalogueAnalysisController {
     static double ip = 0;
     AnalysisCircle analysisCircle = new AnalysisCircle();
     File selectedFileAnalogue;
+
     @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
@@ -168,6 +167,7 @@ public class AnalogueAnalysisController {
             createPDF.setVisible(true);
             loadAnotherFile.setVisible(true);
             btnScanner.setDisable(true);
+            btnOpenAnalogue.setDisable(true);
         } else {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             selectedFileAnalogue = null;
@@ -211,6 +211,8 @@ public class AnalogueAnalysisController {
             addStats.setVisible(true);
             createPDF.setVisible(true);
             loadAnotherFile.setVisible(true);
+            btnScanner.setDisable(true);
+            btnOpenAnalogue.setDisable(true);
         } else {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             loading.setVisible(false);
@@ -378,6 +380,7 @@ public class AnalogueAnalysisController {
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
     }
+
     StackPane stackPane = new StackPane();
     Scene secondScene = new Scene(stackPane, 950,420);
     Stage secondStage = new Stage();
@@ -394,11 +397,35 @@ public class AnalogueAnalysisController {
             secondStage.toFront();
         }
     }
+
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
-        System.out.println(file_name);
+        String fileNametoSearch = file_name.substring(file_name.lastIndexOf("/")+1);
+
+//        Desktop desktop = Desktop.getDesktop();
+//        File dirToOpen = null;
+//        try {
+//            dirToOpen = new File(".\\PDF\\");
+//            desktop.open(dirToOpen);
+//        } catch (IllegalArgumentException | IOException iae) { }
+//        File file = new File(String.valueOf(fileChooser));
         if(file_name.indexOf("/")!=-1) {
+
             CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
-            JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+
+            String[] buttons = {"OK", "Otwórz plik PDF"};
+            int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Plik PDF został utworzony", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+            switch (rs) {
+                case 0:
+                    return;
+                case 1:
+
+                    String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileNametoSearch + ".pdf";
+                    System.out.println(pathpdf);
+                    String[] params = {"cmd", "/c", pathpdf};
+                    try {
+                        Runtime.getRuntime().exec(params);
+                    } catch (Exception e) { }
+            }
         }
         if(file_name.indexOf("\\")!=-1) {
             CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("\\")+1),file_name);
@@ -452,6 +479,28 @@ public class AnalogueAnalysisController {
         addStats.setVisible(false);
         createPDF.setVisible(false);
         loadAnotherFile.setVisible(false);
+        OpenAnalogueData.setVisible(false);
         btnScanner.setDisable(false);
+        btnOpenAnalogue.setDisable(false);
+    }
+
+    public void OpenAnalogueFiles() {
+        if(OpenAnalogueData.isVisible()==false) {
+            btnOpenAnalogue.setText("Wczytaj dane");
+            OpenAnalogueData.setVisible(true);
+            OpenAnalogueData.setManaged(true);
+            showDragAndDrop.setVisible(false);
+            showAnalysis.setVisible(false);
+            imgOpenAnalogue = new Image(getClass().getResourceAsStream("icons/icons8-analogue.png"));
+            imgViewOpenAnalogue.setImage(imgOpenAnalogue);
+        } else {
+            btnOpenAnalogue.setText("Istniejące dane");
+            OpenAnalogueData.setVisible(false);
+            OpenAnalogueData.setManaged(false);
+            showDragAndDrop.setVisible(true);
+            imgOpenAnalogue = new Image(getClass().getResourceAsStream("icons/icons8-user-folder-60.png"));
+            imgViewOpenAnalogue.setImage(imgOpenAnalogue);
+            showAnalysis.setVisible(false);
+        }
     }
 }
