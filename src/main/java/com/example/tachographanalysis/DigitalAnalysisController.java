@@ -1400,7 +1400,14 @@ public class DigitalAnalysisController implements Initializable {
 
             } else {
                 int i = 0;
-                String file_name = UUID.randomUUID() + ".DDD";
+//                String file_name = UUID.randomUUID() + ".DDD";
+                File dir = new File(".\\archiwum\\");
+                String file_name=UUID.randomUUID().toString() + ".ddd";
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                Files.copy(Path.of(String.valueOf(file)),
+                        Path.of(".\\archiwum\\" + file_name));
                 for (String dataGD1 :
                         dataGD[1].split("data aktywności:")) {
 
