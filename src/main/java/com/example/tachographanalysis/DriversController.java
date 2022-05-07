@@ -335,6 +335,10 @@ public class DriversController {
             pst.setString(1, String.valueOf(id));
             pst.executeUpdate();
             pst.close();
+            PreparedStatement pst2 = conn.prepareStatement("DELETE FROM stats WHERE driver_id = ?");
+            pst2.setString(1, String.valueOf(id));
+            pst2.executeUpdate();
+            pst2.close();
 
             JOptionPane.showMessageDialog(null, "Usunięto kierowce");
             loadTable();

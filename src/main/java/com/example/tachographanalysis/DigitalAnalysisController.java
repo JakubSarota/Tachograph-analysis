@@ -640,7 +640,7 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    private Object[] dataDiffOneDay(String data) {
+    public static Object[] dataDiffOneDay(String data) {
 
         int firstActivity = data.indexOf("Aktywność");
         int bTime = 0;
@@ -746,7 +746,7 @@ public class DigitalAnalysisController implements Initializable {
     }
 
     @FXML
-    public int timeDiffrence(String[] activity) {
+    public static int timeDiffrence(String[] activity) {
 
         int sumActivityDataBreakM = 0;
         String[] dateBreakHM = new String[8];
@@ -754,7 +754,6 @@ public class DigitalAnalysisController implements Initializable {
         String stop = "";
 
         for (int i = 1; i < activity.length; i++) {
-
             dateBreakHM[0] = String.valueOf(activity[i].charAt(0));
             dateBreakHM[1] = String.valueOf(activity[i].charAt(1));
             dateBreakHM[2] = String.valueOf(activity[i].charAt(3));

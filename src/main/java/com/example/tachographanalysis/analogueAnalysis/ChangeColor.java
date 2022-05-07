@@ -164,9 +164,12 @@ public class ChangeColor {
         int godziny=m/60;
         int minuty=m%60;
         String mm= String.valueOf(minuty);
+        String gg= String.valueOf(godziny);
         if(minuty<10)
             mm="0"+minuty;
-        return godziny+":"+mm;
+        if(godziny<10)
+            gg="0"+godziny;
+        return gg+":"+mm;
     }
     private double[] hsv2rgb(double hue, double sat, double val) {
         double red = 0, grn = 0, blu = 0;

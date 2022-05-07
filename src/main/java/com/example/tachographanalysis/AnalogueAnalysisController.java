@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -43,7 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import com.asprise.imaging.core.Imaging;;
+import com.asprise.imaging.core.Imaging;;import static java.lang.Integer.parseInt;
 
 
 public class AnalogueAnalysisController {
@@ -61,7 +63,8 @@ public class AnalogueAnalysisController {
     private AnchorPane showAnalysis, showDragAndDrop, OpenAnalogueData;
     @FXML
     private Label loading;
-
+    @FXML
+    private BarChart barChart;
     public static int sumBreak=0;
     public static int sumWork=0;
     public static String file_name;
@@ -343,9 +346,7 @@ public class AnalogueAnalysisController {
                     przerwa=true;
                     xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                                     analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\" />\n";
-                    sumWork+=Integer.parseInt((String) jarr.get(i - 1))-Integer.parseInt((String) jarr.get(lastWork));
                     lastBreak=i-1;
-//                    text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\n";
                 } else {
                     pracowal = true;
                     if(przerwa) {
@@ -354,16 +355,12 @@ public class AnalogueAnalysisController {
                 }
             }
             if(!pracowal) {
-                sumBreak+=Integer.parseInt((String) jarr.get(i))-Integer.parseInt((String) jarr.get(lastBreak));
                 lastWork=i;
-//                text += "Work " + analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i))) + "\n";
                 xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Work\" Time=\""+
                         analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i)))+"\" />\n";
             }
         }
 
-        text+="Break "+analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\n";
-        sumWork+=Integer.parseInt((String) jarr.get(jarr.length() - 1))-Integer.parseInt((String) jarr.get(lastWork));
         xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
                 analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\" />\n";
         xml+="            </CardActivityDailyRecord>\n" +
@@ -379,6 +376,36 @@ public class AnalogueAnalysisController {
         xmlfile.close();
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
+
+
+        barChart.getData().clear();
+        barChart.getData().removeAll();
+        barChart.setVisible(true);
+
+        barChart.setTitle("Aktywność pracownika ");
+        barChart.getXAxis().setLabel("Aktywność");
+        barChart.getYAxis().setLabel("Godziny");
+
+        barChart.setAnimated(false);
+        Object[] dataDiffOneDaTable = DigitalAnalysisController.dataDiffOneDay(s[1]);
+
+        String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
+        String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
+        sumBreak=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) / 60;
+        sumWork=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) / 60;
+        series1.setName("Przerwa ("+sumBreak+")");
+        series2.setName("Praca ("+sumWork+")");
+        series2.getData().add(new XYChart.Data("Praca",
+                sumWork));
+//        series1.getData().add(new XYChart.Data("Jazda",
+//                parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataDrive))) / 60));
+        series1.getData().add(new XYChart.Data("Przerwa",
+               sumBreak ));
+        barChart.getData().addAll(series1);
+        barChart.getData().addAll(series2);
+
     }
 
     StackPane stackPane = new StackPane();
