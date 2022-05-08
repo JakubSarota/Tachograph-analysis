@@ -13,17 +13,6 @@
             <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <AnchorPane fx:id="OpenAnalogueData" prefHeight="620.0" prefWidth="997.0" visible="false">
-                     <children>
-                        <ScrollPane prefHeight="620.0" prefWidth="300.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="298.0">
-                                 <children>
-                                    <ListView prefHeight="620.0" prefWidth="298.0" />
-                                 </children></AnchorPane>
-                          </content>
-                        </ScrollPane>
-                     </children></AnchorPane>
                   <AnchorPane fx:id="showDragAndDrop" prefHeight="620.0" prefWidth="997.0">
                      <children>
                             <Button fx:id="dragOver" layoutX="278.0" layoutY="310.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="185.0" prefWidth="442.0" style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
@@ -50,7 +39,7 @@
                                       <Font name="System Bold" size="17.0" />
                                   </font>
                         </Text>
-                        <HBox prefHeight="100.0" prefWidth="997.0" layoutY="75" layoutX="10">
+                        <HBox layoutX="10" layoutY="75" prefHeight="100.0" prefWidth="997.0">
                            <children>
                                     <TextArea fx:id="textArea" disable="false" prefHeight="349.0" prefWidth="360.0" style="-fx-background-color: #186199;">
                                         <font>
@@ -112,6 +101,18 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
+                  <Button fx:id="btnOpenAnalogue" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#OpenExistsFiles" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Istniejące dane" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="imgViewOpenAnalogue" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-user-folder-60.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                       <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Otwórz folder PDF" textFill="WHITE">
                           <font>
                               <Font name="System Bold" size="14.0" />
@@ -135,18 +136,6 @@
                         <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/icons8-scanner-64.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnOpenAnalogue" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#OpenAnalogueFiles" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Istniejące dane" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fx:id="imgViewOpenAnalogue" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/icons8-user-folder-60.png" />
                            </image>
                         </ImageView>
                      </graphic>

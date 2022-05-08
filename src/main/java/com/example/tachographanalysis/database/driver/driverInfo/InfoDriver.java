@@ -1,5 +1,6 @@
 package com.example.tachographanalysis.database.driver.driverInfo;
 
+import com.example.tachographanalysis.DigitalAnalysisController;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.database.DatabaseConnection;
 import com.itextpdf.text.DocumentException;
@@ -8,6 +9,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,6 +25,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.Integer.valueOf;
+
 public class InfoDriver {
     @FXML
     public Label firstname, lastname, secondname, email, pesel, city, born, country, cardnumber;
@@ -35,7 +41,8 @@ public class InfoDriver {
     public TableColumn<Data, String> dateWorkCol, dateAddCol, sumWorkCol, sumBreakCol, fileCol, fileTypeCol;
     @FXML
     private ObservableList<Data> dataList = FXCollections.observableArrayList();
-
+    @FXML
+    private BarChart barChart;
     static int idDriver;
     static String firstName, lastName, Born, cardNumber;
     int idStats;
@@ -99,14 +106,34 @@ public class InfoDriver {
                     try {
                         ResultSet rs = DatabaseConnection.exQuery(query);
                         work_info.setText(rs.getString("work_info"));
+                        String data = rs.getString("work_info");
+//                        System.out.println(data);
+                        Object[] dataDiffOneDaTable = DigitalAnalysisController.dataDiffOneDay(data);
+                        String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
+                        String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
+                        String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
+
+                        barChart.getData().clear();
+                        barChart.getData().removeAll();
+
+                        barChart.setTitle("Aktywność pracownika ");
+                        barChart.getXAxis().setLabel("Aktywność");
+                        barChart.getYAxis().setLabel("Godziny");
+                        barChart.setAnimated(false);
+
+                        XYChart.Series series1 = new XYChart.Series();
+
+                        series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) / 60));
+                        series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) / 60));
+                        series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataDrive))) / 60));
+                        barChart.getData().addAll(series1);
+
                         if(rs!=null) {
                             rs.close();
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             });
             dataView.setItems(dataList);
@@ -123,7 +150,19 @@ public class InfoDriver {
         System.out.println("Creating PDF");
         String fileName = firstName + "_" + lastName + "_oswiadczenie_";
         System.out.println(firstname);
-        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+        String[] buttons = {"Zamknij", "Otwórz plik PDF"};
+        int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+        switch (rs) {
+            case 0:
+                return;
+            case 1:
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileName+ ".pdf";
+                System.out.println(pathpdf);
+                String[] params = {"cmd", "/c", pathpdf};
+                try {
+                    Runtime.getRuntime().exec(params);
+                } catch (Exception e) { }
+        }
 
         CreatePDF.createPDF(new String[]{
                 "                                          " +
@@ -184,4 +223,5 @@ public class InfoDriver {
                         ""} ,fileName,"" );
 
     }
+
 }
