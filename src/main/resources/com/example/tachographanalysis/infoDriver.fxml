@@ -150,7 +150,12 @@
             <HBox layoutX="10.0" layoutY="340.0" prefHeight="35.0" prefWidth="264.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="generateOsw" layoutX="70.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#generateOsw" prefHeight="44.0" prefWidth="153.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Generuj Oświadczenie" textFill="#47535b">
+                  <Button fx:id="generateOsw" layoutX="21.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#generateOsw" prefHeight="44.0" prefWidth="250.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Generuj oświadczenie o nie pracy" textFill="#47535b">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="generateOsw2" layoutX="21.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#generateOsw2" prefHeight="44.0" prefWidth="250.0" style="-fx-background-color: #F8F9FA; -fx-background-radius: 30 30 30 30; -fx-cursor: hand;" text="Generuj oświadczenie o pracy" textFill="#47535b">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
