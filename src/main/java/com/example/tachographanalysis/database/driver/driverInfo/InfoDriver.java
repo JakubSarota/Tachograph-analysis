@@ -21,6 +21,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 
 public class InfoDriver {
     @FXML
@@ -194,7 +198,18 @@ public class InfoDriver {
         String dateWork[] = new String[14];
         Integer sumLast14DaysOfWork = 0;
         Integer i = 0;
-        String connectQuery = "SELECT sum_work,date_work FROM stats WHERE driver_id='"+driverId+"' LIMIT 14 ";
+        LocalDate ld= LocalDate.now().with(TemporalAdjusters.previous( DayOfWeek.MONDAY ));
+        LocalDate ld2= ld.with(TemporalAdjusters.previous( DayOfWeek.MONDAY ));
+
+        String connectQuery = "SELECT sum_work,date_work FROM stats WHERE driver_id='"+driverId+"'  " +
+                "AND date_work>='"+ld.with(TemporalAdjusters.previous( DayOfWeek.MONDAY )) +"'";
+        if(LocalDate.now().getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+            connectQuery = "SELECT sum_work,date_work FROM stats WHERE driver_id='" + driverId + "'  " +
+                    "AND date_work>='" + ld + "'";
+            ld2=ld;
+        }
+
+
         try{
             ResultSet queryOutput = DatabaseConnection.exQuery(connectQuery);
             while (queryOutput.next()){
@@ -247,8 +262,8 @@ public class InfoDriver {
                         " 12. Data urodzenia: " + Born + "\n" +
                         " 13. Karta kierowcy: " + cardNumber + "\n\n" +
                         "w okresie (14 dni): \n" +
-                        " 14. od (rok-miesiąc-dzień): "+dateWork[0]+"\n" +
-                        " 15. do (rok-miesiąc-dzień): "+dateWork[13]+" \n" +
+                        " 14. od (rok-miesiąc-dzień): "+ld2+"\n" +
+                        " 15. do (rok-miesiąc-dzień): "+LocalDate.now()+" \n" +
                         " 16. Przepracował (jazda + praca) : " + sumLast14DaysOfWork + " godzin   \n\n" +
                         "                                          " +
                         "                                   " +
