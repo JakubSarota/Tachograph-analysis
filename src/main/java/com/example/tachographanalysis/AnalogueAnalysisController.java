@@ -448,7 +448,7 @@ public class AnalogueAnalysisController {
 //        File file = new File(String.valueOf(fileChooser));
         if(file_name.indexOf("/")!=-1) {
 
-            CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
 
             String[] buttons = {"Zamknij", "Otwórz plik PDF"};
             int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
@@ -456,7 +456,7 @@ public class AnalogueAnalysisController {
                 case 0:
                     return;
                 case 1:
-                    String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileNametoSearch + ".pdf";
+                    String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + createPDF + ".pdf";
                     System.out.println(pathpdf);
                     String[] params = {"cmd", "/c", pathpdf};
                     try {
@@ -465,14 +465,14 @@ public class AnalogueAnalysisController {
             }
         }
         if(file_name.indexOf("\\")!=-1) {
-            CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("\\")+1),file_name);
+            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("\\")+1),file_name);
             String[] buttons = {"OK", "Otwórz plik PDF"};
             int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
             switch (rs) {
                 case 0:
                     return;
                 case 1:
-                    String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileNametoSearch + ".pdf";
+                    String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + createPDF + ".pdf";
                     System.out.println(pathpdf);
                     String[] params = {"cmd", "/c", pathpdf};
                     try {
@@ -482,13 +482,17 @@ public class AnalogueAnalysisController {
         }
     }
 
-    public void openFolder(MouseEvent mouseEvent)  {
+    public static void openFolder()  {
         Desktop desktop = Desktop.getDesktop();
         File dirToOpen = null;
         try {
             dirToOpen = new File(".\\PDF\\");
             desktop.open(dirToOpen);
         } catch (IllegalArgumentException | IOException iae) { }
+    }
+
+    public void openFolder1(MouseEvent mouseEvent)  {
+      openFolder();
     }
 
     public void openScanner() throws Exception {
@@ -538,4 +542,5 @@ public class AnalogueAnalysisController {
         Stage scene = (Stage) btnBack.getScene().getWindow();
         scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
     }
+
 }

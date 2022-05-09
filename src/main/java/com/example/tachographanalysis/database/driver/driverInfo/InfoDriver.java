@@ -3,7 +3,6 @@ package com.example.tachographanalysis.database.driver.driverInfo;
 import com.example.tachographanalysis.DigitalAnalysisController;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.database.DatabaseConnection;
-import com.example.tachographanalysis.database.driver.Driver;
 import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,14 +23,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.valueOf;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Calendar;
+
+import static java.lang.Integer.parseInt;
 
 public class InfoDriver {
     @FXML
@@ -185,21 +181,9 @@ public class InfoDriver {
         System.out.println("Creating PDF");
         String fileName = firstName + "_" + lastName + "_oswiadczenie_o_nie_pracy";
         System.out.println(firstname);
-        String[] buttons = {"Zamknij", "Otwórz plik PDF"};
-        int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
-        switch (rs) {
-            case 0:
-                return;
-            case 1:
-                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileName+ ".pdf";
-                System.out.println(pathpdf);
-                String[] params = {"cmd", "/c", pathpdf};
-                try {
-                    Runtime.getRuntime().exec(params);
-                } catch (Exception e) { }
-        }
 
-        CreatePDF.createPDF(new String[]{
+
+        String createPDF = CreatePDF.createPDF(new String[]{
                 "                                          " +
                         "                   " +
                 "ZAŚWIADCZENIE O DZIAŁALNOŚCI " +
@@ -257,6 +241,20 @@ public class InfoDriver {
                         "(*) Można wybrać tylko jedną z rubryk." +
                         ""} ,fileName,"" );
 
+        String[] buttons = {"Zamknij", "Otwórz plik PDF"};
+        int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+        switch (rs) {
+            case 0:
+                return;
+            case 1:
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + createPDF + ".pdf";
+                System.out.println(pathpdf);
+                String[] params = {"cmd", "/c", pathpdf};
+                try {
+                    Runtime.getRuntime().exec(params);
+                } catch (Exception e) { }
+        }
+
     }
 
     @FXML
@@ -303,9 +301,9 @@ public class InfoDriver {
         System.out.println("Creating PDF");
         String fileName = firstName + "_" + lastName + "_oswiadczenie_o_pracy";
 //        System.out.println(firstname);
-        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
 
-        CreatePDF.createPDF(new String[]{
+
+        String createPDF = CreatePDF.createPDF(new String[]{
                 "                                          " +
                         "                   " +
                         "ZAŚWIADCZENIE O DZIAŁALNOŚCI " +
@@ -357,6 +355,20 @@ public class InfoDriver {
                         "                                          " +
                         "" +
                         ""} ,fileName,"" );
+
+        String[] buttons = {"Zamknij", "Otwórz plik PDF"};
+        int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+        switch (rs) {
+            case 0:
+                return;
+            case 1:
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + createPDF+ ".pdf";
+                System.out.println(pathpdf);
+                String[] params = {"cmd", "/c", pathpdf};
+                try {
+                    Runtime.getRuntime().exec(params);
+                } catch (Exception e) { }
+        }
 
     }
 }

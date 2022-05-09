@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -34,6 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import static com.example.tachographanalysis.database.driver.Driver.getDriversObjectPropertyEdit;
+
 
 public class DriversController {
 
@@ -374,6 +376,10 @@ public class DriversController {
         } else {
             secondStage.toFront();
         }
+    }
+
+    public void openFolder(MouseEvent mouseEvent) {
+        AnalogueAnalysisController.openFolder();
     }
 }
 

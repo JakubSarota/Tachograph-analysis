@@ -19,7 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CreatePDF {
-    public static void createPDF(String[] date, String fileName, String nameOfImage, BarChart... barCharts) throws IOException, DocumentException, ParserConfigurationException, SAXException {
+    public static String createPDF(String[] date, String fileName, String nameOfImage, BarChart... barCharts) throws IOException, DocumentException, ParserConfigurationException, SAXException {
 //        System.out.println("Start");
         Document doc = new Document();
         PdfWriter writer;
@@ -77,5 +77,6 @@ public class CreatePDF {
         }
         doc.close();
 //        System.out.println("Stop");
+        return fileName;
     }
 }

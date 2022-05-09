@@ -46,7 +46,7 @@
                                             <Font size="14.0" />
                                         </font>
                               </TextArea>
-                                    <BarChart fx:id="barChart" prefHeight="349.0" prefWidth="360.0" visible="true">
+                                    <BarChart fx:id="barChart" prefHeight="349.0" prefWidth="360.0" style="-fx-background-color: white;" visible="true">
                                         <xAxis>
                                             <CategoryAxis side="BOTTOM" />
                                         </xAxis>
@@ -113,7 +113,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                      <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Otwórz folder PDF" textFill="WHITE">
+                      <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#openFolder1" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Otwórz folder PDF" textFill="WHITE">
                           <font>
                               <Font name="System Bold" size="14.0" />
                           </font>

@@ -298,14 +298,14 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
+       String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
         switch (rs) {
             case 0:
                 return;
             case 1:
-                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + this.file.getName() + ".pdf";
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + createPDF + ".pdf";
                 System.out.println(pathpdf);
                 String[] params = {"cmd", "/c", pathpdf};
                 try {
@@ -317,14 +317,14 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName()) + dataPick, "", barChartTMP);
+        String createPDF = CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName()) + dataPick, "", barChartTMP);
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
         switch (rs) {
             case 0:
                 return;
             case 1:
-                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + this.file.getName() + dataPick+ ".pdf";
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + createPDF + ".pdf";
                 System.out.println(pathpdf);
                 String[] params = {"cmd", "/c", pathpdf};
                 try {

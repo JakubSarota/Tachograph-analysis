@@ -100,6 +100,21 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#openFolder" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Otwórz folder PDF" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/icons8-shared-folder-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
                <opaqueInsets>
                   <Insets />
