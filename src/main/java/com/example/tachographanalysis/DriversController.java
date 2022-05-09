@@ -5,6 +5,7 @@ import com.example.tachographanalysis.database.driver.Driver;
 import com.example.tachographanalysis.database.driver.ShowList;
 import com.example.tachographanalysis.database.driver.driverInfo.InfoDriver;
 import com.example.tachographanalysis.database.driver.driverInfo.showData;
+import com.example.tachographanalysis.database.driver.peselValidator;
 import com.example.tachographanalysis.database.trash.Trash;
 import com.example.tachographanalysis.size.SizeController;
 import javafx.collections.FXCollections;
@@ -260,17 +261,31 @@ public class DriversController {
     }
 
     public void onEditPesel(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
+        Connection conn = getConnection();
         getDriversObjectPropertyEdit().setPesel(driversStringCellEditEvent.getNewValue());
         String value = driversStringCellEditEvent.getNewValue();
         String driverId= String.valueOf(accountTableView.getSelectionModel().getSelectedItem().getId());
 
-        Connection conn = getConnection();
+        peselValidator PeselVal;
+        String PESEL = value;
+        PeselVal = new peselValidator(PESEL);
 
-        System.out.println(value);
-        String query = "UPDATE driver SET  pesel = '"+value+"' WHERE id = '"+driverId+"'";
+        if (PeselVal.isValid()) {
+            System.out.println("Numer PESEL jest prawidlowy");
+            System.out.println("Rok urodzenia: " + PeselVal.getBirthYear());
+            System.out.println("Miesiac urodzenia: " + PeselVal.getBirthMonth());
+            System.out.println("Dzien urodzenia: " + PeselVal.getBirthDay());
+            System.out.println("Plec: " + PeselVal.getSex());
 
-        extracted(conn, query);
-    }
+            String query = "UPDATE driver SET  pesel = '" + value + "' WHERE id = '" + driverId + "'";
+            extracted(conn, query);
+        }else{
+
+            String query = "UPDATE driver SET  pesel = '' WHERE id = '"+driverId+"'";
+            JOptionPane.showMessageDialog(null, "Numer pesel jest nieprawidłowy");
+            extracted(conn, query);
+        }}
+
     public void onEditCity(TableColumn.CellEditEvent<Driver, String> driversStringCellEditEvent) {
         getDriversObjectPropertyEdit().setCity(driversStringCellEditEvent.getNewValue());
         String value = driversStringCellEditEvent.getNewValue();
