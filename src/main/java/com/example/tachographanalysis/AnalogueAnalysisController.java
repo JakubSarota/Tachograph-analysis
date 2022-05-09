@@ -9,9 +9,7 @@ import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
 import com.example.tachographanalysis.size.SizeController;
 import com.itextpdf.text.DocumentException;
-import javafx.application.HostServices;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -43,9 +41,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
-import com.asprise.imaging.core.Imaging;;import static java.lang.Integer.parseInt;
+;import static java.lang.Integer.parseInt;
 
 
 public class AnalogueAnalysisController {
@@ -60,7 +57,7 @@ public class AnalogueAnalysisController {
     @FXML
     private TextArea textArea, fileText;
     @FXML
-    private AnchorPane showAnalysis, showDragAndDrop, OpenAnalogueData;
+    private AnchorPane showAnalysis, showDragAndDrop;
     @FXML
     private Label loading;
     @FXML
@@ -171,6 +168,13 @@ public class AnalogueAnalysisController {
             loadAnotherFile.setVisible(true);
             btnScanner.setDisable(true);
             btnOpenAnalogue.setDisable(true);
+            btnOpenAnalogue.setDisable(true);
+            File findm = new File(System.getProperty("user.dir")+"\\findMinimum.txt");
+            File findmw = new File(System.getProperty("user.dir")+"\\findMinimumWithoutDegree.txt");
+            if(findm.exists() || findmw.exists()) {
+                findm.delete();
+                findmw.delete();
+            }
         } else {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             selectedFileAnalogue = null;
@@ -216,6 +220,13 @@ public class AnalogueAnalysisController {
             loadAnotherFile.setVisible(true);
             btnScanner.setDisable(true);
             btnOpenAnalogue.setDisable(true);
+            btnOpenAnalogue.setDisable(true);
+            File findm = new File(System.getProperty("user.dir")+"\\findMinimum.txt");
+            File findmw = new File(System.getProperty("user.dir")+"\\findMinimumWithoutDegree.txt");
+            if(findm.exists() || findmw.exists()) {
+                findm.delete();
+                findmw.delete();
+            }
         } else {
             dragOver.setText("Nie odnaleziono tarczy, spróbuj ponownie");
             loading.setVisible(false);
@@ -377,7 +388,6 @@ public class AnalogueAnalysisController {
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
 
-
         barChart.getData().clear();
         barChart.getData().removeAll();
         barChart.setVisible(true);
@@ -391,6 +401,7 @@ public class AnalogueAnalysisController {
 
         String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
         String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
+
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
         sumBreak=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) / 60;
@@ -439,13 +450,12 @@ public class AnalogueAnalysisController {
 
             CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
 
-            String[] buttons = {"OK", "Otwórz plik PDF"};
-            int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Plik PDF został utworzony", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+            String[] buttons = {"Zamknij", "Otwórz plik PDF"};
+            int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
             switch (rs) {
                 case 0:
                     return;
                 case 1:
-
                     String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileNametoSearch + ".pdf";
                     System.out.println(pathpdf);
                     String[] params = {"cmd", "/c", pathpdf};
@@ -456,7 +466,19 @@ public class AnalogueAnalysisController {
         }
         if(file_name.indexOf("\\")!=-1) {
             CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("\\")+1),file_name);
-            JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+            String[] buttons = {"OK", "Otwórz plik PDF"};
+            int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+            switch (rs) {
+                case 0:
+                    return;
+                case 1:
+                    String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + fileNametoSearch + ".pdf";
+                    System.out.println(pathpdf);
+                    String[] params = {"cmd", "/c", pathpdf};
+                    try {
+                        Runtime.getRuntime().exec(params);
+                    } catch (Exception e) { }
+            }
         }
     }
 
@@ -474,7 +496,7 @@ public class AnalogueAnalysisController {
         Result result = new AspriseScanUI().setRequest(
                         new Request().addOutputItem(
                                 new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
-                                        .setSavePath("C:\\Users\\Public\\Documents\\\\${TMS}${EXT}")))
+                                        .setSavePath(System.getProperty("user.dir")+"\\skany"+"\\\\${TMS}${EXT}")))
                 .showDialog(null, "Użyj skanera", true, null);
 
 //        System.out.println(result == null ? "(null)" : result.getImageFiles());
@@ -506,28 +528,14 @@ public class AnalogueAnalysisController {
         addStats.setVisible(false);
         createPDF.setVisible(false);
         loadAnotherFile.setVisible(false);
-        OpenAnalogueData.setVisible(false);
         btnScanner.setDisable(false);
+        btnOpenAnalogue.setDisable(false);
         btnOpenAnalogue.setDisable(false);
     }
 
-    public void OpenAnalogueFiles() {
-        if(OpenAnalogueData.isVisible()==false) {
-            btnOpenAnalogue.setText("Wczytaj dane");
-            OpenAnalogueData.setVisible(true);
-            OpenAnalogueData.setManaged(true);
-            showDragAndDrop.setVisible(false);
-            showAnalysis.setVisible(false);
-            imgOpenAnalogue = new Image(getClass().getResourceAsStream("icons/icons8-analogue.png"));
-            imgViewOpenAnalogue.setImage(imgOpenAnalogue);
-        } else {
-            btnOpenAnalogue.setText("Istniejące dane");
-            OpenAnalogueData.setVisible(false);
-            OpenAnalogueData.setManaged(false);
-            showDragAndDrop.setVisible(true);
-            imgOpenAnalogue = new Image(getClass().getResourceAsStream("icons/icons8-user-folder-60.png"));
-            imgViewOpenAnalogue.setImage(imgOpenAnalogue);
-            showAnalysis.setVisible(false);
-        }
+    public void OpenExistsFiles() throws IOException {
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("drivers.fxml"));
+        Stage scene = (Stage) btnBack.getScene().getWindow();
+        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
     }
 }

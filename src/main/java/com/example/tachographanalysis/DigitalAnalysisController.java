@@ -82,7 +82,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private TextArea dailyTextAreaDataChart;
     @FXML
-    private Button btnBack, btnUpload, btnRaport, loadAnotherFile;
+    private Button btnBack, btnUpload, btnRaport, loadAnotherFile, btnOpenAnalogue;
     @FXML
     public Button dragOver;
     @FXML
@@ -154,6 +154,7 @@ public class DigitalAnalysisController implements Initializable {
             draganddropPane.setVisible(false);
             dataDigital.setVisible(true);
             loadAnotherFile.setVisible(true);
+            btnOpenAnalogue.setDisable(true);
             this.file = file;
             TitleFileName.setText("Dane z pliku " + file.getName());
 
@@ -298,14 +299,38 @@ public class DigitalAnalysisController implements Initializable {
     private void generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
         CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
-        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
+        String[] buttons = {"Zamknij", "Otwórz plik PDF"};
+        int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+        switch (rs) {
+            case 0:
+                return;
+            case 1:
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + this.file.getName() + ".pdf";
+                System.out.println(pathpdf);
+                String[] params = {"cmd", "/c", pathpdf};
+                try {
+                    Runtime.getRuntime().exec(params);
+                } catch (Exception e) { }
+        }
     }
 
     @FXML
     private void generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
         CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName()) + dataPick, "", barChartTMP);
-        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony!");
+        String[] buttons = {"Zamknij", "Otwórz plik PDF"};
+        int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
+        switch (rs) {
+            case 0:
+                return;
+            case 1:
+                String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + this.file.getName() + dataPick+ ".pdf";
+                System.out.println(pathpdf);
+                String[] params = {"cmd", "/c", pathpdf};
+                try {
+                    Runtime.getRuntime().exec(params);
+                } catch (Exception e) { }
+        }
     }
 
     @FXML
@@ -425,7 +450,7 @@ public class DigitalAnalysisController implements Initializable {
 
     @FXML
     private void showChart(String data) throws ParseException {
-
+        System.out.println(data);
         Object[] dataDiffOneDaTable = dataDiffOneDay(data);
 
         String selectedDate = data.substring(0, 10);
@@ -641,7 +666,7 @@ public class DigitalAnalysisController implements Initializable {
 
     @FXML
     public static Object[] dataDiffOneDay(String data) {
-
+//        System.out.println(data);
         int firstActivity = data.indexOf("Aktywność");
         int bTime = 0;
 
@@ -1163,7 +1188,7 @@ public class DigitalAnalysisController implements Initializable {
                 System.out.println(filepath);
                 dataDigital.setVisible(true);
                 loadAnotherFile.setVisible(true);
-
+                btnOpenAnalogue.setDisable(true);
                 if (file == null) {
 
                 } else {
@@ -1475,5 +1500,12 @@ public class DigitalAnalysisController implements Initializable {
         btnAddStatsDigitalAll.setVisible(false);
         dragOver.setText("Wybierz plik albo upuść go tutaj");
         loadAnotherFile.setVisible(false);
+        btnOpenAnalogue.setDisable(false);
+    }
+
+    public void OpenExistsFiles() throws IOException {
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("drivers.fxml"));
+        Stage scene = (Stage) btnBack.getScene().getWindow();
+        scene.setScene(new Scene(fxmlLoader, SizeController.sizeW, SizeController.sizeH));
     }
 }

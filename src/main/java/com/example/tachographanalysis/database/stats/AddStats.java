@@ -74,12 +74,14 @@ public class AddStats {
                 driver=newValue;
             }
         });
-        String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
-        textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
+        String[] s = DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
+        System.out.println(s[1]);
+        textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+15, s[1].length()-1));
         breakTime.setText(String.valueOf(AnalogueAnalysisController.sumBreak));
         workTime.setText(String.valueOf(AnalogueAnalysisController.sumWork));
         dataPicker.setValue(LocalDate.now());
-        String l=textArea.getText();
+        String l = textArea.getText();
+
         l=l.replace("\t","");
         l=l.replace("\n","");
         String[] ll=l.split(" ",-1);
@@ -152,11 +154,12 @@ public class AddStats {
         try{
             String query = "SELECT * FROM stats WHERE date_work='"+date_work+"' AND driver_id='"+driver_id+"'";
             ResultSet queryOutput =  DatabaseConnection.exQuery(query);
+
             if(!queryOutput.next()) {
                     int status = DatabaseConnection.exUpdate(
             "INSERT INTO stats (driver_id, date_work, date_add, work_info, sum_work, sum_break, file, file_type, " +
                     "sum_road, date_work_end, time_work_start, time_work_end)" +
-                  " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info + "','" + sumWork + "','" +
+                  " VALUES('" + driver_id + "','" + date_work + "','" + date_add + "','" + work_info +"\n"+ " "+ "','" + sumWork + "','" +
                   sumBreak + "','" + file + "','" + file_type + "','" + sumRoad + "','" + date_work_end + "','" +
                     time_work_start + "','" + time_work_end + "')");
 

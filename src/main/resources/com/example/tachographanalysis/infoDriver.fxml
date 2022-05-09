@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.driver.driverInfo.InfoDriver">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.database.driver.driverInfo.InfoDriver">
    <left>
-      <VBox prefHeight="500.0" prefWidth="264.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="500.0" prefWidth="275.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="100.0" prefWidth="207.0">
                <children>
@@ -27,7 +40,7 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox prefHeight="55.0" prefWidth="288.0" />
+            <HBox prefHeight="20.0" prefWidth="288.0" />
             <HBox layoutX="10.0" layoutY="144.0" prefHeight="35.0" prefWidth="264.0">
                <children>
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="200.0" text="Drugie imię" textAlignment="CENTER" textFill="WHITE">
@@ -168,17 +181,66 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="dataView" prefHeight="500.0" prefWidth="539.0" stylesheets="@css/style1.css">
-               <columns>
-                  <TableColumn fx:id="dateAddCol" prefWidth="97.0" style="-fx-alignment: center;" text="Data dodania" />
-                  <TableColumn fx:id="dateWorkCol" prefWidth="115.0" style="-fx-alignment: center;" text="Data pracy" />
-                  <TableColumn fx:id="sumWorkCol" prefWidth="67.0" style="-fx-alignment: center;" text="Praca" />
-                  <TableColumn fx:id="sumBreakCol" prefWidth="75.0" style="-fx-alignment: center;" text="Przerwa" />
-                  <TableColumn fx:id="sumRoadCol" prefWidth="75.0" style="-fx-alignment: center;" text="Przejechane" />
-                  <TableColumn fx:id="fileTypeCol" minWidth="0.0" prefWidth="111.0" style="-fx-alignment: center;" text="Typ pliku" />
-               </columns>
-            </TableView>
-            <TextArea fx:id="work_info" editable="false" prefHeight="500.0" prefWidth="249.0" />
+            <AnchorPane prefHeight="500.0" prefWidth="853.0">
+               <children>
+                  <HBox layoutY="59.0" prefHeight="441.0" prefWidth="891.0">
+                     <children>
+                        <TableView fx:id="dataView" prefHeight="441.0" prefWidth="470.0" stylesheets="@css/style1.css">
+                           <columns>
+                              <TableColumn fx:id="dateAddCol" prefWidth="97.0" style="-fx-alignment: center;" text="Data dodania" />
+                              <TableColumn fx:id="dateWorkCol" prefWidth="115.0" style="-fx-alignment: center;" text="Data pracy" />
+                              <TableColumn fx:id="sumWorkCol" prefWidth="67.0" style="-fx-alignment: center;" text="Praca" />
+                              <TableColumn fx:id="sumBreakCol" prefWidth="75.0" style="-fx-alignment: center;" text="Przerwa" />
+                              <TableColumn fx:id="sumRoadCol" prefWidth="99.0" style="-fx-alignment: center;" text="Przejechane" />
+                           </columns>
+                        </TableView>
+                        <TabPane prefHeight="500.0" prefWidth="454.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Aktywność">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextArea fx:id="work_info" editable="false" layoutX="23.0" layoutY="1.0" prefHeight="470.0" prefWidth="308.0" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="Wykres dniowy">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <BarChart fx:id="barChart" layoutX="2.0" layoutY="36.0" prefHeight="370.0" prefWidth="350.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </BarChart>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </HBox>
+                  <Label layoutX="14.0" layoutY="28.0" text="Sortuj datę pracy od">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="datePickerSINCE" layoutX="146.0" layoutY="25.0" onAction="#setDatePickerSINCE" prefHeight="25.0" prefWidth="120.0" />
+                  <Label layoutX="275.0" layoutY="29.0" text="do">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="datePickerTO" layoutX="304.0" layoutY="25.0" onAction="#setDatePickerTO" prefHeight="25.0" prefWidth="120.0" />
+                  <Button layoutX="446.0" layoutY="25.0" mnemonicParsing="false" onAction="#sumDate" text="Szukaj" />
+                  <Button layoutX="512.0" layoutY="25.0" mnemonicParsing="false" onAction="#reset" text="Resetuj " />
+               </children>
+            </AnchorPane>
          </children>
       </HBox>
    </center>
