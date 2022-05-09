@@ -136,7 +136,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_id_card" onKeyTyped="#digitOnlyIdCard" prefHeight="25.0" prefWidth="230.0">
+                        <TextField fx:id="tf_id_card" onKeyTyped="#digitOnlyIdCard" onMouseClicked="#peselValidation" prefHeight="25.0" prefWidth="230.0">
                            <font>
                               <Font size="15.0" />
                            </font>

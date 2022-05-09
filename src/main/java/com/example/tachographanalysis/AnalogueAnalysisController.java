@@ -500,7 +500,7 @@ public class AnalogueAnalysisController {
         Result result = new AspriseScanUI().setRequest(
                         new Request().addOutputItem(
                                 new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
-                                        .setSavePath(System.getProperty("user.dir")+"\\skany"+"\\\\${TMS}${EXT}")))
+                                        .setSavePath(System.getProperty("user.dir")+"\\archiwum"+"\\\\${TMS}${EXT}")))
                 .showDialog(null, "Użyj skanera", true, null);
 
 //        System.out.println(result == null ? "(null)" : result.getImageFiles());

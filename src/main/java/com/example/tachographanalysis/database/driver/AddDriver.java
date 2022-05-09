@@ -154,12 +154,31 @@ public class AddDriver implements Initializable {
                 if (!t1.matches("\\d*")) {
                     tf_pesel.setText(t1.replaceAll("[^\\d]", ""));
                 }
-                if (tf_pesel.getLength() >=11) {
+                if (tf_pesel.getLength() >=12) {
                     String max = tf_pesel.getText().substring(0,11);
                     tf_pesel.setText(max);
                 }
             }
         });
+    }
+
+    public void peselValidation(){
+        peselValidator PeselVal;
+        String PESEL = tf_pesel.getText();
+        System.out.println(PESEL);
+        PeselVal = new peselValidator(PESEL);
+
+        if (PeselVal.isValid()) {
+            System.out.println("Numer PESEL jest prawidlowy");
+            System.out.println("Rok urodzenia: " + PeselVal.getBirthYear());
+            System.out.println("Miesiac urodzenia: " + PeselVal.getBirthMonth());
+            System.out.println("Dzien urodzenia: " + PeselVal.getBirthDay());
+            System.out.println("Plec: " + PeselVal.getSex());
+            hint.setTextFill(Color.web("#FFF"));
+            hint.setText("Numer pesel jest prawidłowy");
+        }else{
+            hint.setText("Numer pesel jest nieprawidłowy");
+        }
     }
 
     public void digitOnlyIdCard() {
