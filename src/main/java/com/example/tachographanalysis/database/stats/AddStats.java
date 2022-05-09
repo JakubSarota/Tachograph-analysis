@@ -76,8 +76,8 @@ public class AddStats {
         });
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
-        breakTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumBreak)));
-        workTime.setText(String.valueOf(AnalysisCircle.blackImage.ktoraGodzina(AnalogueAnalysisController.sumWork)));
+        breakTime.setText(String.valueOf(AnalogueAnalysisController.sumBreak));
+        workTime.setText(String.valueOf(AnalogueAnalysisController.sumWork));
         dataPicker.setValue(LocalDate.now());
         String l=textArea.getText();
         l=l.replace("\t","");
