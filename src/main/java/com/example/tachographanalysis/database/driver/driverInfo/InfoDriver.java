@@ -28,6 +28,10 @@ import java.time.LocalDate;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.valueOf;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 
 public class InfoDriver {
     @FXML
@@ -47,8 +51,8 @@ public class InfoDriver {
     @FXML
     private BarChart barChart;
     static int idDriver;
-    static String firstName, lastName, Born, cardNumber;
-    int idStats;
+    static String firstName, lastName, Born, cardNumber, driverId;
+//    int idStats, sumLast14DaysOfWork;
     Integer data;
 
 
@@ -77,6 +81,7 @@ public class InfoDriver {
             firstName=queryOutput.getString("first_name");
             lastName=queryOutput.getString("last_name");
             Born=queryOutput.getString("born_date");
+            driverId=queryOutput.getString("id");
             cardNumber=queryOutput.getString("id_card");
 
             try {
@@ -178,7 +183,7 @@ public class InfoDriver {
     @FXML
     public void generateOsw(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
         System.out.println("Creating PDF");
-        String fileName = firstName + "_" + lastName + "_oswiadczenie_";
+        String fileName = firstName + "_" + lastName + "_oswiadczenie_o_nie_pracy";
         System.out.println(firstname);
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
@@ -254,4 +259,104 @@ public class InfoDriver {
 
     }
 
+    @FXML
+    public void generateOsw2(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
+
+        Integer sumWork[] = new Integer[14];
+        String dateWork[] = new String[14];
+        Integer sumLast14DaysOfWork = 0;
+        Integer i = 0;
+        LocalDate ld= LocalDate.now().with(TemporalAdjusters.previous( DayOfWeek.MONDAY ));
+        LocalDate ld2= ld.with(TemporalAdjusters.previous( DayOfWeek.MONDAY ));
+
+        String connectQuery = "SELECT sum_work,date_work FROM stats WHERE driver_id='"+driverId+"'  " +
+                "AND date_work>='"+ld.with(TemporalAdjusters.previous( DayOfWeek.MONDAY )) +"'";
+        if(LocalDate.now().getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+            connectQuery = "SELECT sum_work,date_work FROM stats WHERE driver_id='" + driverId + "'  " +
+                    "AND date_work>='" + ld + "'";
+            ld2=ld;
+        }
+
+
+        try{
+            ResultSet queryOutput = DatabaseConnection.exQuery(connectQuery);
+            while (queryOutput.next()){
+
+                sumWork[i] = queryOutput.getInt("sum_work");
+                dateWork[i] = queryOutput.getString("date_work");
+                sumLast14DaysOfWork+=sumWork[i];
+                 System.out.println( sumLast14DaysOfWork );
+                i++;
+            }
+
+            try {
+                if(queryOutput!=null) {
+                    queryOutput.close();
+                }
+            } catch (Exception e) {}
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+        System.out.println("Creating PDF");
+        String fileName = firstName + "_" + lastName + "_oswiadczenie_o_pracy";
+//        System.out.println(firstname);
+        JOptionPane.showMessageDialog(null, "Plik PDF został utworzony");
+
+        CreatePDF.createPDF(new String[]{
+                "                                          " +
+                        "                   " +
+                        "ZAŚWIADCZENIE O DZIAŁALNOŚCI " +
+                        "                                                                   " +
+                        "                                             " +
+                        "                                          " +
+                        "                                      \n" +
+                        "Część wypełniana przez przedsiębiorstwo: \n" +
+                        " 1. Nazwa firmy:         ..............................................................................................................................\n" +
+                        " 2. Ulica i numer:        ..............................................................................................................................\n" +
+                        " 3. Kod pocztowy:       .............................................................................................................................. \n" +
+                        " 4. Miejscowość:        .............................................................................................................................. \n" +
+                        " 5. Państwo:               .............................................................................................................................\n" +
+                        " 6. Numer telefonu:      ..............................................................................................................................\n" +
+                        " 7. Numer faksu:          ..............................................................................................................................\n" +
+                        " 8. Adres email:           ..............................................................................................................................\n\n" +
+                        "Ja niżej podpisany: \n" +
+                        " 9. Imię i nazwisko:        ..............................................................................................................................\n" +
+                        " 10. Stanowisko:              ................................................................................................................................\n\n" +
+                        "oświadczam, że kierowca: \n" +
+                        " 11. Imię nazwisko: " + firstname.getText() + " " + lastname.getText() + "\n" +
+                        " 12. Data urodzenia: " + Born + "\n" +
+                        " 13. Karta kierowcy: " + cardNumber + "\n\n" +
+                        "w okresie (14 dni): \n" +
+                        " 14. od (rok-miesiąc-dzień): "+ld2+"\n" +
+                        " 15. do (rok-miesiąc-dzień): "+LocalDate.now()+" \n" +
+                        " 16. Przepracował (jazda + praca) : " + sumLast14DaysOfWork + " godzin   \n\n" +
+                        "                                          " +
+                        "                                   " +
+                        "                                   " +
+                        "         " +
+                        " ................................................................" +
+                        "                                          " +
+                        "                                          " +
+                        "                                          " +
+                        "" +
+                        "(Miejscowość, data i podpis pracownika)\n\n" +
+                        " 21. Ja, jako kierowca, potwierdzam, że w wyżej wymienionym okresie prowadziłem pojazd wchodzący\n \n" +
+                        "                                          " +
+                        "                                          " +
+                        "                                      " +
+                        " ................................................................" +
+                        "                                          " +
+                        "                                          " +
+                        "                                          " +
+                        "" +
+                        "(Miejscowość, data i podpis kierowcy)\n\n" +
+                        "                                          " +
+                        "                                          " +
+                        "" +
+                        ""} ,fileName,"" );
+
+    }
 }

@@ -1450,7 +1450,7 @@ public class DigitalAnalysisController implements Initializable {
                             String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
                             String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
 
-                            String tmpS=AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(0, 11),
+                            String tmpS=AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(1, 11),
                                     LocalDate.now().toString(),dataGD1,
                                     String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60+
                                             parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60),
