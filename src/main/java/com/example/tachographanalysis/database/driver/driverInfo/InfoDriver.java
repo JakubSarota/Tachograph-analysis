@@ -3,11 +3,14 @@ package com.example.tachographanalysis.database.driver.driverInfo;
 import com.example.tachographanalysis.DigitalAnalysisController;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.database.DatabaseConnection;
+import com.example.tachographanalysis.database.driver.Driver;
 import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -21,6 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.valueOf;
@@ -94,10 +98,25 @@ public class InfoDriver {
     }
 
     public void sumDate() {
-        String result = setDatePickerSINCE() + setDatePickerTO();
-        System.out.println(result);
+        if(datePickerSINCE.getValue()!=null && datePickerTO.getValue()!=null) {
+            FilteredList<Data> filteredList = new FilteredList<>(dataList, b -> true);
+            filteredList.setPredicate(Data -> {
+                LocalDate t1 = LocalDate.parse(setDatePickerSINCE());
+                LocalDate t2 = LocalDate.parse(setDatePickerTO());
+                LocalDate t3 = LocalDate.parse(Data.getDate_work());
+                if(t3.isAfter(t1) && t3.isBefore(t2)){
+                    return true;
+                }
+                return false;
+            });
+            SortedList<Data> sortedData = new SortedList<>(filteredList);
+            sortedData.comparatorProperty().bind(dataView.comparatorProperty());
+            dataView.setItems(sortedData);
+        }
     }
-
+    public void reset() throws SQLException {
+        infoDriver();
+    }
     public void infoDriver() throws SQLException {
         try {
             dataList = showData.data();
@@ -107,7 +126,6 @@ public class InfoDriver {
             sumWorkCol.setCellValueFactory(new PropertyValueFactory<>("sum_work"));
             sumBreakCol.setCellValueFactory(new PropertyValueFactory<>("sum_break"));
             sumRoadCol.setCellValueFactory(new PropertyValueFactory<>("sum_road"));
-//            fileCol.setCellValueFactory(new PropertyValueFactory<>("file"));
             dataView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Data>() {
                 @Override
                 public void changed(ObservableValue<? extends Data> observable, Data oldValue, Data newValue) {
