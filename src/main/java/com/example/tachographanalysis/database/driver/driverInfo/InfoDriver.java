@@ -11,10 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import org.xml.sax.SAXException;
@@ -38,7 +35,9 @@ public class InfoDriver {
     @FXML
     private TextArea work_info;
     @FXML
-    public TableColumn<Data, String> dateWorkCol, dateAddCol, sumWorkCol, sumBreakCol, fileCol, fileTypeCol;
+    private DatePicker datePickerSINCE, datePickerTO;
+    @FXML
+    public TableColumn<Data, String> dateWorkCol, dateAddCol, sumWorkCol, sumBreakCol, fileCol;
     @FXML
     private ObservableList<Data> dataList = FXCollections.observableArrayList();
     @FXML
@@ -85,6 +84,19 @@ public class InfoDriver {
 //            System.err.println(e.getMessage());
         }
     }
+    public String setDatePickerSINCE() {
+        String date = String.valueOf(datePickerSINCE.getValue());
+        return date;
+    }
+    public String setDatePickerTO() {
+        String date = String.valueOf(datePickerTO.getValue());
+        return date;
+    }
+
+    public void sumDate() {
+        String result = setDatePickerSINCE() + setDatePickerTO();
+        System.out.println(result);
+    }
 
     public void infoDriver() throws SQLException {
         try {
@@ -95,20 +107,19 @@ public class InfoDriver {
             sumWorkCol.setCellValueFactory(new PropertyValueFactory<>("sum_work"));
             sumBreakCol.setCellValueFactory(new PropertyValueFactory<>("sum_break"));
             sumRoadCol.setCellValueFactory(new PropertyValueFactory<>("sum_road"));
-            fileTypeCol.setCellValueFactory(new PropertyValueFactory<>("file_type"));
 //            fileCol.setCellValueFactory(new PropertyValueFactory<>("file"));
             dataView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Data>() {
                 @Override
                 public void changed(ObservableValue<? extends Data> observable, Data oldValue, Data newValue) {
                     data = newValue.id;
 //                    System.err.println(data);
-                    String query = "SELECT work_info FROM stats WHERE id='"+data+"'";
+                    String query = "SELECT work_info FROM stats WHERE id='"+data+"' ORDER BY id";
                     try {
                         ResultSet rs = DatabaseConnection.exQuery(query);
                         work_info.setText(rs.getString("work_info"));
-                        String data = rs.getString("work_info");
+
 //                        System.out.println(data);
-                        Object[] dataDiffOneDaTable = DigitalAnalysisController.dataDiffOneDay(data);
+                        Object[] dataDiffOneDaTable = DigitalAnalysisController.dataDiffOneDay(work_info.getText());
                         String[] activityDataWork = (String[]) dataDiffOneDaTable[0];
                         String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
                         String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
@@ -131,8 +142,9 @@ public class InfoDriver {
                         if(rs!=null) {
                             rs.close();
                         }
+
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                 }
             });
