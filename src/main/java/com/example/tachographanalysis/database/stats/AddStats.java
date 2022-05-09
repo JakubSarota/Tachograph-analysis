@@ -75,7 +75,7 @@ public class AddStats {
             }
         });
         String[] s = DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
-        System.out.println(s[1]);
+//        System.out.println(s[1]);
         textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+15, s[1].length()-1));
         breakTime.setText(String.valueOf(AnalogueAnalysisController.sumBreak));
         workTime.setText(String.valueOf(AnalogueAnalysisController.sumWork));

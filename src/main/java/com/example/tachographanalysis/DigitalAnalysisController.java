@@ -246,13 +246,18 @@ public class DigitalAnalysisController implements Initializable {
                         logDataWrite.close();
                         System.out.println("Błąd konwersja nie przebiegła pomyślnie");
                         TextLoading.setText("Spróbuj ponownie");
-
+                        dataDigital.setVisible(false);
+                        draganddropPane.setVisible(true);
+                        loadAnotherFile.setVisible(false);
                     } else {
                         FileWriter logDataWrite = new FileWriter(".\\.log");
                         logDataWrite.append(dtf.format(now) + "Błąd konwersja nie przebiegła pomyślnie\n");
                         logDataWrite.close();
                         System.out.println("Błąd konwersja nie przebiegła pomyślnie");
                         TextLoading.setText("Spróbuj ponownie");
+                        dataDigital.setVisible(false);
+                        draganddropPane.setVisible(true);
+                        loadAnotherFile.setVisible(false);
                     }
                     e.printStackTrace();
                 }
@@ -306,7 +311,7 @@ public class DigitalAnalysisController implements Initializable {
                 return;
             case 1:
                 String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + this.file.getName() + ".pdf";
-                System.out.println(pathpdf);
+//                System.out.println(pathpdf);
                 String[] params = {"cmd", "/c", pathpdf};
                 try {
                     Runtime.getRuntime().exec(params);
@@ -325,7 +330,7 @@ public class DigitalAnalysisController implements Initializable {
                 return;
             case 1:
                 String pathpdf = System.getProperty("user.dir") + "\\PDF\\" + this.file.getName() + dataPick+ ".pdf";
-                System.out.println(pathpdf);
+//                System.out.println(pathpdf);
                 String[] params = {"cmd", "/c", pathpdf};
                 try {
                     Runtime.getRuntime().exec(params);
@@ -450,7 +455,7 @@ public class DigitalAnalysisController implements Initializable {
 
     @FXML
     private void showChart(String data) throws ParseException {
-        System.out.println(data);
+//        System.out.println(data);
         Object[] dataDiffOneDaTable = dataDiffOneDay(data);
 
         String selectedDate = data.substring(0, 10);
@@ -1204,7 +1209,7 @@ public class DigitalAnalysisController implements Initializable {
                     String fileNameXML = filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".xml";
                     String fileNameDDD = filepath.getName().subSequence(0, filepath.getName().length() - 4) + ".ddd";
 
-                    System.out.println(filepath);
+//                    System.out.println(filepath);
                     Path logFilePath = Paths.get(".\\.log");
                     //log current time
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
