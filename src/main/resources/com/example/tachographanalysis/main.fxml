@@ -89,7 +89,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button fx:id="btnSettings" layoutX="14.0" layoutY="537.0" mnemonicParsing="false" onAction="#getSettings" prefHeight="54.0" prefWidth="57.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+            <Button fx:id="btnSettings" layoutX="14.0" layoutY="537.0" mnemonicParsing="false" onAction="#getSettings" prefHeight="54.0" prefWidth="57.0" style="-fx-background-color: transparent; -fx-cursor: hand;" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="14.0">
                <graphic>
                   <ImageView fitHeight="33.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -105,7 +105,7 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="659.0" prefWidth="1233.0" style="-fx-background-color: #132C46;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="659.0" prefWidth="1233.0" style="-fx-background-color: #132C46;" BorderPane.alignment="TOP_CENTER">
          <children>
             <ImageView fitHeight="586.0" fitWidth="533.0" layoutX="236.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -123,12 +123,12 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <ImageView fitHeight="130.0" fitWidth="190.0" layoutX="873.0" layoutY="484.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="130.0" fitWidth="190.0" layoutX="873.0" layoutY="484.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="0.0">
                <image>
                   <Image url="@images/delivery-truck.png" />
                </image>
             </ImageView>
-            <Button layoutX="919.0" layoutY="23.0" mnemonicParsing="false" onAction="#aboutProgram" prefHeight="43.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+            <Button layoutX="919.0" layoutY="23.0" mnemonicParsing="false" onAction="#aboutProgram" prefHeight="43.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-cursor: hand;" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="23.0">
                <graphic>
                   <ImageView fitHeight="46.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
