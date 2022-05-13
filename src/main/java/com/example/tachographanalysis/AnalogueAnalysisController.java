@@ -7,13 +7,16 @@ import com.asprise.imaging.core.Result;
 import com.asprise.imaging.scan.ui.workbench.AspriseScanUI;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.analogueAnalysis.AnalysisCircle;
+import com.example.tachographanalysis.analogueAnalysis.ChangeColor;
 import com.example.tachographanalysis.size.SizeController;
+import com.example.tachographanalysis.workinfo.WorkInfo;
 import com.itextpdf.text.DocumentException;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -39,7 +42,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 ;import static java.lang.Integer.parseInt;
@@ -62,6 +68,8 @@ public class AnalogueAnalysisController {
     private Label loading;
     @FXML
     private BarChart barChart;
+    @FXML
+    private AreaChart areaChart;
     public static int sumBreak=0;
     public static int sumWork=0;
     public static String file_name;
@@ -70,7 +78,6 @@ public class AnalogueAnalysisController {
     static double ip = 0;
     AnalysisCircle analysisCircle = new AnalysisCircle();
     File selectedFileAnalogue;
-
     @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
@@ -387,7 +394,33 @@ public class AnalogueAnalysisController {
         xmlfile.close();
         String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
         textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
-
+        JSONArray json2= WorkInfo.getDailyActivity(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
+        areaChart.getData().clear();
+        areaChart.getData().removeAll();
+        XYChart.Series seriesB = new XYChart.Series();
+        XYChart.Series seriesW = new XYChart.Series();
+        seriesB.setName("Break");
+        seriesW.setName("Work");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        Date minuta=format.parse("00:01");
+        for (int i=0;i<json2.length();i++){
+            JSONObject j2= (JSONObject) json2.get(i);
+            if(j2.getInt("czas")>14) {
+                if(j2.getString("activity").equals("Break")) {
+                    Date date1 = format.parse(j2.getString("czas2"));
+                    seriesW.getData().add(new XYChart.Data( ChangeColor.ktoraGodzina((int) ((date1.getTime()-minuta.getTime())/1000/60)),2));
+                    seriesW.getData().add(new XYChart.Data( j2.getString("czas2"),0));
+                    seriesB.getData().add(new XYChart.Data( j2.getString("czas2"),1));
+                }else{
+                    Date date1 = format.parse(j2.getString("czas2"));
+                    seriesB.getData().add(new XYChart.Data( ChangeColor.ktoraGodzina((int) ((date1.getTime()-minuta.getTime())/1000/60)),1));
+                    seriesW.getData().add(new XYChart.Data( j2.getString("czas2"),2));
+                    seriesB.getData().add(new XYChart.Data( j2.getString("czas2"),0));
+                }
+            }
+        }
+        areaChart.getData().addAll(seriesW);
+        areaChart.getData().addAll(seriesB);
         barChart.getData().clear();
         barChart.getData().removeAll();
         barChart.setVisible(true);
@@ -404,8 +437,8 @@ public class AnalogueAnalysisController {
 
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
-        sumBreak=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) / 60;
-        sumWork=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) / 60;
+        sumBreak=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) ;
+        sumWork=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) ;
         series1.setName("Przerwa ("+sumBreak+")");
         series2.setName("Praca ("+sumWork+")");
         series2.getData().add(new XYChart.Data("Praca",

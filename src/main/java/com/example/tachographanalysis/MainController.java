@@ -1,15 +1,20 @@
 package com.example.tachographanalysis;
 
 import com.example.tachographanalysis.size.SizeController;
+import com.example.tachographanalysis.workinfo.WorkInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.swing.text.html.ImageView;
 import java.awt.*;
@@ -21,8 +26,8 @@ import java.io.InputStream;
 public class MainController {
     @FXML
     private Button btnAnalogueButton, btnDigitalButton, btnDrivers, btnReports, btnSettings;
-
-
+    @FXML
+    BarChart barChart;
     public void getAnalogueAnalysis() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("analogueAnalysis.fxml"));
         Stage scene = (Stage) btnAnalogueButton.getScene().getWindow();

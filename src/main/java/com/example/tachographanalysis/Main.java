@@ -1,16 +1,21 @@
 package com.example.tachographanalysis;
 
+import com.example.tachographanalysis.workinfo.WorkInfo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.text.ParseException;
+
 import com.example.tachographanalysis.size.SizeController;
+import org.json.JSONArray;
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, ParseException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), SizeController.sizeW, SizeController.sizeH);
         stage.setTitle("Tachfive 1.4");

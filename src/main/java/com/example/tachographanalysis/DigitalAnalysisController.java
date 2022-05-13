@@ -614,54 +614,16 @@ public class DigitalAnalysisController implements Initializable {
 
         XYChart.Series seriesChart1 = new XYChart.Series();
         seriesChart1.setName("Praca");
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[0], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[0]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[1], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[1]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[2], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[2]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[3], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[3]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[4], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[4]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[5], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[5]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[6], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[6]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[7]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[8]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[9]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[10]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[11]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[12]))) / 60));
-        seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[13]))) / 60));
-
         XYChart.Series seriesChart2 = new XYChart.Series();
         seriesChart2.setName("Przerwa");
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[0], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[0]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[1], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[1]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[2], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[2]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[3], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[3]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[4], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[4]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[5], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[5]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[6], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[6]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[7]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[8]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[9]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[10]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[11]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[12]))) / 60));
-        seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[13]))) / 60));
-
         XYChart.Series seriesChart3 = new XYChart.Series();
         seriesChart3.setName("Jazda");
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[0], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[0]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[1], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[1]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[2], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[2]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[3], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[3]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[4], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[4]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[5], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[5]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[6], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[6]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[7], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[7]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[8], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[8]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[9], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[9]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[10], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[10]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[11], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[11]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[12], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[12]))) / 60));
-        seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[13], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[13]))) / 60));
+        for (int i=0;i<twoWeeksDataCorrectly.length;i++) {
+            seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[i], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[i]))) / 60));
+            seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[i], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[i]))) / 60));
+            seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[i], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[i]))) / 60));
+        }
+
 
 
         chart.getData().addAll(seriesChart1, seriesChart3, seriesChart2);

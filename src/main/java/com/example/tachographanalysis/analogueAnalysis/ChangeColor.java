@@ -160,7 +160,7 @@ public class ChangeColor {
         }
         return json;
     }
-    public String ktoraGodzina(int m){
+    public static String ktoraGodzina(int m){
         int godziny=m/60;
         int minuty=m%60;
         String mm= String.valueOf(minuty);
