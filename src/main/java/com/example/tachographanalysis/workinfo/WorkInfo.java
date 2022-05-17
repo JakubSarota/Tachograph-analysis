@@ -15,21 +15,22 @@ import java.util.regex.Pattern;
 public class WorkInfo {
     public static JSONArray getDailyActivity(String activity) throws ParseException {
         JSONArray json=new JSONArray();
-        System.out.println(activity);
         String[] activity2=activity.split(" ");
-        System.out.println(Arrays.toString(activity2));
         for (int i=0;i<activity2.length;i++){
             if(activity2[i].equals("Work")||activity2[i].equals("Break")||activity2[i].equals("Drive")){
                 JSONObject j2=new JSONObject();
-                j2.put("start",activity2[i+2]);
+                j2.put("start",activity2[i+2].replace("\n",""));
+                j2.put("start2",timeDiffrence2("00:00",activity2[i+2].replace("\n","")));
                 if(i+7<activity2.length) {
-                    j2.put("stop", activity2[i + 7]);
+                    j2.put("stop", activity2[i + 7].replace("\n",""));
+                    j2.put("stop2", timeDiffrence2("00:00",activity2[i + 7].replace("\n","")));
                     j2.put("czas", timeDiffrence2(activity2[i +2],activity2[i + 7]) );
                     j2.put("czas2", ChangeColor.ktoraGodzina((int)timeDiffrence2(activity2[i +2],activity2[i + 7])) );
                 }else {
                     j2.put("stop", "24:00");
                     j2.put("czas", timeDiffrence2(activity2[i +2],"24:00") );
                     j2.put("czas2", ChangeColor.ktoraGodzina((int) timeDiffrence2(activity2[i +2],"24:00")) );
+                    j2.put("stop2", timeDiffrence2("00:00","24:00"));
                 }
                 j2.put("activity",activity2[i]);
                 json.put(j2);

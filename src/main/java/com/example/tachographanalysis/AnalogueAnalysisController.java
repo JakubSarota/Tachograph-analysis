@@ -30,6 +30,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -62,22 +63,25 @@ public class AnalogueAnalysisController {
     private ScrollPane scroll;
     @FXML
     private TextArea textArea, fileText;
+    //    @FXML
+//    private AnchorPane showAnalysis, showDragAndDrop;
     @FXML
-    private AnchorPane showAnalysis, showDragAndDrop;
+    private BorderPane showAnalysis, showDragAndDrop;
     @FXML
     private Label loading;
     @FXML
     private BarChart barChart;
     @FXML
     private AreaChart areaChart;
-    public static int sumBreak=0;
-    public static int sumWork=0;
+    public static int sumBreak = 0;
+    public static int sumWork = 0;
     public static String file_name;
 
     private String imageFile, text = "Wybierz plik albo upuść go tutaj";
     static double ip = 0;
     AnalysisCircle analysisCircle = new AnalysisCircle();
     File selectedFileAnalogue;
+
     @FXML
     public void getBack() throws Exception {
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("main.fxml"));
@@ -87,10 +91,10 @@ public class AnalogueAnalysisController {
 
     @FXML
     private void handleDragOverButton(DragEvent event) {
-        if(event.getDragboard().hasFiles()) {
+        if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.ANY);
         }
-        if(event.isAccepted()) {
+        if (event.isAccepted()) {
             loading.setVisible(true);
         }
         dragOver.setText("Upuść tutaj plik");
@@ -102,21 +106,21 @@ public class AnalogueAnalysisController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files",
-                        "*.png","*.jpg"));
+                        "*.png", "*.jpg"));
         File selectedFile = fileChooser.showOpenDialog(new Stage());
-        if(selectedFile==null){
+        if (selectedFile == null) {
             loading.setVisible(false);
         }
 //        System.out.println("selectedFile "+ selectedFile);
         imageFile = selectedFile.toURI().toURL().toString();
 //        System.out.println("imageFile "+ imageFile);
-        file_name=imageFile.replace("file:/","");
+        file_name = imageFile.replace("file:/", "");
         image = new Image(imageFile);
         this.selectedFileAnalogue = selectedFile;
-        if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
+        if (image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("Rozmiar pliku jest za mały, spróbuj ponownie");
             loading.setVisible(false);
-        } else if(selectedFile != null) {
+        } else if (selectedFile != null) {
             getImageOnClick(imageFile);
         }
 
@@ -128,12 +132,12 @@ public class AnalogueAnalysisController {
         List<String> validExtensions = Arrays.asList("jpg", "png");
         image = new Image(new FileInputStream(files.get(0)));
 //        System.out.println(event.getDragboard().getFiles().stream().map(file -> getExtension(String.valueOf(file.length()))));
-        if(!validExtensions.containsAll(event.getDragboard()
+        if (!validExtensions.containsAll(event.getDragboard()
                 .getFiles().stream().map(file -> getExtension(file.getName()))
                 .collect(Collectors.toList()))) {
             dragOver.setText("To nie jest plik graficzny, spróbuj ponownie");
             loading.setVisible(false);
-        } else if(image.getWidth() <= 1000 || image.getHeight() <= 1000) {
+        } else if (image.getWidth() <= 1000 || image.getHeight() <= 1000) {
             dragOver.setText("Rozmiar pliku jest za mały, spróbuj ponownie");
             loading.setVisible(false);
         } else {
@@ -141,7 +145,7 @@ public class AnalogueAnalysisController {
         }
     }
 
-    public String getExtension(String fileName){
+    public String getExtension(String fileName) {
         String extension = "";
         int i = fileName.lastIndexOf('.');
         if (i > 0 && i < fileName.length() - 1)
@@ -157,18 +161,18 @@ public class AnalogueAnalysisController {
 
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(image);
 
-        if(writableImage[0]!=null){
-            WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
+        if (writableImage[0] != null) {
+            WritableImage wi = SwingFXUtils.toFXImage(writableImage[0], null);
             imageView.setImage(wi);
         }
 
-        if(writableImage[1]!=null){
-            WritableImage wi2=SwingFXUtils.toFXImage(writableImage[1],null);
+        if (writableImage[1] != null) {
+            WritableImage wi2 = SwingFXUtils.toFXImage(writableImage[1], null);
             imageView2.setImage(wi2);
         }
 
-        if((writableImage[0]!=null) || (writableImage[1]!=null)) {
-            showDragAndDrop.setVisible(false);
+        if ((writableImage[0] != null) || (writableImage[1] != null)) {
+//            showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
             addStats.setVisible(true);
             createPDF.setVisible(true);
@@ -176,9 +180,9 @@ public class AnalogueAnalysisController {
             btnScanner.setDisable(true);
             btnOpenAnalogue.setDisable(true);
             btnOpenAnalogue.setDisable(true);
-            File findm = new File(System.getProperty("user.dir")+"\\findMinimum.txt");
-            File findmw = new File(System.getProperty("user.dir")+"\\findMinimumWithoutDegree.txt");
-            if(findm.exists() || findmw.exists()) {
+            File findm = new File(System.getProperty("user.dir") + "\\findMinimum.txt");
+            File findmw = new File(System.getProperty("user.dir") + "\\findMinimumWithoutDegree.txt");
+            if (findm.exists() || findmw.exists()) {
                 findm.delete();
                 findmw.delete();
             }
@@ -188,7 +192,7 @@ public class AnalogueAnalysisController {
             loading.setVisible(false);
         }
 
-        if(analysisCircle.blackImage!=null) {
+        if (analysisCircle.blackImage != null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
 //            analysisCircle.blackImage.save("png",image
 //                    .replace("file:/","")+"praca.png");
@@ -199,28 +203,28 @@ public class AnalogueAnalysisController {
         scroll.pannableProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        file_name=String.valueOf(files.get(0)).replace("file:/","");
+        file_name = String.valueOf(files.get(0)).replace("file:/", "");
         BufferedImage writableImage[] = analysisCircle.getHuanByCircle(String.valueOf(files.get(0)));
-        if(writableImage[0]!=null){
-            WritableImage wi=SwingFXUtils.toFXImage(writableImage[0],null);
+        if (writableImage[0] != null) {
+            WritableImage wi = SwingFXUtils.toFXImage(writableImage[0], null);
             imageView.setImage(wi);
         }
-        if(writableImage[1]!=null){
-            WritableImage wi2=SwingFXUtils.toFXImage(writableImage[1],null);
+        if (writableImage[1] != null) {
+            WritableImage wi2 = SwingFXUtils.toFXImage(writableImage[1], null);
             imageView2.setImage(wi2);
         }
-        if(analysisCircle.blackImage!=null) {
+        if (analysisCircle.blackImage != null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
-            analysisCircle.blackImage.save("png",String.valueOf(files.get(0))
-                    .replace("file:/","")+"praca.png");
+            analysisCircle.blackImage.save("png", String.valueOf(files.get(0))
+                    .replace("file:/", "") + "praca.png");
         } else {
 //            showDragAndDrop.setVisible(true);
 //            showAnalysis.setVisible(false);
 //            dragOver.setText("Nie odnaleziono tarczy");
 //            fileText.setText("Nie odnaleziono tarczy");
         }
-        if((writableImage[0]!=null) || (writableImage[1]!=null)) {
-            showDragAndDrop.setVisible(false);
+        if ((writableImage[0] != null) || (writableImage[1] != null)) {
+//            showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
             addStats.setVisible(true);
             createPDF.setVisible(true);
@@ -228,9 +232,9 @@ public class AnalogueAnalysisController {
             btnScanner.setDisable(true);
             btnOpenAnalogue.setDisable(true);
             btnOpenAnalogue.setDisable(true);
-            File findm = new File(System.getProperty("user.dir")+"\\findMinimum.txt");
-            File findmw = new File(System.getProperty("user.dir")+"\\findMinimumWithoutDegree.txt");
-            if(findm.exists() || findmw.exists()) {
+            File findm = new File(System.getProperty("user.dir") + "\\findMinimum.txt");
+            File findmw = new File(System.getProperty("user.dir") + "\\findMinimumWithoutDegree.txt");
+            if (findm.exists() || findmw.exists()) {
                 findm.delete();
                 findmw.delete();
             }
@@ -241,11 +245,11 @@ public class AnalogueAnalysisController {
     }
 
     private void writeWork(JSONObject json) throws Exception {
-        sumBreak=0;
-        sumWork=0;
-        JSONArray jarr=json.getJSONArray("praca");
-        String text="";
-        String xml="" +
+        sumBreak = 0;
+        sumWork = 0;
+        JSONArray jarr = json.getJSONArray("praca");
+        String text = "";
+        String xml = "" +
                 "<DriverData>\n" +
                 "    <CardIccIdentification>\n" +
                 "        <ClockStop></ClockStop>\n" +
@@ -345,82 +349,93 @@ public class AnalogueAnalysisController {
                 "                \n" +
                 "            </CardFaultRecordCollection>\n" +
                 "        </CardFaultRecords>\n" +
-                "    </FaultsData>\n"+
+                "    </FaultsData>\n" +
                 "    <DriverActivityData>\n" +
                 "<CardDriverActivity>\n" +
-        "            <CardActivityDailyRecord DateTime=\"\" DailyPresenceCounter=\"\" Distance=\"\">\n";
+                "            <CardActivityDailyRecord DateTime=\"\" DailyPresenceCounter=\"\" Distance=\"\">\n";
 
-        int lastWork=0,lastBreak=0;
-        for (int i=0;i<jarr.length();i++) {
-            boolean pracowal=false;
-            boolean przerwa=false;
+        int lastWork = 0, lastBreak = 0;
+        for (int i = 0; i < jarr.length(); i++) {
+            boolean pracowal = false;
+            boolean przerwa = false;
 
-            if(i>0) {
+            if (i > 0) {
                 if (Integer.parseInt((String) jarr.get(i)) - 1 == Integer.parseInt((String) jarr.get(i - 1))) {
                     pracowal = true;
                 }
 
-                if(Integer.parseInt((String) jarr.get(i))-15  >= Integer.parseInt((String) jarr.get(i - 1))) {
-                    przerwa=true;
-                    xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
-                                    analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1)))+"\" />\n";
-                    lastBreak=i-1;
+                if (Integer.parseInt((String) jarr.get(i)) - 15 >= Integer.parseInt((String) jarr.get(i - 1))) {
+                    przerwa = true;
+                    xml += "<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\"" +
+                            analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i - 1))) + "\" />\n";
+                    lastBreak = i - 1;
                 } else {
                     pracowal = true;
-                    if(przerwa) {
+                    if (przerwa) {
                         przerwa = false;
                     }
                 }
             }
-            if(!pracowal) {
-                lastWork=i;
-                xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Work\" Time=\""+
-                        analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i)))+"\" />\n";
+            if (!pracowal) {
+                lastWork = i;
+                xml += "<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Work\" Time=\"" +
+                        analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(i))) + "\" />\n";
             }
         }
 
-        xml+="<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\""+
-                analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1)))+"\" />\n";
-        xml+="            </CardActivityDailyRecord>\n" +
+        xml += "<ActivityChangeInfo FileOffset=\"0x2D12\" Slot=\"0\" Status=\"0\" Inserted=\"True\" Activity=\"Break\" Time=\"" +
+                analysisCircle.blackImage.ktoraGodzina(Integer.parseInt((String) jarr.get(jarr.length() - 1))) + "\" />\n";
+        xml += "            </CardActivityDailyRecord>\n" +
                 "        </CardDriverActivity>\n" +
-                "    </DriverActivityData>\n"+
+                "    </DriverActivityData>\n" +
                 "</DriverData>";
         File dir = new File(".\\ddd_to_xml\\data\\driver\\");
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        FileWriter xmlfile=new FileWriter(".\\ddd_to_xml\\data\\driver\\analoguexml.xml");
+        FileWriter xmlfile = new FileWriter(".\\ddd_to_xml\\data\\driver\\analoguexml.xml");
         xmlfile.write(xml);
         xmlfile.close();
-        String[] s=DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
-        textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
-        JSONArray json2= WorkInfo.getDailyActivity(s[1].substring(s[1].indexOf("Dzień pracy:")+12));
+        String[] s = DigitalAnalysisController.readData(new File(".\\ddd_to_xml\\data\\driver\\analoguexml.xml"));
+        textArea.setText(s[1].substring(s[1].indexOf("Dzień pracy:") + 12));
+        JSONArray json2 = WorkInfo.getDailyActivity(s[1].substring(s[1].indexOf("Dzień pracy:") + 12));
         areaChart.getData().clear();
         areaChart.getData().removeAll();
-        XYChart.Series seriesB = new XYChart.Series();
-        XYChart.Series seriesW = new XYChart.Series();
-        seriesB.setName("Break");
-        seriesW.setName("Work");
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        Date minuta=format.parse("00:01");
-        for (int i=0;i<json2.length();i++){
-            JSONObject j2= (JSONObject) json2.get(i);
-            if(j2.getInt("czas")>14) {
-                if(j2.getString("activity").equals("Break")) {
-                    Date date1 = format.parse(j2.getString("czas2"));
-                    seriesW.getData().add(new XYChart.Data( ChangeColor.ktoraGodzina((int) ((date1.getTime()-minuta.getTime())/1000/60)),2));
-                    seriesW.getData().add(new XYChart.Data( j2.getString("czas2"),0));
-                    seriesB.getData().add(new XYChart.Data( j2.getString("czas2"),1));
-                }else{
-                    Date date1 = format.parse(j2.getString("czas2"));
-                    seriesB.getData().add(new XYChart.Data( ChangeColor.ktoraGodzina((int) ((date1.getTime()-minuta.getTime())/1000/60)),1));
-                    seriesW.getData().add(new XYChart.Data( j2.getString("czas2"),2));
-                    seriesB.getData().add(new XYChart.Data( j2.getString("czas2"),0));
+        Date minuta = format.parse("00:01");
+        int czas=0;
+        for (int i = 0; i < json2.length(); i++) {
+            JSONObject j2 = (JSONObject) json2.get(i);
+            if (j2.getInt("czas") > 14) {
+                String wykrzyknik="";
+                if (j2.getInt("czas") > 270)
+                    wykrzyknik="!";
+                if (j2.getString("activity").equals("Break")) {
+                    XYChart.Series seriesB = new XYChart.Series();
+                    seriesB.setName("Break "+j2.getString("czas2"));
+                    Date date1 = format.parse(j2.getString("stop"));
+                    seriesB.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,1));
+//                    seriesB.getData().add(new XYChart.Data(ChangeColor.ktoraGodzina((int) ((date1.getTime() - minuta.getTime()) / 1000 / 60)), 1));
+                    seriesB.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,1));
+//                    seriesB.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")),1));
+//                    seriesB.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")+czas),1));
+                    areaChart.getData().addAll(seriesB);
+                    czas+=j2.getInt("czas");
+                } else {
+
+                    XYChart.Series seriesW = new XYChart.Series();
+                    seriesW.setName("Work "+j2.getString("czas2")+wykrzyknik);
+                    Date date1 = format.parse(j2.getString("stop"));
+                    seriesW.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,2));
+                    seriesW.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,2));
+//                    seriesW.getData().add(new XYChart.Data(9, 8));
+//                    seriesW.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")),2));
+//                    seriesW.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")+czas),2));
+                    czas+=j2.getInt("czas");
+                    areaChart.getData().addAll(seriesW);
                 }
             }
         }
-        areaChart.getData().addAll(seriesW);
-        areaChart.getData().addAll(seriesB);
         barChart.getData().clear();
         barChart.getData().removeAll();
         barChart.setVisible(true);
@@ -437,27 +452,27 @@ public class AnalogueAnalysisController {
 
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
-        sumBreak=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) ;
-        sumWork=parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) ;
-        series1.setName("Przerwa ("+sumBreak+")");
-        series2.setName("Praca ("+sumWork+")");
+        sumBreak = parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak)));
+        sumWork = parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork)));
+        series1.setName("Przerwa (" + sumBreak + ")");
+        series2.setName("Praca (" + sumWork + ")");
         series2.getData().add(new XYChart.Data("Praca",
                 sumWork));
 //        series1.getData().add(new XYChart.Data("Jazda",
 //                parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataDrive))) / 60));
         series1.getData().add(new XYChart.Data("Przerwa",
-               sumBreak ));
+                sumBreak));
         barChart.getData().addAll(series1);
         barChart.getData().addAll(series2);
 
     }
 
     StackPane stackPane = new StackPane();
-    Scene secondScene = new Scene(stackPane, 950,420);
+    Scene secondScene = new Scene(stackPane, 950, 420);
     Stage secondStage = new Stage();
 
     public void addStats() throws IOException {
-        if(secondStage==null || !secondStage.isShowing()) {
+        if (secondStage == null || !secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
             stackPane.getChildren().add(fxmlLoader);
             secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
@@ -470,7 +485,7 @@ public class AnalogueAnalysisController {
     }
 
     public void makePDF(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
-        String fileNametoSearch = file_name.substring(file_name.lastIndexOf("/")+1);
+        String fileNametoSearch = file_name.substring(file_name.lastIndexOf("/") + 1);
 
 //        Desktop desktop = Desktop.getDesktop();
 //        File dirToOpen = null;
@@ -479,9 +494,9 @@ public class AnalogueAnalysisController {
 //            desktop.open(dirToOpen);
 //        } catch (IllegalArgumentException | IOException iae) { }
 //        File file = new File(String.valueOf(fileChooser));
-        if(file_name.indexOf("/")!=-1) {
+        if (file_name.indexOf("/") != -1) {
 
-            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("/")+1),file_name);
+            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()}, file_name.substring(file_name.lastIndexOf("/") + 1), file_name);
 
             String[] buttons = {"Zamknij", "Otwórz plik PDF"};
             int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
@@ -494,11 +509,12 @@ public class AnalogueAnalysisController {
                     String[] params = {"cmd", "/c", pathpdf};
                     try {
                         Runtime.getRuntime().exec(params);
-                    } catch (Exception e) { }
+                    } catch (Exception e) {
+                    }
             }
         }
-        if(file_name.indexOf("\\")!=-1) {
-            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()},file_name.substring(file_name.lastIndexOf("\\")+1),file_name);
+        if (file_name.indexOf("\\") != -1) {
+            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()}, file_name.substring(file_name.lastIndexOf("\\") + 1), file_name);
             String[] buttons = {"OK", "Otwórz plik PDF"};
             int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
             switch (rs) {
@@ -510,22 +526,24 @@ public class AnalogueAnalysisController {
                     String[] params = {"cmd", "/c", pathpdf};
                     try {
                         Runtime.getRuntime().exec(params);
-                    } catch (Exception e) { }
+                    } catch (Exception e) {
+                    }
             }
         }
     }
 
-    public static void openFolder()  {
+    public static void openFolder() {
         Desktop desktop = Desktop.getDesktop();
         File dirToOpen = null;
         try {
             dirToOpen = new File(".\\PDF\\");
             desktop.open(dirToOpen);
-        } catch (IllegalArgumentException | IOException iae) { }
+        } catch (IllegalArgumentException | IOException iae) {
+        }
     }
 
-    public void openFolder1(MouseEvent mouseEvent)  {
-      openFolder();
+    public void openFolder1(MouseEvent mouseEvent) {
+        openFolder();
     }
 
     public void openScanner() throws Exception {
@@ -533,20 +551,20 @@ public class AnalogueAnalysisController {
         Result result = new AspriseScanUI().setRequest(
                         new Request().addOutputItem(
                                 new RequestOutputItem(Imaging.OUTPUT_SAVE, Imaging.FORMAT_PNG)
-                                        .setSavePath(System.getProperty("user.dir")+"\\archiwum"+"\\\\${TMS}${EXT}")))
+                                        .setSavePath(System.getProperty("user.dir") + "\\archiwum" + "\\\\${TMS}${EXT}")))
                 .showDialog(null, "Użyj skanera", true, null);
 
 //        System.out.println(result == null ? "(null)" : result.getImageFiles());
-        if(result==null) {
+        if (result == null) {
             loading.setVisible(false);
             dragOver.setText(text);
             selectedFileAnalogue = null;
         } else {
             imageFile = String.valueOf(result.getImageFiles());
-            file_name=imageFile.replace("[","");
-            file_name=file_name.replace("]", "");
+            file_name = imageFile.replace("[", "");
+            file_name = file_name.replace("]", "");
             System.out.println(file_name);
-            if(file_name==null) {
+            if (file_name == null) {
                 loading.setVisible(false);
                 dragOver.setText("Nie udało się załadować pliku ze skanera");
                 selectedFileAnalogue = null;
@@ -560,7 +578,7 @@ public class AnalogueAnalysisController {
         selectedFileAnalogue = null;
         dragOver.setText(text);
         showAnalysis.setVisible(false);
-        showDragAndDrop.setVisible(true);
+//        showDragAndDrop.setVisible(true);
         loading.setVisible(false);
         addStats.setVisible(false);
         createPDF.setVisible(false);
