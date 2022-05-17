@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
    <left>
       <AnchorPane prefHeight="742.0" prefWidth="285.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -77,7 +80,7 @@
                   </Button>
                   </children>
               </VBox>
-            <AnchorPane prefHeight="85.0" prefWidth="285.0" style="-fx-background-color: #29A1FA;">
+            <AnchorPane prefHeight="85.0" prefWidth="290.0" style="-fx-background-color: #29A1FA;">
                <children>
                   <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tach5" wrappingWidth="223.1953125">
                      <font>
@@ -104,22 +107,25 @@
    <center>
       <AnchorPane prefHeight="659.0" prefWidth="1233.0" style="-fx-background-color: #132C46;" BorderPane.alignment="TOP_CENTER">
          <children>
-            <ImageView fitHeight="586.0" fitWidth="533.0" layoutX="236.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/Tach5-logos_transparent.png" />
-               </image>
-            </ImageView>
-            <Circle fill="DODGERBLUE" layoutX="502.0" layoutY="325.0" radius="224.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text fill="WHITE" layoutX="384.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Witaj w Tach5!">
-               <font>
-                  <Font name="System Bold" size="34.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="331.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prosty, w pełni zautomatyzowany, cyfrowy i analogowy system analizy i generowania raportów z tachografów." textAlignment="CENTER" wrappingWidth="350.2353515625">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Text>
+            <VBox alignment="CENTER" layoutX="321.0" layoutY="210.0" prefHeight="200.0" prefWidth="351.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="321.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="210.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Witaj w Tach5!">
+                     <font>
+                        <Font name="System Bold" size="34.0" />
+                     </font>
+                  </Text>
+                  <Pane prefHeight="3.0" prefWidth="515.0" style="-fx-background-color: #fff;">
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Prosty, w pełni zautomatyzowany, cyfrowy i analogowy system analizy i generowania raportów z tachografów." textAlignment="CENTER" wrappingWidth="350.2353515625">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
             <ImageView fitHeight="130.0" fitWidth="190.0" layoutX="873.0" layoutY="484.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="0.0">
                <image>
                   <Image url="@images/delivery-truck.png" />

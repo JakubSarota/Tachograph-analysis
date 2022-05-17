@@ -15,275 +15,231 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0"
-            prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.AnalogueAnalysisController">
     <bottom>
 
     </bottom>
     <left>
-        <AnchorPane prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #2F3136;"
-                    BorderPane.alignment="CENTER_LEFT">
+        <AnchorPane prefHeight="85.0" prefWidth="276.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER_LEFT">
             <children>
                 <AnchorPane layoutX="-2.0" prefHeight="85.0" prefWidth="285.0" style="-fx-background-color: #29A1FA;">
                     <children>
-                        <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Analiza analogowa">
+                        <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analiza analogowa">
                             <font>
-                                <Font size="28.0"/>
+                                <Font size="28.0" />
                             </font>
                         </Text>
                     </children>
                 </AnchorPane>
-                <VBox alignment="TOP_CENTER" layoutY="85.0" prefHeight="535.0" prefWidth="283.0"
-                      AnchorPane.topAnchor="85.0">
+                <VBox alignment="TOP_CENTER" layoutY="85.0" prefHeight="535.0" prefWidth="283.0" AnchorPane.topAnchor="85.0">
                     <children>
-                        <Button fx:id="btnBack" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getBack"
-                                prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Wróć"
-                                textFill="WHITE">
+                        <Button fx:id="btnBack" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getBack" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Wróć" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
                                 <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-home-48.png"/>
+                                        <Image url="@icons/icons8-home-48.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                             <VBox.margin>
-                                <Insets bottom="5.0" top="5.0"/>
+                                <Insets bottom="5.0" top="5.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnOpenAnalogue" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="85.0"
-                                mnemonicParsing="false" onMouseClicked="#OpenExistsFiles" prefHeight="50.0"
-                                prefWidth="283.0" stylesheets="@css/style2.css" text="Istniejące dane" textFill="WHITE">
+                        <Button fx:id="btnOpenAnalogue" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#OpenExistsFiles" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Istniejące dane" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
-                                <ImageView fx:id="imgViewOpenAnalogue" fitHeight="28.0" fitWidth="30.0"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="imgViewOpenAnalogue" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-user-folder-60.png"/>
+                                        <Image url="@icons/icons8-user-folder-60.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#openFolder1"
-                                prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css"
-                                text="Otwórz folder PDF" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#openFolder1" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Otwórz folder PDF" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
                                 <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-shared-folder-64.png"/>
+                                        <Image url="@icons/icons8-shared-folder-64.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                             <VBox.margin>
-                                <Insets bottom="5.0" top="5.0"/>
+                                <Insets bottom="5.0" top="5.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnScanner" alignment="BASELINE_LEFT" layoutX="64.0" layoutY="211.0"
-                                mnemonicParsing="false" onAction="#openScanner" prefHeight="50.0" prefWidth="283.0"
-                                stylesheets="@css/style2.css" text="Użyj skanera" textFill="WHITE">
+                        <Button fx:id="btnScanner" alignment="BASELINE_LEFT" layoutX="64.0" layoutY="211.0" mnemonicParsing="false" onAction="#openScanner" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Użyj skanera" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
                                 <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-scanner-64.png"/>
+                                        <Image url="@icons/icons8-scanner-64.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="loadAnotherFile" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                                onMouseClicked="#loadImageAgain" prefHeight="50.0" prefWidth="283.0"
-                                stylesheets="@css/style2.css" text="Załaduj inny plik" textFill="WHITE" visible="false">
+                        <Button fx:id="loadAnotherFile" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#loadImageAgain" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Załaduj inny plik" textFill="WHITE" visible="false">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
                                 <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-new-file-48.png"/>
+                                        <Image url="@icons/icons8-new-file-48.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                             <VBox.margin>
-                                <Insets bottom="5.0" top="5.0"/>
+                                <Insets bottom="5.0" top="5.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="addStats" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                                onMouseClicked="#addStats" prefHeight="50.0" prefWidth="283.0"
-                                stylesheets="@css/style2.css" text="Dodaj statystyki" textFill="WHITE" visible="false">
+                        <Button fx:id="addStats" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#addStats" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Dodaj statystyki" textFill="WHITE" visible="false">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
                                 <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-write-66.png"/>
+                                        <Image url="@icons/icons8-write-66.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                             <VBox.margin>
-                                <Insets bottom="5.0" top="5.0"/>
+                                <Insets bottom="5.0" top="5.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="createPDF" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                                onMouseClicked="#makePDF" prefHeight="50.0" prefWidth="283.0"
-                                stylesheets="@css/style2.css" text="Twórz pdf" textAlignment="CENTER" textFill="WHITE"
-                                visible="false">
+                        <Button fx:id="createPDF" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#makePDF" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Twórz pdf" textAlignment="CENTER" textFill="WHITE" visible="false">
                             <font>
-                                <Font name="System Bold" size="14.0"/>
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <graphic>
                                 <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@icons/icons8-create-48.png"/>
+                                        <Image url="@icons/icons8-create-48.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                             <VBox.margin>
-                                <Insets bottom="5.0" top="5.0"/>
+                                <Insets bottom="5.0" top="5.0" />
                             </VBox.margin>
-                        </Button>
-                        <Label fx:id="loading" text="Ładowanie..." textFill="WHITE" visible="false"
-                               BorderPane.alignment="CENTER">
-                            <font>
-                                <Font name="System Bold" size="22.0"/>
-                            </font>
-                        </Label>
-
-                        <Label text="Wczytaj dane:" textFill="WHITE" visible="true" BorderPane.alignment="CENTER">
-                            <font>
-                                <Font name="System Bold" size="28.0"/>
-                            </font>
-                        </Label>
-                        <Button fx:id="dragOver" alignment="CENTER" mnemonicParsing="false"
-                                onDragDropped="#handleDroppedButton"
-                                onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton"
-                                prefHeight="185.0"
-                                prefWidth="442.0"
-                                style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;"
-                                text="Wybierz plik albo upuść go tutaj" textFill="WHITE"
-                                BorderPane.alignment="BASELINE_CENTER">
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
                         </Button>
                     </children>
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                     <padding>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </padding>
                 </VBox>
             </children>
         </AnchorPane>
     </left>
-    <center>
-        <BorderPane prefHeight="620.0" prefWidth="1000.0" style="-fx-background-color: #186199;">
-            <center>
+    <right>
 
-                <BorderPane fx:id="showAnalysis" prefHeight="620.0" prefWidth="800.0"
-                            style="-fx-background-color: #186199;"
-                            BorderPane.alignment="CENTER" visible="false">
-                    <top>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="TOP_CENTER">
-                            <font>
-                                <Font name="System Bold" size="17.0"/>
-                            </font>
-                        </Text>
-                    </top>
-                    <center>
-                        <BarChart fx:id="barChart" style="-fx-background-color: white;" visible="true">
-                            <xAxis>
-                                <CategoryAxis side="BOTTOM"/>
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis side="LEFT"/>
-                            </yAxis>
-                        </BarChart>
-
-                    </center>
-                    <bottom>
-                        <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+    </right>
+   <center>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="showAnalysis" alignment="CENTER" layoutY="37.0" style="-fx-background-color: #132C46;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                              <TextArea fx:id="textArea" disable="false" prefWidth="850.0" style="-fx-background-color: #186199;">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </TextArea>
+                              <BarChart fx:id="barChart" prefHeight="360.0" prefWidth="850.0" style="-fx-background-color: white;" visible="true">
+                                  <xAxis>
+                                      <CategoryAxis side="BOTTOM" />
+                                  </xAxis>
+                                  <yAxis>
+                                      <NumberAxis side="LEFT" />
+                                  </yAxis>
+                              </BarChart>
+                     </children>
+                  </HBox>
+                        <TabPane tabClosingPolicy="UNAVAILABLE">
                             <tabs>
                                 <Tab text="Obraz">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0">
                                             <children>
-                                                <ScrollPane fx:id="scroll" layoutX="14.0" layoutY="9.0"
-                                                            prefHeight="165.0"
-                                                            prefWidth="925.0">
+                                                <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="250.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <content>
-                                                        <ImageView fx:id="imageView" pickOnBounds="true"
-                                                                   preserveRatio="true"
-                                                                   style="-fx-cursor: all-scroll;"/>
+                                                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: all-scroll;" />
                                                     </content>
                                                 </ScrollPane>
                                             </children>
                                         </AnchorPane>
-
-                                    </content>
-
-                                </Tab>
+      
+                                                            </content>
+      
+                                                        </Tab>
                                 <Tab text="Wykres">
                                     <content>
-                                        <BorderPane  prefHeight="300.0" prefWidth="800.0">
+                                        <BorderPane prefHeight="300.0" prefWidth="800.0">
                                             <center>
-                                                <AreaChart fx:id="areaChart" style="-fx-background-color: white;"
-                                                           visible="true">
+                                                <AreaChart fx:id="areaChart" style="-fx-background-color: white;" visible="true">
                                                     <xAxis>
-                                                        <NumberAxis side="BOTTOM"/>
+                                                        <NumberAxis side="BOTTOM" />
                                                     </xAxis>
                                                     <yAxis>
-                                                        <NumberAxis side="LEFT"/>
+                                                        <NumberAxis side="LEFT" />
                                                     </yAxis>
                                                 </AreaChart>
                                             </center>
-
-                                        </BorderPane>
+      
+                                                                </BorderPane>
                                     </content>
                                 </Tab>
                             </tabs>
                         </TabPane>
-                    </bottom>
-                    <left>
-                        <TextArea fx:id="textArea" disable="false" style="-fx-background-color: #186199;"
-                                  BorderPane.alignment="CENTER">
+               </children>
+            </VBox>
+            <VBox fx:id="showDragAndDrop" alignment="CENTER" layoutY="15.0" prefHeight="590.0" prefWidth="997.0" style="-fx-background-color: #132C46;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+      
+                        <Label text="Wczytaj dane:" textFill="WHITE" visible="true">
                             <font>
-                                <Font size="14.0"/>
+                                <Font name="System Bold" size="28.0" />
                             </font>
-                        </TextArea>
-                    </left>
-                    <right>
-                        <ImageView fx:id="imageView2" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
-                                   visible="false"
-                                   BorderPane.alignment="CENTER">
-                        </ImageView>
-                    </right>
-                </BorderPane>
-
-
-            </center>
-        </BorderPane>
-
-    </center>
-    <right>
-
-    </right>
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                        </Label>
+                        <Label fx:id="loading" text="Ładowanie..." textFill="WHITE" visible="false">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                        </Label>
+                        <Button fx:id="dragOver" alignment="CENTER" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="185.0" prefWidth="442.0" style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </center>
 
 
 </BorderPane>

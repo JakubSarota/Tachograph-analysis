@@ -32,6 +32,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONArray;
@@ -66,7 +67,7 @@ public class AnalogueAnalysisController {
     //    @FXML
 //    private AnchorPane showAnalysis, showDragAndDrop;
     @FXML
-    private BorderPane showAnalysis, showDragAndDrop;
+    private VBox showAnalysis, showDragAndDrop;
     @FXML
     private Label loading;
     @FXML
@@ -168,11 +169,11 @@ public class AnalogueAnalysisController {
 
         if (writableImage[1] != null) {
             WritableImage wi2 = SwingFXUtils.toFXImage(writableImage[1], null);
-            imageView2.setImage(wi2);
+//            imageView2.setImage(wi2);
         }
 
         if ((writableImage[0] != null) || (writableImage[1] != null)) {
-//            showDragAndDrop.setVisible(false);
+            showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
             addStats.setVisible(true);
             createPDF.setVisible(true);
@@ -211,20 +212,20 @@ public class AnalogueAnalysisController {
         }
         if (writableImage[1] != null) {
             WritableImage wi2 = SwingFXUtils.toFXImage(writableImage[1], null);
-            imageView2.setImage(wi2);
+//            imageView2.setImage(wi2);
         }
         if (analysisCircle.blackImage != null) {
             writeWork(analysisCircle.blackImage.czas_pracy());
             analysisCircle.blackImage.save("png", String.valueOf(files.get(0))
                     .replace("file:/", "") + "praca.png");
         } else {
-//            showDragAndDrop.setVisible(true);
-//            showAnalysis.setVisible(false);
-//            dragOver.setText("Nie odnaleziono tarczy");
+            showDragAndDrop.setVisible(true);
+            showAnalysis.setVisible(false);
+            dragOver.setText("Nie odnaleziono tarczy");
 //            fileText.setText("Nie odnaleziono tarczy");
         }
         if ((writableImage[0] != null) || (writableImage[1] != null)) {
-//            showDragAndDrop.setVisible(false);
+            showDragAndDrop.setVisible(false);
             showAnalysis.setVisible(true);
             addStats.setVisible(true);
             createPDF.setVisible(true);
