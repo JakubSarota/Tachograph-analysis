@@ -6,12 +6,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" style="-fx-background-color: #142E49;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tachographanalysis.MainController">
    <left>
       <AnchorPane prefHeight="742.0" prefWidth="285.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
@@ -105,20 +107,29 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="659.0" prefWidth="1233.0" style="-fx-background-color: #132C46;" BorderPane.alignment="TOP_CENTER">
+      <AnchorPane prefHeight="659.0" prefWidth="1233.0" style="-fx-background-color: #132C46;" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" layoutX="321.0" layoutY="210.0" prefHeight="200.0" prefWidth="351.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="321.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="210.0">
+            <HBox alignment="CENTER" layoutX="223.0" layoutY="58.0" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="234.0" AnchorPane.topAnchor="58.0">
+               <children>
+                  <ImageView fx:id="image" fitHeight="586.0" fitWidth="533.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Tach5-logos_transparent.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="265.0" layoutY="101.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="277.0" AnchorPane.topAnchor="101.0">
+               <children>
+                  <Circle fill="DODGERBLUE" radius="224.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" layoutX="317.0" layoutY="172.0" prefHeight="288.0" prefWidth="351.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="317.0" AnchorPane.rightAnchor="322.0" AnchorPane.topAnchor="172.0">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Witaj w Tach5!">
                      <font>
                         <Font name="System Bold" size="34.0" />
                      </font>
                   </Text>
-                  <Pane prefHeight="3.0" prefWidth="515.0" style="-fx-background-color: #fff;">
-                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                     </VBox.margin>
-                  </Pane>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Prosty, w pełni zautomatyzowany, cyfrowy i analogowy system analizy i generowania raportów z tachografów." textAlignment="CENTER" wrappingWidth="350.2353515625">
                      <font>
                         <Font name="System Bold" size="20.0" />
@@ -131,7 +142,7 @@
                   <Image url="@images/delivery-truck.png" />
                </image>
             </ImageView>
-            <Button layoutX="919.0" layoutY="23.0" mnemonicParsing="false" onAction="#aboutProgram" prefHeight="43.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-cursor: hand;" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="23.0">
+            <Button layoutX="919.0" layoutY="23.0" mnemonicParsing="false" onAction="#aboutProgram" prefHeight="43.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-cursor: hand;" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="23.0">
                <graphic>
                   <ImageView fitHeight="46.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
