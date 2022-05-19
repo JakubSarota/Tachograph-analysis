@@ -112,7 +112,7 @@ public class DriversController {
                                     Parent parent = loader.getRoot();
                                     stage.setScene(new Scene(parent));
                                     stage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
-                                    stage.resizableProperty().set(false);
+//                                    stage.resizableProperty().set(false);
                                     stage.setTitle(driver.getFname()+" "+driver.getLname());
                                     stage.show();
                                 } else {

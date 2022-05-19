@@ -3,6 +3,7 @@ package com.example.tachographanalysis.database.driver.driverInfo;
 import com.example.tachographanalysis.DigitalAnalysisController;
 import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.database.DatabaseConnection;
+import com.example.tachographanalysis.workinfo.WorkInfo;
 import com.itextpdf.text.DocumentException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,11 +12,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -23,6 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -46,6 +52,8 @@ public class InfoDriver {
     private ObservableList<Data> dataList = FXCollections.observableArrayList();
     @FXML
     private BarChart barChart;
+    @FXML
+    private AreaChart areaChart,areaChart2;
     static int idDriver;
     static String firstName, lastName, Born, cardNumber, driverId;
 //    int idStats, sumLast14DaysOfWork;
@@ -165,12 +173,50 @@ public class InfoDriver {
                         barChart.getData().addAll(series2);
                         barChart.getData().addAll(series3);
 
+                        areaChart.getData().clear();
+                        areaChart.getData().removeAll();
+                        areaChart2.getData().clear();
+                        areaChart2.getData().removeAll();
+                        JSONArray json2 = WorkInfo.getDailyActivity(work_info.getText());
+                        for (int i = 0; i < json2.length(); i++) {
+                            JSONObject j2 = (JSONObject) json2.get(i);
+                            String wykrzyknik = "";
+                            if (j2.getInt("czas") > 270)
+                                wykrzyknik = "!";
+                            if (j2.getString("activity").equals("Break")) {
+                                XYChart.Series seriesB = new XYChart.Series();
+                                seriesB.setName("Break " + j2.getString("czas2"));
+                                seriesB.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 1));
+                                seriesB.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 1));
+                                XYChart.Series seriesB2 = new XYChart.Series();
+                                seriesB2.setName("Break " + j2.getString("czas2"));
+                                seriesB2.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 1));
+                                seriesB2.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 1));
+                                areaChart.getData().addAll(seriesB);
+                                areaChart2.getData().addAll(seriesB2);
+                            } else {
+
+                                XYChart.Series seriesW = new XYChart.Series();
+                                seriesW.setName("Work " + j2.getString("czas2") + wykrzyknik);
+                                seriesW.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 2));
+                                seriesW.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 2));
+                                XYChart.Series seriesW2 = new XYChart.Series();
+                                seriesW2.setName("Work " + j2.getString("czas2") + wykrzyknik);
+                                seriesW2.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 2));
+                                seriesW2.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 2));
+                                areaChart.getData().addAll(seriesW);
+                                areaChart2.getData().addAll(seriesW2);
+                            }
+                        }
+
                         if(rs!=null) {
                             rs.close();
                         }
 
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                 }
             });
@@ -266,7 +312,6 @@ public class InfoDriver {
 
     @FXML
     public void generateOsw2(MouseEvent mouseEvent) throws DocumentException, IOException, ParserConfigurationException, SAXException {
-
         Integer sumWork[] = new Integer[14];
         String dateWork[] = new String[14];
         Integer sumLast14DaysOfWork = 0;
