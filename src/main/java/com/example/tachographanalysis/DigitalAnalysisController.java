@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -64,7 +65,7 @@ import static java.lang.Integer.parseInt;
 public class DigitalAnalysisController implements Initializable {
 
     @FXML
-    private Text TitleFileName, TextLoading, TextError;
+    private Text TitleFileName, TextLoading;
     @FXML
     private BarChart barChart;
     @FXML
@@ -80,7 +81,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private TabPane tabPane;
     @FXML
-    private TextArea dailyTextAreaDataChart;
+    private TextArea dailyTextAreaDataChart, firstTabPaneText, secondTabPaneText, thirdTabPaneText, fourthTabPaneText;
     @FXML
     private Button btnBack, btnUpload, btnRaport, loadAnotherFile, btnOpenAnalogue;
     @FXML
@@ -102,8 +103,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private TextField sumRoad;
     @FXML
-    private AnchorPane dataDigital, draganddropPane;
-
+    private VBox draganddropPane, dataDigital;
 
     List<String> lstFile;
     private String inThisDayData;
@@ -134,14 +134,12 @@ public class DigitalAnalysisController implements Initializable {
             event.acceptTransferModes(TransferMode.ANY);
         }
         dragOver.setText("Upuść tutaj");
-        TextError.setText("");
         TextLoading.setText("Ładowanie...");
     }
 
 
     @FXML
     void onDragClickedButton(MouseEvent event) throws Exception {
-        TextError.setText("");
         TextLoading.setText("Ładowanie...");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
@@ -303,7 +301,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
+       String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
         switch (rs) {
@@ -314,6 +312,7 @@ public class DigitalAnalysisController implements Initializable {
                 System.out.println(pathpdf);
                 String[] params = {"cmd", "/c", pathpdf};
                 try {
+                    Runtime.getRuntime().exec(params);
                     Runtime.getRuntime().exec(params);
                 } catch (Exception e) {
                 }
@@ -343,7 +342,6 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void showData(String[] readedData) throws InterruptedException, DocumentException, IOException, ParserConfigurationException, SAXException {
         TextLoading.setText("");
-        TextError.setText("");
         draganddropPane.setVisible(false);
         dataDigital.setVisible(true);
         TitleFileName.setText("Dane z pliku");
@@ -368,39 +366,36 @@ public class DigitalAnalysisController implements Initializable {
             generatePDF3();
         }
         btnAddStatsDigitalAll.setVisible(true);
+        firstTabPaneText.appendText(readedData[0]);
 
-        TextArea generalData = new TextArea("");
-        one.setContent(generalData);
-        TextArea textArea = (TextArea) one.getContent();
-        textArea.appendText(readedData[0]);
-
-        TextArea dailyData = new TextArea("");
-        two.setContent(dailyData);
+        secondTabPaneText.appendText("");
         dataT = readedData[1] + " \n\n d";
-
         if (dataPicker != null) {
             visibilityDataPickerEnter();
         }
 
-        TextArea driverRoute = new TextArea("");
-        three.setContent(driverRoute);
-        TextArea driverRouteArea = (TextArea) three.getContent();
-        driverRouteArea.appendText(readedData[2]);
+        thirdTabPaneText.appendText(readedData[2]);
+        fourthTabPaneText.appendText(readedData[3]);
 
-
-        TextArea vehicleHistory = new TextArea("");
-        four.setContent(vehicleHistory);
-        TextArea vehicleHistoryData = (TextArea) four.getContent();
-        vehicleHistoryData.appendText(readedData[3]);
-
-
-        TextArea dataChartTwoWeekend = new TextArea("");
-        five.setContent(dataChartTwoWeekend);
-        TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
-        dataChartTwoWeekendArea.setEditable(false);
-
+//        TextArea driverRoute = new TextArea("");
+//        three.setContent(driverRoute);
+//        TextArea driverRouteArea = (TextArea) three.getContent();
+//        driverRouteArea.appendText(readedData[2]);
+//
+//
+//        TextArea vehicleHistory = new TextArea("");
+//        four.setContent(vehicleHistory);
+//        TextArea vehicleHistoryData = (TextArea) four.getContent();
+//        vehicleHistoryData.appendText(readedData[3]);
+//
+//
+//        TextArea dataChartTwoWeekend = new TextArea("");
+//        five.setContent(dataChartTwoWeekend);
+//        TextArea dataChartTwoWeekendArea = (TextArea) five.getContent();
+//        dataChartTwoWeekendArea.setEditable(false);
 
         if (!two.isSelected()) {
+            System.err.println("dupa");
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
@@ -424,25 +419,22 @@ public class DigitalAnalysisController implements Initializable {
         String datePickerTime = String.valueOf(dataPicker.getValue());
         String indexOfDataPickerTime = String.valueOf(dataXml.indexOf(datePickerTime));
         inThisDayData = "";
-
         dataPick = datePickerTime;
         dataPick1 = indexOfDataPickerTime;
 
-        TextArea dailyData = new TextArea("");
-        two.setContent(dailyData);
-        TextArea dailyDataDriver = (TextArea) two.getContent();
+//        TextArea dailyData = new TextArea("");
+//        two.setContent(dailyData);
+//        TextArea dailyDataDriver = (TextArea) two.getContent();
 
         btnRaportPDFdnia.setVisible(true);
         btnAddStatsDigital.setVisible(true);
 
-        if (indexOfDataPickerTime.equals("-1")) {
-        } else {
-
-            dailyDataDriver.appendText("Dzienna Aktywność: ");
+        if(!indexOfDataPickerTime.equals("-1")) {
+            secondTabPaneText.setText("Dzienna Aktywność: ");
             int indeksString = parseInt(indexOfDataPickerTime);
             int i = 0;
             while (!String.valueOf(dataXml.charAt(indeksString + i)).equals("d")) {
-                dailyDataDriver.appendText("" + dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
+                secondTabPaneText.appendText("" + dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
                 inThisDayData += String.valueOf(dataXml.charAt(parseInt(indexOfDataPickerTime) + i));
                 i += 1;
             }
@@ -1324,7 +1316,7 @@ public class DigitalAnalysisController implements Initializable {
         }
         if (id == 0) {
             //JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
-            String[] options = {"Dodaj użytkownika", "Anuluj"};
+            String[] options = {"Dodaj użytkownika","Anuluj"};
             int odp = JOptionPane.showOptionDialog(null, "W bazie nie ma takiego użytkownika!", "Uwaga!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, options, options[0]);
@@ -1332,7 +1324,8 @@ public class DigitalAnalysisController implements Initializable {
                 StackPane stackPane = new StackPane();
                 Scene secondScene = new Scene(stackPane);
                 Stage secondStage = new Stage();
-                if (secondStage == null || !secondStage.isShowing()) {
+                secondStage.resizableProperty().set(false);
+                if(secondStage==null||!secondStage.isShowing()) {
                     Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
                     stackPane.getChildren().add(fxmlLoader);
                     secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
@@ -1471,6 +1464,10 @@ public class DigitalAnalysisController implements Initializable {
         dragOver.setText("Wybierz plik albo upuść go tutaj");
         loadAnotherFile.setVisible(false);
         btnOpenAnalogue.setDisable(false);
+        firstTabPaneText.clear();
+        secondTabPaneText.clear();
+        thirdTabPaneText.clear();
+        fourthTabPaneText.clear();
     }
 
     public void OpenExistsFiles() throws IOException {
