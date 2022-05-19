@@ -405,12 +405,8 @@ public class AnalogueAnalysisController {
         areaChart.getData().removeAll();
         areaChart2.getData().clear();
         areaChart2.getData().removeAll();
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        Date minuta = format.parse("00:01");
-        int czas=0;
         for (int i = 0; i < json2.length(); i++) {
             JSONObject j2 = (JSONObject) json2.get(i);
-            if (j2.getInt("czas") > 14) {
                 String wykrzyknik="";
                 if (j2.getInt("czas") > 270)
                     wykrzyknik="!";
@@ -425,7 +421,6 @@ public class AnalogueAnalysisController {
                     seriesB2.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,1));
                     areaChart.getData().addAll(seriesB);
                     areaChart2.getData().addAll(seriesB2);
-                    czas+=j2.getInt("czas");
                 } else {
 
                     XYChart.Series seriesW = new XYChart.Series();
@@ -436,11 +431,10 @@ public class AnalogueAnalysisController {
                     seriesW2.setName("Work "+j2.getString("czas2")+wykrzyknik);
                     seriesW2.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,2));
                     seriesW2.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,2));
-                    czas+=j2.getInt("czas");
                     areaChart.getData().addAll(seriesW);
                     areaChart2.getData().addAll(seriesW2);
                 }
-            }
+
         }
         barChart.getData().clear();
         barChart.getData().removeAll();

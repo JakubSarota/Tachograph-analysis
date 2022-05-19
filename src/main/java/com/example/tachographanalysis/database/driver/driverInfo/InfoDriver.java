@@ -152,11 +152,18 @@ public class InfoDriver {
                         barChart.setAnimated(false);
 
                         XYChart.Series series1 = new XYChart.Series();
+                        XYChart.Series series2 = new XYChart.Series();
+                        XYChart.Series series3 = new XYChart.Series();
 
-                        series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) / 60));
-                        series1.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) / 60));
-                        series1.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataDrive))) / 60));
+                        series1.setName("Praca");
+                        series2.setName("Przerwa");
+                        series3.setName("Jazda");
+                        series1.getData().add(new XYChart.Data("Praca", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataWork))) ));
+                        series2.getData().add(new XYChart.Data("Przerwa", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataBreak))) ));
+                        series3.getData().add(new XYChart.Data("Jazda", parseInt(String.valueOf(DigitalAnalysisController.timeDiffrence(activityDataDrive))) ));
                         barChart.getData().addAll(series1);
+                        barChart.getData().addAll(series2);
+                        barChart.getData().addAll(series3);
 
                         if(rs!=null) {
                             rs.close();

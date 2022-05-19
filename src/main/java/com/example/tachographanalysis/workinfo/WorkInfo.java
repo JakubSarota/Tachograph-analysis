@@ -17,7 +17,7 @@ public class WorkInfo {
         JSONArray json=new JSONArray();
         String[] activity2=activity.split(" ");
         for (int i=0;i<activity2.length;i++){
-            if(activity2[i].equals("Work")||activity2[i].equals("Break")||activity2[i].equals("Drive")){
+            if(activity2[i].equals("Work")||activity2[i].equals("Break")||activity2[i].equals("Driving")){
                 JSONObject j2=new JSONObject();
                 j2.put("start",activity2[i+2].replace("\n",""));
                 j2.put("start2",timeDiffrence2("00:00",activity2[i+2].replace("\n","")));

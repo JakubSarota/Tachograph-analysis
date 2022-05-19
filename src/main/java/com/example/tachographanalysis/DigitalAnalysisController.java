@@ -4,6 +4,7 @@ import com.example.tachographanalysis.PDF.CreatePDF;
 import com.example.tachographanalysis.database.DatabaseConnection;
 import com.example.tachographanalysis.database.stats.AddStats;
 import com.example.tachographanalysis.size.SizeController;
+import com.example.tachographanalysis.workinfo.WorkInfo;
 import com.itextpdf.text.DocumentException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -105,6 +108,8 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private VBox draganddropPane, dataDigital;
 
+    @FXML
+    private AreaChart areaChart, areaChart2;
     List<String> lstFile;
     private String inThisDayData;
     static String PDF = "";
@@ -301,7 +306,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-       String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
+        String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
         switch (rs) {
@@ -322,7 +327,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void generatePDF3() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-        String createPDF = CreatePDF.createPDF(new String[]{inThisDayData}, String.valueOf(this.file.getName()) + dataPick, "", barChartTMP);
+        String createPDF = CreatePDF.createPDF2(new String[]{inThisDayData}, String.valueOf(this.file.getName()) + dataPick, "", areaChart2);
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
         switch (rs) {
@@ -395,7 +400,6 @@ public class DigitalAnalysisController implements Initializable {
 //        dataChartTwoWeekendArea.setEditable(false);
 
         if (!two.isSelected()) {
-            System.err.println("dupa");
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
@@ -429,7 +433,7 @@ public class DigitalAnalysisController implements Initializable {
         btnRaportPDFdnia.setVisible(true);
         btnAddStatsDigital.setVisible(true);
 
-        if(!indexOfDataPickerTime.equals("-1")) {
+        if (!indexOfDataPickerTime.equals("-1")) {
             secondTabPaneText.setText("Dzienna Aktywność: ");
             int indeksString = parseInt(indexOfDataPickerTime);
             int i = 0;
@@ -460,6 +464,43 @@ public class DigitalAnalysisController implements Initializable {
         barChart.getData().removeAll();
         barChartTMP.getData().clear();
         barChartTMP.getData().removeAll();
+
+        areaChart.getData().clear();
+        areaChart.getData().removeAll();
+        areaChart2.getData().clear();
+        areaChart2.getData().removeAll();
+        JSONArray json2 = WorkInfo.getDailyActivity(data);
+        for (int i = 0; i < json2.length(); i++) {
+            JSONObject j2 = (JSONObject) json2.get(i);
+            String wykrzyknik = "";
+            if (j2.getInt("czas") > 270)
+                wykrzyknik = "!";
+            if (j2.getString("activity").equals("Break")) {
+                XYChart.Series seriesB = new XYChart.Series();
+                seriesB.setName("Break " + j2.getString("czas2"));
+                seriesB.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 1));
+                seriesB.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 1));
+                XYChart.Series seriesB2 = new XYChart.Series();
+                seriesB2.setName("Break " + j2.getString("czas2"));
+                seriesB2.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 1));
+                seriesB2.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 1));
+                areaChart.getData().addAll(seriesB);
+                areaChart2.getData().addAll(seriesB2);
+            } else {
+
+                XYChart.Series seriesW = new XYChart.Series();
+                seriesW.setName("Work " + j2.getString("czas2") + wykrzyknik);
+                seriesW.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 2));
+                seriesW.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 2));
+                XYChart.Series seriesW2 = new XYChart.Series();
+                seriesW2.setName("Work " + j2.getString("czas2") + wykrzyknik);
+                seriesW2.getData().add(new XYChart.Data((float) j2.getInt("start2") / 60, 2));
+                seriesW2.getData().add(new XYChart.Data((float) j2.getInt("stop2") / 60, 2));
+                areaChart.getData().addAll(seriesW);
+                areaChart2.getData().addAll(seriesW2);
+            }
+
+        }
 
         counterEnter++;
 
@@ -803,6 +844,7 @@ public class DigitalAnalysisController implements Initializable {
         dataPicker.setVisible(true);
         barChart.setVisible(false);
         barChart.getData().clear();
+        secondTabPaneText.clear();
         barChartTMP.getData().clear();
         dataPicker.getEditor().clear();
         chart.setVisible(false);
@@ -1316,7 +1358,7 @@ public class DigitalAnalysisController implements Initializable {
         }
         if (id == 0) {
             //JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
-            String[] options = {"Dodaj użytkownika","Anuluj"};
+            String[] options = {"Dodaj użytkownika", "Anuluj"};
             int odp = JOptionPane.showOptionDialog(null, "W bazie nie ma takiego użytkownika!", "Uwaga!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, options, options[0]);
@@ -1325,7 +1367,7 @@ public class DigitalAnalysisController implements Initializable {
                 Scene secondScene = new Scene(stackPane);
                 Stage secondStage = new Stage();
                 secondStage.resizableProperty().set(false);
-                if(secondStage==null||!secondStage.isShowing()) {
+                if (secondStage == null || !secondStage.isShowing()) {
                     Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
                     stackPane.getChildren().add(fxmlLoader);
                     secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
@@ -1414,9 +1456,9 @@ public class DigitalAnalysisController implements Initializable {
 
                             String tmpS = AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(1, 11),
                                     LocalDate.now().toString(), dataGD1,
-                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60 +
-                                            parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60),
-                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60),
+                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork)))  +
+                                            parseInt(String.valueOf(timeDiffrence(activityDataDrive))) ),
+                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) ),
                                     file_name, "cyfrowy", Integer.parseInt(d),
                                     dataGD1.substring(0, 11), "", "");
                             if (tmpS.equals("Dodano"))
