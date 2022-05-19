@@ -404,10 +404,7 @@ public class DigitalAnalysisController implements Initializable {
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
         }
-
-
     }
-
     @FXML
     private void setDataPicker() {
         try {
@@ -843,6 +840,7 @@ public class DigitalAnalysisController implements Initializable {
 
         dataPicker.setVisible(true);
         barChart.setVisible(false);
+        secondTabPaneText.clear();
         barChart.getData().clear();
         secondTabPaneText.clear();
         barChartTMP.getData().clear();
