@@ -7,13 +7,15 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -22,7 +24,7 @@
    <left>
       <AnchorPane prefHeight="635.0" prefWidth="283.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutY="6.0" prefHeight="85.0" prefWidth="283.0" style="-fx-background-color: #29A1FA;">
+            <AnchorPane layoutY="6.0" prefHeight="85.0" prefWidth="283.0" style="-fx-background-color: #29A1FA;" AnchorPane.topAnchor="0.0">
                <children>
                   <Text fill="WHITE" layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analiza cyfrowa">
                      <font>
@@ -31,7 +33,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <VBox layoutY="91.0" prefHeight="541.0" prefWidth="283.0">
+            <VBox layoutY="91.0">
                <children>
                   <Button fx:id="btnBack" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#getBack" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Wróć" textFill="WHITE">
                      <font>
@@ -90,7 +92,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnRaportPDF" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Generuj Raport" textFill="WHITE" visible="false">
+                  <Button fx:id="btnRaportPDF" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#generatePDF2" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Generuj Raport PDF" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -120,7 +122,7 @@
                            </ImageView>
                        </graphic>
                    </Button>
-                  <Button fx:id="btnRaportPDFdnia" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Generuj Raport Dnia" textFill="WHITE" visible="false">
+                  <Button fx:id="btnRaportPDFdnia" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#generatePDF3" prefHeight="50.0" prefWidth="283.0" stylesheets="@css/style2.css" text="Generuj Raport Dnia PDF" textFill="WHITE" visible="false">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -176,53 +178,11 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="635.0" prefWidth="981.0" style="-fx-background-color: #186199;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="635.0" prefWidth="981.0" style="-fx-background-color: #132C46;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="draganddropPane" layoutY="8.0" prefHeight="626.0" prefWidth="1007.0">
+            <AnchorPane prefHeight="550.0" prefWidth="700.0">
                <children>
-                  <Button fx:id="dragOver" layoutX="301.0" layoutY="313.0" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="150.0" prefWidth="405.0" style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                   <Text fx:id="TextError" fill="WHITE" layoutX="239.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="515.0">
-                       <font>
-                           <Font name="System Bold" size="30.0" />
-                       </font>
-                   </Text>
-                   <Text fx:id="TextLoading" fill="LIGHTBLUE" layoutX="254.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="500.0">
-                       <font>
-                           <Font name="System Bold" size="30.0" />
-                       </font>
-                   </Text>
-                  <Text fill="WHITE" layoutX="400.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wczytaj dane:">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Text>
-               </children></AnchorPane>
-            <AnchorPane fx:id="dataDigital" layoutX="11.0" layoutY="14.0" prefHeight="620.0" prefWidth="978.0" visible="false">
-               <children>
-                  <TabPane fx:id="tabPane" layoutX="87.0" layoutY="100.0" prefHeight="445.0" prefWidth="821.0" tabClosingPolicy="UNAVAILABLE" visible="false">
-                    <tabs>
-                      <Tab fx:id="one" onSelectionChanged="#visibilityDataPickerLeave" text="Dane Ogólne" />
-                      <Tab fx:id="two" onSelectionChanged="#visibilityDataPickerEnter" text="Dzienna aktywność kierowcy" />
-                       <Tab fx:id="three" onSelectionChanged="#visibilityDataPickerLeave" text="Trasy kierowcy" />
-                       <Tab fx:id="four" onSelectionChanged="#visibilityDataPickerLeave" text="Przebieg" />
-                        <Tab fx:id="five" onSelectionChanged="#visiblityChartArea" text="Wykres godzinowy" />
-                    </tabs>
-                  </TabPane>
-                  <ProgressBar fx:id="progressBar" layoutX="398.0" layoutY="301.0" prefWidth="200.0" progress="0.0" visible="false" />
-                  <DatePicker fx:id="dataPicker" layoutX="789.0" layoutY="100.0" onAction="#setDataPicker" prefHeight="25.0" prefWidth="119.0" visible="false" />
-                  <BarChart fx:id="barChart" layoutX="382.0" layoutY="189.0" prefHeight="341.0" prefWidth="431.0" visible="false">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </BarChart>
-                   <BarChart fx:id="barChartTMP" layoutX="382.0" layoutY="189.0" prefHeight="341.0" prefWidth="431.0" visible="false">
+                   <BarChart fx:id="barChartTMP" prefHeight="460.0" prefWidth="700.0" visible="false">
                    <xAxis>
                        <CategoryAxis side="BOTTOM" />
                    </xAxis>
@@ -230,21 +190,120 @@
                        <NumberAxis side="LEFT" />
                    </yAxis>
                </BarChart>
-                  <AreaChart fx:id="chart" layoutX="108.0" layoutY="146.0" prefHeight="400.0" prefWidth="776.0" visible="false">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </AreaChart>
-                  <Text fx:id="TitleFileName" fill="WHITE" layoutX="201.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="590.0">
+               </children>
+            </AnchorPane>
+            <VBox fx:id="dataDigital" alignment="CENTER" layoutY="32.0" prefHeight="602.0" prefWidth="997.0" visible="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <Text fx:id="TitleFileName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="590.0">
                      <font>
                         <Font name="System Bold" size="19.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
                   </Text>
+                  <TabPane fx:id="tabPane" prefHeight="630.0" prefWidth="957.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab fx:id="one" onSelectionChanged="#visibilityDataPickerLeave" text="Dane Ogólne">
+                           <content>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                 <center>
+                                    <TextArea fx:id="firstTabPaneText" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                 </center></BorderPane>
+                           </content></Tab>
+                      <Tab fx:id="two" onSelectionChanged="#visibilityDataPickerEnter" text="Dzienna aktywność kierowcy">
+                           <content>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                                 <top>
+                                    <DatePicker fx:id="dataPicker" onAction="#setDataPicker" prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="TOP_RIGHT">
+                                       <BorderPane.margin>
+                                          <Insets bottom="5.0" right="5.0" top="5.0" />
+                                       </BorderPane.margin></DatePicker>
+                                 </top>
+                                 <center>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <TextArea fx:id="secondTabPaneText" editable="false" prefHeight="500.0" prefWidth="900.0">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" right="5.0" />
+                                             </HBox.margin></TextArea>
+                                          <BarChart fx:id="barChart" prefHeight="528.0" prefWidth="959.0" visible="false">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" right="5.0" />
+                                             </HBox.margin>
+                                          </BarChart>
+                                       </children>
+                                    </HBox>
+                                 </center>
+                              </BorderPane>
+                           </content></Tab>
+                       <Tab fx:id="three" onSelectionChanged="#visibilityDataPickerLeave" text="Trasy kierowcy">
+                           <content>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                 <center>
+                                    <TextArea fx:id="thirdTabPaneText" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                 </center></BorderPane>
+                           </content></Tab>
+                       <Tab fx:id="four" onSelectionChanged="#visibilityDataPickerLeave" text="Przebieg">
+                           <content>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                 <center>
+                                    <TextArea fx:id="fourthTabPaneText" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                 </center></BorderPane>
+                           </content></Tab>
+                        <Tab fx:id="five" onSelectionChanged="#visiblityChartArea" text="Wykres godzinowy">
+                           <content>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+                                 <center>
+                                    <AreaChart fx:id="chart" prefHeight="400.0" prefWidth="776.0" visible="false" BorderPane.alignment="CENTER">
+                                      <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                      </yAxis>
+                                    </AreaChart>
+                                 </center>
+                              </BorderPane>
+                           </content></Tab>
+                    </tabs>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TabPane>
                </children>
-            </AnchorPane>
+            </VBox>
+            <VBox fx:id="draganddropPane" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label text="Wczytaj dane:" textFill="WHITE" visible="true">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                   <Text fx:id="TextLoading" fill="LIGHTBLUE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="500.0">
+                       <font>
+                           <Font name="System Bold" size="30.0" />
+                       </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                   </Text>
+                  <Button fx:id="dragOver" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="150.0" prefWidth="405.0" style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </center>

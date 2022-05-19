@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -114,11 +113,6 @@
                         <Font name="System Bold" size="34.0" />
                      </font>
                   </Text>
-                  <Pane prefHeight="3.0" prefWidth="515.0" style="-fx-background-color: #fff;">
-                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                     </VBox.margin>
-                  </Pane>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Prosty, w pełni zautomatyzowany, cyfrowy i analogowy system analizy i generowania raportów z tachografów." textAlignment="CENTER" wrappingWidth="350.2353515625">
                      <font>
                         <Font name="System Bold" size="20.0" />

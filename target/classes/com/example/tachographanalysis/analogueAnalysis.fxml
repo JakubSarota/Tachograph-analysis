@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -154,7 +155,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="showAnalysis" alignment="CENTER" layoutY="37.0" style="-fx-background-color: #132C46;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="showAnalysis" alignment="CENTER" layoutY="37.0" prefHeight="620.0" prefWidth="997.0" style="-fx-background-color: #132C46;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <HBox alignment="CENTER">
                      <children>
@@ -162,6 +163,9 @@
                                   <font>
                                       <Font size="14.0" />
                                   </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
                               </TextArea>
                               <BarChart fx:id="barChart" prefHeight="360.0" prefWidth="850.0" style="-fx-background-color: white;" visible="true">
                                   <xAxis>
@@ -172,6 +176,9 @@
                                   </yAxis>
                               </BarChart>
                      </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
                   </HBox>
                         <TabPane tabClosingPolicy="UNAVAILABLE">
                             <tabs>
@@ -181,7 +188,10 @@
                                             <children>
                                                 <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" prefHeight="250.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <content>
-                                                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: all-scroll;" />
+                                                        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: all-scroll;">
+                                             <viewport>
+                                                <Rectangle2D />
+                                             </viewport></ImageView>
                                                     </content>
                                                 </ScrollPane>
                                             </children>
@@ -208,28 +218,31 @@
                                     </content>
                                 </Tab>
                             </tabs>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </VBox.margin>
                         </TabPane>
                </children>
             </VBox>
-            <VBox fx:id="showDragAndDrop" alignment="CENTER" layoutY="15.0" prefHeight="590.0" prefWidth="997.0" style="-fx-background-color: #132C46;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="showDragAndDrop" alignment="CENTER" style="-fx-background-color: #132C46;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
       
-                        <Label text="Wczytaj dane:" textFill="WHITE" visible="true">
+                              <Label text="Wczytaj dane:" textFill="WHITE" visible="true">
                             <font>
                                 <Font name="System Bold" size="28.0" />
                             </font>
                      <VBox.margin>
-                        <Insets bottom="30.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                         </Label>
-                        <Label fx:id="loading" text="Ładowanie..." textFill="WHITE" visible="false">
-                            <font>
-                                <Font name="System Bold" size="22.0" />
-                            </font>
+                  <Text fx:id="loading" fill="LIGHTBLUE" strokeType="OUTSIDE" strokeWidth="0.0" text="Ładowanie..." textAlignment="CENTER" visible="false" wrappingWidth="500.0">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
                      <VBox.margin>
-                        <Insets bottom="30.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
-                        </Label>
+                  </Text>
                         <Button fx:id="dragOver" alignment="CENTER" mnemonicParsing="false" onDragDropped="#handleDroppedButton" onDragOver="#handleDragOverButton" onMouseClicked="#onDragClickedButton" prefHeight="185.0" prefWidth="442.0" style="-fx-background-color: transparent; -fx-border-style: dotted; -fx-cursor: hand;" text="Wybierz plik albo upuść go tutaj" textFill="WHITE">
                             <font>
                                 <Font size="15.0" />

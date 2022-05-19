@@ -33,6 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONArray;
@@ -69,7 +70,7 @@ public class AnalogueAnalysisController {
     @FXML
     private VBox showAnalysis, showDragAndDrop;
     @FXML
-    private Label loading;
+    private Text loading;
     @FXML
     private BarChart barChart;
     @FXML
@@ -443,7 +444,7 @@ public class AnalogueAnalysisController {
 
         barChart.setTitle("Aktywność pracownika ");
         barChart.getXAxis().setLabel("Aktywność");
-        barChart.getYAxis().setLabel("Godziny");
+        barChart.getYAxis().setLabel("Minuty");
 
         barChart.setAnimated(false);
         Object[] dataDiffOneDaTable = DigitalAnalysisController.dataDiffOneDay(s[1]);
@@ -477,6 +478,7 @@ public class AnalogueAnalysisController {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
             stackPane.getChildren().add(fxmlLoader);
             secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
+            secondStage.resizableProperty().set(false);
             secondStage.setTitle("Dodaj statystyki");
             secondStage.setScene(secondScene);
             secondStage.show();
@@ -579,7 +581,7 @@ public class AnalogueAnalysisController {
         selectedFileAnalogue = null;
         dragOver.setText(text);
         showAnalysis.setVisible(false);
-//        showDragAndDrop.setVisible(true);
+        showDragAndDrop.setVisible(true);
         loading.setVisible(false);
         addStats.setVisible(false);
         createPDF.setVisible(false);

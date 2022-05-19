@@ -201,6 +201,7 @@ public class DriversController {
         StackPane stackPane = new StackPane();
         Scene secondScene = new Scene(stackPane, 950,420);
         Stage secondStage = new Stage();
+        secondStage.resizableProperty().set(false);
         if(secondStage==null||!secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
             stackPane.getChildren().add(fxmlLoader);
@@ -381,6 +382,7 @@ public class DriversController {
         StackPane stackPane = new StackPane();
         Scene secondScene = new Scene(stackPane, 643,451);
         Stage secondStage = new Stage();
+        secondStage.resizableProperty().set(false);
         if(secondStage==null||!secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("backUpDrivers.fxml"));
             stackPane.getChildren().add(fxmlLoader);
