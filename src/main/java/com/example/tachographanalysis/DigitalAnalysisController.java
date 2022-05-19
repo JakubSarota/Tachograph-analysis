@@ -395,15 +395,11 @@ public class DigitalAnalysisController implements Initializable {
 //        dataChartTwoWeekendArea.setEditable(false);
 
         if (!two.isSelected()) {
-            System.err.println("dupa");
             dataPicker.setVisible(false);
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
         }
-
-
     }
-
     @FXML
     private void setDataPicker() {
         try {
@@ -802,6 +798,7 @@ public class DigitalAnalysisController implements Initializable {
 
         dataPicker.setVisible(true);
         barChart.setVisible(false);
+        secondTabPaneText.clear();
         barChart.getData().clear();
         barChartTMP.getData().clear();
         dataPicker.getEditor().clear();

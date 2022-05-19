@@ -112,6 +112,7 @@ public class DriversController {
                                     Parent parent = loader.getRoot();
                                     stage.setScene(new Scene(parent));
                                     stage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
+                                    stage.resizableProperty().set(false);
                                     stage.setTitle(driver.getFname()+" "+driver.getLname());
                                     stage.show();
                                 } else {
@@ -208,6 +209,7 @@ public class DriversController {
             secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
             secondStage.setTitle("Dodaj kierowce");
             secondStage.setScene(secondScene);
+            secondStage.resizableProperty().set(false);
             secondStage.show();
         } else {
             secondStage.toFront();

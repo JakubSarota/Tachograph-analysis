@@ -478,11 +478,11 @@ public class AnalogueAnalysisController {
     Stage secondStage = new Stage();
 
     public void addStats() throws IOException {
+        secondStage.resizableProperty().set(false);
         if (secondStage == null || !secondStage.isShowing()) {
             Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addStats.fxml"));
             stackPane.getChildren().add(fxmlLoader);
             secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
-            secondStage.resizableProperty().set(false);
             secondStage.setTitle("Dodaj statystyki");
             secondStage.setScene(secondScene);
             secondStage.show();
