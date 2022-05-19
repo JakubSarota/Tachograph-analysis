@@ -73,7 +73,7 @@ public class AnalogueAnalysisController {
     @FXML
     private BarChart barChart;
     @FXML
-    private AreaChart areaChart;
+    private AreaChart areaChart,areaChart2;
     public static int sumBreak = 0;
     public static int sumWork = 0;
     public static String file_name;
@@ -402,6 +402,8 @@ public class AnalogueAnalysisController {
         JSONArray json2 = WorkInfo.getDailyActivity(s[1].substring(s[1].indexOf("Dzień pracy:") + 12));
         areaChart.getData().clear();
         areaChart.getData().removeAll();
+        areaChart2.getData().clear();
+        areaChart2.getData().removeAll();
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         Date minuta = format.parse("00:01");
         int czas=0;
@@ -414,26 +416,28 @@ public class AnalogueAnalysisController {
                 if (j2.getString("activity").equals("Break")) {
                     XYChart.Series seriesB = new XYChart.Series();
                     seriesB.setName("Break "+j2.getString("czas2"));
-                    Date date1 = format.parse(j2.getString("stop"));
                     seriesB.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,1));
-//                    seriesB.getData().add(new XYChart.Data(ChangeColor.ktoraGodzina((int) ((date1.getTime() - minuta.getTime()) / 1000 / 60)), 1));
                     seriesB.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,1));
-//                    seriesB.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")),1));
-//                    seriesB.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")+czas),1));
+                    XYChart.Series seriesB2 = new XYChart.Series();
+                    seriesB2.setName("Break "+j2.getString("czas2"));
+                    seriesB2.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,1));
+                    seriesB2.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,1));
                     areaChart.getData().addAll(seriesB);
+                    areaChart2.getData().addAll(seriesB2);
                     czas+=j2.getInt("czas");
                 } else {
 
                     XYChart.Series seriesW = new XYChart.Series();
                     seriesW.setName("Work "+j2.getString("czas2")+wykrzyknik);
-                    Date date1 = format.parse(j2.getString("stop"));
                     seriesW.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,2));
                     seriesW.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,2));
-//                    seriesW.getData().add(new XYChart.Data(9, 8));
-//                    seriesW.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")),2));
-//                    seriesW.getData().add(new XYChart.Data(String.valueOf(j2.getInt("czas")+czas),2));
+                    XYChart.Series seriesW2 = new XYChart.Series();
+                    seriesW2.setName("Work "+j2.getString("czas2")+wykrzyknik);
+                    seriesW2.getData().add(new XYChart.Data((float)j2.getInt("start2")/60,2));
+                    seriesW2.getData().add(new XYChart.Data((float)j2.getInt("stop2")/60,2));
                     czas+=j2.getInt("czas");
                     areaChart.getData().addAll(seriesW);
+                    areaChart2.getData().addAll(seriesW2);
                 }
             }
         }
@@ -495,9 +499,11 @@ public class AnalogueAnalysisController {
 //            desktop.open(dirToOpen);
 //        } catch (IllegalArgumentException | IOException iae) { }
 //        File file = new File(String.valueOf(fileChooser));
+        System.out.println(areaChart2.getWidth());
+        System.out.println(areaChart2.getHeight());
         if (file_name.indexOf("/") != -1) {
 
-            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()}, file_name.substring(file_name.lastIndexOf("/") + 1), file_name);
+            String createPDF = CreatePDF.createPDF2(new String[]{textArea.getText()}, file_name.substring(file_name.lastIndexOf("/") + 1), file_name,areaChart2);
 
             String[] buttons = {"Zamknij", "Otwórz plik PDF"};
             int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
@@ -515,7 +521,7 @@ public class AnalogueAnalysisController {
             }
         }
         if (file_name.indexOf("\\") != -1) {
-            String createPDF = CreatePDF.createPDF(new String[]{textArea.getText()}, file_name.substring(file_name.lastIndexOf("\\") + 1), file_name);
+            String createPDF = CreatePDF.createPDF2(new String[]{textArea.getText()}, file_name.substring(file_name.lastIndexOf("\\") + 1), file_name,areaChart2);
             String[] buttons = {"OK", "Otwórz plik PDF"};
             int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
             switch (rs) {

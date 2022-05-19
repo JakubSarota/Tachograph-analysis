@@ -55,4 +55,7 @@ public class Trash {
             queryOutput.close();
         }
     }
+    public static void deleteWhenTimeOut() throws SQLException {
+        DatabaseConnection.exUpdate("DELETE FROM trash WHERE date_add <= DateTime('Now', 'LocalTime', '-30 Day')");
+    }
 }

@@ -303,7 +303,7 @@ public class DigitalAnalysisController implements Initializable {
     @FXML
     private void generatePDF2() throws DocumentException, IOException, ParserConfigurationException, SAXException, InterruptedException {
 
-       String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
+        String createPDF = CreatePDF.createPDF(dataGD, String.valueOf(this.file.getName()), "");
         String[] buttons = {"Zamknij", "Otwórz plik PDF"};
         int rs = JOptionPane.showOptionDialog(null, "Plik PDF został utworzony", "Twórz pdf", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, buttons, buttons[0]);
         switch (rs) {
@@ -315,7 +315,8 @@ public class DigitalAnalysisController implements Initializable {
                 String[] params = {"cmd", "/c", pathpdf};
                 try {
                     Runtime.getRuntime().exec(params);
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                }
         }
     }
 
@@ -334,7 +335,8 @@ public class DigitalAnalysisController implements Initializable {
                 String[] params = {"cmd", "/c", pathpdf};
                 try {
                     Runtime.getRuntime().exec(params);
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                }
         }
     }
 
@@ -403,7 +405,6 @@ public class DigitalAnalysisController implements Initializable {
             btnRaportPDFdnia.setVisible(false);
             btnAddStatsDigital.setVisible(false);
         }
-
 
 
     }
@@ -618,12 +619,11 @@ public class DigitalAnalysisController implements Initializable {
         seriesChart2.setName("Przerwa");
         XYChart.Series seriesChart3 = new XYChart.Series();
         seriesChart3.setName("Jazda");
-        for (int i=0;i<twoWeeksDataCorrectly.length;i++) {
+        for (int i = 0; i < twoWeeksDataCorrectly.length; i++) {
             seriesChart1.getData().add(new XYChart.Data(twoWeeksDataCorrectly[i], parseInt(String.valueOf(timeDiffrence((String[]) activityDataWorkObject[i]))) / 60));
             seriesChart2.getData().add(new XYChart.Data(twoWeeksDataCorrectly[i], parseInt(String.valueOf(timeDiffrence((String[]) activityDataBreakObject[i]))) / 60));
             seriesChart3.getData().add(new XYChart.Data(twoWeeksDataCorrectly[i], parseInt(String.valueOf(timeDiffrence((String[]) activityDataDriveObject[i]))) / 60));
         }
-
 
 
         chart.getData().addAll(seriesChart1, seriesChart3, seriesChart2);
@@ -666,8 +666,8 @@ public class DigitalAnalysisController implements Initializable {
                 if (split.length - i == 4) {
                     activityDataBreak[count2] = split[i + 2] + "24:00";
                 } else {
-                    if(i + 7<split.length)
-                    activityDataBreak[count2] = split[i + 2] + split[i + 7];
+                    if (i + 7 < split.length)
+                        activityDataBreak[count2] = split[i + 2] + split[i + 7];
                     else
                         activityDataBreak[count2] = split[i + 2] + "24:00";
                 }
@@ -1324,22 +1324,23 @@ public class DigitalAnalysisController implements Initializable {
         }
         if (id == 0) {
             //JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
-            String[] options = {"Dodaj użytkownika","Anuluj"};
+            String[] options = {"Dodaj użytkownika", "Anuluj"};
             int odp = JOptionPane.showOptionDialog(null, "W bazie nie ma takiego użytkownika!", "Uwaga!",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                     null, options, options[0]);
-            if(odp==JOptionPane.YES_OPTION){
+            if (odp == JOptionPane.YES_OPTION) {
                 StackPane stackPane = new StackPane();
                 Scene secondScene = new Scene(stackPane);
                 Stage secondStage = new Stage();
-                if(secondStage==null||!secondStage.isShowing()) {
+                if (secondStage == null || !secondStage.isShowing()) {
                     Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
                     stackPane.getChildren().add(fxmlLoader);
                     secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
                     secondStage.setTitle("Dodaj kierowce");
                     secondStage.setScene(secondScene);
                     secondStage.show();
-                }}
+                }
+            }
 
         } else {
 
@@ -1372,28 +1373,29 @@ public class DigitalAnalysisController implements Initializable {
             }
             if (id == 0) {
                 //JOptionPane.showMessageDialog(null, "W bazie nie ma takiego użytkownika!");
-                String[] options = {"Dodaj użytkownika","Anuluj"};
+                String[] options = {"Dodaj użytkownika", "Anuluj"};
                 int odp = JOptionPane.showOptionDialog(null, "W bazie nie ma takiego użytkownika!", "Uwaga!",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
                         null, options, options[0]);
-                if(odp==JOptionPane.YES_OPTION){
+                if (odp == JOptionPane.YES_OPTION) {
                     StackPane stackPane = new StackPane();
                     Scene secondScene = new Scene(stackPane);
                     Stage secondStage = new Stage();
-                    if(secondStage==null||!secondStage.isShowing()) {
+                    if (secondStage == null || !secondStage.isShowing()) {
                         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("addDrivers.fxml"));
                         stackPane.getChildren().add(fxmlLoader);
                         secondStage.getIcons().add(new Image(getClass().getResourceAsStream("images/DRIVER.png")));
                         secondStage.setTitle("Dodaj kierowce");
                         secondStage.setScene(secondScene);
                         secondStage.show();
-                    }}
+                    }
+                }
 
             } else {
                 int i = 0;
 //                String file_name = UUID.randomUUID() + ".DDD";
                 File dir = new File(".\\archiwum\\");
-                String file_name=UUID.randomUUID().toString() + ".ddd";
+                String file_name = UUID.randomUUID().toString() + ".ddd";
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
@@ -1417,14 +1419,14 @@ public class DigitalAnalysisController implements Initializable {
                             String[] activityDataDrive = (String[]) dataDiffOneDaTable[1];
                             String[] activityDataBreak = (String[]) dataDiffOneDaTable[2];
 
-                            String tmpS=AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(1, 11),
-                                    LocalDate.now().toString(),dataGD1,
-                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60+
+                            String tmpS = AddStats.insertToDatabase(parseInt(String.valueOf(id)), dataGD1.substring(1, 11),
+                                    LocalDate.now().toString(), dataGD1,
+                                    String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataWork))) / 60 +
                                             parseInt(String.valueOf(timeDiffrence(activityDataDrive))) / 60),
                                     String.valueOf(parseInt(String.valueOf(timeDiffrence(activityDataBreak))) / 60),
                                     file_name, "cyfrowy", Integer.parseInt(d),
                                     dataGD1.substring(0, 11), "", "");
-                            if(tmpS.equals("Dodano"))
+                            if (tmpS.equals("Dodano"))
                                 i++;
                         }
                     }
@@ -1447,13 +1449,14 @@ public class DigitalAnalysisController implements Initializable {
         }
     }
 
-    public void openFolder(MouseEvent mouseEvent)  {
+    public void openFolder(MouseEvent mouseEvent) {
         Desktop desktop = Desktop.getDesktop();
         File dirToOpen;
-                try {
+        try {
             dirToOpen = new File(".\\PDF\\");
             desktop.open(dirToOpen);
-        } catch (IllegalArgumentException | IOException iae) { }
+        } catch (IllegalArgumentException | IOException iae) {
+        }
     }
 
     public void loadFileAgain() {
